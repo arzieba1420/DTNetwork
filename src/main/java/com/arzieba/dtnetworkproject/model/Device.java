@@ -14,12 +14,11 @@ public class Device {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    @Getter
-    @Setter
     private Integer deviceId;
-    private DeviceType deviceType;
-    private Room room;
+
+
     private String deviceDescription;
+
     @OneToOne(mappedBy = "DeviceCard_device")
     private DeviceCard deviceCard;
 
