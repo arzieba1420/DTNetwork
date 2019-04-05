@@ -24,7 +24,7 @@ public class DeviceCard {
 
     private Room installPlace;
 
-    private String inventNumber;
+
 
     private String keeperData;
 

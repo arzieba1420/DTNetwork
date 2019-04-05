@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DeviceDAO extends CrudRepository<Device,Integer> {
+public interface DeviceDAO extends CrudRepository<Device,String> {
 }

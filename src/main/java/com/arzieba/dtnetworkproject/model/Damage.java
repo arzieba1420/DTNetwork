@@ -19,7 +19,7 @@ public class Damage {
     private Integer damageId;
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "device_deviceId")
+    @JoinColumn(name = "device_inventNumber")
     @Column(nullable = false)
     private Device device;
 

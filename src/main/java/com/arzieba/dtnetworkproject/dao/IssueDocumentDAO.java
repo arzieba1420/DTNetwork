@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IssueDocumentDAO extends CrudRepository<IssueDocument,Integer> {
+public interface IssueDocumentDAO extends CrudRepository<IssueDocument,String> {
 }
