@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @Table
 public class Damage {
+    //cannot exist without Device
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -19,6 +20,7 @@ public class Damage {
 
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "device_deviceId")
+    @Column(nullable = false)
     private Device device;
 
     private String description;

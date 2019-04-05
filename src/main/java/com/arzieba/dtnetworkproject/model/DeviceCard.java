@@ -11,10 +11,11 @@ import java.util.Date;
 @Getter
 @Setter
 public class DeviceCard {
+//cannot exist without Device
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-
     private Integer deviceCardID;
 
     private String address;
