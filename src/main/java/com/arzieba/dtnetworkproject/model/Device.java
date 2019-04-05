@@ -19,13 +19,13 @@ public class Device {
 
     private String deviceDescription;
 
-    @OneToOne(mappedBy = "DeviceCard_device")
+    @OneToOne(mappedBy = "device")
     private DeviceCard deviceCard;
 
-    @OneToMany(mappedBy = "IssueDocument_device")
+    @OneToMany(mappedBy = "device")
     private List<IssueDocument> issueDocumentList;
 
-    @OneToMany(mappedBy = "damage_device")
+    @OneToMany(mappedBy = "device")
     private List<Damage> damageList;
 
 

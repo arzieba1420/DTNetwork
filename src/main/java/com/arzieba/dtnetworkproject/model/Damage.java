@@ -25,7 +25,7 @@ public class Damage {
     private Date damageDate;
     private String author;
 
-    @OneToMany(mappedBy = "IssueDocument_damage")
+    @OneToMany(mappedBy = "damage")
     private List<IssueDocument> issueDocumentList;
 
 
