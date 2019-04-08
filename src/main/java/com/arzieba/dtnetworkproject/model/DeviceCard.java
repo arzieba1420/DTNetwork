@@ -4,7 +4,9 @@ import lombok.*;
 
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 @Entity
 @Table
@@ -43,9 +45,9 @@ public class DeviceCard {
 
     private String attachementsIDs;
 
-    private Date deliveryDate;
+    private GregorianCalendar deliveryDate;
 
-    private Date startDate;
+    private GregorianCalendar startDate;
 
     private String signatureNumber;
 
@@ -60,7 +62,7 @@ public class DeviceCard {
     //To be matched with Device
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "device_serialNumber")
+    @JoinColumn(name = "DeviceInventNumber")
     private Device device;
 
     public Integer getDeviceCardID() {
@@ -163,19 +165,19 @@ public class DeviceCard {
         this.attachementsIDs = attachementsIDs;
     }
 
-    public Date getDeliveryDate() {
+    public GregorianCalendar getDeliveryDate() {
         return deliveryDate;
     }
 
-    public void setDeliveryDate(Date deliveryDate) {
+    public void setDeliveryDate(GregorianCalendar deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
 
-    public Date getStartDate() {
+    public GregorianCalendar getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(GregorianCalendar startDate) {
         this.startDate = startDate;
     }
 
@@ -225,6 +227,33 @@ public class DeviceCard {
 
     public void setDevice(Device device) {
         this.device = device;
+    }
+
+    @Override
+    public String toString() {
+        return "DeviceCard{" +
+                "deviceCardID=" + deviceCardID +
+                ", address='" + address + '\'' +
+                ", Department='" + Department + '\'' +
+                ", installPlace=" + installPlace +
+                ", keeperData='" + keeperData + '\'' +
+                ", deviceName='" + deviceName + '\'' +
+                ", deviceType=" + deviceType +
+                ", fabricalID='" + fabricalID + '\'' +
+                ", producer='" + producer + '\'' +
+                ", deliverer='" + deliverer + '\'' +
+                ", buildTime=" + buildTime +
+                ", deliveryDocumentID='" + deliveryDocumentID + '\'' +
+                ", attachementsIDs='" + attachementsIDs + '\'' +
+                ", deliveryDate=" + deliveryDate +
+                ", startDate=" + startDate +
+                ", signatureNumber='" + signatureNumber + '\'' +
+                ", financeSource='" + financeSource + '\'' +
+                ", creatorOfDeviceCard='" + creatorOfDeviceCard + '\'' +
+                ", creationTime=" + creationTime +
+                ", deviceValue=" + deviceValue +
+                ", device=" + device +
+                '}';
     }
 }
 

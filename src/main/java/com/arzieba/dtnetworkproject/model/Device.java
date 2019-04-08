@@ -16,8 +16,7 @@ public class Device {
 
     private String deviceDescription;
 
-    @OneToOne(mappedBy = "device", fetch = FetchType.EAGER)
-    @JoinColumn(name = "deviceCardID")
+    @OneToOne(mappedBy = "device", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private DeviceCard deviceCard;
 
     @OneToMany(mappedBy = "device")
@@ -64,5 +63,16 @@ public class Device {
 
     public void setDamageList(List<Damage> damageList) {
         this.damageList = damageList;
+    }
+
+    @Override
+    public String toString() {
+        return "Device{" +
+                "inventNumber='" + inventNumber + '\'' +
+                ", deviceDescription='" + deviceDescription + '\'' +
+                ", deviceCard=" + deviceCard +
+                ", issueDocumentList=" + issueDocumentList +
+                ", damageList=" + damageList +
+                '}';
     }
 }

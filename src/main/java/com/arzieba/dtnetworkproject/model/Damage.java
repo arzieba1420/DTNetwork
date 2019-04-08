@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Setter
@@ -18,12 +19,12 @@ public class Damage {
     @GeneratedValue
     private Integer damageId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "device_inventNumber")
     private Device device;
 
     private String description;
-    private Date damageDate;
+    private GregorianCalendar damageDate;
     private String author;
 
     @OneToMany(mappedBy = "damage")
@@ -54,11 +55,11 @@ public class Damage {
         this.description = description;
     }
 
-    public Date getDamageDate() {
+    public GregorianCalendar getDamageDate() {
         return damageDate;
     }
 
-    public void setDamageDate(Date damageDate) {
+    public void setDamageDate(GregorianCalendar damageDate) {
         this.damageDate = damageDate;
     }
 

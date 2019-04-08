@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 @Entity
 @Table
@@ -17,17 +18,17 @@ public class IssueDocument {
 
     private String delivererName;
     private String delivererNIP;
-    private Date issueDate;
+    private GregorianCalendar issueDate;
 
     private  String issueTittle;
     private String issueDetails;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name= "device_inventNumber")
     private Device device;
 
-    @ManyToOne()
-    @JoinColumn(name = "damage_damageId")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "damage_Id")
     private Damage damage;
 
     public String getIssueSignature() {
@@ -54,11 +55,11 @@ public class IssueDocument {
         this.delivererNIP = delivererNIP;
     }
 
-    public Date getIssueDate() {
+    public GregorianCalendar getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(Date issueDate) {
+    public void setIssueDate(GregorianCalendar issueDate) {
         this.issueDate = issueDate;
     }
 
