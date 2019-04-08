@@ -1,6 +1,8 @@
 package com.arzieba.dtnetworkproject.model;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 import javax.persistence.*;
@@ -45,9 +47,11 @@ public class DeviceCard {
 
     private String attachementsIDs;
 
-    private GregorianCalendar deliveryDate;
+    @Temporal(TemporalType.DATE)
+    private Calendar deliveryDate;
 
-    private GregorianCalendar startDate;
+    @Temporal(TemporalType.DATE)
+    private Calendar startDate;
 
     private String signatureNumber;
 
@@ -60,9 +64,8 @@ public class DeviceCard {
     private Double deviceValue;
 
     //To be matched with Device
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "DeviceInventNumber")
+    @OneToOne
+    @JoinColumn(name = "Device_INVENT")
     private Device device;
 
     public Integer getDeviceCardID() {
@@ -165,19 +168,19 @@ public class DeviceCard {
         this.attachementsIDs = attachementsIDs;
     }
 
-    public GregorianCalendar getDeliveryDate() {
+    public Calendar getDeliveryDate() {
         return deliveryDate;
     }
 
-    public void setDeliveryDate(GregorianCalendar deliveryDate) {
+    public void setDeliveryDate(Calendar deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
 
-    public GregorianCalendar getStartDate() {
+    public Calendar getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(GregorianCalendar startDate) {
+    public void setStartDate(Calendar startDate) {
         this.startDate = startDate;
     }
 

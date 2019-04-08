@@ -4,6 +4,7 @@ import lombok.*;
 
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -18,16 +19,16 @@ public class IssueDocument {
 
     private String delivererName;
     private String delivererNIP;
-    private GregorianCalendar issueDate;
+
+    @Temporal(TemporalType.DATE)
+    private Calendar issueDate;
 
     private  String issueTittle;
     private String issueDetails;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name= "device_inventNumber")
-    private Device device;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne
     @JoinColumn(name = "damage_Id")
     private Damage damage;
 
@@ -55,11 +56,11 @@ public class IssueDocument {
         this.delivererNIP = delivererNIP;
     }
 
-    public GregorianCalendar getIssueDate() {
+    public Calendar getIssueDate() {
         return issueDate;
     }
 
-    public void setIssueDate(GregorianCalendar issueDate) {
+    public void setIssueDate(Calendar issueDate) {
         this.issueDate = issueDate;
     }
 
@@ -79,13 +80,9 @@ public class IssueDocument {
         this.issueDetails = issueDetails;
     }
 
-    public Device getDevice() {
-        return device;
-    }
 
-    public void setDevice(Device device) {
-        this.device = device;
-    }
+
+
 
     public Damage getDamage() {
         return damage;

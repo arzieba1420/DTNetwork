@@ -1,6 +1,8 @@
 package com.arzieba.dtnetworkproject.model;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.context.annotation.Primary;
 
 
@@ -16,13 +18,14 @@ public class Device {
 
     private String deviceDescription;
 
-    @OneToOne(mappedBy = "device", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+
+    @OneToOne(mappedBy = "device")
     private DeviceCard deviceCard;
 
-    @OneToMany(mappedBy = "device")
-    private List<IssueDocument> issueDocumentList;
 
-    @OneToMany(mappedBy = "device")
+
+    @OneToMany(mappedBy = "device", fetch =FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Damage> damageList;
 
     public String getInventNumber() {
@@ -49,13 +52,7 @@ public class Device {
         this.deviceCard = deviceCard;
     }
 
-    public List<IssueDocument> getIssueDocumentList() {
-        return issueDocumentList;
-    }
 
-    public void setIssueDocumentList(List<IssueDocument> issueDocumentList) {
-        this.issueDocumentList = issueDocumentList;
-    }
 
     public List<Damage> getDamageList() {
         return damageList;
@@ -71,7 +68,6 @@ public class Device {
                 "inventNumber='" + inventNumber + '\'' +
                 ", deviceDescription='" + deviceDescription + '\'' +
                 ", deviceCard=" + deviceCard +
-                ", issueDocumentList=" + issueDocumentList +
                 ", damageList=" + damageList +
                 '}';
     }
