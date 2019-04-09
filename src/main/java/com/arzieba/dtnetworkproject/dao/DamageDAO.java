@@ -12,4 +12,6 @@ public interface DamageDAO extends CrudRepository<Damage,Integer> {
     List<Damage> findAll();
 
     List<Damage> findByDevice(Device device);
+
+    Damage findByDamageId(Integer id);
 }

@@ -1,6 +1,8 @@
 package com.arzieba.dtnetworkproject.model;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 import javax.persistence.*;
@@ -10,8 +12,6 @@ import java.util.GregorianCalendar;
 
 @Entity
 @Table
-@Getter
-@Setter
 public class IssueDocument {
 
     @Id
@@ -30,7 +30,11 @@ public class IssueDocument {
 
     @ManyToOne
     @JoinColumn(name = "damage_Id")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Damage damage;
+
+    public IssueDocument() {
+    }
 
     public String getIssueSignature() {
         return issueSignature;

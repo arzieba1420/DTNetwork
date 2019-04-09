@@ -5,9 +5,11 @@ import com.arzieba.dtnetworkproject.dao.DamageDAO;
 import com.arzieba.dtnetworkproject.dao.DeviceCardDAO;
 import com.arzieba.dtnetworkproject.dao.DeviceDAO;
 import com.arzieba.dtnetworkproject.dao.IssueDocumentDAO;
+import com.arzieba.dtnetworkproject.dto.DeviceDTO;
 import com.arzieba.dtnetworkproject.model.Damage;
 import com.arzieba.dtnetworkproject.model.Device;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -43,12 +45,25 @@ public class DeviceController {
         return names;
     }
 
+    @GetMapping("getById")
+    public ResponseEntity<DeviceDTO> getByID(@RequestParam String id){
+
+        return ResponseEntity.ok(Device.mapper(deviceDAO.findByInventNumber(id)));
+    }
+
+    @GetMapping("getByDesc")
+    public ResponseEntity<DeviceDTO> getByDesc(@RequestParam String string){
+        Device found = deviceDAO.findByDeviceDescription(string);
+        return ResponseEntity.ok(Device.mapper(found));
+
+    }
+
     @PostMapping(value="add", produces = "application/json")
-    public String add(@RequestBody Device device){
+    public ResponseEntity<DeviceDTO> add(@RequestBody DeviceDTO deviceDTO){
 
-        deviceDAO.save(device);
+        deviceDAO.save(DeviceDTO.mapper(deviceDTO));
 
-        return "Success";
+        return ResponseEntity.ok(deviceDTO);
     }
 
     @GetMapping("/getDamages")

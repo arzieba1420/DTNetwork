@@ -4,23 +4,21 @@ import com.arzieba.dtnetworkproject.dao.DamageDAO;
 import com.arzieba.dtnetworkproject.dao.DeviceCardDAO;
 import com.arzieba.dtnetworkproject.dao.DeviceDAO;
 import com.arzieba.dtnetworkproject.dao.IssueDocumentDAO;
-import com.arzieba.dtnetworkproject.model.Damage;
-import com.arzieba.dtnetworkproject.model.Device;
-import com.arzieba.dtnetworkproject.model.DeviceCard;
-import com.arzieba.dtnetworkproject.model.IssueDocument;
+import com.arzieba.dtnetworkproject.model.*;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import lombok.*;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component
 public class initComponent {
-    private DeviceDAO deviceDAO;
+  /*  private DeviceDAO deviceDAO;
     private DamageDAO damageDAO;
     private IssueDocumentDAO issueDocumentDAO;
     private DeviceCardDAO deviceCardDAO;
@@ -31,11 +29,11 @@ public class initComponent {
         this.damageDAO = damageDAO;
         this.issueDocumentDAO = issueDocumentDAO;
         this.deviceCardDAO = deviceCardDAO;
-    }
+    }*/
 
     @PostConstruct
     public void init(){
-        Device device = new Device();
+      /*  Device device = new Device();
         Damage damage1 = new Damage();
         Damage damage2 = new Damage();
         IssueDocument issueDocument1 = new IssueDocument();
@@ -45,16 +43,13 @@ public class initComponent {
 
         device.setDeviceDescription("Opis");
         device.setInventNumber("S-003");
+        device.setRoom(Room.G39);
 
 
         deviceCard.setAddress("Test adress");
         deviceCard.setDevice(device);
 
-     /*
-        damageDAO.save(damage1);
-        damageDAO.save(damage2);
-        issueDocumentDAO.save(issueDocument1);
-        issueDocumentDAO.save(issueDocument2);*/
+
         damage1.setAuthor("Arek");
         damage1.setDamageDate(new GregorianCalendar(2018,11,11));
         damage1.setDescription("Przykładowa usterka 1");
@@ -89,12 +84,12 @@ public class initComponent {
         damageDAO.save(damage1);
         damageDAO.save(damage2);
         issueDocumentDAO.save(issueDocument1);
-        issueDocumentDAO.save(issueDocument2);
+        issueDocumentDAO.save(issueDocument2);*/
 
        /* deviceCardDAO.findById(1).get().getDevice();*/
       /*  System.out.println(deviceCardDAO.findAll().get(0).getDevice());*/
         /*System.out.println(deviceDAO.findAll().get(1).getDeviceCard());*/
-        Integer i= deviceDAO.findAll().get(0).getDeviceCard().getDeviceCardID();
+        /*Integer i= deviceDAO.findAll().get(0).getDeviceCard().getDeviceCardID();
         System.out.println(i);
         System.out.println(deviceCardDAO.findByDeviceCardID(i).getDevice().getInventNumber());
         System.out.println(deviceDAO.findAll().get(0).getDeviceCard().getAddress());
@@ -110,7 +105,7 @@ public class initComponent {
             System.out.println(j);
         } catch (NullPointerException e) {
             System.out.println("Brak urządzeń");
-        }
+        }*/
 
 
       /* List<Damage> damages = damageDAO.findByDevice(device);
@@ -128,6 +123,8 @@ public class initComponent {
 
 
     }
+    @PreDestroy
+    public void teardown(){}
 
 
 

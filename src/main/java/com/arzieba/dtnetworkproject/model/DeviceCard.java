@@ -66,7 +66,11 @@ public class DeviceCard {
     //To be matched with Device
     @OneToOne
     @JoinColumn(name = "Device_INVENT")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Device device;
+
+    public DeviceCard() {
+    }
 
     public Integer getDeviceCardID() {
         return deviceCardID;

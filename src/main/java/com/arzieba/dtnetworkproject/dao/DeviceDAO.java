@@ -11,5 +11,6 @@ public interface DeviceDAO extends CrudRepository<Device,String> {
 
     List<Device> findAll();
     Device findByInventNumber(String string);
+    Device findByDeviceDescription(String description);
 
 }

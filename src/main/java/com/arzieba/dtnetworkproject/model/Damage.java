@@ -1,16 +1,15 @@
 package com.arzieba.dtnetworkproject.model;
 
-import lombok.*;
+import com.arzieba.dtnetworkproject.dto.DamageDTO;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 import javax.persistence.*;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
-@Setter
-@Getter
+
 @Entity
 @Table
 public class Damage {
@@ -20,8 +19,9 @@ public class Damage {
     @GeneratedValue
     private Integer damageId;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "device_inventNumber")
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Device device;
 
     private String description;
@@ -32,6 +32,8 @@ public class Damage {
     @OneToMany(mappedBy = "damage", fetch =FetchType.LAZY, cascade = CascadeType.ALL)
     private List<IssueDocument> issueDocumentList;
 
+    public Damage() {
+    }
 
     public Integer getDamageId() {
         return damageId;
@@ -79,5 +81,27 @@ public class Damage {
 
     public void setIssueDocumentList(List<IssueDocument> issueDocumentList) {
         this.issueDocumentList = issueDocumentList;
+    }
+
+
+    //Mapper to DTO
+    public static DamageDTO mapper(Damage damage){
+        DamageDTO damageDTO = new DamageDTO();
+
+        damageDTO.setDescription(damage.getDescription());
+        damageDTO.setDamageDate(Damage.cal2string(damage.getDamageDate()));
+        damageDTO.setAuthor(damage.getAuthor());
+        damageDTO.setDeviceDescription(damage.device.getDeviceDescription());
+
+        return damageDTO;
+    }
+
+    //Calendar to String
+    private static String cal2string(Calendar calendar){
+        int day = calendar.getTime().getDay();
+        int month = calendar.getTime().getMonth();
+        int year = calendar.getTime().getYear();
+
+        return day +"-"+month+"-"+year;
     }
 }
