@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 
 @Component
 public class initComponent {
-  /*  private DeviceDAO deviceDAO;
+    private DeviceDAO deviceDAO;
     private DamageDAO damageDAO;
     private IssueDocumentDAO issueDocumentDAO;
     private DeviceCardDAO deviceCardDAO;
@@ -29,7 +29,7 @@ public class initComponent {
         this.damageDAO = damageDAO;
         this.issueDocumentDAO = issueDocumentDAO;
         this.deviceCardDAO = deviceCardDAO;
-    }*/
+    }
 
     @PostConstruct
     public void init(){
@@ -38,7 +38,7 @@ public class initComponent {
         Damage damage2 = new Damage();
         IssueDocument issueDocument1 = new IssueDocument();
         IssueDocument issueDocument2 = new IssueDocument();
-        DeviceCard deviceCard = new DeviceCard();
+
 
 
         device.setDeviceDescription("Opis");
@@ -46,8 +46,7 @@ public class initComponent {
         device.setRoom(Room.G39);
 
 
-        deviceCard.setAddress("Test adress");
-        deviceCard.setDevice(device);
+
 
 
         damage1.setAuthor("Arek");
@@ -117,6 +116,7 @@ public class initComponent {
 
         damagesToRemove.stream().forEach(d->damageDAO.delete(d));
 */
+
 
 
 

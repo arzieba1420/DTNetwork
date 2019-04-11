@@ -46,14 +46,7 @@ public class DeviceDTO {
         this.room = room;
     }
 
-    public static Device mapper(DeviceDTO deviceDTO){
-        Device device = new Device();
-        device.setInventNumber(deviceDTO.getInventNumber());
-        device.setDeviceDescription(deviceDTO.getDeviceDescription());
-        device.setRoom(deviceDTO.getRoom());
-        device.setDeviceType(deviceDTO.getDeviceType());
-        return device;
-    }
+
 
     @Override
     public String toString() {

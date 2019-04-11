@@ -35,7 +35,7 @@ public class Device {
     @OneToOne(mappedBy = "device")
     private DeviceCard deviceCard;
 
-    @OneToMany(mappedBy = "device", fetch =FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "device", fetch =FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Damage> damageList;
 
     public Device() {
@@ -97,12 +97,5 @@ public class Device {
                 '}';
     }
 
-    public static DeviceDTO mapper(Device device){
-      DeviceDTO deviceDTO = new DeviceDTO();
-      deviceDTO.setRoom(device.getRoom());
-      deviceDTO.setDeviceDescription(device.getDeviceDescription());
-      deviceDTO.setInventNumber(device.getInventNumber());
-      deviceDTO.setDeviceType(device.getDeviceType());
-      return deviceDTO;
-    };
+
 }

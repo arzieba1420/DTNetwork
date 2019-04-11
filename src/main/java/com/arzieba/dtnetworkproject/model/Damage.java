@@ -22,6 +22,7 @@ public class Damage {
     @ManyToOne
     @JoinColumn(name = "device_inventNumber")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
+
     private Device device;
 
     private String description;
