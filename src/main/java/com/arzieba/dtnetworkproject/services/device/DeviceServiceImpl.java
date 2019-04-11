@@ -46,11 +46,14 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     public List<DeviceDTO> findByType(String name) {
 
+        System.out.println();
+
       return deviceDAO.findAll().stream()
               .filter(d->d.getDeviceType()
               .name().equals(name))
               .map(d->DeviceMapper.map(d))
               .collect(Collectors.toList());
+
     }
 
     @Override
@@ -82,6 +85,8 @@ public class DeviceServiceImpl implements DeviceService {
     public DeviceCard getDeviceCard(String inventNumber) {
         return null;
     }
+
+
 
 
 }
