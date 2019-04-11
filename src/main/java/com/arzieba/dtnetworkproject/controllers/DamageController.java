@@ -24,23 +24,5 @@ public class DamageController {
         this.deviceDAO = deviceDAO;
     }
 
-    @PostMapping
-    public ResponseEntity<DamageDTO> add(@RequestBody DamageDTO damageDTO){
 
-          damageDAO.save(damageDTO.mapper(damageDTO,deviceDAO));
-         return ResponseEntity.ok(damageDTO);
-    };
-
-    @GetMapping("/getAll")
-    public ResponseEntity<List<DamageDTO>> getAll(){
-
-      List<Damage> damages = damageDAO.findAll();
-      List<DamageDTO> dtos = new ArrayList<>();
-
-        for (Damage damage: damages  ) {
-            dtos.add(Damage.mapper(damage));
-        }
-
-      return ResponseEntity.ok(dtos);
-    };
 }

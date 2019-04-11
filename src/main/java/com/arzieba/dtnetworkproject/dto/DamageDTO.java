@@ -15,8 +15,6 @@ import java.util.Date;
 public class DamageDTO {
 
 
-
-
     //****Fields
 
     private String description;
@@ -26,18 +24,10 @@ public class DamageDTO {
 
     private String Author;
 
-    private String deviceDescription; //is DeviceDescription in Device.class
+    private String deviceInventNumber; //is deviceDescription in Device.class
 
     //**** Getters, setters, toString, constructor
 
-
-    public String getDeviceDescription() {
-        return deviceDescription;
-    }
-
-    public void setDeviceDescription(String deviceDescription) {
-        this.deviceDescription = deviceDescription;
-    }
 
     public String getDescription() {
         return description;
@@ -63,51 +53,29 @@ public class DamageDTO {
         Author = author;
     }
 
+    public String getDeviceInventNumber() {
+        return deviceInventNumber;
+    }
+
+    public void setDeviceInventNumber(String deviceInventNumber) {
+        this.deviceInventNumber = deviceInventNumber;
+    }
+
     @Override
     public String toString() {
         return "DamageDTO{" +
                 "description='" + description + '\'' +
-                ", damageDate=" + damageDate +
+                ", damageDate='" + damageDate + '\'' +
                 ", Author='" + Author + '\'' +
-                ", deviceDescription='" + deviceDescription + '\'' +
+                ", deviceInventNumber='" + deviceInventNumber + '\'' +
                 '}';
     }
+}
 
     //*******Additional Util Methods
 
-    //Mapper to Domain
-    public static   Damage mapper(DamageDTO damageDTO, DeviceDAO deviceDAO){
+    /*//Mapper to Domain
 
-
-
-        Damage damage = new Damage();
-
-
-        damage.setDamageDate(DamageDTO.getCalendar(damageDTO.getDamageDate()));
-        damage.setAuthor(damageDTO.getAuthor());
-        damage.setDevice(deviceDAO.findByDeviceDescription(damageDTO.getDeviceDescription()));
-
-        return damage;
-    }
-
-    //Parse to Calendar
-    private static Calendar getCalendar(String dateToParse) {
-        String stringDate = dateToParse;
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-
-        Date date;
-        {
-            try {
-               date  = formatter.parse(stringDate);
-                Calendar calender = Calendar.getInstance();
-                calender.setTime(date);
-
-                return calender;
-            } catch (ParseException e) {
-               e.getMessage();
-            }
-            return null;
-        }
 
     }
-}
+}*/

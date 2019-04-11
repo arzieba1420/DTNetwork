@@ -5,26 +5,34 @@ import com.arzieba.dtnetworkproject.dao.DamageDAO;
 import com.arzieba.dtnetworkproject.dao.DeviceCardDAO;
 import com.arzieba.dtnetworkproject.dao.DeviceDAO;
 import com.arzieba.dtnetworkproject.dao.IssueDocumentDAO;
+import com.arzieba.dtnetworkproject.dto.DamageDTO;
 import com.arzieba.dtnetworkproject.dto.DeviceDTO;
 import com.arzieba.dtnetworkproject.model.Damage;
 import com.arzieba.dtnetworkproject.model.Device;
 import com.arzieba.dtnetworkproject.model.DeviceCard;
 import com.arzieba.dtnetworkproject.services.device.DeviceService;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
+import com.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("device")
+@RequestMapping("devices")
 public class DeviceController {
 
     @Autowired
-    public DeviceController(DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, DeviceService deviceService) {
+    public DeviceController(DeviceDAO deviceDAO,
+                            DamageDAO damageDAO,
+                            IssueDocumentDAO issueDocumentDAO,
+                            DeviceCardDAO deviceCardDAO,
+                            DeviceService deviceService) {
         this.deviceDAO = deviceDAO;
         this.damageDAO = damageDAO;
         this.issueDocumentDAO = issueDocumentDAO;
@@ -56,63 +64,31 @@ public class DeviceController {
         return deviceService.findByType(type);
     }
 
- /*   @GetMapping("getById")
-    public ResponseEntity<DeviceDTO> getByID(@RequestParam String id){
-
-        return ResponseEntity.ok(Device.mapper(deviceDAO.findByInventNumber(id)));
+    @PostMapping("/add")
+    public DeviceDTO create(@RequestBody DeviceDTO deviceDTO){
+        return deviceService.create(deviceDTO);
     }
 
-    @GetMapping("getByName")
-    public ResponseEntity<DeviceDTO> getByDesc(@RequestParam String string){
-        Device found = deviceDAO.findByDeviceDescription(string);
-        return ResponseEntity.ok(Device.mapper(found));
-
+    @PutMapping("/update")
+    public DeviceDTO update(@RequestBody DeviceDTO deviceDTO){
+        return deviceService.update(deviceDTO);
     }
 
-    @PostMapping(value="add", produces = "application/json")
-    public ResponseEntity<DeviceDTO> add(@RequestBody DeviceDTO deviceDTO){
+    @DeleteMapping("/remove")
+    public DeviceDTO remove(String inventNumber){
+        return deviceService.remove(inventNumber);
+    }
 
-        DeviceCard deviceCard = new DeviceCard();
-        deviceCard.setAddress("Test adress");
-        Device created = DeviceDTO.mapper(deviceDTO);
-        deviceCard.setDevice(created);
-        deviceDAO.save(created);
-        deviceCardDAO.save(deviceCard);
+    @GetMapping("/damages/{inventNumber}")
+    public List<DamageDTO> getDamages(@PathVariable String inventNumber){
 
 
-        return ResponseEntity.ok(deviceDTO);
-    }*/
 
-    @GetMapping("/getDamages")
-    public List<String> getDamages(@RequestParam String inventNumber){
-
-        if (deviceDAO.existsById(inventNumber)) {
-
-            List<Damage> damages = deviceDAO.findByInventNumber(inventNumber).getDamageList();
-            List<String> descriptions = new ArrayList<>();
-            for (Damage damage : damages) {
-                descriptions.add(damage.getDescription());
-            }
-            return descriptions;
-        } else {
-            List<String> nieMa = new ArrayList<>();
-            nieMa.add("Nie ma takiego urządzenia");
-            return nieMa;
-        }
-
+        return deviceService.getDamages(inventNumber);
     }
 
 
-    //------------DO NOT USE YET!!!! TODO: CHANGE STRATEGY OF UPDATING
-
-/*    @PutMapping("/update")
-    public  ResponseEntity updateDevice(@RequestParam String inventNumber, @RequestBody DeviceDTO newDataDTO){
 
 
 
-
-
-
-
-    }*/
 }

@@ -22,7 +22,6 @@ public class Damage {
     @ManyToOne
     @JoinColumn(name = "device_inventNumber")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-
     private Device device;
 
     private String description;
@@ -85,24 +84,5 @@ public class Damage {
     }
 
 
-    //Mapper to DTO
-    public static DamageDTO mapper(Damage damage){
-        DamageDTO damageDTO = new DamageDTO();
 
-        damageDTO.setDescription(damage.getDescription());
-        damageDTO.setDamageDate(Damage.cal2string(damage.getDamageDate()));
-        damageDTO.setAuthor(damage.getAuthor());
-        damageDTO.setDeviceDescription(damage.device.getDeviceDescription());
-
-        return damageDTO;
-    }
-
-    //Calendar to String
-    private static String cal2string(Calendar calendar){
-        int day = calendar.getTime().getDay();
-        int month = calendar.getTime().getMonth();
-        int year = calendar.getTime().getYear();
-
-        return day +"-"+month+"-"+year;
-    }
 }
