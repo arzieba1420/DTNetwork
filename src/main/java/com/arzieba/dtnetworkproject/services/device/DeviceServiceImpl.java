@@ -101,7 +101,7 @@ public class DeviceServiceImpl implements DeviceService {
         if(!this.findAll().stream()
                 .map(d->d.getInventNumber())
                 .collect(Collectors.toList())
-                .contains(inventNumber)) throw new DeviceNotFoundException();
+                .contains(inventNumber)) throw new DeviceNotFoundException("Device not found");
         else {
             DeviceDTO removed = findByInventNumber(inventNumber);
             deviceDAO.deleteDeviceByInventNumber(inventNumber);
@@ -131,7 +131,14 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public static class DeviceNotFoundException extends RuntimeException{}
+    public static class DeviceNotFoundException extends RuntimeException{
+        public DeviceNotFoundException() {
+        }
+
+        public DeviceNotFoundException(String message) {
+            super(message);
+        }
+    }
 
 
 

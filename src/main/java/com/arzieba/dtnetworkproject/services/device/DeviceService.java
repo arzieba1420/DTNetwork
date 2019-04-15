@@ -12,9 +12,7 @@ public interface DeviceService {
 
      List<DeviceDTO> findAll();
      DeviceDTO findByInventNumber(String inventNumber);
-
      List<DeviceDTO> findByType(String name);
-
      DeviceDTO create(DeviceDTO toAdd);
      DeviceDTO update(DeviceDTO deviceDTO);
      DeviceDTO remove(String inventNumber);

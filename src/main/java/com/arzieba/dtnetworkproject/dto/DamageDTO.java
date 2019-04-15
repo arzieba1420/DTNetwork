@@ -26,6 +26,8 @@ public class DamageDTO {
 
     private String deviceInventNumber; //is deviceDescription in Device.class
 
+    private Integer damageId;
+
     //**** Getters, setters, toString, constructor
 
 
@@ -61,6 +63,14 @@ public class DamageDTO {
         this.deviceInventNumber = deviceInventNumber;
     }
 
+    public Integer getDamageId() {
+        return damageId;
+    }
+
+    public void setDamageId(Integer damageId) {
+        this.damageId = damageId;
+    }
+
     @Override
     public String toString() {
         return "DamageDTO{" +
@@ -68,6 +78,7 @@ public class DamageDTO {
                 ", damageDate='" + damageDate + '\'' +
                 ", Author='" + Author + '\'' +
                 ", deviceInventNumber='" + deviceInventNumber + '\'' +
+                ", damageId=" + damageId +
                 '}';
     }
 }

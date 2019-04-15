@@ -81,9 +81,6 @@ public class DeviceController {
 
     @GetMapping("/damages/{inventNumber}")
     public List<DamageDTO> getDamages(@PathVariable String inventNumber){
-
-
-
         return deviceService.getDamages(inventNumber);
     }
 
