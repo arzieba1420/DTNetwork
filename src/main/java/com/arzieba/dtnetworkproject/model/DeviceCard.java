@@ -1,6 +1,9 @@
 package com.arzieba.dtnetworkproject.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -8,11 +11,13 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 @Entity
 @Table
-
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class DeviceCard {
 //cannot exist without Device
 
@@ -23,11 +28,9 @@ public class DeviceCard {
 
     private String address;
 
-    private final String Department = "DTN";
+    private final String department = "DTN";
 
     private Room installPlace;
-
-
 
     private String keeperData;
 
@@ -69,199 +72,8 @@ public class DeviceCard {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Device device;
 
-    public DeviceCard() {
-    }
 
-    public Integer getDeviceCardID() {
-        return deviceCardID;
-    }
 
-    public void setDeviceCardID(Integer deviceCardID) {
-        this.deviceCardID = deviceCardID;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getDepartment() {
-        return Department;
-    }
-
-    public Room getInstallPlace() {
-        return installPlace;
-    }
-
-    public void setInstallPlace(Room installPlace) {
-        this.installPlace = installPlace;
-    }
-
-    public String getKeeperData() {
-        return keeperData;
-    }
-
-    public void setKeeperData(String keeperData) {
-        this.keeperData = keeperData;
-    }
-
-    public String getDeviceName() {
-        return deviceName;
-    }
-
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
-    }
-
-    public DeviceType getDeviceType() {
-        return deviceType;
-    }
-
-    public void setDeviceType(DeviceType deviceType) {
-        this.deviceType = deviceType;
-    }
-
-    public String getFabricalID() {
-        return fabricalID;
-    }
-
-    public void setFabricalID(String fabricalID) {
-        this.fabricalID = fabricalID;
-    }
-
-    public String getProducer() {
-        return producer;
-    }
-
-    public void setProducer(String producer) {
-        this.producer = producer;
-    }
-
-    public String getDeliverer() {
-        return deliverer;
-    }
-
-    public void setDeliverer(String deliverer) {
-        this.deliverer = deliverer;
-    }
-
-    public int getBuildTime() {
-        return buildTime;
-    }
-
-    public void setBuildTime(int buildTime) {
-        this.buildTime = buildTime;
-    }
-
-    public String getDeliveryDocumentID() {
-        return deliveryDocumentID;
-    }
-
-    public void setDeliveryDocumentID(String deliveryDocumentID) {
-        this.deliveryDocumentID = deliveryDocumentID;
-    }
-
-    public String getAttachementsIDs() {
-        return attachementsIDs;
-    }
-
-    public void setAttachementsIDs(String attachementsIDs) {
-        this.attachementsIDs = attachementsIDs;
-    }
-
-    public Calendar getDeliveryDate() {
-        return deliveryDate;
-    }
-
-    public void setDeliveryDate(Calendar deliveryDate) {
-        this.deliveryDate = deliveryDate;
-    }
-
-    public Calendar getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Calendar startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getSignatureNumber() {
-        return signatureNumber;
-    }
-
-    public void setSignatureNumber(String signatureNumber) {
-        this.signatureNumber = signatureNumber;
-    }
-
-    public String getFinanceSource() {
-        return financeSource;
-    }
-
-    public void setFinanceSource(String financeSource) {
-        this.financeSource = financeSource;
-    }
-
-    public String getCreatorOfDeviceCard() {
-        return creatorOfDeviceCard;
-    }
-
-    public void setCreatorOfDeviceCard(String creatorOfDeviceCard) {
-        this.creatorOfDeviceCard = creatorOfDeviceCard;
-    }
-
-    public Date getCreationTime() {
-        return creationTime;
-    }
-
-    public void setCreationTime(Date creationTime) {
-        this.creationTime = creationTime;
-    }
-
-    public Double getDeviceValue() {
-        return deviceValue;
-    }
-
-    public void setDeviceValue(Double deviceValue) {
-        this.deviceValue = deviceValue;
-    }
-
-    public Device getDevice() {
-        return device;
-    }
-
-    public void setDevice(Device device) {
-        this.device = device;
-    }
-
-    @Override
-    public String toString() {
-        return "DeviceCard{" +
-                "deviceCardID=" + deviceCardID +
-                ", address='" + address + '\'' +
-                ", Department='" + Department + '\'' +
-                ", installPlace=" + installPlace +
-                ", keeperData='" + keeperData + '\'' +
-                ", deviceName='" + deviceName + '\'' +
-                ", deviceType=" + deviceType +
-                ", fabricalID='" + fabricalID + '\'' +
-                ", producer='" + producer + '\'' +
-                ", deliverer='" + deliverer + '\'' +
-                ", buildTime=" + buildTime +
-                ", deliveryDocumentID='" + deliveryDocumentID + '\'' +
-                ", attachementsIDs='" + attachementsIDs + '\'' +
-                ", deliveryDate=" + deliveryDate +
-                ", startDate=" + startDate +
-                ", signatureNumber='" + signatureNumber + '\'' +
-                ", financeSource='" + financeSource + '\'' +
-                ", creatorOfDeviceCard='" + creatorOfDeviceCard + '\'' +
-                ", creationTime=" + creationTime +
-                ", deviceValue=" + deviceValue +
-                ", device=" + device +
-                '}';
-    }
 }
 
 

@@ -4,10 +4,12 @@ import com.arzieba.dtnetworkproject.dto.DamageDTO;
 import com.arzieba.dtnetworkproject.dto.DeviceDTO;
 import com.arzieba.dtnetworkproject.model.DeviceCard;
 import com.arzieba.dtnetworkproject.model.IssueDocument;
+import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.List;
 
+@Service
 public interface DamageService {
 
     List<DamageDTO> findAll();

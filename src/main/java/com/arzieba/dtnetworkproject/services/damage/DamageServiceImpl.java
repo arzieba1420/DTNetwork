@@ -5,6 +5,7 @@ import com.arzieba.dtnetworkproject.dao.DeviceCardDAO;
 import com.arzieba.dtnetworkproject.dao.DeviceDAO;
 import com.arzieba.dtnetworkproject.dao.IssueDocumentDAO;
 import com.arzieba.dtnetworkproject.dto.DamageDTO;
+import com.arzieba.dtnetworkproject.model.Author;
 import com.arzieba.dtnetworkproject.model.Damage;
 import com.arzieba.dtnetworkproject.model.IssueDocument;
 import com.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
@@ -51,22 +52,33 @@ public class DamageServiceImpl implements DamageService {
 
     @Override
     public List<DamageDTO> findByDeviceInventNumber(String inventNumber) {
-        return null;
+        return damageDAO.findByDevice_InventNumber(inventNumber)
+                .stream()
+                .map(d->DamageMapper.map(d))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<DamageDTO> findByDateBefore(String date) {
-        return null;
+        return damageDAO.findByDamageDateBefore(CalendarUtil.string2cal(date))
+                .stream()
+                .map(d->DamageMapper.map(d))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<DamageDTO> findByDateAfter(String date) {
-        return null;
+        return damageDAO.findByDamageDateAfter(CalendarUtil.string2cal(date))
+                .stream()
+                .map(d->DamageMapper.map(d))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<DamageDTO> findByAuthor(String author) {
-        return null;
+        return damageDAO.findByAuthor(Author.valueOf(author)).stream()
+                .map(d->DamageMapper.map(d))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -110,7 +122,7 @@ public class DamageServiceImpl implements DamageService {
             return removed;
         }
     }
-
+    //Todo method with issuedoc
     @Override
     public List<IssueDocument> getIssueDocuments(Integer id) {
         return null;

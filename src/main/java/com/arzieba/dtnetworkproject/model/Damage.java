@@ -1,6 +1,10 @@
 package com.arzieba.dtnetworkproject.model;
 
 import com.arzieba.dtnetworkproject.dto.DamageDTO;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -12,6 +16,10 @@ import java.util.List;
 
 @Entity
 @Table
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class Damage {
     //cannot exist without Device
 
@@ -27,62 +35,8 @@ public class Damage {
     private String description;
     @Temporal(TemporalType.DATE)
     private Calendar damageDate;
-    private String author;
+    private Author author;
 
     @OneToMany(mappedBy = "damage", fetch =FetchType.LAZY, cascade = CascadeType.ALL)
     private List<IssueDocument> issueDocumentList;
-
-    public Damage() {
-    }
-
-    public Integer getDamageId() {
-        return damageId;
-    }
-
-    public void setDamageId(Integer damageId) {
-        this.damageId = damageId;
-    }
-
-    public Device getDevice() {
-        return device;
-    }
-
-    public void setDevice(Device device) {
-        this.device = device;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Calendar getDamageDate() {
-        return damageDate;
-    }
-
-    public void setDamageDate(Calendar damageDate) {
-        this.damageDate = damageDate;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public List<IssueDocument> getIssueDocumentList() {
-        return issueDocumentList;
-    }
-
-    public void setIssueDocumentList(List<IssueDocument> issueDocumentList) {
-        this.issueDocumentList = issueDocumentList;
-    }
-
-
-
 }

@@ -48,12 +48,12 @@ public class DeviceController {
 
 
     //Returns list of all Devices from DB as DTO's
-
     @GetMapping(value="/getAll", produces = "application/json")
     public List<DeviceDTO> findAll(){
         return deviceService.findAll();
     }
 
+    //Returns DeviceDTO by ID = inventNumber
     @GetMapping("/inventNumbers/{inventNumber}")
     public DeviceDTO findByInventNumber(@PathVariable String inventNumber){
         return deviceService.findByInventNumber(inventNumber);

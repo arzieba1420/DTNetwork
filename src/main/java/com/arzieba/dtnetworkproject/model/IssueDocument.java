@@ -12,6 +12,10 @@ import java.util.GregorianCalendar;
 
 @Entity
 @Table
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class IssueDocument {
 
     @Id
@@ -25,74 +29,11 @@ public class IssueDocument {
 
     private  String issueTittle;
     private String issueDetails;
-
-
+    private String inventNumber;
+    private double value;
 
     @ManyToOne
     @JoinColumn(name = "damage_Id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Damage damage;
-
-    public IssueDocument() {
-    }
-
-    public String getIssueSignature() {
-        return issueSignature;
-    }
-
-    public void setIssueSignature(String issueSignature) {
-        this.issueSignature = issueSignature;
-    }
-
-    public String getDelivererName() {
-        return delivererName;
-    }
-
-    public void setDelivererName(String delivererName) {
-        this.delivererName = delivererName;
-    }
-
-    public String getDelivererNIP() {
-        return delivererNIP;
-    }
-
-    public void setDelivererNIP(String delivererNIP) {
-        this.delivererNIP = delivererNIP;
-    }
-
-    public Calendar getIssueDate() {
-        return issueDate;
-    }
-
-    public void setIssueDate(Calendar issueDate) {
-        this.issueDate = issueDate;
-    }
-
-    public String getIssueTittle() {
-        return issueTittle;
-    }
-
-    public void setIssueTittle(String issueTittle) {
-        this.issueTittle = issueTittle;
-    }
-
-    public String getIssueDetails() {
-        return issueDetails;
-    }
-
-    public void setIssueDetails(String issueDetails) {
-        this.issueDetails = issueDetails;
-    }
-
-
-
-
-
-    public Damage getDamage() {
-        return damage;
-    }
-
-    public void setDamage(Damage damage) {
-        this.damage = damage;
-    }
 }

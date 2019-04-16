@@ -9,4 +9,12 @@ import java.util.List;
 @Repository
 public interface IssueDocumentDAO extends CrudRepository<IssueDocument,String> {
     List<IssueDocument> findAll();
+    IssueDocument findByIssueSignature(String signature);
+    List<IssueDocument> findByDamage_DamageId(Integer id);
+    List<IssueDocument> findByInventNumber(String inventNumber);
+    boolean existsByIssueSignature(String signature);
+
+
+
+
 }

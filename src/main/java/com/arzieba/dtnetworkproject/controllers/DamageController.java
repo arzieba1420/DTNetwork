@@ -5,6 +5,7 @@ import com.arzieba.dtnetworkproject.dao.DeviceCardDAO;
 import com.arzieba.dtnetworkproject.dao.DeviceDAO;
 import com.arzieba.dtnetworkproject.dao.IssueDocumentDAO;
 import com.arzieba.dtnetworkproject.dto.DamageDTO;
+import com.arzieba.dtnetworkproject.model.Author;
 import com.arzieba.dtnetworkproject.model.Damage;
 import com.arzieba.dtnetworkproject.services.damage.DamageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,12 +53,33 @@ public class DamageController {
 
     @PutMapping("/update") //requires damageID
     public DamageDTO update( DamageDTO damageDTO){
+
        return damageService.update(damageDTO);
     }
 
     @DeleteMapping("/delete/{id}")
     public DamageDTO remove(@PathVariable Integer id){
         return damageService.remove(id);
+    }
+
+    @GetMapping("/authors/{author}")
+    public List<DamageDTO> findByAuthor(@PathVariable Author author){
+        return damageService.findByAuthor(author.name());
+    }
+
+    @GetMapping("/allBefore")
+    public List<DamageDTO> findByDateBefore(String date){
+        return  damageService.findByDateBefore(date);
+    }
+
+    @GetMapping("/allAfter")
+    public List<DamageDTO> findByDateAfter(String date){
+        return damageService.findByDateAfter(date);
+    }
+
+    @GetMapping("/devices/{inventNumber}")
+    public List<DamageDTO> findByDeviceInventNumber(@PathVariable String inventNumber){
+        return damageService.findByDeviceInventNumber(inventNumber);
     }
 
 }

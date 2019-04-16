@@ -1,15 +1,7 @@
 package com.arzieba.dtnetworkproject.dto;
 
-import com.arzieba.dtnetworkproject.dao.DeviceDAO;
-import com.arzieba.dtnetworkproject.model.Damage;
-import com.arzieba.dtnetworkproject.model.Device;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.arzieba.dtnetworkproject.model.Author;
 import org.springframework.stereotype.Component;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 @Component
 public class DamageDTO {
@@ -22,7 +14,7 @@ public class DamageDTO {
 
     private String damageDate;
 
-    private String Author;
+    private Author author;
 
     private String deviceInventNumber; //is deviceDescription in Device.class
 
@@ -47,12 +39,12 @@ public class DamageDTO {
         this.damageDate = damageDate;
     }
 
-    public String getAuthor() {
-        return Author;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAuthor(String author) {
-        Author = author;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     public String getDeviceInventNumber() {
@@ -76,7 +68,7 @@ public class DamageDTO {
         return "DamageDTO{" +
                 "description='" + description + '\'' +
                 ", damageDate='" + damageDate + '\'' +
-                ", Author='" + Author + '\'' +
+                ", author='" + author + '\'' +
                 ", deviceInventNumber='" + deviceInventNumber + '\'' +
                 ", damageId=" + damageId +
                 '}';
