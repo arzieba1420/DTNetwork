@@ -5,15 +5,17 @@ import com.arzieba.dtnetworkproject.dao.DeviceCardDAO;
 import com.arzieba.dtnetworkproject.dao.DeviceDAO;
 import com.arzieba.dtnetworkproject.dao.IssueDocumentDAO;
 import com.arzieba.dtnetworkproject.dto.DamageDTO;
+import com.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import com.arzieba.dtnetworkproject.model.Author;
 import com.arzieba.dtnetworkproject.model.Damage;
 import com.arzieba.dtnetworkproject.model.IssueDocument;
 import com.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 import com.arzieba.dtnetworkproject.utils.damage.DamageMapper;
+import com.arzieba.dtnetworkproject.utils.exceptions.DamageNotFoundException;
+import com.arzieba.dtnetworkproject.utils.issueDocument.IssueDocMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
+
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -39,14 +41,14 @@ public class DamageServiceImpl implements DamageService {
     public List<DamageDTO> findAll() {
         return damageDAO.findAll()
                 .stream()
-                .map(d -> DamageMapper.map(d))
+                .map(DamageMapper::map)
                 .collect(Collectors.toList());
     }
 
     @Override
     public DamageDTO findById(Integer id) {
         return damageDAO.findById(id)
-                .map(d -> DamageMapper.map(d)).orElse(null);
+                .map(DamageMapper::map).orElse(null);
 
     }
 
@@ -54,7 +56,7 @@ public class DamageServiceImpl implements DamageService {
     public List<DamageDTO> findByDeviceInventNumber(String inventNumber) {
         return damageDAO.findByDevice_InventNumber(inventNumber)
                 .stream()
-                .map(d->DamageMapper.map(d))
+                .map(DamageMapper::map)
                 .collect(Collectors.toList());
     }
 
@@ -62,7 +64,7 @@ public class DamageServiceImpl implements DamageService {
     public List<DamageDTO> findByDateBefore(String date) {
         return damageDAO.findByDamageDateBefore(CalendarUtil.string2cal(date))
                 .stream()
-                .map(d->DamageMapper.map(d))
+                .map(DamageMapper::map)
                 .collect(Collectors.toList());
     }
 
@@ -70,14 +72,14 @@ public class DamageServiceImpl implements DamageService {
     public List<DamageDTO> findByDateAfter(String date) {
         return damageDAO.findByDamageDateAfter(CalendarUtil.string2cal(date))
                 .stream()
-                .map(d->DamageMapper.map(d))
+                .map(DamageMapper::map)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<DamageDTO> findByAuthor(String author) {
         return damageDAO.findByAuthor(Author.valueOf(author)).stream()
-                .map(d->DamageMapper.map(d))
+                .map(DamageMapper::map)
                 .collect(Collectors.toList());
     }
 
@@ -91,7 +93,7 @@ public class DamageServiceImpl implements DamageService {
     @Override
     public DamageDTO update(DamageDTO damageDTO) {
         if(!    findAll().stream()
-                .map(d->d.getDamageId())
+                .map(DamageDTO::getDamageId)
                 .collect(Collectors.toList())
                 .contains(damageDTO.getDamageId())){
             return  create(damageDTO);
@@ -113,7 +115,7 @@ public class DamageServiceImpl implements DamageService {
     @Override
     public DamageDTO remove(Integer id) {
         if(!findAll().stream()
-        .map(d->d.getDamageId())
+        .map(DamageDTO::getDamageId)
             .collect(Collectors.toList())
             .contains(id)) throw new DamageNotFoundException("Damage not found");
         else{
@@ -123,20 +125,15 @@ public class DamageServiceImpl implements DamageService {
             return removed;
         }
     }
-    //Todo method with issuedoc
+
     @Override
-    public List<IssueDocument> getIssueDocuments(Integer id) {
-        return null;
-    }
+    public List<IssueDocumentDTO> getIssueDocuments(Integer id) {
+        return issueDocumentDAO.findAll().stream()
+                .filter(d->d.getDamage().getDamageId().equals(id))
+            .map(IssueDocMapper::map)
+                .collect(Collectors.toList());
+}
 
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public static class DamageNotFoundException extends RuntimeException{
-        public DamageNotFoundException() {
-        }
 
-        public DamageNotFoundException(String message) {
-            super(message);
-        }
-    }
 }

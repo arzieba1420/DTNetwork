@@ -6,7 +6,7 @@ import com.arzieba.dtnetworkproject.dao.DeviceDAO;
 import com.arzieba.dtnetworkproject.dao.IssueDocumentDAO;
 import com.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import com.arzieba.dtnetworkproject.model.IssueDocument;
-import com.arzieba.dtnetworkproject.services.device.DeviceServiceImpl;
+import com.arzieba.dtnetworkproject.utils.exceptions.IssueDocumentNotFoundException;
 import com.arzieba.dtnetworkproject.utils.issueDocument.IssueDocMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,7 +38,7 @@ public class IssueDocServiceImpl implements IssueDocService {
     @Override
     public List<IssueDocumentDTO> findAll() {
         return issueDocumentDAO.findAll().stream()
-                .map(d-> IssueDocMapper.map(d))
+                .map(IssueDocMapper::map)
                 .collect(Collectors.toList());
     }
 
@@ -46,21 +46,21 @@ public class IssueDocServiceImpl implements IssueDocService {
     public IssueDocumentDTO findBySignature(String signature) {
         if(issueDocumentDAO.existsByIssueSignature(signature))
         return IssueDocMapper.map(issueDocumentDAO.findByIssueSignature(signature));
-        else throw new IssueDocumentNotFound("Issue document not found");
+        else throw new IssueDocumentNotFoundException("Issue document not found");
     }
 
     @Override
     public List<IssueDocumentDTO> findByInventNumber(String inventNumber) {
         return issueDocumentDAO.findByInventNumber(inventNumber)
                 .stream()
-                .map(d->IssueDocMapper.map(d))
+                .map(IssueDocMapper::map)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<IssueDocumentDTO> findByDamageId(Integer id) {
         return issueDocumentDAO.findByDamage_DamageId(id).stream()
-                .map(d->IssueDocMapper.map(d))
+                .map(IssueDocMapper::map)
                 .collect(Collectors.toList());
     }
 
@@ -86,7 +86,7 @@ public class IssueDocServiceImpl implements IssueDocService {
     @Override
     public IssueDocumentDTO remove(String signature) {
         if(!issueDocumentDAO.existsByIssueSignature(signature)){
-            throw new IssueDocumentNotFound("Issue Document not found!");
+            throw new IssueDocumentNotFoundException("Issue Document not found!");
         } else{
             IssueDocumentDTO removed = findBySignature(signature);
             issueDocumentDAO.delete(issueDocumentDAO.findByIssueSignature(signature));
@@ -96,13 +96,5 @@ public class IssueDocServiceImpl implements IssueDocService {
         }
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    private class IssueDocumentNotFound extends RuntimeException {
-        public IssueDocumentNotFound() {
-        }
 
-        public IssueDocumentNotFound(String message) {
-            super(message);
-        }
-    }
 }

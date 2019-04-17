@@ -26,7 +26,7 @@ public class ShortPostServiceImpl implements ShortPostService {
     @Override
     public List<ShortPostDTO> findAll() {
         return postDAO.findAll().stream()
-                .map(d-> ShortPostMapper.map(d))
+                .map(ShortPostMapper::map)
                 .collect(Collectors.toList());
     }
 
@@ -38,14 +38,14 @@ public class ShortPostServiceImpl implements ShortPostService {
     @Override
     public List<ShortPostDTO> findByAuthor(Author author) {
         return postDAO.findAllByAuthor(author).stream()
-                .map(d->ShortPostMapper.map(d))
+                .map(ShortPostMapper::map)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<ShortPostDTO> findByDevice(String inventNumber) {
         return postDAO.findAllByDevice_InventNumber(inventNumber).stream()
-                .map(d->ShortPostMapper.map(d))
+                .map(ShortPostMapper::map)
                 .collect(Collectors.toList());
     }
 
@@ -53,14 +53,14 @@ public class ShortPostServiceImpl implements ShortPostService {
     public List<ShortPostDTO> find5ByDevice(String inventNumber) {
         return postDAO.findTop5ByDevice_InventNumberOrderByDateDesc(inventNumber)
                 .stream()
-                .map(d->ShortPostMapper.map(d))
+                .map(ShortPostMapper::map)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<ShortPostDTO> findLast5() {
         return postDAO.findTop5ByOrderByDateDesc().stream()
-                .map(d->ShortPostMapper.map(d))
+                .map(ShortPostMapper::map)
                 .collect(Collectors.toList());
     }
 

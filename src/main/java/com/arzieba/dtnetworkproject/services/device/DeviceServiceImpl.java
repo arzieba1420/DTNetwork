@@ -5,12 +5,17 @@ import com.arzieba.dtnetworkproject.dao.DeviceCardDAO;
 import com.arzieba.dtnetworkproject.dao.DeviceDAO;
 import com.arzieba.dtnetworkproject.dao.IssueDocumentDAO;
 import com.arzieba.dtnetworkproject.dto.DamageDTO;
+import com.arzieba.dtnetworkproject.dto.DeviceCardDTO;
 import com.arzieba.dtnetworkproject.dto.DeviceDTO;
+import com.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import com.arzieba.dtnetworkproject.model.Device;
 import com.arzieba.dtnetworkproject.model.DeviceCard;
 import com.arzieba.dtnetworkproject.model.IssueDocument;
 import com.arzieba.dtnetworkproject.utils.damage.DamageMapper;
 import com.arzieba.dtnetworkproject.utils.device.DeviceMapper;
+import com.arzieba.dtnetworkproject.utils.deviceCard.DeviceCardMapper;
+import com.arzieba.dtnetworkproject.utils.exceptions.DeviceNotFoundException;
+import com.arzieba.dtnetworkproject.utils.issueDocument.IssueDocMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,15 +50,15 @@ public class DeviceServiceImpl implements DeviceService {
     public List<DeviceDTO> findAll() {
        return deviceDAO.findAll()
                .stream()
-               .map(d-> DeviceMapper.map(d))
+               .map(DeviceMapper::map)
                .collect(Collectors.toList());
     }
 
-    //TODO validation IF EXIST
+
     @Override
     public DeviceDTO findByInventNumber(String inventNumber) {
         if(!this.findAll().stream()
-                .map(d->d.getInventNumber())
+                .map(DeviceDTO::getInventNumber)
                 .collect(Collectors.toList())
                 .contains(inventNumber)) throw new DeviceNotFoundException();
         return DeviceMapper.map( deviceDAO.findByInventNumber(inventNumber));
@@ -67,7 +72,7 @@ public class DeviceServiceImpl implements DeviceService {
       return deviceDAO.findAll().stream()
               .filter(d->d.getDeviceType()
               .name().equals(name))
-              .map(d->DeviceMapper.map(d))
+              .map(DeviceMapper::map)
               .collect(Collectors.toList());
 
     }
@@ -81,7 +86,7 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     public DeviceDTO update(DeviceDTO deviceDTO) {
         if(!this.findAll().stream()
-                .map(d->d.getInventNumber())
+                .map(DeviceDTO::getInventNumber)
                 .collect(Collectors.toList())
                 .contains(deviceDTO.getInventNumber())){
             return  create(deviceDTO);
@@ -99,7 +104,7 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     public DeviceDTO remove(String inventNumber) {
         if(!this.findAll().stream()
-                .map(d->d.getInventNumber())
+                .map(DeviceDTO::getInventNumber)
                 .collect(Collectors.toList())
                 .contains(inventNumber)) throw new DeviceNotFoundException("Device not found");
         else {
@@ -116,29 +121,24 @@ public class DeviceServiceImpl implements DeviceService {
         return deviceDAO.findByInventNumber(inventNumber)
                 .getDamageList()
                 .stream()
-                .map(d-> DamageMapper.map(d))
+                .map(DamageMapper::map)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<IssueDocument> getIssueDocuments(String inventNumber) {
-        return null;
+    public List<IssueDocumentDTO> getIssueDocuments(String inventNumber) {
+        return issueDocumentDAO.findAll().stream()
+                .filter(d->d.getInventNumber().equals(inventNumber))
+                .map(IssueDocMapper::map)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public DeviceCard getDeviceCard(String inventNumber) {
-        return null;
+    public DeviceCardDTO getDeviceCard(String inventNumber) {
+        return DeviceCardMapper.map(deviceCardDAO.findByDevice_InventNumber(inventNumber));
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public static class DeviceNotFoundException extends RuntimeException{
-        public DeviceNotFoundException() {
-        }
 
-        public DeviceNotFoundException(String message) {
-            super(message);
-        }
-    }
 
 
 

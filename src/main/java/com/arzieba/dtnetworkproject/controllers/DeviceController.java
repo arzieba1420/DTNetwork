@@ -6,15 +6,19 @@ import com.arzieba.dtnetworkproject.dao.DeviceCardDAO;
 import com.arzieba.dtnetworkproject.dao.DeviceDAO;
 import com.arzieba.dtnetworkproject.dao.IssueDocumentDAO;
 import com.arzieba.dtnetworkproject.dto.DamageDTO;
+import com.arzieba.dtnetworkproject.dto.DeviceCardDTO;
 import com.arzieba.dtnetworkproject.dto.DeviceDTO;
+import com.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import com.arzieba.dtnetworkproject.model.Damage;
 import com.arzieba.dtnetworkproject.model.Device;
 import com.arzieba.dtnetworkproject.model.DeviceCard;
+import com.arzieba.dtnetworkproject.model.DeviceType;
 import com.arzieba.dtnetworkproject.services.device.DeviceService;
 
 import com.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -82,6 +86,23 @@ public class DeviceController {
     @GetMapping("/damages/{inventNumber}")
     public List<DamageDTO> getDamages(@PathVariable String inventNumber){
         return deviceService.getDamages(inventNumber);
+    }
+
+    @GetMapping("/issues/{inv}")
+    public List<IssueDocumentDTO> getIssueDocs(@PathVariable String inv){
+        return deviceService.getIssueDocuments(inv);
+    }
+
+    @GetMapping("/cards/{inv}")
+    public DeviceCardDTO getDeviceCard(@PathVariable String inv){
+        return deviceService.getDeviceCard(inv);
+    }
+
+
+
+    @GetMapping("/image/{type}")
+    public String getImage(@PathVariable DeviceType type){
+        return "index.html";
     }
 
 

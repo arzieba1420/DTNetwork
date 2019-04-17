@@ -2,6 +2,7 @@ package com.arzieba.dtnetworkproject.services.damage;
 
 import com.arzieba.dtnetworkproject.dto.DamageDTO;
 import com.arzieba.dtnetworkproject.dto.DeviceDTO;
+import com.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import com.arzieba.dtnetworkproject.model.DeviceCard;
 import com.arzieba.dtnetworkproject.model.IssueDocument;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public interface DamageService {
     DamageDTO update(DamageDTO damageDTO);
     DamageDTO remove(Integer id);
 
-    List<IssueDocument> getIssueDocuments(Integer id);
+    List<IssueDocumentDTO> getIssueDocuments(Integer id);
 
 }
 

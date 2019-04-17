@@ -1,7 +1,9 @@
 package com.arzieba.dtnetworkproject.services.device;
 
 import com.arzieba.dtnetworkproject.dto.DamageDTO;
+import com.arzieba.dtnetworkproject.dto.DeviceCardDTO;
 import com.arzieba.dtnetworkproject.dto.DeviceDTO;
+import com.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import com.arzieba.dtnetworkproject.model.DeviceCard;
 import com.arzieba.dtnetworkproject.model.IssueDocument;
 
@@ -17,9 +19,8 @@ public interface DeviceService {
      DeviceDTO update(DeviceDTO deviceDTO);
      DeviceDTO remove(String inventNumber);
      List<DamageDTO> getDamages (String inventNumber);
-     //TODO change returned type into IssueDocDTO
-     List<IssueDocument> getIssueDocuments (String inventNumber);
-     DeviceCard getDeviceCard(String inventNumber);
+     List<IssueDocumentDTO> getIssueDocuments (String inventNumber);
+     DeviceCardDTO getDeviceCard(String inventNumber);
 
 
 

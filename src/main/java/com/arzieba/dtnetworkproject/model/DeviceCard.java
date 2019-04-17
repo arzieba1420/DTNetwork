@@ -62,7 +62,8 @@ public class DeviceCard {
 
     private String creatorOfDeviceCard;
 
-    private Date creationTime;
+    @Temporal(TemporalType.DATE)
+    private Calendar creationTime;
 
     private Double deviceValue;
 
