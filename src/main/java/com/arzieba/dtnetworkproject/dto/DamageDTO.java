@@ -33,7 +33,7 @@ public class DamageDTO {
 
     //*******Additional Util Methods
 
-    /*//Mapper to Domain
+    /*//Mapper to Do
 
 
     }
