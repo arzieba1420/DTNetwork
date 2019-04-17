@@ -105,6 +105,7 @@ public class DamageServiceImpl implements DamageService {
             toBeUpdated.setAuthor(damageDTO.getAuthor());
             damageDAO.save(toBeUpdated);
             System.out.println(toBeUpdated.getDescription());
+
             return DamageMapper.map(toBeUpdated);
         }
     }

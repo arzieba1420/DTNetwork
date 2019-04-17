@@ -32,7 +32,7 @@ public class IssueDocController {
         this.issueDocService = issueDocService;
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("/all")
     public List<IssueDocumentDTO> findAll(){
         return issueDocService.findAll();
     }

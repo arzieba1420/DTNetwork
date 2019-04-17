@@ -36,5 +36,8 @@ public class Device {
     @OneToMany(mappedBy = "device", fetch =FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Damage> damageList;
 
+    @OneToMany(mappedBy = "device")
+    private List<ShortPost> shortPosts;
+
 
 }
