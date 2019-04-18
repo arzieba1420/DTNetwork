@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="navbar.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="navbar.js"></script>
+
+</head>
+<body>
+
+    <div th:fragment="navbar" >
+        <div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#news">News</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropbtn">Dropdown</a>
+                    <div class="dropdown-content">
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                    </div>
+                </li>
+                <li id="about"><a href="#">About</a></li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
