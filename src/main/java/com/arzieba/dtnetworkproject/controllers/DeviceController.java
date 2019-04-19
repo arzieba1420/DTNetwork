@@ -27,7 +27,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController
+@Controller
 @RequestMapping("devices")
 public class DeviceController {
 
@@ -100,8 +100,8 @@ public class DeviceController {
 
 
 
-    @GetMapping("/image/{type}")
-    public String getImage(@PathVariable DeviceType type){
+    @GetMapping("/home")
+    public String home(){
         return "index.html";
     }
 

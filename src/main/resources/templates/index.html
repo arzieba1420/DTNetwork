@@ -3,11 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
+    <link rel="stylesheet"  th:href="@{/css/navbar.css}">
+    
+    <link rel="icon" type="image/png" href="../static/images/icons/favicon.ico" th:href="@{/images/icons/favicon.ico}" />
+    <!--===============================================================================================-->
+   
+    <link rel="stylesheet" type="text/css" href="../static/css/util.css" th:href="@{/css/util.css}">
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css" th:href="@{/css/main.css}">
 </head>
 <body>
-    <div th:insert="~{fragments/navbar.html :: navbar}"></div>
-    <img src="/images/hiross.jpg" alt="default">
+    <div th:insert="~{fragments/navbar.html :: navbar} "  >
+    </div>
     
+  
+    
+    <div class="limiter">
+        <div class="container-table100">
+            <div class="wrap-table100">
+                <div class="table">
+                    
+                    <div class="row header">
+                        <div class="cell">
+                            Data
+                        </div>
+                        <div class="cell">
+                            Autor
+                        </div>
+                        <div class="cell">
+                            Dotyczy
+                        </div>
+                        <div class="cell">
+                            Treść
+                        </div>
+                    </div>
+                    
+                    <div class="row" th:each="post, iterStat: ${lastPosts} ">
+                        <div class="cell" data-title="Full Name" th:text="${post.date}" >
+                            11-11-2011
+                        </div>
+                        <div class="cell" data-title="Age" th:text="${post.author}">
+                            Arek
+                        </div>
+                        <div class="cell" data-title="Job Title" th:text="${post.inventNumber}">
+                            S-001
+                        </div>
+                        <div class="cell" data-title="Location" th:text="${post.content}">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda at corporis fugit natus nemo optio porro quaerat saepe sequi suscipit?
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 </html>

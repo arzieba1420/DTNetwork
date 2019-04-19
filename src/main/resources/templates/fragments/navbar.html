@@ -3,29 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="navbar.css">
-
+    
+    <link rel="stylesheet" href="../../static/css/navbar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="navbar.js"></script>
 
 </head>
 <body>
 
-    <div th:fragment="navbar" >
-        <div>
+    <div th:fragment="navbar">
+        <div id="bar">
+        <nav id="nav">
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#news">News</a></li>
-                <li class="dropdown">
-                    <a href="javascript:void(0)" class="dropbtn">Dropdown</a>
-                    <div class="dropdown-content">
-                        <a href="#">Link 1</a>
-                        <a href="#">Link 2</a>
-                        <a href="#">Link 3</a>
-                    </div>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Tutorial &raquo;</a>
+                    <ul>
+                        <li><a href="#">Android</a></li>
+                        <li><a href="#">Java</a></li>
+                        <li><a href="#">Web Design &raquo;</a>
+                            <ul>
+                                <li><a href="#">HTML5</a></li>
+                                <li><a href="#">CSS3</a></li>
+                                <li><a href="#">jQuery</a></li>
+                                <li><a href="#">PHP</a></li>
+                                <li><a href="#">WordPress</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Graphic Design &raquo;</a>
+                            <ul>
+                                <li><a href="#">Corel Draw</a></li>
+                                <li><a href="#">Photo Shop</a></li>
+                                <li><a href="#">Illustrator</a></li>
+                                <li><a href="#">Dreamweaver</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">MS.Net</a></li>
+                    </ul>
                 </li>
-                <li id="about"><a href="#">About</a></li>
+                <li><a href="#">Portfolio</a></li>
+                <li><a href="#">Download &raquo;</a>
+                    <ul>
+                        <li><a href="#">Music</a></li>
+                        <li><a href="#">Video</a></li>
+                        <li><a href="#">Software</a></li>
+                        <li><a href="#">Game</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
             </ul>
+        </nav>
         </div>
     </div>
 
