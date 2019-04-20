@@ -2,14 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Title</title>
     <link rel="stylesheet"  th:href="@{/css/navbar.css}">
-    
+    <link rel="stylesheet" href="../static/css/overlay.css">
+    <script src="../static/js/overlay.js"></script>
+    <script type="text/javascript" th:src="@{/js/overlay.js}"></script>
     <link rel="icon" type="image/png" href="../static/images/icons/favicon.ico" th:href="@{/images/icons/favicon.ico}" />
     <!--===============================================================================================-->
-   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../static/css/util.css" th:href="@{/css/util.css}">
     <link rel="stylesheet" type="text/css" href="../static/css/main.css" th:href="@{/css/main.css}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="jquery-3.3.1.min.js"></script>
+
 </head>
 <body>
     <div th:insert="~{fragments/navbar.html :: navbar} "  >
@@ -24,17 +31,21 @@
                     
                     <div class="row header">
                         <div class="cell">
-                            Data
+                            Date
                         </div>
                         <div class="cell">
-                            Autor
+                            Author
                         </div>
                         <div class="cell">
-                            Dotyczy
+                            Target
                         </div>
                         <div class="cell">
-                            Treść
+                            Content
                         </div>
+                        <div class="cell action">
+
+                        </div>
+
                     </div>
                     
                     <div class="row" th:each="post, iterStat: ${lastPosts} ">
@@ -48,15 +59,50 @@
                             S-001
                         </div>
                         <div class="cell" data-title="Location" th:text="${post.content}">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda at corporis fugit natus nemo optio porro quaerat saepe sequi suscipit?
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusamus alias aliquam aperiam consectetur cum cumque distinctio dolore dolores ea eaque eligendi ipsum iusto laboriosam laudantium libero maxime natus nemo neque nisi odit omnis pariatur perspiciatis porro quae quasi quibusdam quis quod recusandae reiciendis rem rerum similique sunt tempora tempore, velit vero! Atque, culpa nesciunt obcaecati qui quisquam unde veniam. Atque cum cumque debitis delectus, dolores eveniet facere id iste laborum mollitia nam necessitatibus perferendis repellat sint ullam vel voluptatibus. Amet magni, voluptatem. Adipisci cupiditate ea eius maiores modi neque nihil quisquam sint! Adipisci aspernatur aut dignissimos distinctio doloremque expedita, facere fuga fugiat illo iure neque obcaecati omnis placeat qui quo sequi vero vitae voluptate voluptatem voluptates. Atque consectetur consequuntur corporis debitis delectus deleniti doloremque ducimus earum eius expedita fugiat incidunt inventore magni modi molestias nam numquam obcaecati pariatur possimus quisquam sed suscipit, temporibus veniam vero voluptates voluptatibus voluptatum? Est fugiat iure laborum nihil unde? Culpa ex harum impedit laboriosam libero mollitia nostrum quae repellendus sapiente ut? Aliquid aspernatur commodi consequuntur culpa deleniti dicta dignissimos dolorem ea eum facilis hic ipsum itaque laborum molestias, natus placeat, quas quod totam vero voluptate? Ad aliquam aperiam incidunt inventore laboriosam nemo repudiandae temporibus. Blanditiis, incidunt, tenetur. Asperiores corporis eius eligendi enim et iure minus natus nesciunt numquam omnis pariatur placeat porro possimus quaerat quam saepe, tenetur voluptas? Deserunt doloribus, esse, ex excepturi fugiat id impedit itaque modi omnis possimus provident quam quibusdam, unde veniam vero. Eveniet, magni, nulla? Asperiores aut commodi debitis delectus laboriosam praesentium quia quidem sapiente! Accusantium architecto atque aut consectetur, culpa iusto mollitia nesciunt, nihil nulla porro quae quidem repudiandae rerum. Alias amet aperiam asperiores consequatur cupiditate dicta doloribus dolorum facilis harum ipsa ipsam maxime officia possimus quia soluta, sunt vero voluptatem. Cum dolor id impedit officia quibusdam vitae voluptas.
+                        </div>
+                        <div class="cell ">
+                            <span style="font-size: 1em;cursor:pointer" onclick="openNav()" th:onclick="'javascript:openNav()'"   >&#9776; More actions</span>
                         </div>
                     </div>
                 
                 </div>
+
+
+                <a th:href="@{/posts/addForm}"> <div th:insert="~{fragments/addButton.html::addButton}"></div></a>
+
             </div>
+
         </div>
+
     </div>
 
+    <!-- The overlay -->
+    <div id="myNav" class="overlay">
+        <!-- Button to close the overlay navigation -->
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <!-- Overlay content -->
+        <div class="overlay-content">
+            <h2>Choose an action</h2>
+            <div class="subcontent">
+            <a href="#">Show device</a>
+            <a href="#">Remove</a>
+            </div>
 
+        </div>
+
+    </div>
+    <script>
+    function openNav() {
+    document.getElementById("myNav").style.width = "100%";
+    }
+
+    /* Close when someone clicks on the "x" symbol inside the overlay */
+    function closeNav() {
+    document.getElementById("myNav").style.width = "0%";
+    }
+
+
+    </script>
 </body>
 </html>

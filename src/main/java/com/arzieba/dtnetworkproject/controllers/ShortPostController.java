@@ -6,11 +6,13 @@ import com.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import com.arzieba.dtnetworkproject.model.Author;
 import com.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/posts")
 public class ShortPostController {
 
@@ -62,7 +64,14 @@ public class ShortPostController {
 
     @DeleteMapping("/delete/{id}")
     public ShortPostDTO remove (@PathVariable Integer id){
+
         return postService.remove(id);
+    }
+
+    @GetMapping("/addForm")
+    public String addForm(Model model){
+        model.addAttribute("newPost",new ShortPostDTO());
+        return "posts/addPostForm";
     }
 
 
