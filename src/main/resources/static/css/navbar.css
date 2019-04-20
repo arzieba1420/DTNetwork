@@ -14,11 +14,11 @@ ul{
     position: relative;
     float: left;
     width: 100%;
-    background: linear-gradient(#228b22,#006400);
     margin-bottom: 0px;
+    z-index: 99;
 }
 
-
+/**/
 ul li{
     display: inline;
     margin: 0;
