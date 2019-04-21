@@ -4,16 +4,14 @@ import com.arzieba.dtnetworkproject.dao.ShortPostDAO;
 import com.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import com.arzieba.dtnetworkproject.services.device.DeviceService;
 import com.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
+import com.arzieba.dtnetworkproject.utils.enums.ListOfEnumValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -50,10 +48,12 @@ public class MainController {
                     deviceService.findByInventNumber(dto.getInventNumber()).getRoom());
             mapa.put(keys.get(i),dto);
         }
-
-
+        List<String> rooms = new ArrayList<>();
+        rooms = ListOfEnumValues.rooms;
         model.addAttribute("deviceServ", deviceService);
         model.addAttribute("lastPosts", mapa);
+        model.addAttribute("rooms",rooms);
+
         return "index";
     }
 

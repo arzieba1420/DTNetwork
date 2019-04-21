@@ -6,14 +6,15 @@
     
     <link rel="stylesheet" href="../../static/css/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet"  th:href="@{/css/navbar.css}">
    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="navbar.js"></script>
+   
+   
 
 </head>
 <body>
 
-    <div th:fragment="navbar">
+    <div th:fragment="navbar(rooms)">
         <div id="bar">
         <nav id="nav">
             <ul>
@@ -23,8 +24,8 @@
                         <li><a href="#">Android</a></li>
                         <li><a href="#">Java</a></li>
                         <li><a href="#">Web Design &raquo;</a>
-                            <ul>
-                                <li><a href="#">HTML5</a></li>
+                            <ul th:each="room :${rooms}">
+                                <li th:text="|${room}|"><a href="#">HTML5</a></li>
                                 <li><a href="#">CSS3</a></li>
                                 <li><a href="#">jQuery</a></li>
                                 <li><a href="#">PHP</a></li>
@@ -42,7 +43,11 @@
                         <li><a href="#">MS.Net</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Portfolio</a></li>
+                <li><a href="#">Portfolio &raquo;</a>
+                    <ul>
+                        <li th:each="room :${rooms}" th:text="|${room}|"><a href="#" >Corel Draw</a></li>
+                    </ul>
+                </li>
                 <li><a href="#">Download &raquo;</a>
                     <ul>
                         <li><a href="#">Music</a></li>

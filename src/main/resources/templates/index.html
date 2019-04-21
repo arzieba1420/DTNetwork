@@ -25,7 +25,7 @@
     window.location.refresh();
     </script>
     <div th:insert="~{fragments/header.html::header}"></div>
-    <div th:insert="~{fragments/navbar.html :: navbar} "  >
+    <div th:insert="~{fragments/navbar.html :: navbar(${rooms})} "  >
     </div>
     
   
