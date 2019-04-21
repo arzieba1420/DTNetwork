@@ -1,5 +1,6 @@
 package com.arzieba.dtnetworkproject.utils.enums;
 
+import com.arzieba.dtnetworkproject.model.Author;
 import com.arzieba.dtnetworkproject.model.DeviceType;
 import com.arzieba.dtnetworkproject.model.Room;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,10 @@ public class ListOfEnumValues {
 
     public static List<String> rooms = Stream.of(Room.values())
             .map(Room::name)
+            .collect(Collectors.toList());
+
+    public static List<String> authors = Stream.of(Author.values())
+            .map(Author::name)
             .collect(Collectors.toList());
 
 }

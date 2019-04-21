@@ -4,13 +4,19 @@ import com.arzieba.dtnetworkproject.dao.DeviceDAO;
 import com.arzieba.dtnetworkproject.dao.ShortPostDAO;
 import com.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import com.arzieba.dtnetworkproject.model.Author;
+import com.arzieba.dtnetworkproject.model.Device;
 import com.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
+import com.arzieba.dtnetworkproject.utils.enums.ListOfEnumValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/posts")
@@ -25,6 +31,7 @@ public class ShortPostController {
         this.postDAO = postDAO;
         this.deviceDAO = deviceDAO;
         this.postService = postService;
+
     }
 
     @GetMapping("/all")
@@ -33,7 +40,7 @@ public class ShortPostController {
     }
 
     @GetMapping("/last5")
-    public List<ShortPostDTO> getLast5(){
+    public @ResponseBody List<ShortPostDTO> getLast5(){
         return postService.findLast5();
     }
 
@@ -58,19 +65,36 @@ public class ShortPostController {
     }
 
     @PostMapping("/add")
-    public ShortPostDTO create(@RequestBody ShortPostDTO dto){
-        return postService.create(dto);
+    public String  create(Model model, ShortPostDTO dto){
+        postService.create(dto);
+        return "success";
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ShortPostDTO remove (@PathVariable Integer id){
+    @PostMapping("/addAsModel")
+    public String  create2(Model model, @ModelAttribute("dto") ShortPostDTO dto){
+        postService.create(dto);
+        return "success";
+    }
 
-        return postService.remove(id);
+    @GetMapping("/delete/{id}")
+    public String remove (@PathVariable Integer id, Model model){
+
+         postService.remove(id);
+         return "success";
     }
 
     @GetMapping("/addForm")
     public String addForm(Model model){
         model.addAttribute("newPost",new ShortPostDTO());
+        model.addAttribute("authors", ListOfEnumValues.authors);
+        Map<String,String> mapa = new HashMap<>();
+        List<String> keys = deviceDAO.findAll().stream().map(d->d.getInventNumber()).collect(Collectors.toList());
+        for (String key:keys) {
+            Device device = deviceDAO.findByInventNumber(key);
+            device.setDeviceDescription(device.getDeviceDescription()+" "+device.getRoom());
+            mapa.put(key,device.getDeviceDescription());
+        }
+        model.addAttribute("devices",mapa);
         return "posts/addPostForm";
     }
 

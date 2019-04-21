@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Title</title>
+    <title>Index</title>
     <link rel="stylesheet"  th:href="@{/css/navbar.css}">
     <link rel="stylesheet"  th:href="@{/css/main.css}" href="../static/css/main.css">
     <link rel="stylesheet" th:href="@{/css/background.css}" href="../static/css/background.css">
@@ -19,6 +19,10 @@
 
 </head>
 <body>
+   <!-- VERY IMPORTANT SCRIPT!!!-->
+    <script>
+    window.location.refresh();
+    </script>
     <div th:insert="~{fragments/navbar.html :: navbar} "  >
     </div>
     
@@ -48,21 +52,21 @@
 
                     </div>
                     
-                    <div class="row" th:each="post, iterStat: ${lastPosts} ">
-                        <div class="cell" data-title="Full Name" th:text="${post.date}" >
+                    <div class="row" th:each="key, iterStat: ${lastPosts.keySet()} ">
+                        <div class="cell" data-title="Date" th:text="${lastPosts.get(key).date}" >
                             11-11-2011
                         </div>
-                        <div class="cell" data-title="Age" th:text="${post.author}">
+                        <div class="cell" data-title="Author" th:text="${lastPosts.get(key).author}">
                             Arek
                         </div>
-                        <div class="cell" data-title="Job Title" th:text="${post.inventNumber}">
+                        <div class="cell" data-title="Related with" th:text="${lastPosts.get(key).inventNumber}">
                             S-001
                         </div>
-                        <div class="cell" data-title="Location" th:text="${post.content}">
+                        <div class="cell" data-title="Content" th:text="${lastPosts.get(key).content}">
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusamus alias aliquam aperiam consectetur cum cumque distinctio dolore dolores ea eaque eligendi ipsum iusto laboriosam laudantium libero maxime natus nemo neque nisi odit omnis pariatur perspiciatis porro quae quasi quibusdam quis quod recusandae reiciendis rem rerum similique sunt tempora tempore, velit vero! Atque, culpa nesciunt obcaecati qui quisquam unde veniam. Atque cum cumque debitis delectus, dolores eveniet facere id iste laborum mollitia nam necessitatibus perferendis repellat sint ullam vel voluptatibus. Amet magni, voluptatem. Adipisci cupiditate ea eius maiores modi neque nihil quisquam sint! Adipisci aspernatur aut dignissimos distinctio doloremque expedita, facere fuga fugiat illo iure neque obcaecati omnis placeat qui quo sequi vero vitae voluptate voluptatem voluptates. Atque consectetur consequuntur corporis debitis delectus deleniti doloremque ducimus earum eius expedita fugiat incidunt inventore magni modi molestias nam numquam obcaecati pariatur possimus quisquam sed suscipit, temporibus veniam vero voluptates voluptatibus voluptatum? Est fugiat iure laborum nihil unde? Culpa ex harum impedit laboriosam libero mollitia nostrum quae repellendus sapiente ut? Aliquid aspernatur commodi consequuntur culpa deleniti dicta dignissimos dolorem ea eum facilis hic ipsum itaque laborum molestias, natus placeat, quas quod totam vero voluptate? Ad aliquam aperiam incidunt inventore laboriosam nemo repudiandae temporibus. Blanditiis, incidunt, tenetur. Asperiores corporis eius eligendi enim et iure minus natus nesciunt numquam omnis pariatur placeat porro possimus quaerat quam saepe, tenetur voluptas? Deserunt doloribus, esse, ex excepturi fugiat id impedit itaque modi omnis possimus provident quam quibusdam, unde veniam vero. Eveniet, magni, nulla? Asperiores aut commodi debitis delectus laboriosam praesentium quia quidem sapiente! Accusantium architecto atque aut consectetur, culpa iusto mollitia nesciunt, nihil nulla porro quae quidem repudiandae rerum. Alias amet aperiam asperiores consequatur cupiditate dicta doloribus dolorum facilis harum ipsa ipsam maxime officia possimus quia soluta, sunt vero voluptatem. Cum dolor id impedit officia quibusdam vitae voluptas.
                         </div>
-                        <div class="cell ">
-                            <span style="font-size: 1em;cursor:pointer" onclick="openNav()" th:onclick="'javascript:openNav()'"   >&#9776; More actions</span>
+                        <div class="cell remove ">
+                            <a href="#" th:href="@{'/posts/delete/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer">&#9776; Remove post</span></a>
                         </div>
                     </div>
                 
@@ -77,32 +81,7 @@
 
     </div>
 
-    <!-- The overlay -->
-    <div id="myNav" class="overlay">
-        <!-- Button to close the overlay navigation -->
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <!-- Overlay content -->
-        <div class="overlay-content">
-            <h2>Choose an action</h2>
-            <div class="subcontent">
-            <a href="#">Show device</a>
-            <a href="#">Remove</a>
-            </div>
-
-        </div>
-
-    </div>
-    <script>
-    function openNav() {
-    document.getElementById("myNav").style.width = "100%";
-    }
-
-    /* Close when someone clicks on the "x" symbol inside the overlay */
-    function closeNav() {
-    document.getElementById("myNav").style.width = "0%";
-    }
-
-
-    </script>
+  
+   
 </body>
 </html>

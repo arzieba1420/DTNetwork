@@ -1,18 +1,27 @@
-
-
-#nav{
-
-}
-
 body{
-    margin: 0;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin: 0px;
 }
+
+#bar{
+    width: 100%;
+    background: linear-gradient(#228b22,#006400);
+    border: 1px solid black;
+    position: relative;
+    height: complex;
+    display: list-item;
+
+}
+
+
 ul{
 
     padding-left: 0px;
     margin-top: 0px;
     position: relative;
-    float: left;
+  /*  float: left;*/
+    display: table-cell;
     width: 100%;
     margin-bottom: 0px;
     z-index: 99;

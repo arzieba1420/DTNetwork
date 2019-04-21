@@ -4,9 +4,58 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
+    <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
 </head>
 <body>
-
+    
+    <h2>Add new post</h2>
+    <p>Resize the browser window to see the effect. When the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other.</p>
+    
+    <div class="container">
+        <form action="/action_page.php" th:action="@{'/posts/add'}" th:object="${newPost}" method="post" >
+            <div class="row">
+                <div class="col-25">
+                    <label for="date">Date</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="date" name="Date" placeholder="DD-MM-YYYY" th:field="*{date}">
+                </div>
+            </div>
+            <!--Add select!-->
+            <div class="row">
+                <div class="col-25">
+                    <label for="device">Device</label>
+                </div>
+                <select id="device" name="Device" class="col-75" th:field="*{inventNumber}">
+                    <option value="null">Choose device</option>
+                    <option th:each="key,iterStat:${devices.keySet()}" th:value="${key}" th:text="${devices.get(key)}"></option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="author">Author</label>
+                </div>
+                <div class="col-75">
+                    <select id="author" name="author" th:field="*{author}" >
+                        <option value="null">Choose author</option>
+                        <option th:each="author,iterStat:${authors}" th:value="${author}" th:text="${author}">Canada</option>
+                        
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="content">Content</label>
+                </div>
+                <div class="col-75">
+                    <textarea id="content" name="content" placeholder="Write something.." style="height:200px" th:field="*{content}"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
 
 
 
