@@ -45,7 +45,10 @@ public class MainController {
         System.out.println(keys);
 
         for (int i = 0; i <keys.size() ; i++) {
-            mapa.put(keys.get(i),postService.findById(keys.get(i)));
+            ShortPostDTO dto = postService.findById(keys.get(i));
+            dto.setInventNumber(deviceService.findByInventNumber(dto.getInventNumber()).getDeviceDescription()+" "+
+                    deviceService.findByInventNumber(dto.getInventNumber()).getRoom());
+            mapa.put(keys.get(i),dto);
         }
 
 

@@ -8,8 +8,9 @@
     <link rel="stylesheet"  th:href="@{/css/main.css}" href="../static/css/main.css">
     <link rel="stylesheet" th:href="@{/css/background.css}" href="../static/css/background.css">
     <link rel="stylesheet" href="../static/css/overlay.css">
+    <link rel="stylesheet" href="" th:href="@{/css/header.css}">
     <!--<link rel="stylesheet" href="../static/css/background.css" th:href="@{/css/background.css}">-->
-
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <!--===============================================================================================-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -23,6 +24,7 @@
     <script>
     window.location.refresh();
     </script>
+    <div th:insert="~{fragments/header.html::header}"></div>
     <div th:insert="~{fragments/navbar.html :: navbar} "  >
     </div>
     
@@ -31,6 +33,7 @@
     <div class="limiter">
         <div class="container-table100">
             <div class="wrap-table100">
+                <h1>Ostatnie wpisy</h1>
                 <div class="table">
                     
                     <div class="row header">
