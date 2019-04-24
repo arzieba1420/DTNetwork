@@ -14,10 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.transaction.Transactional;
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -105,9 +102,11 @@ public class IssueDocServiceImpl implements IssueDocService {
             List<Integer> yearsList= issueDocumentDAO.findAll().stream()
                     .map(d->d.getIssueDate().get( Calendar.YEAR))
                     .collect(Collectors.toList());
-            Set<Integer> years = yearsList.stream().collect(Collectors.toSet());
-        System.out.println(years);
-            return years;
+            Set<Integer> years =yearsList.stream().collect(Collectors.toSet());
+            TreeSet<Integer> sortedSet = new TreeSet<>();
+            sortedSet.addAll(years);
+        System.out.println(sortedSet);
+            return sortedSet;
         }
 
 
