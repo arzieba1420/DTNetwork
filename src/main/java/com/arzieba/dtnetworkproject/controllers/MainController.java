@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.thymeleaf.context.WebContext;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -28,6 +29,8 @@ public class MainController {
         this.deviceService = deviceService;
         this.dao = dao;
     }
+
+
 
     @GetMapping
     public String home(Model model){
@@ -50,6 +53,7 @@ public class MainController {
         }
         List<String> rooms = new ArrayList<>();
         rooms = ListOfEnumValues.rooms;
+
         model.addAttribute("deviceServ", deviceService);
         model.addAttribute("lastPosts", mapa);
         model.addAttribute("rooms",rooms);

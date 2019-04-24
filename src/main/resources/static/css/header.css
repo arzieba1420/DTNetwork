@@ -7,14 +7,15 @@
     justify-content: center;
     background: linear-gradient(to bottom left, #cff1f4, #edf4ff);
     /*background-image: white;*/
-
     border-bottom: 1px solid #779742;
 
 }
 
 .headerBar #tittle{
 
-    margin-right: 100px;
+    margin-right: 10px;
+    margin-top: 40px;
+    text-align: center;
 
 }
 
@@ -26,7 +27,7 @@
     background-repeat: no-repeat;
     z-index: 99;
     align-self: flex-start;
-    margin-right: 10px;
+    margin-right: 120px;
     margin-top: -30px;
 
 }

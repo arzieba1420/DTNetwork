@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public interface IssueDocService {
@@ -15,5 +16,6 @@ public interface IssueDocService {
     IssueDocumentDTO create(IssueDocumentDTO documentDTO);
     IssueDocumentDTO update(IssueDocumentDTO documentDTO);
     IssueDocumentDTO remove(String signature);
+    Set<Integer> setOfYears();
 
 }

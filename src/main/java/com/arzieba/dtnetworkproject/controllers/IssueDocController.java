@@ -67,6 +67,12 @@ public class IssueDocController {
         return issueDocService.remove(sign);
     }
 
+    @GetMapping("/years")
+    public String getYears(){
+        issueDocService.setOfYears();
+        return "OK";
+    }
+
 
 
 

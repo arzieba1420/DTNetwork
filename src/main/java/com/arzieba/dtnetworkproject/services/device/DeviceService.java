@@ -21,6 +21,7 @@ public interface DeviceService {
      List<DamageDTO> getDamages (String inventNumber);
      List<IssueDocumentDTO> getIssueDocuments (String inventNumber);
      DeviceCardDTO getDeviceCard(String inventNumber);
+     List<DeviceDTO> findByRoom(String room);
 
 
 

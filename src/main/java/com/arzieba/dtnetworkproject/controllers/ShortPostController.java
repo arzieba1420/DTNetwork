@@ -73,14 +73,14 @@ public class ShortPostController {
     @PostMapping("/addAsModel")
     public String  create2(Model model, @ModelAttribute("dto") ShortPostDTO dto){
         postService.create(dto);
-        return "success";
+        return "redirect:/dtnetwork";
     }
 
     @GetMapping("/delete/{id}")
     public String remove (@PathVariable Integer id, Model model){
 
          postService.remove(id);
-         return "success";
+         return "redirect:/dtnetwork";
     }
 
     @GetMapping("/addForm")

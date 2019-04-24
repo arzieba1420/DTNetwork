@@ -21,11 +21,17 @@
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Devices &raquo;</a>
                     <ul>
-                        <li><a href="#">Android</a></li>
+                        <li  th:each="room:${rooms}"><a href="#" th:text="${room}+' '+'&raquo;'"></a>
+                            <ul>
+                                <li th:each="device:${@deviceServiceImpl.findByRoom(room)}"><a href="" th:text="${device.deviceDescription}"></a></li>
+                            </ul>
+                        
+                        </li>
+                        <!--<li><a href="#">Android</a></li>
                         <li><a href="#">Java</a></li>
                         <li><a href="#">Web Design &raquo;</a>
-                            <ul th:each="room :${rooms}">
-                                <li th:text="|${room}|"><a href="#">HTML5</a></li>
+                            <ul>
+                                <li><a href="#">HTML5</a></li>
                                 <li><a href="#">CSS3</a></li>
                                 <li><a href="#">jQuery</a></li>
                                 <li><a href="#">PHP</a></li>
@@ -40,12 +46,12 @@
                                 <li><a href="#">Dreamweaver</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">MS.Net</a></li>
+                        <li><a href="#">MS.Net</a></li>-->
                     </ul>
                 </li>
-                <li><a href="#">Portfolio &raquo;</a>
+                <li><a href="#">Documents &raquo;</a>
                     <ul>
-                        <li th:each="room :${rooms}" th:text="|${room}|"><a href="#" >Corel Draw</a></li>
+                        <li ><a href="#">Corel Draw</a></li>
                     </ul>
                 </li>
                 <li><a href="#">Download &raquo;</a>

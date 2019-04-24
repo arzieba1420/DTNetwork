@@ -24,7 +24,7 @@ ul{
     display: table-cell;
     width: 100%;
     margin-bottom: 0px;
-    z-index: 9;
+    z-index: 98;
 }
 
 /**/
@@ -34,6 +34,7 @@ ul li{
     padding: 0;
     float: left;
     position: relative;
+    z-index: 99;
 }
 ul li a{
     border-right: 1px solid #fff;
@@ -43,6 +44,7 @@ ul li a{
     text-decoration: none;
     display: inline-block;
     background: linear-gradient(#228b22,#006400);
+    z-index: 99;
 }
 
 ul li:hover>a{

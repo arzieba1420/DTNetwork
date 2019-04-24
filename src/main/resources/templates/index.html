@@ -20,13 +20,13 @@
 
 </head>
 <body>
-   <!-- VERY IMPORTANT SCRIPT!!!-->
+   <!-- VERY IMPORTANT SCRIPT!!! (without it server will meet NullPointer after removing ShortPost from DB) -->
     <script>
     window.location.refresh();
     </script>
-    <div th:insert="~{fragments/header.html::header}"></div>
-    <div th:insert="~{fragments/navbar.html :: navbar(${rooms})} "  >
-    </div>
+    <div th:replace="~{fragments/header.html::header}"></div>
+    <div th:replace="~{fragments/navbar.html::navbar(${rooms})}"></div>
+   
     
   
     
@@ -46,7 +46,7 @@
                         <div class="cell">
                             Target
                         </div>
-                        <div class="cell">
+                        <div class="cell" >
                             Content
                         </div>
                         <div class="cell action">
