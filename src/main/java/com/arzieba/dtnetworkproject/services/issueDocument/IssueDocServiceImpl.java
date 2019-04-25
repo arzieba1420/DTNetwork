@@ -105,7 +105,8 @@ public class IssueDocServiceImpl implements IssueDocService {
             Set<Integer> years =yearsList.stream().collect(Collectors.toSet());
             TreeSet<Integer> sortedSet = new TreeSet<>();
             sortedSet.addAll(years);
-        System.out.println(sortedSet);
+            //test
+            System.out.println(sortedSet);
             return sortedSet;
         }
 

@@ -9,16 +9,14 @@ import com.arzieba.dtnetworkproject.dto.DamageDTO;
 import com.arzieba.dtnetworkproject.dto.DeviceCardDTO;
 import com.arzieba.dtnetworkproject.dto.DeviceDTO;
 import com.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
-import com.arzieba.dtnetworkproject.model.Damage;
-import com.arzieba.dtnetworkproject.model.Device;
-import com.arzieba.dtnetworkproject.model.DeviceCard;
-import com.arzieba.dtnetworkproject.model.DeviceType;
+import com.arzieba.dtnetworkproject.model.*;
 import com.arzieba.dtnetworkproject.services.device.DeviceService;
 
 import com.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -71,6 +69,20 @@ public class DeviceController {
     @PostMapping("/add")
     public DeviceDTO create(@RequestBody DeviceDTO deviceDTO){
         return deviceService.create(deviceDTO);
+    }
+
+    @PostMapping("/addAsModel")
+    public String create2(Model model, @ModelAttribute("dto") DeviceDTO dto ){
+        dto.setRoom(dto.getRoom());
+        deviceService.create(dto);
+        return "redirect:/dtnetwork";
+    }
+
+    @GetMapping("/addForm/{room}")
+    public String addForm(Model model, @PathVariable String room){
+        model.addAttribute("newDevice", new DeviceDTO());
+        model.addAttribute("room",Room.valueOf(room));
+        return "devices/addDeviceForm";
     }
 
     @PutMapping("/update")

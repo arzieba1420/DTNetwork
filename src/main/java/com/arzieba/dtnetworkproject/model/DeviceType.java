@@ -1,6 +1,7 @@
 package com.arzieba.dtnetworkproject.model;
 
 import lombok.Getter;
+import org.springframework.stereotype.Component;
 
 @Getter
 public enum DeviceType {

@@ -24,6 +24,7 @@
                         <li  th:each="room:${rooms}"><a href="#" th:text="${room}+' '+'&raquo;'"></a>
                             <ul>
                                 <li th:each="device:${@deviceServiceImpl.findByRoom(room)}"><a href="" th:text="${device.deviceDescription}"></a></li>
+                                <li><a href="#" th:text="'+' + ' Add new'" th:href="@{/devices/addForm/}+${room}" >+ add new</a></li>
                             </ul>
                         
                         </li>
@@ -51,7 +52,7 @@
                 </li>
                 <li><a href="#">Documents &raquo;</a>
                     <ul>
-                        <li ><a href="#">Corel Draw</a></li>
+                        <li th:each="year:${@issueDocServiceImpl.setOfYears()}" ><a href="#" th:text="${year}">Corel Draw</a></li>
                     </ul>
                 </li>
                 <li><a href="#">Download &raquo;</a>

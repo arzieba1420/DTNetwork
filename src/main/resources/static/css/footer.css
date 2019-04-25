@@ -1,0 +1,30 @@
+.footerContainer{
+    background-color: #494949;
+    color: #cccccc;
+    width: 100%;
+    height: 70px;
+    margin-bottom: 0px;
+    position: absolute;
+    padding-bottom: 0px;
+}
+
+.ackData{
+    margin: 10px 10px;
+    margin-left: 60px;
+    text-align: center;
+    width: 400px;
+    display: inline-block;
+}
+
+.otherData{
+    display: inline-block;
+    text-align: center;
+
+    margin-left: 1000px;
+    width: 400px;
+    height: 70px;
+}
+
+#ignore{
+    color: #494949;
+}

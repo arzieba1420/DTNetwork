@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
+    <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
+</head>
+<body>
+    
+    <h2>Add new device</h2>
+    <p>Resize the browser window to see the effect. When the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other.</p>
+    
+    <div class="container">
+        <form action="/action_page.php" th:action="@{'/devices/addAsModel'}" th:object="${newDevice}" method="post"
+              modelAttribute="dto" >
+            
+            <div class="row">
+                <div class="col-25">
+                    <label for="inventNumber">Invent Number</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="inventNumber" name="inventNumber" placeholder="S-XXX" th:field="*{inventNumber}">
+                </div>
+            </div>
+            
+            <!--Add select!-->
+            <div class="row">
+                <div class="col-25">
+                    <label for="deviceType">Device type</label>
+                </div>
+                <select id="deviceType" name="Device Type" class="col-75" th:field="*{deviceType}">
+                    <option value="null">Choose device type</option>
+                    <option th:each="type:${@listOfEnumValues.deviceTypes}" th:value="${type}" th:text="${type.name()}"></option>
+                </select>
+            </div>
+            
+            <div class="row">
+                <div class="col-25">
+                    <label for="room">Room</label>
+                </div>
+                <select class="col-75" id="room" th:field="*{room}">
+                    <option value="null">Choose room</option>
+                    <option th:value="${room}" th:text="${room.name()}" ></option>
+                </select>
+            </div>
+            
+            <div class="row">
+                <div class="col-25">
+                    <label for="description">Description</label>
+                </div>
+                <div class="col-75">
+                    <textarea id="description" name="Description" placeholder="Np CRV 1" style="height:100px" th:field="*{deviceDescription}"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+
+
+</body>
+</html>
