@@ -34,12 +34,6 @@ public class MainController {
 
     @GetMapping
     public String home(Model model){
-        List<ShortPostDTO> list = postService.findLast5();
-        for (ShortPostDTO dto:list) {
-            String newDesc = deviceService.findByInventNumber(dto.getInventNumber()).getDeviceDescription()+" "+
-                    deviceService.findByInventNumber(dto.getInventNumber()).getRoom();
-            dto.setInventNumber(newDesc);
-        }
 
         Map<Integer,ShortPostDTO> mapa = new LinkedHashMap<>();
         List<Integer> keys = dao.findTop5ByOrderByDateDesc().stream().map(d->d.getPostId()).collect(Collectors.toList());
@@ -47,8 +41,6 @@ public class MainController {
 
         for (int i = 0; i <keys.size() ; i++) {
             ShortPostDTO dto = postService.findById(keys.get(i));
-            dto.setInventNumber(deviceService.findByInventNumber(dto.getInventNumber()).getDeviceDescription()+" "+
-                    deviceService.findByInventNumber(dto.getInventNumber()).getRoom());
             mapa.put(keys.get(i),dto);
         }
         List<String> rooms = new ArrayList<>();

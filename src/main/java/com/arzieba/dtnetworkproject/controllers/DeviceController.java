@@ -57,8 +57,9 @@ public class DeviceController {
 
     //Returns DeviceDTO by ID = inventNumber
     @GetMapping("/inventNumbers/{inventNumber}")
-    public DeviceDTO findByInventNumber(@PathVariable String inventNumber){
-        return deviceService.findByInventNumber(inventNumber);
+    public String findByInventNumber(@PathVariable String inventNumber){
+         deviceService.findByInventNumber(inventNumber);
+         return "devices/deviceInfo";
     }
 
     @GetMapping("/types/{type}")

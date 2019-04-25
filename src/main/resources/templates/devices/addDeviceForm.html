@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
     <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
 </head>
@@ -29,7 +30,7 @@
                 <div class="col-25">
                     <label for="deviceType">Device type</label>
                 </div>
-                <select id="deviceType" name="Device Type" class="col-75" th:field="*{deviceType}">
+                <select class="col-75" id="deviceType"  th:field="*{deviceType}">
                     <option value="null">Choose device type</option>
                     <option th:each="type:${@listOfEnumValues.deviceTypes}" th:value="${type}" th:text="${type.name()}"></option>
                 </select>

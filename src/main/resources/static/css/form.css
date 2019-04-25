@@ -1,13 +1,25 @@
-* {
+/**:not(UL LI) {
     box-sizing: border-box;
-}
+}*/
 
-input[type=text], select, textarea {
-    width: 100%;
+input[type=text], textarea {
+    width: 95%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
     resize: vertical;
+}
+
+select {
+    width: 98%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+input[type=text]:focus, textarea:focus, select:focus{
+    border: 1.1px solid #327530;
 }
 
 label {
@@ -23,6 +35,8 @@ input[type=submit] {
     border-radius: 4px;
     cursor: pointer;
     float: right;
+    margin-right: 26.5%;
+    margin-top: 10px;
 }
 
 input[type=submit]:hover {
@@ -33,18 +47,21 @@ input[type=submit]:hover {
     border-radius: 5px;
     background-color: #f2f2f2;
     padding: 20px;
+    margin-right: 10px;
 }
 
 .col-25 {
     float: left;
     width: 25%;
     margin-top: 6px;
+
 }
 
 .col-75 {
     float: left;
-    width: 75%;
+    width: 50%;
     margin-top: 6px;
+
 }
 
 /* Clear floats after the columns */

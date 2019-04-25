@@ -5,10 +5,20 @@
     <title>Title</title>
     <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
     <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
+    <link rel="stylesheet"  th:href="@{/css/navbar.css}">
+    <link rel="stylesheet"  th:href="@{/css/main.css}" href="../static/css/main.css">
+    <link rel="stylesheet" href="../static/css/overlay.css">
+    <link rel="stylesheet" href="" th:href="@{/css/header.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
 </head>
 <body>
-    
-    <h2>Add new post</h2>
+    <script>
+        window.location.refresh();
+    </script>
+    <div th:replace="~{fragments/header.html::header}"></div>
+    <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
+    <h2 style="margin-left: 10px">Add new post</h2>
     <p>Resize the browser window to see the effect. When the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other.</p>
     
     <div class="container">
@@ -27,11 +37,14 @@
                 <div class="col-25">
                     <label for="device">Device</label>
                 </div>
-                <select id="device" name="Device" class="col-75" th:field="*{inventNumber}">
+                <div class="col-75">
+                <select id="device" name="Device"  th:field="*{inventNumber}">
                     <option value="null">Choose device</option>
-                    <option th:each="key,iterStat:${devices.keySet()}" th:value="${key}" th:text="${devices.get(key)}"></option>
+                    <option th:each="key,iterStat:${devices.keySet()}" th:value="${key}" th:text="${@deviceDAO.findByInventNumber(key).deviceDescription}+' '+${@deviceDAO.findByInventNumber(key).room}"></option>
                 </select>
+                </div>
             </div>
+            
             <div class="row">
                 <div class="col-25">
                     <label for="author">Author</label>

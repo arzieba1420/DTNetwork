@@ -91,7 +91,6 @@ public class ShortPostController {
         List<String> keys = deviceDAO.findAll().stream().map(d->d.getInventNumber()).collect(Collectors.toList());
         for (String key:keys) {
             Device device = deviceDAO.findByInventNumber(key);
-            device.setDeviceDescription(device.getDeviceDescription()+" "+device.getRoom());
             mapa.put(key,device.getDeviceDescription());
         }
         model.addAttribute("devices",mapa);
