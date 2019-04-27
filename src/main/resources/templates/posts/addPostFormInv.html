@@ -6,7 +6,7 @@
     <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
     <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
     <link rel="stylesheet"  th:href="@{/css/navbar.css}">
-    <!--<link rel="stylesheet"  th:href="@{/css/main.css}" href="../static/css/main.css">-->
+
     <link rel="stylesheet" href="../static/css/overlay.css">
     <link rel="stylesheet" href="" th:href="@{/css/header.css}">
     <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
@@ -40,7 +40,7 @@
                 <div class="col-75">
                 <select id="device" name="Device"  th:field="*{inventNumber}">
                     <option value="null">Choose device</option>
-                    <option th:each="key,iterStat:${devices.keySet()}" th:value="${key}" th:text="${@deviceDAO.findByInventNumber(key).deviceDescription}+' '+${@deviceDAO.findByInventNumber(key).room}"></option>
+                    <option  th:value="${inventNumber}" th:text="${text}"></option>
                 </select>
                 </div>
             </div>

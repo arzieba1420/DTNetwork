@@ -97,5 +97,17 @@ public class ShortPostController {
         return "posts/addPostForm";
     }
 
+    @GetMapping("/addForm/{inventNumber}")
+    public String addForm(Model model, @PathVariable String inventNumber){
+        model.addAttribute("newPost",new ShortPostDTO());
+        model.addAttribute("authors", ListOfEnumValues.authors);
+        model.addAttribute("inventNumber", inventNumber);
+
+        String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
+                +" "+deviceDAO.findByInventNumber(inventNumber).getRoom();
+        model.addAttribute("text",text);
+        return "posts/addPostFormInv";
+    }
+
 
 }

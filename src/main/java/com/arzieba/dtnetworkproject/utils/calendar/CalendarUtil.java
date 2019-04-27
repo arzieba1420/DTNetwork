@@ -1,10 +1,14 @@
 package com.arzieba.dtnetworkproject.utils.calendar;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+@Component
 public class CalendarUtil {
     //Calendar to String
     public static String cal2string(Calendar calendar) {

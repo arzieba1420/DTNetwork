@@ -21,12 +21,12 @@
         <div id="bar">
         <nav id="nav">
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Devices &raquo;</a>
+                <li><a href="#" th:href="@{/dtnetwork}">Home</a></li>
+                <li><a >Devices &raquo;</a>
                     <ul>
                         <li  th:each="room:${rooms}"><a href="#" th:text="${room}+' '+'&raquo;'"></a>
                             <ul>
-                                <li th:each="device:${@deviceServiceImpl.findByRoom(room)}"><a href="" th:text="${device.deviceDescription}"></a></li>
+                                <li th:each="device:${@deviceServiceImpl.findByRoom(room)}"><a th:href="@{/devices/}+ ${device.inventNumber}" th:text="${device.deviceDescription}"></a></li>
                                 <li><a href="#" th:text="'+' + ' Add new'" th:href="@{/devices/addForm/}+${room}" >+ add new</a></li>
                             </ul>
                         

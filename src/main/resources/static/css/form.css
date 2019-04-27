@@ -25,6 +25,7 @@ input[type=text]:focus, textarea:focus, select:focus{
 label {
     padding: 12px 12px 12px 0;
     display: inline-block;
+    margin-left: 70%;
 }
 
 input[type=submit] {
@@ -45,7 +46,8 @@ input[type=submit]:hover {
 
 .container {
     border-radius: 5px;
-    background-color: #f2f2f2;
+    background-color: rgba(240, 240, 240, 0.1);
+
     padding: 20px;
     margin-right: 10px;
 }

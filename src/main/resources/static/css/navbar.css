@@ -73,6 +73,7 @@ ul ul li ul{
 }
 ul ul li a{
     background: linear-gradient(#0065b2,#1685da);
+    z-index: 99;
     padding: 7px 15px;
     color: #fff;
     text-shadow: 0 1px 1px #111;
@@ -84,4 +85,5 @@ ul ul li a{
 }
 ul ul ul li a{
     background: linear-gradient(#b22222,#8b0000);
+    z-index: 99;
 }

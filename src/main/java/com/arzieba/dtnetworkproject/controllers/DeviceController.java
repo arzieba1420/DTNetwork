@@ -56,9 +56,14 @@ public class DeviceController {
     }
 
     //Returns DeviceDTO by ID = inventNumber
-    @GetMapping("/inventNumbers/{inventNumber}")
-    public String findByInventNumber(@PathVariable String inventNumber){
-         deviceService.findByInventNumber(inventNumber);
+    @GetMapping("/{inventNumber}")
+    public String findByInventNumber(@PathVariable String inventNumber, Model model){
+         DeviceDTO dto= deviceService.findByInventNumber(inventNumber);
+         Device device= deviceDAO.findByInventNumber(inventNumber);
+         model.addAttribute("dto",dto);
+         model.addAttribute("dao",device);
+         model.addAttribute("issueDAO", issueDocumentDAO);
+         model.addAttribute("CalUtil", new CalendarUtil());
          return "devices/deviceInfo";
     }
 
