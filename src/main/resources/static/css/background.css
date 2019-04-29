@@ -3,13 +3,13 @@ body {
 
     background-image: url('../images/prometheus.jpg');
     background-color: rgba(211,211,211,0.40);
-
-
     background-blend-mode: overlay;
-    height: 100%;
     background-repeat: no-repeat;
     background-size: cover;
     margin: 0;
     padding: 0px;
+    position: relative;
+
+
 
 }

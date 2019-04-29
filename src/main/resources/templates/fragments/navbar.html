@@ -19,7 +19,7 @@
             window.location.refresh;
         </script>
         <div id="bar">
-        <nav id="nav">
+        <div id="nav">
             <ul>
                 <li><a href="#" th:href="@{/dtnetwork}">Home</a></li>
                 <li><a >Devices &raquo;</a>
@@ -31,26 +31,7 @@
                             </ul>
                         
                         </li>
-                        <!--<li><a href="#">Android</a></li>
-                        <li><a href="#">Java</a></li>
-                        <li><a href="#">Web Design &raquo;</a>
-                            <ul>
-                                <li><a href="#">HTML5</a></li>
-                                <li><a href="#">CSS3</a></li>
-                                <li><a href="#">jQuery</a></li>
-                                <li><a href="#">PHP</a></li>
-                                <li><a href="#">WordPress</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Graphic Design &raquo;</a>
-                            <ul>
-                                <li><a href="#">Corel Draw</a></li>
-                                <li><a href="#">Photo Shop</a></li>
-                                <li><a href="#">Illustrator</a></li>
-                                <li><a href="#">Dreamweaver</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">MS.Net</a></li>-->
+
                     </ul>
                 </li>
                 <li><a href="#">Documents &raquo;</a>
@@ -58,18 +39,16 @@
                         <li th:each="year:${@issueDocServiceImpl.setOfYears()}" ><a href="#" th:text="${year}">Corel Draw</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Download &raquo;</a>
+                <li><a href="#">Posts &raquo;</a>
                     <ul>
-                        <li><a href="#">Music</a></li>
-                        <li><a href="#">Video</a></li>
-                        <li><a href="#">Software</a></li>
-                        <li><a href="#">Game</a></li>
+                        <li><a href="#">Test</a></li>
+
                     </ul>
                 </li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="#" th:href="@{/dtnetwork}">About</a></li>
+                <!--<li><a href="#">Contact</a></li>-->
             </ul>
-        </nav>
+        </div>
         </div>
     </div>
 

@@ -20,7 +20,7 @@
     <h2>Add new device</h2>
     <p>Resize the browser window to see the effect. When the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other.</p>
     
-    <div class="container">
+    <div class="container" style="min-height: 100vh">
         <form action="/action_page.php" th:action="@{'/devices/addAsModel'}" th:object="${newDevice}" method="post"
               modelAttribute="dto" >
             
@@ -72,6 +72,6 @@
         </form>
     </div>
 
-<div th:replace="~{fragments/footer.html::footer}"></div>
+<div th:insert="~{fragments/footer.html::footer}"></div>
 </body>
 </html>

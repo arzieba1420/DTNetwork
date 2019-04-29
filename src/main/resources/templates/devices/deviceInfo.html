@@ -17,8 +17,13 @@
             font-family: arial, sans-serif;
             border-collapse: collapse;
             width: 65%;
-            margin-top: 50px;
+            margin-top: 80px;
             margin-bottom: 30px;
+        }
+
+         #topBar{
+            background: linear-gradient(45deg, #818181, #cccccc);
+
         }
 
         td a:visited{
@@ -38,11 +43,13 @@
         }
 
         th {
-            background-color: #666666;
-            border: 1px solid #dddddd;
+
+            border: 2px solid #dddddd;
             text-align: center;
             padding: 8px;
         }
+
+
 
         tr:nth-child(even) {
             background-color: #dddddd;
@@ -87,15 +94,15 @@
 </script>
 <div th:replace="~{fragments/header.html::header}"></div>
 <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
-
+<div class="container" style="min-height: 100vh; padding-top: 150px; ">
 <div class="col-25" style="margin-left: 50px">
-    <h1 style="text-align: left" th:text="${dto.getDeviceDescription()}+ '&roarr;'+${dto.getRoom()}"></h1>
-    <img style="text-align: center;width: 350px;height: 350px" src="" th:src="${dto.deviceType.getIMAGE()}" alt="">
+    <h1 style="text-align: center; border:2px solid black; width: 350px;background-color: lightgray" th:text="${dto.getDeviceDescription()}+ '&roarr;'+${dto.getRoom()}"></h1>
+    <img style="text-align: left;width: 350px;height: 350px" src="" th:src="${dto.deviceType.getIMAGE()}" alt="">
 </div>
 
-<div class="col-75">
+<div class="col-75" style="margin-left: 200px">
     <table>
-        <tr>
+        <tr id="topBar">
             <th>Attribute</th>
             <th>Value</th>
             <th>Action</th>
@@ -110,9 +117,9 @@
             <td>Start date</td>
             <td th:if="${dao.getDeviceCard()== null}" th:text="'Any device card found'"> </td>
             <td th:if="${dao.getDeviceCard()!= null}" th:text="${CalUtil.cal2string(dao.getDeviceCard().getStartDate())}"> </td>
-            128270	1F50E
+
             <td th:if="${dao.getDeviceCard()== null}"><a href="" th:text="'Add device card'"></a> </td>
-            <td th:if="${dao.getDeviceCard()!= null}"><a href="" th:text="'&#1F50E;'"></a> </td>
+            <td th:if="${dao.getDeviceCard()!= null}"><a href="" th:text="' &#8981;'+' Show device card'"></a> </td>
         </tr>
         <tr>
             <td>Number of damages</td>
@@ -135,11 +142,6 @@
             <td th:if="${issueDAO.findByInventNumber(dto.getInventNumber()).size()!=0}" ><a href="" th:text="'Show documents'" ></a></td>
 
         </tr>
-        <tr>
-            <td>Magazzini Alimentari Riuniti</td>
-            <td>Giovanni Rovelli</td>
-
-        </tr>
 
     </table>
     <div style="width:65%; display: flex;  justify-content: space-around;">
@@ -158,7 +160,7 @@
     </div>
 </div>
 
-
-<!--<div th:replace="~{fragments/footer.html::footer}"></div>-->
+</div>
+<div th:insert="~{fragments/footer.html::footer}"></div>
 </body>
 </html>

@@ -21,7 +21,7 @@
     <h2 style="margin-left: 10px">Add new post</h2>
     <p>Resize the browser window to see the effect. When the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other.</p>
     
-    <div class="container">
+    <div class="container" style="min-height: 100vh">
         <form action="/action_page.php" th:action="@{'/posts/addAsModel'}" th:object="${newPost}" method="post"
         modelAttribute="dto" >
             <div class="row">
@@ -73,6 +73,6 @@
 
 
 
-    <div th:replace="~{fragments/footer.html::footer}"></div>
+    <div th:insert="~{fragments/footer.html::footer}"></div>
 </body>
 </html>

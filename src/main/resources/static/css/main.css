@@ -21,10 +21,7 @@
 /*!/////////////////////////////////////////////////////////////////
 [ Table ]*/
 
-html,body{
-  margin: 0;
-  padding: 0px;
-}
+
 
 a{
   text-decoration: none;
@@ -72,13 +69,15 @@ a:hover{
  /* padding: 350px 30px;*/
   margin-top: 200px;
 
+
 }
 
 .wrap-table100 {
   width: 1600px;
-  border-radius: 10px;
+
   overflow: hidden;
   padding-bottom: 30px;
+
 }
 
 .table {
@@ -86,6 +85,9 @@ a:hover{
   display: table;
   margin: 0;
   margin-bottom: 30px;
+
+
+
 }
 
 .wrap-table100 h1{
@@ -110,6 +112,8 @@ a:hover{
   color: #ffffff;
   background: linear-gradient(45deg, #818181, #cccccc);
 
+
+
 }
 
 
@@ -131,11 +135,12 @@ a:hover{
   display: table-cell;
   vertical-align: middle;
 
+
   padding-top: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid lightgrey;
   border-right: 2px solid lightgrey;
-
+  height: 30px;
 
 }
 
@@ -169,10 +174,11 @@ a:hover{
   width: 190px;
 }*/
 
-.row .cell:nth-child(5){
+.row .cell:last-child{
+  margin-right: 2px;
   width: 100px;
-  z-index: 10;
-  border-right: none;
+
+
 }
 
 

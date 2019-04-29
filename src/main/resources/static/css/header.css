@@ -3,39 +3,71 @@
 
     align-items: center;
     height: 120px;
+    width: 100%;
     flex-flow: row;
     justify-content: center;
-    background: linear-gradient(to bottom left, #cff1f4, #edf4ff);
+    background: linear-gradient(to bottom left, #e0e0e0, #eeeeee);
+
     /*background-image: white;*/
-    border-bottom: 1px solid #779742;
+    border: 2px solid #779742;
+    margin: 0px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
 
 }
 
 .headerBar #tittle{
 
-    margin-right: 30px;
-    margin-top: 40px;
+
+    margin-left: 150px;
+    margin-top: 60px;
+    padding-top: 15px;
+
     text-align: center;
+    font-family: arial, sans-serif;
+    font-size: 1.2em;
+    align-self: center;
+    width: 300px;
+    z-index: 99;
+    /*color: #1e9e0b;*/
+    background: -webkit-linear-gradient( #9ada8c, #1e9d0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent
+}
+
+.headerBar #desc{
+    background-image: url("../images/logo_desc.png");
+    width: 500px;
+    height: 60px;
+    text-align: center;
+    margin-right: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    margin-top: 10px;
+    margin-bottom: 25px;
 
 }
 
 .headerBar #logo{
 
-  height: 250px;
-    width: 250px;
-    background-image: url("../images/cyfronet-logo.png");
+  height: 140px;
+    width: 260px;
+    background-image: url("../images/logo.png");
     background-size: contain;
     background-repeat: no-repeat;
-    z-index: 99;
+    z-index:90;
     align-self: flex-start;
-    margin-right: 100px;
+    margin-right: 40px;
     margin-top: 15px;
+
 
 }
 
 .headerBar #projectName{
 
     margin-right: 40%;
+    margin-left: 20px;
     padding-right: 30px;
     font-family: 'Pacifico', cursive;
     color: #1cb50b;
