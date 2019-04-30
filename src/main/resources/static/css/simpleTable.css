@@ -1,0 +1,45 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 65%;
+    margin-top: 80px;
+    margin-bottom: 30px;
+}
+
+#topBar{
+    background: linear-gradient(45deg, #818181, #cccccc);
+
+}
+
+td a:visited{
+    color: inherit;
+    text-decoration: none;
+}
+
+td a{
+    text-decoration: none;
+}
+
+td a:hover{
+    color: #0065b2;
+}
+
+td {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+
+}
+
+th {
+
+    border: 2px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+}
+
+
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}

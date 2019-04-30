@@ -1,28 +1,5 @@
 
 
-/*!/////////////////////////////////////////////////////////////////
-[ FONT ]*/
-
-
-@font-face {
-  font-family: Poppins-Regular;
-  src: url('../fonts/poppins/Poppins-Regular.ttf'); 
-}
-
-@font-face {
-  font-family: Poppins-Bold;
-  src: url('../fonts/poppins/Poppins-Bold.ttf'); 
-}
-
-/*!/////////////////////////////////////////////////////////////////
-[ RESTYLE TAG ]*/
-
-
-/*!/////////////////////////////////////////////////////////////////
-[ Table ]*/
-
-
-
 a{
   text-decoration: none;
   color: #666666;
@@ -73,7 +50,7 @@ a:hover{
 }
 
 .wrap-table100 {
-  width: 1600px;
+  width: 1300px;
 
   overflow: hidden;
   padding-bottom: 30px;
@@ -158,28 +135,29 @@ a:hover{
 }
 
 .row .cell:nth-child(1) {
-  width: 120px;
+  width: 100px;
   /*padding-left: 40px;*/
 }
 
 .row .cell:nth-child(2) {
-  width: 120px;
+  width: 100px;
 }
 
 .row .cell:nth-child(3) {
-  width: 250px;
+  width: 100px;
 }
 
 /*.row .cell:nth-child(4) {
-  width: 190px;
-}*/
+   width: 190px;
+ }*/
 
 .row .cell:last-child{
-  margin-right: 2px;
+  margin-right: 1px;
   width: 100px;
 
 
 }
+
 
 
 .table, .row {

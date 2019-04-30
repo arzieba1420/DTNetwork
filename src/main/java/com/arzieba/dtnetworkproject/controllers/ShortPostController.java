@@ -2,20 +2,23 @@ package com.arzieba.dtnetworkproject.controllers;
 
 import com.arzieba.dtnetworkproject.dao.DeviceDAO;
 import com.arzieba.dtnetworkproject.dao.ShortPostDAO;
+import com.arzieba.dtnetworkproject.dto.DeviceDTO;
 import com.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import com.arzieba.dtnetworkproject.model.Author;
 import com.arzieba.dtnetworkproject.model.Device;
+import com.arzieba.dtnetworkproject.model.ShortPost;
+import com.arzieba.dtnetworkproject.services.device.DeviceService;
 import com.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
 import com.arzieba.dtnetworkproject.utils.enums.ListOfEnumValues;
+import com.arzieba.dtnetworkproject.utils.shortPost.ShortPostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -25,12 +28,14 @@ public class ShortPostController {
     private ShortPostDAO postDAO;
     private DeviceDAO deviceDAO;
     private ShortPostService postService;
+    private DeviceService deviceService;
 
     @Autowired
-    public ShortPostController(ShortPostDAO postDAO, DeviceDAO deviceDAO, ShortPostService postService) {
+    public ShortPostController(ShortPostDAO postDAO, DeviceDAO deviceDAO, ShortPostService postService, DeviceService deviceService) {
         this.postDAO = postDAO;
         this.deviceDAO = deviceDAO;
         this.postService = postService;
+        this.deviceService=deviceService;
 
     }
 
@@ -45,8 +50,19 @@ public class ShortPostController {
     }
 
     @GetMapping("/devices/{inv}")
-    public List<ShortPostDTO> getAllForDevice(@PathVariable String inv){
-        return postService.findByDevice(inv);
+    public String getAllForDevice(@PathVariable String inv, Model model){
+       List<ShortPost> shortPosts= postDAO.findAllByDevice_InventNumberOrderByDateDesc(inv);
+        DeviceDTO dto= deviceService.findByInventNumber(inv);
+        Map<Integer,ShortPostDTO> mapa = new LinkedHashMap<>();
+
+        for (ShortPost post: shortPosts) {
+            mapa.put(post.getPostId(), ShortPostMapper.map(post));
+        }
+
+         List<ShortPostDTO> list= postService.findByDevice(inv);
+         model.addAttribute("posts",mapa);
+         model.addAttribute("dto",dto);
+        return "posts/allPostsForDevice";
     }
 
     @GetMapping("/devices/last5/{inv}")
@@ -71,7 +87,10 @@ public class ShortPostController {
     }
 
     @PostMapping("/addAsModel")
-    public String  create2(Model model, @ModelAttribute("dto") ShortPostDTO dto){
+    public String  create2(Model model, @ModelAttribute("dto")  ShortPostDTO dto, BindingResult bindingResult, HttpServletRequest request){
+        if(bindingResult.hasErrors()){
+            return "posts/addPostForm";
+        }
         postService.create(dto);
         return "redirect:/dtnetwork";
     }
@@ -79,8 +98,15 @@ public class ShortPostController {
     @GetMapping("/delete/{id}")
     public String remove (@PathVariable Integer id, Model model){
 
-         postService.remove(id);
-         return "redirect:/dtnetwork";
+        postService.remove(id);
+        return "redirect:/dtnetwork";
+    }
+
+    @GetMapping("/delete/{id}/stay")
+    public String removeAndStay (@PathVariable Integer id, Model model, HttpServletRequest request){
+
+        postService.remove(id);
+        return "redirect:"+request.getHeader("Referer") ;
     }
 
     @GetMapping("/addForm")

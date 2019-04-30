@@ -5,18 +5,23 @@ import com.arzieba.dtnetworkproject.dao.DeviceCardDAO;
 import com.arzieba.dtnetworkproject.dao.DeviceDAO;
 import com.arzieba.dtnetworkproject.dao.IssueDocumentDAO;
 import com.arzieba.dtnetworkproject.dto.DamageDTO;
+import com.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import com.arzieba.dtnetworkproject.model.Author;
 import com.arzieba.dtnetworkproject.model.Damage;
 import com.arzieba.dtnetworkproject.services.damage.DamageService;
+import com.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
+import com.arzieba.dtnetworkproject.utils.enums.ListOfEnumValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
-@RequestMapping("/damage")
+@Controller
+@RequestMapping("/damages")
 public class DamageController {
 
 
@@ -26,14 +31,17 @@ public class DamageController {
     private IssueDocumentDAO issueDocumentDAO;
     private DeviceCardDAO deviceCardDAO;
     private DamageService damageService;
+    private ShortPostService postService;
+
 
     @Autowired
-    public DamageController(DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, DamageService damageService) {
+    public DamageController(ShortPostService postService,DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, DamageService damageService) {
         this.deviceDAO = deviceDAO;
         this.damageDAO = damageDAO;
         this.issueDocumentDAO = issueDocumentDAO;
         this.deviceCardDAO = deviceCardDAO;
         this.damageService = damageService;
+        this.postService = postService;
     }
 
     @GetMapping("/getAll")
@@ -41,9 +49,24 @@ public class DamageController {
         return damageService.findAll();
     }
 
-    @PostMapping("/add")
-    public DamageDTO add(@RequestBody DamageDTO damageDTO){
-        return damageService.create(damageDTO);
+    @PostMapping("/addAsModel")
+    public String add(@ModelAttribute("dto") DamageDTO damageDTO){
+
+        if(!damageDTO.isNewPostFlag()) {
+            damageService.create(damageDTO);
+
+        } else{
+            ShortPostDTO dto = new ShortPostDTO();
+            dto.setDate(damageDTO.getDamageDate());
+            dto.setAuthor(damageDTO.getAuthor());
+            dto.setInventNumber(damageDTO.getDeviceInventNumber());
+            dto.setContent("New damage! Click target for more...");
+            dto.setForDamage(true);
+            damageService.create(damageDTO);
+            postService.create(dto);
+
+        }
+        return "redirect:/dtnetwork";
     }
 
     @GetMapping("/ids/{id}")
@@ -80,6 +103,20 @@ public class DamageController {
     @GetMapping("/devices/{inventNumber}")
     public List<DamageDTO> findByDeviceInventNumber(@PathVariable String inventNumber){
         return damageService.findByDeviceInventNumber(inventNumber);
+    }
+
+    @GetMapping("/addForm/{inventNumber}")
+    public String createDamage(Model model,@PathVariable String inventNumber){
+        model.addAttribute("newDamage", new DamageDTO());
+        model.addAttribute("authors", ListOfEnumValues.authors);
+        model.addAttribute("inventNumber",inventNumber);
+        String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
+                +" "+deviceDAO.findByInventNumber(inventNumber).getRoom();
+        model.addAttribute("text",text);
+
+
+
+        return "damages/addForm";
     }
 
 }

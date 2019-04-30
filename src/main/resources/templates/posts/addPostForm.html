@@ -31,6 +31,9 @@
                 <div class="col-75">
                     <input type="text" id="date" name="Date" placeholder="DD-MM-YYYY" th:field="*{date}">
                 </div>
+                <div class="col-75" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">
+
+                </div>
             </div>
             <!--Add select!-->
             <div class="row">

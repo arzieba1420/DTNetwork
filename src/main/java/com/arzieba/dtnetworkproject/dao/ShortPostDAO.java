@@ -15,6 +15,7 @@ public interface ShortPostDAO extends CrudRepository<ShortPost,Integer> {
     List<ShortPost> findTop5ByOrderByDateDesc();
     List<ShortPost> findAllByAuthor(Author author);
     List<ShortPost> findAllByDevice_InventNumber(String number);
+    List<ShortPost> findAllByDevice_InventNumberOrderByDateDesc(String number);
     List<ShortPost> findTop5ByDevice_InventNumberOrderByDateDesc(String number);
     void removeByPostId(Integer id);
 }
