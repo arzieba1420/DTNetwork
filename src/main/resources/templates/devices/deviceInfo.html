@@ -54,7 +54,7 @@
             <td>Number of damages</td>
             <td th:text="${dao.getDamageList().size()}"></td>
             <td th:if="${dao.getDamageList().size()==0}" th:text="'---'" ></td>
-            <td th:if="${dao.getDamageList().size()!=0}" ><a href="" th:text="' &#8981;'+' Show damages'" > </a></td>
+            <td th:if="${dao.getDamageList().size()!=0}" ><a th:href="@{'/damages/devices/'+${dto.getInventNumber()}}" th:text="' &#8981;'+' Show damages'" > </a></td>
 
         </tr>
         <tr>
@@ -83,7 +83,7 @@
             <span class="tooltiptext">Add new damage</span>
         </div>
         <div class="tooltip">
-            <i class="fas fa-file-invoice-dollar" style=" color: darkgreen;"></i>
+            <a th:href="@{/issueDocs/addForm/}+${dto.getInventNumber()}"><i class="fas fa-file-invoice-dollar" style=" color: darkgreen;"></i></a>
             <span class="tooltiptext">Add new document</span>
         </div>
         <div class="tooltip" th:if="${dao.getDeviceCard()== null}">

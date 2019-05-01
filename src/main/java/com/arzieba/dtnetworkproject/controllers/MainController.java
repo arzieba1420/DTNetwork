@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.thymeleaf.context.WebContext;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -52,5 +53,11 @@ public class MainController {
 
         return "index";
     }
+
+    @GetMapping("/redirect")
+    public String redirect(HttpServletRequest request){
+        return "redirect:"+request.getHeader("Referer");
+    }
+
 
 }

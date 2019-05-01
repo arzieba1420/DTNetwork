@@ -95,6 +95,15 @@ public class ShortPostController {
         return "redirect:/dtnetwork";
     }
 
+    @PostMapping("/addAsModel/stay")
+    public String  create3(Model model, @ModelAttribute("dto")  ShortPostDTO dto, BindingResult bindingResult, HttpServletRequest request){
+        if(bindingResult.hasErrors()){
+            return "posts/addPostForm";
+        }
+        postService.create(dto);
+        return "redirect:/posts/devices/"+dto.getInventNumber();
+    }
+
     @GetMapping("/delete/{id}")
     public String remove (@PathVariable Integer id, Model model){
 

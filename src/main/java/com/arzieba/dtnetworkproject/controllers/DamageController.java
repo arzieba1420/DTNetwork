@@ -5,11 +5,14 @@ import com.arzieba.dtnetworkproject.dao.DeviceCardDAO;
 import com.arzieba.dtnetworkproject.dao.DeviceDAO;
 import com.arzieba.dtnetworkproject.dao.IssueDocumentDAO;
 import com.arzieba.dtnetworkproject.dto.DamageDTO;
+import com.arzieba.dtnetworkproject.dto.DeviceDTO;
 import com.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import com.arzieba.dtnetworkproject.model.Author;
 import com.arzieba.dtnetworkproject.model.Damage;
 import com.arzieba.dtnetworkproject.services.damage.DamageService;
+import com.arzieba.dtnetworkproject.services.device.DeviceService;
 import com.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
+import com.arzieba.dtnetworkproject.utils.damage.DamageMapper;
 import com.arzieba.dtnetworkproject.utils.enums.ListOfEnumValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +21,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/damages")
@@ -32,16 +37,18 @@ public class DamageController {
     private DeviceCardDAO deviceCardDAO;
     private DamageService damageService;
     private ShortPostService postService;
+    private DeviceService deviceService;
 
 
     @Autowired
-    public DamageController(ShortPostService postService,DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, DamageService damageService) {
+    public DamageController(DeviceService deviceService, ShortPostService postService,DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, DamageService damageService) {
         this.deviceDAO = deviceDAO;
         this.damageDAO = damageDAO;
         this.issueDocumentDAO = issueDocumentDAO;
         this.deviceCardDAO = deviceCardDAO;
         this.damageService = damageService;
         this.postService = postService;
+        this.deviceService=deviceService;
     }
 
     @GetMapping("/getAll")
@@ -101,8 +108,19 @@ public class DamageController {
     }
 
     @GetMapping("/devices/{inventNumber}")
-    public List<DamageDTO> findByDeviceInventNumber(@PathVariable String inventNumber){
-        return damageService.findByDeviceInventNumber(inventNumber);
+    public String getAllForDevice(@PathVariable String inventNumber, Model model){
+        List<Damage> damages = damageDAO.findByDevice_InventNumberOrderByDamageDateDesc(inventNumber);
+        DeviceDTO dto = deviceService.findByInventNumber(inventNumber);
+        Map<Integer,DamageDTO> mapa = new LinkedHashMap<>();
+
+        for (Damage damage: damages) {
+            mapa.put(damage.getDamageId(), DamageMapper.map(damage));
+        }
+
+        model.addAttribute("damages",mapa);
+        model.addAttribute("dto",dto);
+
+        return "damages/allDamagesForDevice";
     }
 
     @GetMapping("/addForm/{inventNumber}")

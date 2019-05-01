@@ -34,7 +34,7 @@
     <div class="limiter">
         <div class="container-table100">
             <div class="wrap-table100">
-                <h1>Ostatnie wpisy</h1>
+                <h1><span>LAST POSTS</span></h1>
                 <div class="table">
                     
                     <div class="row header">
@@ -56,22 +56,28 @@
 
                     </div>
                     
-                    <div class="row" th:each="key, iterStat: ${lastPosts.keySet()} ">
+                    <div class="row" th:each="key, iterStat: ${lastPosts.keySet()} " >
                         <div class="cell" data-title="Date" th:text="${lastPosts.get(key).date}" >
                             11-11-2011
                         </div>
                         <div class="cell" data-title="Author" th:text="${lastPosts.get(key).author}">
                             Arek
                         </div>
-                        <div class="cell" data-title="Related with" >
+                        <div class="cell" data-title="Related with" th:if="${!lastPosts.get(key).content.contains('damage')}" >
                             <a href="" th:text="${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).deviceDescription}+'&roarr;'+${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).room} " th:href="@{'/devices/' + ${lastPosts.get(key).inventNumber}}"></a>
+                        </div>
+                        <div class="cell" data-title="Related with" th:if="${lastPosts.get(key).content.contains('damage')}" >
+                            <a href="" th:text="${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).deviceDescription}+'&roarr;'+${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).room} " th:href="@{'/damages/devices/' + ${lastPosts.get(key).inventNumber}}"></a>
                         </div>
                         <div class="cell" data-title="Content" th:text="${lastPosts.get(key).content}" style="white-space: pre">
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusamus alias aliquam aperiam consectetur cum cumque distinctio dolore dolores ea eaque eligendi ipsum iusto laboriosam laudantium libero maxime natus nemo neque nisi odit omnis pariatur perspiciatis porro quae quasi quibusdam quis quod recusandae reiciendis rem rerum similique sunt tempora tempore, velit vero! Atque, culpa nesciunt obcaecati qui quisquam unde veniam. Atque cum cumque debitis delectus, dolores eveniet facere id iste laborum mollitia nam necessitatibus perferendis repellat sint ullam vel voluptatibus. Amet magni, voluptatem. Adipisci cupiditate ea eius maiores modi neque nihil quisquam sint! Adipisci aspernatur aut dignissimos distinctio doloremque expedita, facere fuga fugiat illo iure neque obcaecati omnis placeat qui quo sequi vero vitae voluptate voluptatem voluptates. Atque consectetur consequuntur corporis debitis delectus deleniti doloremque ducimus earum eius expedita fugiat incidunt inventore magni modi molestias nam numquam obcaecati pariatur possimus quisquam sed suscipit, temporibus veniam vero voluptates voluptatibus voluptatum? Est fugiat iure laborum nihil unde? Culpa ex harum impedit laboriosam libero mollitia nostrum quae repellendus sapiente ut? Aliquid aspernatur commodi consequuntur culpa deleniti dicta dignissimos dolorem ea eum facilis hic ipsum itaque laborum molestias, natus placeat, quas quod totam vero voluptate? Ad aliquam aperiam incidunt inventore laboriosam nemo repudiandae temporibus. Blanditiis, incidunt, tenetur. Asperiores corporis eius eligendi enim et iure minus natus nesciunt numquam omnis pariatur placeat porro possimus quaerat quam saepe, tenetur voluptas? Deserunt doloribus, esse, ex excepturi fugiat id impedit itaque modi omnis possimus provident quam quibusdam, unde veniam vero. Eveniet, magni, nulla? Asperiores aut commodi debitis delectus laboriosam praesentium quia quidem sapiente! Accusantium architecto atque aut consectetur, culpa iusto mollitia nesciunt, nihil nulla porro quae quidem repudiandae rerum. Alias amet aperiam asperiores consequatur cupiditate dicta doloribus dolorum facilis harum ipsa ipsam maxime officia possimus quia soluta, sunt vero voluptatem. Cum dolor id impedit officia quibusdam vitae voluptas.
                         </div>
 
-                        <div class="cell remove ">
+                        <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('damage')}">
                             <a href="#" th:href="@{'/posts/delete/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Remove post</span></a>
+                        </div>
+                        <div class="cell remove " th:if="${lastPosts.get(key).content.contains('damage')}">
+                            <a href="#" ><i class="fas fa-exclamation-circle" style="font-size: 200%;color: red"></i></a>
                         </div>
                     </div>
                 

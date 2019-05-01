@@ -54,7 +54,7 @@ public class DamageServiceImpl implements DamageService {
 
     @Override
     public List<DamageDTO> findByDeviceInventNumber(String inventNumber) {
-        return damageDAO.findByDevice_InventNumber(inventNumber)
+        return damageDAO.findByDevice_InventNumberOrderByDamageDateDesc(inventNumber)
                 .stream()
                 .map(DamageMapper::map)
                 .collect(Collectors.toList());

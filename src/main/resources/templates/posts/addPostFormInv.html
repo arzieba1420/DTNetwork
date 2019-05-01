@@ -22,7 +22,7 @@
     <p>Resize the browser window to see the effect. When the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other.</p>
     
     <div class="container" style="min-height: 100vh">
-        <form action="/action_page.php" th:action="@{'/posts/addAsModel'}" th:object="${newPost}" method="post"
+        <form action="/action_page.php" th:action="@{'/posts/addAsModel/stay'}" th:object="${newPost}" method="post"
         modelAttribute="dto" >
             <div class="row">
                 <div class="col-25">
@@ -66,7 +66,9 @@
                 </div>
             </div>
             <div class="row">
-                <input type="submit" value="Submit">
+                <input type="submit" value="Cancel" onclick="window.history.go(-1); return false;">
+                <input type="submit" value="Submit" style="margin-right: 20px">
+
             </div>
         </form>
     </div>
