@@ -51,9 +51,15 @@ public class IssueDocController {
         return issueDocService.findBySignature(signature);
     }
 
-    @GetMapping("/devices/{number}")
-    public List<IssueDocumentDTO> findByInventNumber(@PathVariable String number){
-        return issueDocService.findByInventNumber(number);
+    @GetMapping("/devices/{inventNumber}")
+    public String findByInventNumber(@PathVariable String inventNumber, Model model){
+
+        List<IssueDocumentDTO> docs = deviceService.getIssueDocuments(inventNumber);
+        DeviceDTO dto = deviceService.findByInventNumber(inventNumber);
+        model.addAttribute("docs", docs);
+        model.addAttribute("dto", dto);
+
+        return "devices/getAllDocs";
     }
 
 
@@ -121,8 +127,17 @@ public class IssueDocController {
         List<IssueDocumentDTO> docs= issueDocService.findByDamageId(damageId);
         model.addAttribute("docs",docs);
         model.addAttribute("dto",dto);
+        model.addAttribute("damageId", damageId);
         return "damages/getAllDocs";
 
+    }
+
+    @GetMapping("/{year}")
+    public String getAllForYear(@PathVariable int year, Model model){
+        List<IssueDocumentDTO> docs= issueDocService.findByYear(year);
+        model.addAttribute("year", year);
+        model.addAttribute("docs",docs);
+        return "documents/getAllForYear";
     }
 
 

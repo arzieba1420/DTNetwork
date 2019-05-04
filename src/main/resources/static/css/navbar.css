@@ -65,10 +65,13 @@ ul li a{
 
 
 ul li:hover>a{
-    background: linear-gradient(#ff6307, #ff6510);
-    color: #fff;
-    opacity: 0.9;
+    /*background: linear-gradient(#ff6307, #ff6510);*/
+    color: inherit;
+    border: 1px solid black;
+    background: linear-gradient(to bottom left, #e0e0e0, #eeeeee);
     cursor: pointer;
+
+
 }
 ul li:hover>ul{
     visibility: visible;
@@ -94,14 +97,16 @@ ul ul li a{
     z-index: 99;
     padding: 7px 15px;
     color: #fff;
-    text-shadow: 0 1px 1px #111;
+
     text-decoration: none;
     display: inline-block;
     float: left;
     width: 150px;
     border-bottom: 1px dotted #fff;
+    border-radius: 10px;
 }
 ul ul ul li a{
     background: linear-gradient(#b22222,#8b0000);
     z-index: 99;
+    border-radius: 10px;
 }

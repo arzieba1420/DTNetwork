@@ -68,7 +68,7 @@
             <td>Number of documents</td>
             <td th:text="${issueDAO.findByInventNumber(dto.getInventNumber()).size()}"></td>
             <td th:if="${issueDAO.findByInventNumber(dto.getInventNumber()).size()==0}" th:text="'---'" ></td>
-            <td th:if="${issueDAO.findByInventNumber(dto.getInventNumber()).size()!=0}" ><a href="" th:text="' &#8981;'+'Show documents'" ></a></td>
+            <td th:if="${issueDAO.findByInventNumber(dto.getInventNumber()).size()!=0}" ><a href="" th:href="@{'/issueDocs/devices/'+${dto.getInventNumber()}}" th:text="' &#8981;'+'Show documents'" ></a></td>
 
         </tr>
 

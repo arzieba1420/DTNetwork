@@ -2,7 +2,7 @@ table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 65%;
-    margin-top: 80px;
+    margin-top: 30px;
     margin-bottom: 30px;
 }
 
@@ -23,6 +23,7 @@ td a{
 
 td a:hover{
     color: #0065b2;
+    cursor: pointer;
 }
 
 td {
@@ -37,10 +38,13 @@ th {
     border: 2px solid #dddddd;
     text-align: center;
     padding: 8px;
+    width: 100px;
 }
 
 
-
-tr:nth-child(even) {
-    background-color: #dddddd;
+tr:hover{
+    background-color: #dfdfdf;
+}
+tr {
+    background-color: #f0f0f0;
 }

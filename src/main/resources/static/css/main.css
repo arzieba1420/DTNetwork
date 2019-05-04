@@ -67,15 +67,16 @@ a:hover{
 
 }
 
-.wrap-table100 h1{
+ h1{
   text-align: center;
   font-family: Poppins-Bold;
   backface-visibility: hidden;
-  font-size: 2.5em;
+  font-size: 2.0em;
   color: #666666;
+   margin-bottom: 20px;
 }
 
-.wrap-table100 h1 span{
+ h1 span{
   border: 2px solid black;
   padding: 5px;
 }

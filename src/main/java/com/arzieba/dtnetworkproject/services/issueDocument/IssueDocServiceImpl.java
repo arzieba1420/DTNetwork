@@ -58,6 +58,19 @@ public class IssueDocServiceImpl implements IssueDocService {
     }
 
     @Override
+    public List<IssueDocumentDTO> findByYear(int year) {
+
+
+
+
+        List<IssueDocumentDTO> list= issueDocumentDAO.findAll().stream()
+                .filter(d->d.getIssueDate().get(Calendar.YEAR) ==year)
+                .map(d->IssueDocMapper.map(d))
+                .collect(Collectors.toList());
+        return list;
+    }
+
+    @Override
     public List<IssueDocumentDTO> findByDamageId(Integer id) {
         return issueDocumentDAO.findByDamage_DamageId(id).stream()
                 .map(IssueDocMapper::map)
@@ -106,7 +119,7 @@ public class IssueDocServiceImpl implements IssueDocService {
             TreeSet<Integer> sortedSet = new TreeSet<>();
             sortedSet.addAll(years);
             //test
-            System.out.println(sortedSet);
+
             return sortedSet;
         }
 

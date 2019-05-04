@@ -29,9 +29,8 @@
                 <label for="damage">Damage</label>
             </div>
             <div class="col-75">
-                <select id="damage" name="Device"  th:field="*{damageId}">
-                    <option  th:value="${damageId}" th:text="${damageId}"></option>
-                </select>
+                <input class="disabledInput" type="text" id="damage" th:placeholder="${damageId}" th:readonly="readonly" name="Damage" th:value="${damageId}"  th:field="*{damageId}">
+               
             </div>
         </div>
         <!--<div class="row" >
@@ -64,10 +63,8 @@
                 <label for="device">Device</label>
             </div>
             <div class="col-75">
-                <select  id="device" name="Device"  th:field="*{inventNumber}">
-
-                    <option  th:value="${inventNumber}" th:text="${text}"></option>
-                </select>
+                <input class="disabledInput" type="text" th:readonly="readonly" id="device" name="Device" th:field="*{inventNumber}" th:placeholder="${text}"  th:value="${inventNumber}"   >
+                
             </div>
         </div>
 

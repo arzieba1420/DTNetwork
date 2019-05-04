@@ -10,6 +10,16 @@ input[type=text], textarea {
     resize: vertical;
 }
 
+input.disabledInput{
+    color: #000000;
+    background-color: #b8b8b8;
+    font-weight: bold;
+}
+
+input.disabledInput:hover{
+    cursor: not-allowed;
+}
+
 select {
     width: 98%;
     padding: 12px;
@@ -20,6 +30,10 @@ select {
 
 input[type=text]:focus, textarea:focus, select:focus{
     border: 1.1px solid #327530;
+}
+
+input.disabledInput:focus{
+    border: 1.1px solid red;!important;
 }
 
 label {
