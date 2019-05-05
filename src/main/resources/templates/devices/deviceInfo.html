@@ -30,7 +30,9 @@
 </div>
 
 <div class="col-75" style="margin-left: 200px">
+
     <table>
+
         <tr id="topBar">
             <th>Attribute</th>
             <th>Value</th>
@@ -59,9 +61,9 @@
         </tr>
         <tr>
             <td>Number of posts</td>
-            <td th:text="${dao.getShortPosts().size()}"></td>
-            <td th:if="${dao.getShortPosts().size()==0}" th:text="'---'" ></td>
-            <td th:if="${dao.getShortPosts().size()!=0}" ><a th:href="@{'/posts/devices/'+${dto.getInventNumber()}}" th:text="' &#8981;'+'Show posts'" ></a></td>
+            <td th:text="${posts}"></td>
+            <td th:if="${posts==0}" th:text="'---'" ></td>
+            <td th:if="${posts!=0}" ><a th:href="@{'/posts/devices/'+${dto.getInventNumber()}}" th:text="' &#8981;'+'Show posts'" ></a></td>
 
         </tr>
         <tr>
@@ -73,7 +75,7 @@
         </tr>
 
     </table>
-    <div style="width:65%; display: flex;  justify-content: space-around; ">
+    <div style="width:65%; display: flex;  justify-content: center; ">
         <div class="tooltip">
             <a th:href="@{/posts/addForm/}+${dto.getInventNumber()}"><i class="fas fa-clipboard-list" style=" color: #051f64;"></i></a>
             <span class="tooltiptext">Add new post</span>

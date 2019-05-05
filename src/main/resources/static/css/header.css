@@ -7,12 +7,14 @@
     flex-flow: row;
     justify-content: center;
     background: linear-gradient(to bottom left, #e0e0e0, #eeeeee);
+    /*background: linear-gradient(to bottom left, #2e2be0, #ee203d);*/
 
     /*background-image: white;*/
     border: 2px solid #779742;
     margin: 0px;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
+
 
 }
 

@@ -1,12 +1,13 @@
 .tooltip {
     position: relative;
     display: inline-block;
-    margin-right: 0px;
+    margin: 0px 40px;
 
 }
 
 .tooltip i{
     font-size: 300%;
+
 }
 
 
@@ -25,8 +26,8 @@
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
-    top: 105%;
-    right: 105%;
+    top: 120%;
+    right: 60%;
     /* Position the tooltip */
     position: absolute;
     z-index: 99;

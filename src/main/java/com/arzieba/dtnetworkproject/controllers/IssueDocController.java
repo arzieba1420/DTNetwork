@@ -117,7 +117,8 @@ public class IssueDocController {
             return "posts/addPostForm";
         }
         issueDocService.create(dto);
-        return "redirect:/devices/"+dto.getInventNumber();
+        String text = "redirect:/devices/" + dto.getInventNumber();
+        return text ;
     }
 
     @GetMapping("/damages/{damageId}")

@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
+    <script src="../../static/js/collapsible.js" th:src="@{/js/collapsible.js}" ></script>
 </head>
 <body>
 <script>
@@ -21,13 +21,15 @@
 </script>
 <div th:replace="~{fragments/header.html::header}"></div>
 <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
-<div class="container" style="min-height: 100vh; padding-top: 150px; ">
-    <div class="col-25" style="margin-left: 50px">
+
+<div class="container" style="min-height: 100vh; padding-top: 50px;  ">
+    <div class="col-25" style="margin-left: 50px; margin-top: 0px">
         <h1 style="text-align: center; border:2px solid black; width: 350px;background-color: lightgray" th:text="${dto.getDeviceDescription()}+ '&roarr;'+${dto.getRoom()}"></h1>
         <img style="text-align: left;width: 350px;height: 350px" src="" th:src="${dto.deviceType.getIMAGE()}" alt="">
     </div>
 
-    <div class="col-75" style="margin-left: 200px">
+    <div class="col-75" style="margin-left: 200px; margin-top: 50px">
+        <h1 id="tableTitle"  ><span>Damages for selected device</span></h1>
         <div class="table">
 
             <div class="row header">
@@ -69,22 +71,18 @@
             </div>
 
         </div>
-        <div style="width:100%; display: flex;  justify-content: space-around;">
-            <div class="tooltip">
-                <a th:href="@{/posts/addForm/}+${dto.getInventNumber()}"><i class="fas fa-clipboard-list" style=" color: #051f64;"></i></a>
-                <span class="tooltiptext">Add new post</span>
-            </div>
+        <div style="width:100%; display: flex;  justify-content: center; ">
             <div class="tooltip">
                 <a href="" th:href="@{/damages/addForm/}+${dto.getInventNumber()}"> <i class="fas fa-exclamation-circle" style=" color: #640108;"></i></a>
                 <span class="tooltiptext">Add new damage</span>
             </div>
             <div class="tooltip">
-                <i class="fas fa-file-invoice-dollar" style=" color: darkgreen;"></i>
-                <span class="tooltiptext">Add new document</span>
+                <a th:href="@{'/devices/'+${dto.getInventNumber()}}"><i class="fas fa-info-circle" style=" color: aqua;"></i></a>
+                <span class="tooltiptext">Show device info</span>
             </div>
             <div class="tooltip">
-                <a th:href="@{'/devices/'+${dto.getInventNumber()}}"><i class="fas fa-backward" style=" color: #55003b;"></i></a>
-                <span class="tooltiptext">Back to device info</span>
+                <a onclick="window.history.go(-1)" ><i class="fas fa-backward" style=" color: #55003b;"></i></a>
+                <span class="tooltiptext">Back to previous site</span>
             </div>
         </div>
     </div>

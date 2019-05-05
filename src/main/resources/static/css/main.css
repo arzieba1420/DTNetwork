@@ -67,7 +67,7 @@ a:hover{
 
 }
 
- h1{
+ /*h1{
   text-align: center;
   font-family: Poppins-Bold;
   backface-visibility: hidden;
@@ -79,7 +79,7 @@ a:hover{
  h1 span{
   border: 2px solid black;
   padding: 5px;
-}
+}*/
 
 .wrap-table100:last-child{
   text-align: right;
@@ -125,6 +125,7 @@ a:hover{
   padding-bottom: 20px;
   border-bottom: 1px solid lightgrey;
   border-right: 2px solid lightgrey;
+
   height: 30px;
 
 }
@@ -136,15 +137,21 @@ a:hover{
 
   /*line-height: 1.2;*/
   font-weight: unset !important;
-  border-right: 2px solid white;
+  border-right: 2px solid lightgrey;
+
 
 
   padding-top: 9px;
   padding-bottom: 9px;
 }
 
+.row.header .cell:first-child{
+  border-left: 2px solid lightgrey;
+}
+
 .row .cell:nth-child(1) {
   width: 100px;
+  border-left: 2px solid lightgrey;
   /*padding-left: 40px;*/
 }
 
@@ -161,7 +168,7 @@ a:hover{
  }*/
 
 .row .cell:last-child{
-  margin-right: 1px;
+
   width: 100px;
 
 

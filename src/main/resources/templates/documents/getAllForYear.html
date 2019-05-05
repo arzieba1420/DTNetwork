@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" href="" th:href="@{/css/collapsible.css}">
-    
+    <link rel="stylesheet"  th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/tooltips.css}">
     <link rel="stylesheet" th:href="@{/css/simpleTable.css}">
     <link rel="stylesheet" href="../static/css/overlay.css">
@@ -23,7 +23,10 @@
     </script>
     <div th:replace="~{fragments/header.html::header}"></div>
     <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
-    <div class="container" style="min-height: 100vh;padding-top: 150px; display: flex;flex-flow: row;justify-content: center">
+
+    <div class="container" style="min-height: 100vh;" >
+        <h1><span th:text="'Documents in ' +${year} "> </span></h1>
+    <div style="display: flex;flex-flow: row;justify-content: center">
     <table style=" width: 80%;  margin: 10px 30px">
         <tr id="topBar">
             <th >Signature</th>
@@ -56,6 +59,7 @@
         </tr>
     
     </table>
+    </div>
     </div>
     <div th:insert="~{fragments/footer.html::footer}"></div>
     <script>

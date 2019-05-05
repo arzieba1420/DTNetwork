@@ -1,6 +1,4 @@
-/**:not(UL LI) {
-    box-sizing: border-box;
-}*/
+
 
 input[type=text], textarea {
     width: 95%;
@@ -10,20 +8,12 @@ input[type=text], textarea {
     resize: vertical;
 }
 
-input.disabledInput{
-    color: #000000;
-    background-color: #b8b8b8;
-    font-weight: bold;
-}
-
-input.disabledInput:hover{
-    cursor: not-allowed;
-}
 
 select {
     width: 98%;
     padding: 12px;
     border: 1px solid #ccc;
+
     border-radius: 4px;
     resize: vertical;
 }
@@ -32,8 +22,22 @@ input[type=text]:focus, textarea:focus, select:focus{
     border: 1.1px solid #327530;
 }
 
-input.disabledInput:focus{
-    border: 1.1px solid red;!important;
+select.disabledSelect{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background-color: darkgrey;
+    z-index: 99;
+
+}
+
+select.disabledSelect:focus{
+    border: none;
+
+}
+
+
+select.disabledSelect:hover{
+    cursor: not-allowed;
 }
 
 label {
@@ -59,11 +63,13 @@ input[type=submit]:hover {
 }
 
 .container {
+    margin-top: 100px;
     border-radius: 5px;
     background-color: rgba(240, 240, 240, 0.1);
 
     padding: 20px;
     margin-right: 10px;
+
 }
 
 .col-25 {
@@ -71,6 +77,10 @@ input[type=submit]:hover {
     width: 25%;
     margin-top: 6px;
 
+}
+
+.col-25 h1{
+    color: black;!important;
 }
 
 .col-75 {
@@ -85,4 +95,25 @@ input[type=submit]:hover {
     content: "";
     display: table;
     clear: both;
+}
+
+.container h1{
+    text-align: center;
+}
+
+.col-75 h1{
+    text-align: center;
+    font-family: Poppins-Bold;
+    backface-visibility: hidden;
+    font-size: 2.0em;
+    color: #666666;
+    margin-bottom: 70px;
+    margin-top: 10px;
+    width: inherit;
+    margin-left: inherit;
+}
+
+.col-75 h1 span{
+    border: 2px solid black;
+    padding: 5px;
 }

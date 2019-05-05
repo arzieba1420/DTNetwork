@@ -3,6 +3,7 @@ package com.arzieba.dtnetworkproject.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -15,6 +16,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class ShortPost {
 
     @Id

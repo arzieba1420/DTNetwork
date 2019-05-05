@@ -128,10 +128,11 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public List<IssueDocumentDTO> getIssueDocuments(String inventNumber) {
-        return issueDocumentDAO.findAll().stream()
-                .filter(d->d.getInventNumber().equals(inventNumber))
+
+        return issueDocumentDAO.findByInventNumber(inventNumber).stream()
                 .map(IssueDocMapper::map)
                 .collect(Collectors.toList());
+
     }
 
     @Override

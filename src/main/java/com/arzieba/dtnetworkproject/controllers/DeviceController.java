@@ -64,6 +64,13 @@ public class DeviceController {
          model.addAttribute("dao",device);
          model.addAttribute("issueDAO", issueDocumentDAO);
          model.addAttribute("CalUtil", new CalendarUtil());
+         int posts = device.getShortPosts().size();
+        for (ShortPost post: device.getShortPosts()) {
+            if (post.getContent().contains("damage")){
+                posts--;
+            }
+        }
+        model.addAttribute("posts",posts);
          return "devices/deviceInfo";
     }
 
@@ -81,7 +88,7 @@ public class DeviceController {
     public String create2(Model model, @ModelAttribute("dto") DeviceDTO dto ){
         dto.setRoom(dto.getRoom());
         deviceService.create(dto);
-        return "redirect:/dtnetwork";
+        return "redirect:/devices/"+ dto.getInventNumber() ;
     }
 
     @GetMapping("/addForm/{room}")

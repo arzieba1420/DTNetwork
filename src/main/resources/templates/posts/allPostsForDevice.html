@@ -28,6 +28,7 @@
     </div>
 
     <div class="col-75" style="margin-left: 200px">
+        <h1 id="tableTitle"  ><span>Posts for selected device</span></h1>
         <div class="table">
 
             <div class="row header">
@@ -49,7 +50,8 @@
 
             </div>
 
-            <div class="row" th:each="key, iterStat: ${posts.keySet()} ">
+            <div class="row"  th:each="key, iterStat: ${posts.keySet()} "
+                 th:if="${!posts.get(key).content.contains('damage')}" >
                 <div class="cell" data-title="Date" th:text="${posts.get(key).date}" >
                     11-11-2011
                 </div>
@@ -68,22 +70,18 @@
             </div>
 
         </div>
-        <div style="width:100%; display: flex;  justify-content: space-around;">
+        <div style="width:100%; display: flex;  justify-content: center;">
             <div class="tooltip">
                 <a th:href="@{/posts/addForm/}+${dto.getInventNumber()}"><i class="fas fa-clipboard-list" style=" color: #051f64;"></i></a>
                 <span class="tooltiptext">Add new post</span>
             </div>
             <div class="tooltip">
-                <i class="fas fa-exclamation-circle" style=" color: #640108;"></i>
-                <span class="tooltiptext">Add new damage</span>
+                <a th:href="@{'/devices/'+${dto.getInventNumber()}}"><i class="fas fa-info-circle" style=" color: aqua;"></i></a>
+                <span class="tooltiptext">Show device info</span>
             </div>
             <div class="tooltip">
-                <i class="fas fa-file-invoice-dollar" style=" color: darkgreen;"></i>
-                <span class="tooltiptext">Add new document</span>
-            </div>
-            <div class="tooltip">
-                <a th:href="@{'/devices/'+${dto.getInventNumber()}}"><i class="fas fa-backward" style=" color: #55003b;"></i></a>
-                <span class="tooltiptext">Back to device info</span>
+                <a onclick="window.history.go(-1)" ><i class="fas fa-backward" style=" color: #55003b;"></i></a>
+                <span class="tooltiptext">Back to previous site</span>
             </div>
         </div>
     </div>
