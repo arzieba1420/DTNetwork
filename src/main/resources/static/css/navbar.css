@@ -2,7 +2,7 @@
 
 #bar{
     width: 100%;
-    background: linear-gradient(to top,#23b423, #004400);
+    background: linear-gradient(to top,#23b423, #008600);
     border: 1px solid black;
     position: relative;
     height: complex;
@@ -85,15 +85,15 @@ ul ul,ul ul li ul{
     width: 180px;
 }
 ul ul{
-    top: 39px;
+    top: 40px;
     left: 0;
 }
 ul ul li ul{
     top: 0;
-    left: 181px;
+    left: 131px;
 }
 ul ul li a{
-    background: linear-gradient(#0065b2,#1685da);
+    background: linear-gradient(#86b278, #98da59);
     z-index: 99;
     padding: 7px 15px;
     color: #fff;
@@ -101,7 +101,7 @@ ul ul li a{
     text-decoration: none;
     display: inline-block;
     float: left;
-    width: 150px;
+    width: 100px;
     border-bottom: 1px dotted #fff;
     border-radius: 10px;
 }

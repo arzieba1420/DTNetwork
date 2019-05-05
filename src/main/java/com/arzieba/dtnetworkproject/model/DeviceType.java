@@ -13,7 +13,7 @@ public enum DeviceType {
     PCW("/images/pcw.jpg"),
     XDP("/images/xdp.png"),
     XDC("/images/xdc.png"),
-    HIROSS("/images/hiross.jpg"),
+    HIROSS("/images/hiross.png"),
     GENERATOR("/images/generator.jpg"),
     DRY_COOLER("/images/cooler.png"),
     OTHER("/images/cyfronet.jpg");

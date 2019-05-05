@@ -83,7 +83,7 @@ public class ShortPostController {
     @PostMapping("/add")
     public String  create(Model model, ShortPostDTO dto){
         postService.create(dto);
-        return "success";
+        return "error";
     }
 
     @PostMapping("/addAsModel")

@@ -38,7 +38,7 @@ public class MainController {
 
         Map<Integer,ShortPostDTO> mapa = new LinkedHashMap<>();
         List<Integer> keys = dao.findTop5ByOrderByDateDesc().stream().map(d->d.getPostId()).collect(Collectors.toList());
-        System.out.println(keys);
+
 
         for (int i = 0; i <keys.size() ; i++) {
             ShortPostDTO dto = postService.findById(keys.get(i));

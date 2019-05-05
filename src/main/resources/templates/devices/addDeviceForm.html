@@ -51,7 +51,7 @@
                 </div>
                 <div class="col-75">
                 <select class="disabledSelect" th:readonly="readonly"  id="room" th:field="*{room}">
-                    <option th:value="${room}" th:text="${room.name()}" ></option>
+                    <option th:hidden="hidden" th:value="${room}" th:text="${room.name()}" ></option>
                 </select>
                 </div>
             </div>
