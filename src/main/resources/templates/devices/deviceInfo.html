@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
+    <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" th:href="@{/css/tooltips.css}">
+    <link rel="stylesheet" th:href="@{/css/simpleTable.css}">
+    <link rel="stylesheet" href="../static/css/overlay.css">
+    <link rel="stylesheet" href="" th:href="@{/css/header.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <style>
+
+    </style>
+</head>
+<body>
+<script>
+    window.location.refresh();
+</script>
+<div th:replace="~{fragments/header.html::header}"></div>
+<div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
+<div class="container" style="min-height: 100vh; padding-top: 150px; ">
+<div class="col-25" style="margin-left: 50px">
+    <h1 style="text-align: center; border:2px solid black; width: 350px;background-color: lightgray" th:text="${dto.getDeviceDescription()}+ '&roarr;'+${dto.getRoom()}"></h1>
+    <img style="text-align: left;width: 350px;height: 350px" src="" th:src="${dto.deviceType.getIMAGE()}" alt="">
+</div>
+
+<div class="col-75" style="margin-left: 200px">
+
+    <table>
+
+        <tr id="topBar">
+            <th>Attribute</th>
+            <th>Value</th>
+            <th>Action</th>
+        </tr>
+        <tr>
+            <td>Invent Number</td>
+            <td th:text="${dto.getInventNumber()}">Test</td>
+            <td th:text="'---'"></td>
+
+        </tr>
+        <tr>
+            <td>Start date</td>
+            <td th:if="${dao.getDeviceCard()== null}" th:text="'Not known'"> </td>
+            <td th:if="${dao.getDeviceCard()!= null}" th:text="${CalUtil.cal2string(dao.getDeviceCard().getStartDate())}"> </td>
+
+            <td th:if="${dao.getDeviceCard()== null}"><a href="" th:text="'---'"></a> </td>
+            <td th:if="${dao.getDeviceCard()!= null}"><a href="" th:text="' &#8981;'+' Show device card'"></a> </td>
+        </tr>
+        <tr>
+            <td>Number of damages</td>
+            <td th:text="${dao.getDamageList().size()}"></td>
+            <td th:if="${dao.getDamageList().size()==0}" th:text="'---'" ></td>
+            <td th:if="${dao.getDamageList().size()!=0}" ><a th:href="@{'/damages/devices/'+${dto.getInventNumber()}}" th:text="' &#8981;'+' Show damages'" > </a></td>
+
+        </tr>
+        <tr>
+            <td>Number of posts</td>
+            <td th:text="${posts}"></td>
+            <td th:if="${posts==0}" th:text="'---'" ></td>
+            <td th:if="${posts!=0}" ><a th:href="@{'/posts/devices/'+${dto.getInventNumber()}}" th:text="' &#8981;'+'Show posts'" ></a></td>
+
+        </tr>
+        <tr>
+            <td>Number of documents</td>
+            <td th:text="${issueDAO.findByInventNumber(dto.getInventNumber()).size()}"></td>
+            <td th:if="${issueDAO.findByInventNumber(dto.getInventNumber()).size()==0}" th:text="'---'" ></td>
+            <td th:if="${issueDAO.findByInventNumber(dto.getInventNumber()).size()!=0}" ><a href="" th:href="@{'/issueDocs/devices/'+${dto.getInventNumber()}}" th:text="' &#8981;'+'Show documents'" ></a></td>
+
+        </tr>
+
+    </table>
+    <div style="width:65%; display: flex;  justify-content: center; ">
+        <div class="tooltip">
+            <a th:href="@{/posts/addForm/}+${dto.getInventNumber()}"><i class="fas fa-clipboard-list" style=" color: #051f64;"></i></a>
+            <span class="tooltiptext">Add new post</span>
+        </div>
+        <div class="tooltip">
+            <a href="" th:href="@{/damages/addForm/}+${dto.getInventNumber()}"> <i class="fas fa-exclamation-circle" style=" color: #640108;"></i></a>
+            <span class="tooltiptext">Add new damage</span>
+        </div>
+        <div class="tooltip">
+            <a th:href="@{/issueDocs/addForm/}+${dto.getInventNumber()}"><i class="fas fa-file-invoice-dollar" style=" color: darkgreen;"></i></a>
+            <span class="tooltiptext">Add new document</span>
+        </div>
+        <div class="tooltip" th:if="${dao.getDeviceCard()== null}">
+            <i class="far fa-id-card" style=" color: #55003b;"></i>
+            <span class="tooltiptext">Add device card</span>
+        </div>
+    </div>
+</div>
+
+</div>
+<div th:insert="~{fragments/footer.html::footer}"></div>
+</body>
+</html>

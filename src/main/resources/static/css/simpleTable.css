@@ -1,0 +1,52 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 65%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+
+
+#topBar{
+    background: linear-gradient(45deg, #818181, #cccccc);
+
+}
+
+td a:visited{
+    color: inherit;
+    text-decoration: none;
+}
+
+td a{
+    text-decoration: none;
+    color: inherit;
+}
+
+td a:hover{
+    color: #0065b2;
+    cursor: pointer;
+}
+
+td {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+
+}
+
+th {
+
+    border: 2px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+    width: 100px;
+}
+
+
+tr:hover{
+    background-color: #dfdfdf;
+}
+tr {
+    background-color: #f0f0f0;
+}

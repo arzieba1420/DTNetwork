@@ -1,5 +1,8 @@
 package com.arzieba.dtnetworkproject.model;
 
+import org.springframework.stereotype.Component;
+
+
 public enum  Room {
     G39,
     G04,

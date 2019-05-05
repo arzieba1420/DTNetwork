@@ -1,0 +1,188 @@
+
+
+a{
+  text-decoration: none;
+  color: #666666;
+}
+
+a:hover{
+  color: #0065b2;
+}
+
+.limiter {
+
+  width: 100%;
+  margin: 0 auto;
+
+}
+
+
+.formButton{
+  border:0;
+  background:none;
+  /*And other css to remove the default button property */
+}
+
+
+
+
+.container-table100 {
+  width: 100%;
+  min-height: 100vh;
+
+/*  background-image: linear-gradient(to bottom right,rgba(89,218,255,0.38),rgba(98,255,47,0.58));*/
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: start;
+  /*align-items: center;*/
+  justify-content: center;
+
+
+  flex-wrap: wrap;
+ /* padding: 350px 30px;*/
+  margin-top: 200px;
+
+
+}
+
+.wrap-table100 {
+  width: 1300px;
+
+  overflow: hidden;
+  padding-bottom: 30px;
+
+}
+
+.table {
+  width: 100%;
+  display: table;
+  margin: 0;
+  margin-bottom: 30px;
+
+
+
+}
+
+ h1{
+  text-align: center;
+  font-family: Poppins-Bold;
+  backface-visibility: hidden;
+  font-size: 2.0em;
+  color: #666666;
+   margin-bottom: 20px;
+}
+
+ h1 span{
+  border: 2px solid black;
+  padding: 5px;
+}
+
+.wrap-table100:last-child{
+  text-align: right;
+  z-index: 11;
+}
+
+
+
+.row {
+  display: table;
+  background: #fff;
+}
+
+.row.header {
+  color: #ffffff;
+  background: linear-gradient(45deg, #818181, #cccccc);
+
+
+
+}
+
+
+
+.cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+
+
+.row .cell {
+  font-family: Poppins-Regular;
+  font-size: 15px;
+  color: #666666;
+  line-height: 1.2;
+  font-weight: unset !important;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+
+
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid lightgrey;
+  border-right: 2px solid lightgrey;
+
+  height: 30px;
+
+}
+
+.row.header .cell {
+  font-family: Poppins-Regular;
+  font-size: 18px;
+  color: #fff;
+
+  /*line-height: 1.2;*/
+  font-weight: unset !important;
+  border-right: 2px solid lightgrey;
+
+
+
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+
+.row.header .cell:first-child{
+  border-left: 2px solid lightgrey;
+}
+
+.row .cell:nth-child(1) {
+  width: 100px;
+  border-left: 2px solid lightgrey;
+  /*padding-left: 40px;*/
+}
+
+.row .cell:nth-child(2) {
+  width: 100px;
+}
+
+.row .cell:nth-child(3) {
+  width: 100px;
+}
+
+/*.row .cell:nth-child(4) {
+   width: 190px;
+ }*/
+
+.row .cell:last-child{
+
+  width: 100px;
+
+
+}
+
+
+
+.table, .row {
+  width: 100% !important;
+}
+
+.row:hover {
+  background-color: #ececff;
+  cursor: pointer;
+}
+
+

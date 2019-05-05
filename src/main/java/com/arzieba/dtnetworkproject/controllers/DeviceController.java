@@ -9,16 +9,14 @@ import com.arzieba.dtnetworkproject.dto.DamageDTO;
 import com.arzieba.dtnetworkproject.dto.DeviceCardDTO;
 import com.arzieba.dtnetworkproject.dto.DeviceDTO;
 import com.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
-import com.arzieba.dtnetworkproject.model.Damage;
-import com.arzieba.dtnetworkproject.model.Device;
-import com.arzieba.dtnetworkproject.model.DeviceCard;
-import com.arzieba.dtnetworkproject.model.DeviceType;
+import com.arzieba.dtnetworkproject.model.*;
 import com.arzieba.dtnetworkproject.services.device.DeviceService;
 
 import com.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController
+@Controller
 @RequestMapping("devices")
 public class DeviceController {
 
@@ -58,9 +56,22 @@ public class DeviceController {
     }
 
     //Returns DeviceDTO by ID = inventNumber
-    @GetMapping("/inventNumbers/{inventNumber}")
-    public DeviceDTO findByInventNumber(@PathVariable String inventNumber){
-        return deviceService.findByInventNumber(inventNumber);
+    @GetMapping("/{inventNumber}")
+    public String findByInventNumber(@PathVariable String inventNumber, Model model){
+         DeviceDTO dto= deviceService.findByInventNumber(inventNumber);
+         Device device= deviceDAO.findByInventNumber(inventNumber);
+         model.addAttribute("dto",dto);
+         model.addAttribute("dao",device);
+         model.addAttribute("issueDAO", issueDocumentDAO);
+         model.addAttribute("CalUtil", new CalendarUtil());
+         int posts = device.getShortPosts().size();
+        for (ShortPost post: device.getShortPosts()) {
+            if (post.getContent().contains("damage")){
+                posts--;
+            }
+        }
+        model.addAttribute("posts",posts);
+         return "devices/deviceInfo";
     }
 
     @GetMapping("/types/{type}")
@@ -71,6 +82,20 @@ public class DeviceController {
     @PostMapping("/add")
     public DeviceDTO create(@RequestBody DeviceDTO deviceDTO){
         return deviceService.create(deviceDTO);
+    }
+
+    @PostMapping("/addAsModel")
+    public String create2(Model model, @ModelAttribute("dto") DeviceDTO dto ){
+        dto.setRoom(dto.getRoom());
+        deviceService.create(dto);
+        return "redirect:/devices/"+ dto.getInventNumber() ;
+    }
+
+    @GetMapping("/addForm/{room}")
+    public String addForm(Model model, @PathVariable String room){
+        model.addAttribute("newDevice", new DeviceDTO());
+        model.addAttribute("room",Room.valueOf(room));
+        return "devices/addDeviceForm";
     }
 
     @PutMapping("/update")
@@ -100,8 +125,8 @@ public class DeviceController {
 
 
 
-    @GetMapping("/image/{type}")
-    public String getImage(@PathVariable DeviceType type){
+    @GetMapping("/home")
+    public String home(){
         return "index.html";
     }
 

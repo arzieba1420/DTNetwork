@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.Pattern;
+
 @Component
 @Getter
 @Setter
@@ -18,6 +20,7 @@ public class DamageDTO {
     private String description;
 
 
+    @Pattern(regexp="dd-MM-yyyy")
     private String damageDate;
 
     private Author author;
@@ -26,6 +29,8 @@ public class DamageDTO {
 
     private Integer damageId;
 
+    private boolean newPostFlag;
+
     //**** Getters, setters, toString, constructor
 
 
@@ -33,7 +38,7 @@ public class DamageDTO {
 
     //*******Additional Util Methods
 
-    /*//Mapper to Do
+    /*//Mapper to
 
 
     }

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
+
+    <link rel="stylesheet"  th:href="@{/css/navbar.css}">
+
+    <link rel="stylesheet" href="../static/css/overlay.css">
+    <link rel="stylesheet" href="" th:href="@{/css/header.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+</head>
+<body>
+<script>
+    window.location.refresh();
+</script>
+<div th:replace="~{fragments/header.html::header}"></div>
+<div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
+
+
+
+<div class="container" style="min-height: 100vh">
+    <h1 id="tableTitle"  ><span>Add new damage</span></h1>
+    <form action="" th:action="@{'/damages/addAsModel'}" th:object="${newDamage}" method="post"
+          modelAttribute="dto" >
+        <div class="row">
+            <div class="col-25">
+                <label for="date">Date</label>
+            </div>
+            <div class="col-75">
+                <input type="text" id="date" name="Date" placeholder="DD-MM-YYYY" th:field="*{damageDate}">
+            </div>
+        </div>
+        <!--Add select!-->
+        <div class="row">
+            <div class="col-25">
+                <label for="device">Device</label>
+            </div>
+            <div class="col-75">
+                <select class="disabledSelect" id="device" name="Device"  th:field="*{deviceInventNumber}">
+                    <option th:hidden="hidden" th:readonly="readonly"  th:value="${inventNumber}" th:text="${text}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25">
+                <label for="author">Author</label>
+            </div>
+            <div class="col-75">
+                <select id="author" name="author" th:field="*{author}" >
+                    <option value="null">Choose author</option>
+                    <option th:each="author,iterStat:${authors}" th:value="${author}" th:text="${author}">Canada</option>
+
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="content">Description</label>
+            </div>
+            <div class="col-75">
+                <textarea id="content" name="content" placeholder="Write something.." style="height:200px" th:field="*{description}"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="check">Auto-create new post?</label>
+            </div>
+            <div class="col-75">
+                <input type="checkbox" id="check" name="newPostFlag"  th:checked="*{newPostFlag}">
+            </div>
+        </div>
+        <div class="row">
+            <input type="submit" value="Cancel" onclick="window.history.go(-1); return false;">
+            <input type="submit" value="Submit" style="margin-right: 20px">
+        </div>
+    </form>
+</div>
+
+
+
+<div th:insert="~{fragments/footer.html::footer}"></div>
+</body>
+</html>

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.transaction.Transactional;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,6 +58,19 @@ public class IssueDocServiceImpl implements IssueDocService {
     }
 
     @Override
+    public List<IssueDocumentDTO> findByYear(int year) {
+
+
+
+
+        List<IssueDocumentDTO> list= issueDocumentDAO.findAll().stream()
+                .filter(d->d.getIssueDate().get(Calendar.YEAR) ==year)
+                .map(d->IssueDocMapper.map(d))
+                .collect(Collectors.toList());
+        return list;
+    }
+
+    @Override
     public List<IssueDocumentDTO> findByDamageId(Integer id) {
         return issueDocumentDAO.findByDamage_DamageId(id).stream()
                 .map(IssueDocMapper::map)
@@ -85,16 +98,31 @@ public class IssueDocServiceImpl implements IssueDocService {
 
     @Override
     public IssueDocumentDTO remove(String signature) {
-        if(!issueDocumentDAO.existsByIssueSignature(signature)){
+        if (!issueDocumentDAO.existsByIssueSignature(signature)) {
             throw new IssueDocumentNotFoundException("Issue Document not found!");
-        } else{
+        } else {
             IssueDocumentDTO removed = findBySignature(signature);
             issueDocumentDAO.delete(issueDocumentDAO.findByIssueSignature(signature));
-            removed.setIssueTittle("Removed "+removed.getIssueTittle());
+            removed.setIssueTittle("Removed " + removed.getIssueTittle());
             return removed;
 
         }
     }
+
+    @Override
+        public Set<Integer> setOfYears(){
+
+            List<Integer> yearsList= issueDocumentDAO.findAll().stream()
+                    .map(d->d.getIssueDate().get( Calendar.YEAR))
+                    .collect(Collectors.toList());
+            Set<Integer> years =yearsList.stream().collect(Collectors.toSet());
+            TreeSet<Integer> sortedSet = new TreeSet<>();
+            sortedSet.addAll(years);
+            //test
+
+            return sortedSet;
+        }
+
 
 
 }

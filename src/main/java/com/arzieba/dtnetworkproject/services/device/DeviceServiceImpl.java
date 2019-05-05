@@ -11,6 +11,7 @@ import com.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import com.arzieba.dtnetworkproject.model.Device;
 import com.arzieba.dtnetworkproject.model.DeviceCard;
 import com.arzieba.dtnetworkproject.model.IssueDocument;
+import com.arzieba.dtnetworkproject.model.Room;
 import com.arzieba.dtnetworkproject.utils.damage.DamageMapper;
 import com.arzieba.dtnetworkproject.utils.device.DeviceMapper;
 import com.arzieba.dtnetworkproject.utils.deviceCard.DeviceCardMapper;
@@ -127,10 +128,11 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public List<IssueDocumentDTO> getIssueDocuments(String inventNumber) {
-        return issueDocumentDAO.findAll().stream()
-                .filter(d->d.getInventNumber().equals(inventNumber))
+
+        return issueDocumentDAO.findByInventNumber(inventNumber).stream()
                 .map(IssueDocMapper::map)
                 .collect(Collectors.toList());
+
     }
 
     @Override
@@ -138,9 +140,12 @@ public class DeviceServiceImpl implements DeviceService {
         return DeviceCardMapper.map(deviceCardDAO.findByDevice_InventNumber(inventNumber));
     }
 
-
-
-
+    @Override
+    public List<DeviceDTO> findByRoom(String room) {
+        return deviceDAO.findAll().stream().filter(d->d.getRoom().equals(Room.valueOf(room)))
+                .map(DeviceMapper::map)
+                .collect(Collectors.toList());
+    }
 
 
 }
