@@ -11,6 +11,8 @@
 
     /*background-image: white;*/
     border: 2px solid #779742;
+
+    border-bottom: none;
     margin: 0px;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;

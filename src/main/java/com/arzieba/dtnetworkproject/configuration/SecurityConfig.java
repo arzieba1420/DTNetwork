@@ -29,11 +29,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new InMemoryUserDetailsManager(user,admin);
     }
 
+    //TODO configure permitions
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .anyRequest()
-                .hasAnyRole("USER","ADMIN")
+                .anyRequest().permitAll()
+           /*     hasAnyRole("USER","ADMIN")*/
                 .and()
                 .formLogin().permitAll()
                 .and()

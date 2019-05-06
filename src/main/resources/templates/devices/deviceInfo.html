@@ -16,6 +16,7 @@
     <style>
 
     </style>
+    <link rel="stylesheet" href="../../../../../../strona1/style.css">
 </head>
 <body>
 <script>
@@ -23,13 +24,13 @@
 </script>
 <div th:replace="~{fragments/header.html::header}"></div>
 <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
-<div class="container" style="min-height: 100vh; padding-top: 150px; ">
+<div class="container" style="min-height: 100vh; padding-top: 100px; ">
 <div class="col-25" style="margin-left: 50px">
     <h1 style="text-align: center; border:2px solid black; width: 350px;background-color: lightgray" th:text="${dto.getDeviceDescription()}+ '&roarr;'+${dto.getRoom()}"></h1>
     <img style="text-align: left;width: 350px;height: 350px" src="" th:src="${dto.deviceType.getIMAGE()}" alt="">
 </div>
 
-<div class="col-75" style="margin-left: 200px">
+<div class="col-75" style="margin-left: 300px">
 
     <table>
 
@@ -50,7 +51,7 @@
             <td th:if="${dao.getDeviceCard()!= null}" th:text="${CalUtil.cal2string(dao.getDeviceCard().getStartDate())}"> </td>
 
             <td th:if="${dao.getDeviceCard()== null}"><a href="" th:text="'---'"></a> </td>
-            <td th:if="${dao.getDeviceCard()!= null}"><a href="" th:text="' &#8981;'+' Show device card'"></a> </td>
+            <td th:if="${dao.getDeviceCard()!= null}"><a href="" th:text="'---'"></a> </td>
         </tr>
         <tr>
             <td>Number of damages</td>
@@ -88,9 +89,13 @@
             <a th:href="@{/issueDocs/addForm/}+${dto.getInventNumber()}"><i class="fas fa-file-invoice-dollar" style=" color: darkgreen;"></i></a>
             <span class="tooltiptext">Add new document</span>
         </div>
-        <div class="tooltip" th:if="${dao.getDeviceCard()== null}">
-            <i class="far fa-id-card" style=" color: #55003b;"></i>
+        <div class="tooltip"  th:if="${dao.getDeviceCard()== null}" >
+            <a th:href="@{/cards/addForm/}+${dto.getInventNumber()}"><i class="far fa-id-card" style=" color: #55003b;"></i></a>
             <span class="tooltiptext">Add device card</span>
+        </div>
+        <div class="tooltip"  th:if="${dao.getDeviceCard()!= null}" >
+            <a href=""><i class="far fa-id-card" style=" color: #55003b;"></i></a>
+            <span class="tooltiptext">Show device card</span>
         </div>
     </div>
 </div>

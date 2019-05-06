@@ -91,7 +91,7 @@ public class initComponent {
         /*Integer i= deviceDAO.findAll().get(0).getDeviceCard().getDeviceCardID();
         System.out.println(i);
         System.out.println(deviceCardDAO.findByDeviceCardID(i).getDevice().getInventNumber());
-        System.out.println(deviceDAO.findAll().get(0).getDeviceCard().getAddress());
+        System.out.println(deviceDAO.findAll().get(0).getDeviceCard().getParameters());
 
 
 

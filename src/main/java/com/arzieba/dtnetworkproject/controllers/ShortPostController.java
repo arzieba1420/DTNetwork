@@ -144,5 +144,33 @@ public class ShortPostController {
         return "posts/addPostFormInv";
     }
 
+    @GetMapping("/all/{year}/{page}")
+    public String allByYear(Model model, @PathVariable int year, @PathVariable int page){
+       Map<Integer,ShortPostDTO> mapa = postService.findAll(year,page-1,10);
+       int numberOfPages = (postService.numberByYear(year))/10 + 1;
+
+       if(postService.numberByYear(year)%10==0){
+           numberOfPages--;
+       }
+       List<Integer> morePages = new LinkedList<>();
+
+       int i = 2;
+       int lastPage = 1;
+
+       while(i<=numberOfPages){
+           morePages.add(i);
+           i++;
+           lastPage++;
+       }
+
+       model.addAttribute("classActiveSettings","active");
+       model.addAttribute("posts",mapa);
+       model.addAttribute("pages",morePages);
+       model.addAttribute("currentPage",page);
+       model.addAttribute("year",year);
+       model.addAttribute("lastPage",lastPage);
+       return "posts/allByYear";
+    }
+
 
 }

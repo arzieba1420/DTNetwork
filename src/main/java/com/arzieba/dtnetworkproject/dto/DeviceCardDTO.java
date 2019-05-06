@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @ToString
 public class DeviceCardDTO {
 
-    private String address;
+    private  String parameters ;
     private final String department = "DTN";
     private Room installPlace;
     private String keeperData;

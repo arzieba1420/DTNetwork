@@ -21,8 +21,8 @@
 </script>
 <div th:replace="~{fragments/header.html::header}"></div>
 <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
-<div class="container" style="min-height: 100vh; padding-top: 150px; ">
-    <div class="col-25" style="margin-left: 50px">
+<div class="container" style="min-height: 100vh; padding-top: 0px; ">
+    <div class="col-25" style="margin-left: 50px;margin-top: 100px">
         <h1 style="text-align: center; border:2px solid black; width: 350px;background-color: lightgray" th:text="${dto.getDeviceDescription()}+ '&roarr;'+${dto.getRoom()}"></h1>
         <img style="text-align: left;width: 350px;height: 350px" src="" th:src="${dto.deviceType.getIMAGE()}" alt="">
     </div>

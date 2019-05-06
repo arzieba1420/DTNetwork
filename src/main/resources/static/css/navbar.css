@@ -3,15 +3,20 @@
 #bar{
     width: 100%;
     background: linear-gradient(to top,#23b423, #008600);
-    border: 1px solid black;
+    border-bottom: 1px solid black;
+    border-right: 2px solid #779742;
+    border-left: 2px solid  #779742;
+    border-top: none;
     position: relative;
     height: complex;
     display: flex;
     justify-content: center;
     flex-flow: row;
     height: 40px;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
     padding-top: 5px;
+    margin: 0px;
+
 
 
 }
@@ -24,19 +29,21 @@ ul{
     padding-left: 0px;
     margin-top: 5px;
     position: relative;
-  /*  float: left;*/
+    float: left;
     display: table-cell;
     width: 100%;
     margin-bottom: 5px;
     z-index: 98;
     border-collapse: collapse;
+
 }
 
 
 /**/
 ul li{
     display: inline;
-    margin: 0;
+
+
     padding: 0;
     float: left;
     position: relative;
@@ -45,7 +52,7 @@ ul li{
 }
 ul li a{
     border-right: 1px solid #fff;
-    padding: 10px 25px;
+    padding: 10px 15px;
     color: #373737;
     font-weight: bold;
     /*text-shadow: 1px 1px 0 #222;*/
@@ -58,9 +65,17 @@ ul li a{
     margin-right: 15px;
     border-bottom: 1px solid #fff;
     border-top: 1px solid #fff;
+    width: 100px;
+    text-align: center;
+
+
 
 
 }
+ul li a.home , ul li a.logout {
+   width: 50px;
+}
+
 
 
 

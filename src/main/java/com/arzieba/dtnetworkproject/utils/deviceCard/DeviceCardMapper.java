@@ -10,7 +10,7 @@ public class DeviceCardMapper {
     public static DeviceCard map(DeviceCardDTO dto, DeviceDAO dao){
         DeviceCard card = new DeviceCard();
         card.setDevice(dao.findByInventNumber(dto.getInventNumber()));
-        card.setAddress(dto.getAddress());
+        card.setAddress(dto.getParameters());
         card.setAttachementsIDs(dto.getAttachementsIDs());
         card.setBuildTime(dto.getBuildTime());
         card.setCreationTime(CalendarUtil.string2cal(dto.getCreationTime()));
@@ -34,7 +34,7 @@ public class DeviceCardMapper {
     public static DeviceCardDTO map(DeviceCard card){
         DeviceCardDTO dto = new DeviceCardDTO();
         dto.setInventNumber(card.getDevice().getInventNumber());
-        dto.setAddress(card.getAddress());
+        dto.setParameters(card.getAddress());
         dto.setAttachementsIDs(card.getAttachementsIDs());
         dto.setBuildTime(card.getBuildTime());
         dto.setCreationTime(CalendarUtil.cal2string(card.getCreationTime()));

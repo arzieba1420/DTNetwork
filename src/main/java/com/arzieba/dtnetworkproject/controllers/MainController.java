@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.thymeleaf.context.WebContext;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -37,7 +36,7 @@ public class MainController {
     public String home(Model model){
 
         Map<Integer,ShortPostDTO> mapa = new LinkedHashMap<>();
-        List<Integer> keys = dao.findTop5ByOrderByDateDesc().stream().map(d->d.getPostId()).collect(Collectors.toList());
+        List<Integer> keys = dao.findTop10ByOrderByDateDesc().stream().map(d->d.getPostId()).collect(Collectors.toList());
 
 
         for (int i = 0; i <keys.size() ; i++) {
