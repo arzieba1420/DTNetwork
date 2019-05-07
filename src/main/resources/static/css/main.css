@@ -37,18 +37,13 @@ a:hover{
   align-items: start;
   /*align-items: center;*/
   justify-content: center;
-
-
   flex-wrap: wrap;
  /* padding: 350px 30px;*/
   margin-top: 100px;
-
-
 }
 
 .wrap-table100 {
   width: 1300px;
-
   overflow: hidden;
   padding-bottom: 30px;
 
@@ -59,9 +54,6 @@ a:hover{
   display: table;
   margin: 0;
   margin-bottom: 30px;
-
-
-
 }
 
  h1{
@@ -74,7 +66,6 @@ a:hover{
 }
 
  h1 span{
-  border: 2px solid black;
   padding: 5px;
 }
 
@@ -82,8 +73,6 @@ a:hover{
   text-align: right;
   z-index: 11;
 }
-
-
 
 .row {
   display: table;
@@ -93,9 +82,6 @@ a:hover{
 .row.header {
   color: #ffffff;
   background: linear-gradient(45deg, #818181, #cccccc);
-
-
-
 }
 
 
@@ -116,28 +102,20 @@ a:hover{
   text-align: center;
   display: table-cell;
   vertical-align: middle;
-
-
   padding-top: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid lightgrey;
   border-right: 2px solid lightgrey;
-
   height: 30px;
-
 }
 
 .row.header .cell {
   font-family: Poppins-Regular;
   font-size: 18px;
   color: #fff;
-
   /*line-height: 1.2;*/
   font-weight: unset !important;
   border-right: 2px solid lightgrey;
-
-
-
   padding-top: 9px;
   padding-bottom: 9px;
 }
@@ -160,18 +138,9 @@ a:hover{
   width: 100px;
 }
 
-/*.row .cell:nth-child(4) {
-   width: 190px;
- }*/
-
 .row .cell:last-child{
-
   width: 100px;
-
-
 }
-
-
 
 .table, .row {
   width: 100% !important;

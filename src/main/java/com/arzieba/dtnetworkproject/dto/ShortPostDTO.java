@@ -15,10 +15,8 @@ public class ShortPostDTO {
     private Author author;
     private String content;
 
-    @Pattern(regexp="dd-MM-yyyy")
+    @Pattern(regexp="^\\d{2}-\\d{2}-\\d{4}$", message = "Respect pattern dd-MM-yyyy")
     private String date;
     private String inventNumber;
     private boolean isForDamage = false;
-
-
 }

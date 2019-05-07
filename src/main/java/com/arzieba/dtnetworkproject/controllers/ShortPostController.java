@@ -4,7 +4,6 @@ import com.arzieba.dtnetworkproject.dao.DeviceDAO;
 import com.arzieba.dtnetworkproject.dao.ShortPostDAO;
 import com.arzieba.dtnetworkproject.dto.DeviceDTO;
 import com.arzieba.dtnetworkproject.dto.ShortPostDTO;
-import com.arzieba.dtnetworkproject.model.Author;
 import com.arzieba.dtnetworkproject.model.Device;
 import com.arzieba.dtnetworkproject.model.ShortPost;
 import com.arzieba.dtnetworkproject.services.device.DeviceService;
@@ -16,14 +15,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/posts")
-public class ShortPostController {
+public class ShortPostController implements WebMvcConfigurer {
 
     private ShortPostDAO postDAO;
     private DeviceDAO deviceDAO;
@@ -39,15 +40,6 @@ public class ShortPostController {
 
     }
 
-    @GetMapping("/all")
-    public List<ShortPostDTO> getAll(){
-        return postService.findAll();
-    }
-
-    @GetMapping("/last5")
-    public @ResponseBody List<ShortPostDTO> getLast5(){
-        return postService.findLast5();
-    }
 
     @GetMapping("/devices/{inv}")
     public String getAllForDevice(@PathVariable String inv, Model model){
@@ -65,20 +57,6 @@ public class ShortPostController {
         return "posts/allPostsForDevice";
     }
 
-    @GetMapping("/devices/last5/{inv}")
-    public List<ShortPostDTO> getLast5ForDevice(@PathVariable String inv){
-        return postService.find5ByDevice(inv);
-    }
-
-    @GetMapping("/authors/{author}")
-    public List<ShortPostDTO> getAllForAuthor(@PathVariable Author author){
-        return postService.findByAuthor(author);
-    }
-
-    @GetMapping("/{id}")
-    public ShortPostDTO findById(@PathVariable Integer id){
-        return postService.findById(id);
-    }
 
     @PostMapping("/add")
     public String  create(Model model, ShortPostDTO dto){
@@ -87,16 +65,16 @@ public class ShortPostController {
     }
 
     @PostMapping("/addAsModel")
-    public String  create2(Model model, @ModelAttribute("dto")  ShortPostDTO dto, BindingResult bindingResult, HttpServletRequest request){
+    public String  create2(Model model,  @Valid @ModelAttribute("newPost")   ShortPostDTO dto, BindingResult bindingResult, HttpServletRequest request){
         if(bindingResult.hasErrors()){
-            return "posts/addPostForm";
+            return "redirect:"+request.getHeader("Referer");
         }
         postService.create(dto);
         return "redirect:/dtnetwork";
     }
 
     @PostMapping("/addAsModel/stay")
-    public String  create3(Model model, @ModelAttribute("dto")  ShortPostDTO dto, BindingResult bindingResult, HttpServletRequest request){
+    public String  create3(Model model,@Valid @ModelAttribute("newPost")   ShortPostDTO dto, BindingResult bindingResult, HttpServletRequest request){
         if(bindingResult.hasErrors()){
             return "posts/addPostForm";
         }

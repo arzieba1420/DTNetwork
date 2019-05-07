@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>DTNetwork</title>
     <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
     <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
     <link rel="stylesheet"  th:href="@{/css/navbar.css}">
@@ -21,7 +21,7 @@
 
     <div class="container" style="min-height: 100vh">
         <h1 ><span>Add new post</span></h1>
-        <form action="/action_page.php" th:action="@{'/posts/addAsModel/stay'}" th:object="${newPost}" method="post"
+        <form  th:action="@{'/posts/addAsModel/stay'}" th:object="${newPost}" method="post"
         modelAttribute="dto" >
             <div class="row">
                 <div class="col-25">
@@ -70,8 +70,6 @@
             </div>
         </form>
     </div>
-
-
 
     <div th:insert="~{fragments/footer.html::footer}"></div>
 </body>

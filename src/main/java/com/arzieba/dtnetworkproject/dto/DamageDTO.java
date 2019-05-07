@@ -14,32 +14,19 @@ import javax.validation.constraints.Pattern;
 @ToString
 public class DamageDTO {
 
-
-    //****Fields
-
     private String description;
 
-
-    @Pattern(regexp="dd-MM-yyyy")
+    @Pattern(regexp="^\\d{2}-\\d{2}-\\d{4}$")
     private String damageDate;
 
     private Author author;
 
-    private String deviceInventNumber; //is deviceDescription in Device.class
+    private String deviceInventNumber;
 
     private Integer damageId;
 
-    private boolean newPostFlag;
-
-    //**** Getters, setters, toString, constructor
-
+    private boolean newPostFlag;  //auto-create relate shortPost or not
 
 }
 
-    //*******Additional Util Methods
 
-    /*//Mapper to
-
-
-    }
-}*/

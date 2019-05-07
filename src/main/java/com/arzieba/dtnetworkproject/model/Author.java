@@ -9,5 +9,4 @@ public enum Author {
     Bartek,
     Grzesiek,
     Tomek;
-
 }

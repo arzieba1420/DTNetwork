@@ -51,10 +51,7 @@ public class DamageController {
         this.deviceService=deviceService;
     }
 
-    @GetMapping("/getAll")
-    public List<DamageDTO> findAll(){
-        return damageService.findAll();
-    }
+
 
     @PostMapping("/addAsModel")
     public String add(@ModelAttribute("dto") DamageDTO damageDTO){
@@ -76,37 +73,6 @@ public class DamageController {
         return "redirect:/dtnetwork";
     }
 
-    @GetMapping("/ids/{id}")
-    public DamageDTO findById(@PathVariable Integer id){
-        return damageService.findById(id);
-    }
-
-    @PutMapping("/update") //requires damageID
-    public DamageDTO update( DamageDTO damageDTO){
-
-       return damageService.update(damageDTO);
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public DamageDTO remove(@PathVariable Integer id){
-        return damageService.remove(id);
-    }
-
-    @GetMapping("/authors/{author}")
-    public List<DamageDTO> findByAuthor(@PathVariable Author author){
-        return damageService.findByAuthor(author.name());
-    }
-
-    @GetMapping("/allBefore")
-    public List<DamageDTO> findByDateBefore(String date){
-        return  damageService.findByDateBefore(date);
-    }
-
-    @GetMapping("/allAfter")
-    public List<DamageDTO> findByDateAfter(String date){
-        return damageService.findByDateAfter(date);
-    }
-
     @GetMapping("/devices/{inventNumber}")
     public String getAllForDevice(@PathVariable String inventNumber, Model model){
         List<Damage> damages = damageDAO.findByDevice_InventNumberOrderByDamageDateDesc(inventNumber);
@@ -125,14 +91,13 @@ public class DamageController {
 
     @GetMapping("/addForm/{inventNumber}")
     public String createDamage(Model model,@PathVariable String inventNumber){
+
         model.addAttribute("newDamage", new DamageDTO());
         model.addAttribute("authors", ListOfEnumValues.authors);
         model.addAttribute("inventNumber",inventNumber);
         String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
                 +" "+deviceDAO.findByInventNumber(inventNumber).getRoom();
         model.addAttribute("text",text);
-
-
 
         return "damages/addForm";
     }

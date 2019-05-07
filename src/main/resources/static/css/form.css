@@ -82,6 +82,11 @@ input[type=submit]:hover {
 
 .col-25 h1{
     color: black;!important;
+    width: 100%; !important;
+}
+.col-25 div{
+
+    width: 100%;
 }
 
 .col-75 {
@@ -91,7 +96,7 @@ input[type=submit]:hover {
 
 }
 
-/* Clear floats after the columns */
+
 .row:after {
     content: "";
     display: table;

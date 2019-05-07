@@ -10,7 +10,7 @@ public enum DeviceType {
     HPM("/images/hpm.png"),
     CHILLER("/images/chiller.png"),
     UPS("/images/ups.png"),
-    PCW("/images/pcw.jpg"),
+    PCW("/images/pcw.png"),
     XDP("/images/xdp.png"),
     XDC("/images/xdc.png"),
     HIROSS("/images/hiross.png"),

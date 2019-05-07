@@ -2,12 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>DTNetwork</title>
     <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
     <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
     <link rel="stylesheet"  th:href="@{/css/navbar.css}">
-    <!--<link rel="stylesheet"  th:href="@{/css/main.css}" href="../static/css/main.css">-->
-    <link rel="stylesheet" href="../static/css/overlay.css">
     <link rel="stylesheet" href="" th:href="@{/css/header.css}">
     <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
@@ -21,14 +19,15 @@
 
     <div class="container" style="min-height: 100vh">
         <h1 ><span>Add new post</span></h1>
-        <form action="/action_page.php" th:action="@{'/posts/addAsModel'}" th:object="${newPost}" method="post"
-        modelAttribute="dto" >
+        <form th:commandName="posts" th:action="@{'/posts/addAsModel'}" th:object="${newPost}" method="post"
+        modelAttribute="newPost" >
             <div class="row">
                 <div class="col-25">
                     <label for="date">Date</label>
                 </div>
                 <div class="col-75">
                     <input type="text" id="date" name="Date" placeholder="DD-MM-YYYY" th:field="*{date}">
+                    <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}" th:text="Wrong date">Name Error></span>
                 </div>
                 <div class="col-75" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">
 
@@ -73,8 +72,6 @@
             </div>
         </form>
     </div>
-
-
 
     <div th:insert="~{fragments/footer.html::footer}"></div>
 </body>

@@ -6,6 +6,7 @@ import com.arzieba.dtnetworkproject.services.device.DeviceService;
 import com.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
 import com.arzieba.dtnetworkproject.utils.enums.ListOfEnumValues;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,9 +31,9 @@ public class MainController {
         this.dao = dao;
     }
 
+    // required because login form redirects to localhost:8080/ not to /dtnetwork
     @GetMapping
     public String homeLog(Model model){
-
        return home(model);
     }
 
@@ -42,12 +43,11 @@ public class MainController {
         Map<Integer,ShortPostDTO> mapa = new LinkedHashMap<>();
         List<Integer> keys = dao.findTop10ByOrderByDateDesc().stream().map(d->d.getPostId()).collect(Collectors.toList());
 
-
         for (int i = 0; i <keys.size() ; i++) {
             ShortPostDTO dto = postService.findById(keys.get(i));
             mapa.put(keys.get(i),dto);
         }
-        List<String> rooms = new ArrayList<>();
+        List<String> rooms;
         rooms = ListOfEnumValues.rooms;
 
         model.addAttribute("deviceServ", deviceService);

@@ -14,7 +14,6 @@ public interface DamageDAO extends CrudRepository<Damage,Integer> {
     List<Damage> findAll();
     List<Damage> findByDevice_InventNumberOrderByDamageDateDesc(String inventNumber);
     Optional<Damage> findById(Integer id);
-    void deleteDamageByDevice_InventNumber(String inventNumber);
     List<Damage> findByAuthor(Author author);
     List<Damage> findByDamageDateAfter(Calendar date);
     List<Damage> findByDamageDateBefore(Calendar date);

@@ -21,26 +21,18 @@ margin: 0px;
 }
 
 .ackData{
-    /*margin: 10px 10px;*/
     margin-left: 60px;
     text-align: center;
     width: 400px;
-   /* display: inline-block;*/
-
-
-
-
     align-self: center;
 }
 
 .otherData{
-    /*display: inline-block;*/
     text-align: center;
     margin-top: 10px;
     margin-left: 1000px;
     width: 400px;
     height: 40px;
-
 }
 
 #ignore{

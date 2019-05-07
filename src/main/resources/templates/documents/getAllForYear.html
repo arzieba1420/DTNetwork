@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>DTNetwork</title>
     <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
     <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
@@ -10,9 +10,9 @@
     <link rel="stylesheet"  th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/tooltips.css}">
     <link rel="stylesheet" th:href="@{/css/simpleTable.css}">
-    <link rel="stylesheet" href="../static/css/overlay.css">
     <link rel="stylesheet" href="" th:href="@{/css/header.css}">
     <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
+    <script th:src="@{/js/collapsible.js}"></script>
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
@@ -55,28 +55,13 @@
             </td>
             <td th:text="${doc.value}">Invent Number</td>
             <td th:text="'---'"></td>
-        
         </tr>
     
     </table>
+
     </div>
     </div>
     <div th:insert="~{fragments/footer.html::footer}"></div>
-    <script>
-        var coll = document.getElementsByClassName("collapsible");
-        var i;
 
-        for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.display === "block") {
-                    content.style.display = "none";
-                } else {
-                    content.style.display = "block";
-                }
-            });
-        }
-    </script>
 </body>
 </html>

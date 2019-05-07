@@ -41,15 +41,6 @@ public class IssueDocController {
         this.damageService=damageService;
     }
 
-    @GetMapping("/all")
-    public List<IssueDocumentDTO> findAll(){
-        return issueDocService.findAll();
-    }
-
-    @GetMapping("/signatures/{signature}")
-    public IssueDocumentDTO findBySignature(@PathVariable String signature){
-        return issueDocService.findBySignature(signature);
-    }
 
     @GetMapping("/devices/{inventNumber}")
     public String findByInventNumber(@PathVariable String inventNumber, Model model){
@@ -60,25 +51,6 @@ public class IssueDocController {
         model.addAttribute("dto", dto);
 
         return "devices/getAllDocs";
-    }
-
-
-
-    @PostMapping("/add")
-    public IssueDocumentDTO create(IssueDocumentDTO documentDTO){
-        return issueDocService.create(documentDTO);
-
-    }
-
-
-    @PutMapping("/update")
-    public IssueDocumentDTO update(IssueDocumentDTO documentDTO){
-        return issueDocService.update(documentDTO);
-    }
-
-    @DeleteMapping("/delete/{sign}")
-    public IssueDocumentDTO delete(@PathVariable String sign){
-        return issueDocService.remove(sign);
     }
 
     @GetMapping("/years")
@@ -117,8 +89,7 @@ public class IssueDocController {
             return "posts/addPostForm";
         }
         issueDocService.create(dto);
-        String text = "redirect:/devices/" + dto.getInventNumber();
-        return text ;
+        return "redirect:/devices/" + dto.getInventNumber();
     }
 
     @GetMapping("/damages/{damageId}")

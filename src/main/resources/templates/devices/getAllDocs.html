@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>DTNetwork</title>
     <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
     <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="" th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/tooltips.css}">
     <link rel="stylesheet" th:href="@{/css/simpleTable.css}">
-    <link rel="stylesheet" href="../static/css/overlay.css">
     <link rel="stylesheet" href="" th:href="@{/css/header.css}">
     <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
@@ -25,8 +24,8 @@
     <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
     <div class="container" style="min-height: 100vh; padding-top: 150px; padding-right: 10px  ">
         <div class="col-25" style="margin-left: 50px">
-            <h1 style="text-align: center; border:2px solid black; width: 350px;background-color: lightgray" th:text="${dto.getDeviceDescription()}+ '&roarr;'+${dto.getRoom()}"></h1>
-            <img style="text-align: left;width: 350px;height: 350px" src="" th:src="${dto.deviceType.getIMAGE()}" alt="">
+            <h1 style="text-align: center; background-color: lightgray" th:text="${dto.getDeviceDescription()}+ '&roarr;'+${dto.getRoom()}"></h1>
+            <div style="text-align: center;"><img  src="" th:src="${dto.deviceType.getIMAGE()}" alt=""></div>
         </div>
         
         <div class="col-75" style="margin-right: 0px; border: 1px solid black;width: 1200px" >
@@ -45,7 +44,7 @@
                     <td style="white-space:pre-wrap;width: 150px" th:text="${doc.issueSignature}">Invent Number</td>
                     <td th:text="${doc.issueDate}">Invent Number</td>
                     <td th:text="${doc.delivererName}">Invent Number</td>
-                    
+
                     <td style="width: 600px">
                         <button class="collapsible"  th:text="${doc.issueTittle}"></button>
                         <div class="content">
@@ -54,11 +53,9 @@
                     </td>
                     <td th:text="${doc.value}">Invent Number</td>
                     <td th:text="'---'"></td>
-                
                 </tr>
-            
-            
             </table>
+
             <div style="width:100%; display: flex;  justify-content: center;">
                 
                 <div class="tooltip">

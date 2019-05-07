@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.Pattern;
 
 
 @Component
@@ -28,20 +29,17 @@ public class DeviceCardDTO {
     private String deliveryDocumentID;
     private String attachementsIDs;
 
+    @Pattern(regexp="^\\d{2}-\\d{2}-\\d{4}$")
     private String deliveryDate;
-    private String startDate;
 
+    @Pattern(regexp="^\\d{2}-\\d{2}-\\d{4}$")
+    private String startDate;
     private String signatureNumber;
     private String financeSource;
     private String creatorOfDeviceCard;
+
+    @Pattern(regexp="^\\d{2}-\\d{2}-\\d{4}$")
     private String creationTime;
     private Double deviceValue;
-
-
     private String inventNumber;
-
-
-
-
-
 }

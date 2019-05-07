@@ -19,6 +19,4 @@ public class DeviceDTO {
     private String deviceDescription;
     private Room room;
     private DeviceType deviceType;
-
-
 }

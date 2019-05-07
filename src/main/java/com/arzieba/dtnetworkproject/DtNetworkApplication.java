@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class DtNetworkApplication extends SpringBootServletInitializer {
+public class DtNetworkApplication  {
 
     public static void main(String[] args) {
         SpringApplication.run(DtNetworkApplication.class, args);

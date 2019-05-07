@@ -26,35 +26,6 @@ public class DeviceCardController {
         this.service = service;
     }
 
-
-    @GetMapping("/all")
-    public List<DeviceCardDTO> findAll(){
-        return service.findAll();
-    }
-
-    @GetMapping("/signatures")
-    public List<String> showSignatures(){
-        return service.showAllSignatures();
-    }
-
-    @GetMapping("/devices/{inv}")
-    public DeviceCardDTO findByDevice(@PathVariable String inv){
-        return service.findForDevice(inv);
-    }
-
-    @GetMapping("/signatures/{sign}")
-    public DeviceCardDTO findBySignature(@PathVariable String sign){
-        return service.findForSignature(sign);
-    }
-
-    @GetMapping("/{id}")
-    public DeviceCardDTO findById(@PathVariable Integer id){
-        return service.findForId(id);
-    }
-
-
-
-
     //tests only
     @DeleteMapping("/delete")
     public String removeById(@RequestParam Integer id){
