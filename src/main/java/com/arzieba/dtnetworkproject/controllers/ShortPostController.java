@@ -11,6 +11,7 @@ import com.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
 import com.arzieba.dtnetworkproject.utils.enums.ListOfEnumValues;
 import com.arzieba.dtnetworkproject.utils.shortPost.ShortPostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -38,6 +39,7 @@ public class ShortPostController implements WebMvcConfigurer {
 
 
 
+
     @Autowired
     public ShortPostController(ShortPostDAO postDAO, DeviceDAO deviceDAO, ShortPostService postService, DeviceService deviceService) {
         this.postDAO = postDAO;
@@ -45,6 +47,11 @@ public class ShortPostController implements WebMvcConfigurer {
         this.postService = postService;
         this.deviceService=deviceService;
 
+    }
+
+    @Bean
+    public FieldError fieldError(){
+        return new FieldError("newPost","date",new String());
     }
 
 
@@ -75,10 +82,11 @@ public class ShortPostController implements WebMvcConfigurer {
     public String  create2(Model model,  @Valid @ModelAttribute("newPost")   ShortPostDTO dto, BindingResult bindingResult, HttpServletRequest request){
 
         if(bindingResult.hasErrors()){
-
+           List<FieldError> errors= bindingResult.getFieldErrors("date");
             System.out.println(bindingResult.getFieldError("date").getDefaultMessage());
             model.addAttribute("message",bindingResult.getFieldError("date").getDefaultMessage());
             model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("errors",errors);
 
             return addForm(model);
         }

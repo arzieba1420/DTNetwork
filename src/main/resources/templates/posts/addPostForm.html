@@ -70,7 +70,7 @@
             </div>
         </form>
     </div>
-    <p th:each="err:${#fields.errors()}" th:text="${message}"></p>
+    <p th:each="err:${errors}" th:text="${message}"></p>
 
     <div th:insert="~{fragments/footer.html::footer}"></div>
 </body>
