@@ -34,10 +34,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .anyRequest().permitAll()
-           /*     hasAnyRole("USER","ADMIN")*/
+               /*.hasAnyRole("USER","ADMIN")*/
                 .and()
                 .formLogin().permitAll()
                 .and()
                 .logout().permitAll();
+
     }
 }

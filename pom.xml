@@ -10,6 +10,7 @@
     </parent>
     <groupId>com.arzieba</groupId>
     <artifactId>dtnetwork-project</artifactId>
+    <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>DTNetwork</name>
     <description>App used in DTN of Cyfronet AGH</description>
@@ -70,6 +71,7 @@
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-catalina</artifactId>
+
             <version>9.0.17</version>
         </dependency>
 

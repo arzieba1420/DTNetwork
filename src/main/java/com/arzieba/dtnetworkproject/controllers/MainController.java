@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/dtnetwork")
+@RequestMapping("/")
 public class MainController {
 
     private ShortPostService postService;
@@ -30,9 +30,13 @@ public class MainController {
         this.dao = dao;
     }
 
-
-
     @GetMapping
+    public String homeLog(Model model){
+
+       return home(model);
+    }
+
+    @GetMapping("/dtnetwork")
     public String home(Model model){
 
         Map<Integer,ShortPostDTO> mapa = new LinkedHashMap<>();
@@ -52,6 +56,7 @@ public class MainController {
 
         return "index";
     }
+
 
     @GetMapping("/redirect")
     public String redirect(HttpServletRequest request){

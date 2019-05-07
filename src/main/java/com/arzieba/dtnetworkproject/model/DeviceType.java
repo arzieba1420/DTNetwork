@@ -14,9 +14,9 @@ public enum DeviceType {
     XDP("/images/xdp.png"),
     XDC("/images/xdc.png"),
     HIROSS("/images/hiross.png"),
-    GENERATOR("/images/generator.jpg"),
+    GENERATOR("/images/generator.png"),
     DRY_COOLER("/images/cooler.png"),
-    OTHER("/images/cyfronet.jpg");
+    OTHER("/images/cyfronet.png");
     
     private final String IMAGE;
 

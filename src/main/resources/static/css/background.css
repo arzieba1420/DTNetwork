@@ -1,10 +1,11 @@
 body {
-    background-image: url('../images/prometheus2.jpg');
-    background-color: rgba(221, 221, 221, 0.4);
+    background-image: url('../images/prometheus2.png');
+   /* background-color: rgba(221, 221, 221, 0.4);*/
     /*background-color: rgb(238, 5, 44);*/
-    background-blend-mode: overlay;
+   /* background-blend-mode: overlay;*/
     background-repeat: no-repeat;
     background-size: cover;
+
     margin: 0;
     padding: 0px;
     position: relative;
