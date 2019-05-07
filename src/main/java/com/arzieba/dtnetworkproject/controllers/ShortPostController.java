@@ -13,9 +13,14 @@ import com.arzieba.dtnetworkproject.utils.shortPost.ShortPostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.thymeleaf.context.IExpressionContext;
+import org.thymeleaf.spring5.expression.Fields;
+import org.thymeleaf.spring5.util.FieldUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -30,6 +35,8 @@ public class ShortPostController implements WebMvcConfigurer {
     private DeviceDAO deviceDAO;
     private ShortPostService postService;
     private DeviceService deviceService;
+
+
 
     @Autowired
     public ShortPostController(ShortPostDAO postDAO, DeviceDAO deviceDAO, ShortPostService postService, DeviceService deviceService) {
@@ -66,8 +73,14 @@ public class ShortPostController implements WebMvcConfigurer {
 
     @PostMapping("/addAsModel")
     public String  create2(Model model,  @Valid @ModelAttribute("newPost")   ShortPostDTO dto, BindingResult bindingResult, HttpServletRequest request){
+
         if(bindingResult.hasErrors()){
-            return "redirect:"+request.getHeader("Referer");
+
+            System.out.println(bindingResult.getFieldError("date").getDefaultMessage());
+            model.addAttribute("message",bindingResult.getFieldError("date").getDefaultMessage());
+            model.addAttribute("bindingResult", bindingResult);
+
+            return addForm(model);
         }
         postService.create(dto);
         return "redirect:/dtnetwork";
@@ -76,6 +89,7 @@ public class ShortPostController implements WebMvcConfigurer {
     @PostMapping("/addAsModel/stay")
     public String  create3(Model model,@Valid @ModelAttribute("newPost")   ShortPostDTO dto, BindingResult bindingResult, HttpServletRequest request){
         if(bindingResult.hasErrors()){
+            System.out.println(bindingResult);
             return "posts/addPostForm";
         }
         postService.create(dto);
@@ -107,6 +121,7 @@ public class ShortPostController implements WebMvcConfigurer {
             mapa.put(key,device.getDeviceDescription());
         }
         model.addAttribute("devices",mapa);
+
         return "posts/addPostForm";
     }
 
