@@ -77,7 +77,6 @@ input[type=submit]:hover {
     width: 25%;
     margin-top: 6px;
     text-align: center;
-
 }
 
 .col-25 h1{
@@ -87,6 +86,10 @@ input[type=submit]:hover {
 .col-25 div{
 
     width: 100%;
+}
+
+.col-25 img{
+    margin: 0px;
 }
 
 .col-75 {
@@ -122,4 +125,20 @@ input[type=submit]:hover {
 .col-75 h1 span{
     border: 2px solid black;
     padding: 5px;
+}
+
+.errors{
+    background-color: #ff645f;
+}
+
+.errors p{
+    padding-left: 10px;
+}
+
+.errors p:first-child{
+    padding-top: 10px;
+}
+
+.errors p:last-child{
+    padding-bottom: 10px;
 }

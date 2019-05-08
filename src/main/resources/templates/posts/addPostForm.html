@@ -16,8 +16,14 @@
     </script>
     <div th:replace="~{fragments/header.html::header}"></div>
     <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
-
+    
+    
+    <div th:if="errorsAmount!=0" class="errors">
+        <p th:each="err,iterStat :${errors}" th:text=" ${iterStat.index+1} + '. Error in field: '+
+               ${err.field.toUpperCase()}+'! Bad value: '+${err.rejectedValue}+'. Error message: '+${err.defaultMessage} " ></p>
+    </div>
     <div class="container" style="min-height: 100vh">
+       
         <h1 ><span>Add new post</span></h1>
         <form  th:action="@{'/posts/addAsModel'}" th:object="${newPost}" method="post"
         modelAttribute="newPost" >
@@ -50,7 +56,7 @@
                 </div>
                 <div class="col-75">
                     <select id="author" name="author" th:field="*{author}" >
-                        <option value="null">Choose author</option>
+                        <option th:value='null' >Choose author</option>
                         <option th:each="author,iterStat:${authors}" th:value="${author}" th:text="${author}">Canada</option>
                         
                     </select>
@@ -70,7 +76,8 @@
             </div>
         </form>
     </div>
-    <p th:each="err:${errors}" th:text="${message}"></p>
+    
+    
 
     <div th:insert="~{fragments/footer.html::footer}"></div>
 </body>
