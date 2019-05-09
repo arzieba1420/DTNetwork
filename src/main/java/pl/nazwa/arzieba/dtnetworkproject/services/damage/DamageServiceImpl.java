@@ -1,5 +1,9 @@
 package pl.nazwa.arzieba.dtnetworkproject.services.damage;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DamageDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceCardDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
@@ -52,11 +56,23 @@ public class DamageServiceImpl implements DamageService {
     }
 
     @Override
-    public List<DamageDTO> findByDeviceInventNumber(String inventNumber) {
-        return damageDAO.findByDevice_InventNumberOrderByDamageDateDesc(inventNumber)
-                .stream()
-                .map(DamageMapper::map)
-                .collect(Collectors.toList());
+    public int numberOfDamagesByDevice(String inventNumber){
+
+        return damageDAO.findByDevice_InventNumber(inventNumber).size();
+    }
+
+
+
+    @Override
+    public List<Damage> findByDeviceInventNumber(int page, int size,String inventNumber) {
+
+        List<Damage> damagePage = damageDAO.findByDevice_InventNumber(PageRequest.of(page, size, Sort.Direction.DESC,"damageDate"), inventNumber)
+                                    .get()
+                                    .collect(Collectors.toList());
+
+        return damagePage;
+
+
     }
 
     @Override

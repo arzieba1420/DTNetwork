@@ -61,6 +61,8 @@ public class ShortPostController implements WebMvcConfigurer {
         }
 
          List<ShortPostDTO> list= postService.findByDevice(inv);
+
+        model.addAttribute("amount",shortPosts.size());
          model.addAttribute("posts",mapa);
          model.addAttribute("dto",dto);
         return "posts/allPostsForDevice";
@@ -168,6 +170,7 @@ public class ShortPostController implements WebMvcConfigurer {
            lastPage++;
        }
 
+       model.addAttribute("amount",postService.numberByYear(year));
        model.addAttribute("classActiveSettings","active");
        model.addAttribute("posts",mapa);
        model.addAttribute("pages",morePages);

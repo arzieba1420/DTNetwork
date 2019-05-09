@@ -56,10 +56,12 @@ ul li a{
     border-top: 1px solid #fff;
     width: 100px;
     text-align: center;
+
 }
 
 ul li a.home , ul li a.logout {
-   width: 50px;
+   width: 70px;
+
 }
 
 .logout.disabled{

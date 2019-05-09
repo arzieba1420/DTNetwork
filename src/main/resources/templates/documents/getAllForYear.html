@@ -25,7 +25,7 @@
     <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
 
     <div class="container" style="min-height: 100vh;" >
-        <h1><span th:text="'Documents in ' +${year} "> </span></h1>
+        <h1><span th:text="'Documents in ' +${year}+ ' ('+ ${amount} +')' "> </span></h1>
     <div style="display: flex;flex-flow: row;justify-content: center">
     <table style=" width: 80%;  margin: 10px 30px">
         <tr id="topBar">
@@ -42,7 +42,7 @@
         </tr>
         <tr th:each="doc:${docs}">
             <td style="white-space:pre-wrap;" th:text="${doc.issueSignature}">Invent Number</td>
-            <td ><a href="" th:href="@{'/devices/'+${doc.inventNumber}}"><span th:text="${doc.inventNumber}"></span></a></td>
+            <td ><a href="" th:href=" @{'/devices/'+${doc.inventNumber}}  "><span th:text="${doc.inventNumber}"></span></a></td>
             
             <td th:text="${doc.issueDate}">Invent Number</td>
             <td th:text="${doc.delivererName}">Invent Number</td>

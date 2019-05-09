@@ -26,7 +26,7 @@
     <div class="limiter">
         <div class="container-table100">
             <div class="wrap-table100">
-                <h1><span th:text="'POSTS IN ' + ${year}"></span></h1>
+                <h1><span th:text="'Posts in ' + ${year}+' ('+ ${amount}+')'"></span></h1>
                 <div class="table">
                     
                     <div class="row header">
@@ -64,7 +64,7 @@
                         </div>
                         
                         <div class="cell remove " >
-                            <a href="#" th:href="@{'/posts/delete/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Remove post</span></a>
+                            <a href="#" th:href="@{'/posts/delete/'+ ${key}+'/stay'}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Remove post</span></a>
                         </div>
                         
                     </div>

@@ -30,8 +30,8 @@
             <div style="text-align: center;"><img  src="" th:src="${dto.deviceType.getIMAGE()}" alt=""></div>
         </div>
 
-        <div class="col-75" style="margin-right: 0px; border: 1px solid black;width: 1200px" >
-            <h1><span>Documents for selected damage</span></h1>
+        <div class="col-75" style="margin-right: 0px; padding-left: 30px; width: 1200px" >
+            <h1><span th:text="'Documents for selected damage ('+ ${amount} +')'"></span></h1>
             <table style="width: 100%">
                 <tr id="topBar">
                     <th style="width: 150px">Signature</th>

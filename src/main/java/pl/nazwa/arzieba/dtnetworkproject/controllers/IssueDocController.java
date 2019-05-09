@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/issueDocs")
@@ -50,6 +51,8 @@ public class IssueDocController {
 
         List<IssueDocumentDTO> docs = deviceService.getIssueDocuments(inventNumber);
         DeviceDTO dto = deviceService.findByInventNumber(inventNumber);
+
+        model.addAttribute("amount", docs.size());
         model.addAttribute("docs", docs);
         model.addAttribute("dto", dto);
 
@@ -125,6 +128,8 @@ public class IssueDocController {
         String inventNumber = damageService.findById(damageId).getDeviceInventNumber();
         DeviceDTO dto= deviceService.findByInventNumber(inventNumber) ;
         List<IssueDocumentDTO> docs= issueDocService.findByDamageId(damageId);
+
+        model.addAttribute("amount", docs.size());
         model.addAttribute("docs",docs);
         model.addAttribute("dto",dto);
         model.addAttribute("damageId", damageId);
@@ -135,7 +140,15 @@ public class IssueDocController {
     @GetMapping("/{year}/{page}")
     public String getAllForYear(@PathVariable int year, Model model,@PathVariable int page){
 
+        boolean hasExistingDevice;
+
+
+
         List<IssueDocumentDTO> docs= issueDocService.findByYear(year,page-1,10);
+
+        List<String> numbers = docs.stream().map(d->d.getInventNumber()).collect(Collectors.toList());
+
+
         int numberOfPages = (issueDocService.numberByYear(year))/10 + 1;
 
         if(issueDocService.numberByYear(year)%10==0){
@@ -152,6 +165,9 @@ public class IssueDocController {
             lastPage++;
         }
 
+
+        model.addAttribute("numbers",numbers);
+        model.addAttribute("amount",issueDocService.numberByYear(year));
         model.addAttribute("classActiveSettings","active");
         model.addAttribute("pages",morePages);
         model.addAttribute("currentPage",page);

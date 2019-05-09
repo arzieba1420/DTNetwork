@@ -58,7 +58,7 @@
                 <td>Number of damages</td>
                 <td th:text="${dao.getDamageList().size()}"></td>
                 <td th:if="${dao.getDamageList().size()==0}" th:text="'---'" ></td>
-                <td th:if="${dao.getDamageList().size()!=0}" ><a th:href="@{'/damages/devices/'+${dto.getInventNumber()}}" th:text="' &#8981;'+' Show damages'" > </a></td>
+                <td th:if="${dao.getDamageList().size()!=0}" ><a th:href="@{'/damages/devices/'+${dto.getInventNumber()}+'/1'}" th:text="' &#8981;'+' Show damages'" > </a></td>
 
             </tr>
             <tr>

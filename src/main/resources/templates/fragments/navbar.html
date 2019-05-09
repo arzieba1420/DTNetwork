@@ -26,7 +26,7 @@
                     <ul>
                         <li  th:each="room:${rooms}"><a href="#" th:text="${room}+' '+'&raquo;'"></a>
                             <ul>
-                                <li th:each="device:${@deviceServiceImpl.findByRoom(room)}"><a th:href="@{/devices/}+ ${device.inventNumber}" th:text="${device.deviceDescription}"></a></li>
+                                <li th:if="${device.getInventNumber()}!='NOT SPECIFIED'" th:each="device:${@deviceServiceImpl.findByRoom(room)}"><a th:href="@{/devices/}+ ${device.inventNumber}" th:text="${device.deviceDescription}"></a></li>
                                 <li><a href="#" th:text="'+' + ' Add new'" th:href="@{/devices/addForm/}+${room}" >+ add new</a></li>
                             </ul>
                         
@@ -51,7 +51,7 @@
 
                 </li>
 
-                <li  ><a class="logout" href="#"  th:text="${@mainController.authentication.getName()}" >Logout</a>
+                <li  ><a style="padding-bottom: 7px" class="logout" href="#"  th:text=" '&#9673; '    +${@mainController.authentication.getName()}" >Logout</a>
                     <ul>
                         <li ><a class="logout" href="#" th:href="@{/logout}" >Logout</a></li>
                         <li th:if="${@mainController.authentication.getName()}=='admin'" ><a class="logout" href="#" th:href="@{/dev}" >Dev panel</a></li>

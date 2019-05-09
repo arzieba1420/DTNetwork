@@ -27,8 +27,8 @@
             <div style="text-align: center;"><img  src="" th:src="${dto.deviceType.getIMAGE()}" alt=""></div>
         </div>
 
-        <div class="col-75" style="margin-left: 200px; margin-top: 50px">
-            <h1 id="tableTitle"  ><span>Damages for selected device</span></h1>
+        <div class="col-75" style="margin-left: 200px; margin-top: 20px">
+            <h1 id="tableTitle"  ><span th:text="'Damages for selected device (' + ${amount}+')' " ></span></h1>
             <div class="table">
 
                 <div class="row header">
@@ -70,6 +70,9 @@
                 </div>
 
             </div>
+    
+            
+            
             <div style="width:100%; display: flex;  justify-content: center; ">
                 <div class="tooltip">
                     <a href="" th:href="@{/damages/addForm/}+${dto.getInventNumber()}"> <i class="fas fa-exclamation-circle" style=" color: #640108;"></i></a>
@@ -82,6 +85,15 @@
                 <div class="tooltip">
                     <a onclick="window.history.go(-1)" ><i class="fas fa-backward" style=" color: #55003b;"></i></a>
                     <span class="tooltiptext">Back to previous site</span>
+                </div>
+            </div>
+    
+            <div  style="text-align: center; margin-top: 50px">
+                <div id="btnContainer"  class="pagination">
+                    <a  th:href="@{'/damages/devices/'+${inventNumber}+'/1' }" >&laquo;</a>
+                    <a th:href="@{'/damages/devices/'+${inventNumber}+'/1' }"  th:class=" ${currentPage}==1 ?'active' : '' " >1</a>
+                    <a th:href="@{'/damages/devices/'+${inventNumber}+'/'+${page} }" th:each="page:${pages}" th:text="${page}" th:class="${currentPage}==${page}? 'active' : ''" >2</a>
+                    <a th:href="@{'/damages/devices/'+${inventNumber}+'/'+${lastPage} }">&raquo;</a>
                 </div>
             </div>
         </div>

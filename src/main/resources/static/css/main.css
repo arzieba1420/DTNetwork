@@ -154,6 +154,7 @@ a:hover{
 .pagination {
   display: inline-block;
   text-align: center;
+  background-color: #cbcbcb;
 }
 
 .pagination a {
@@ -170,6 +171,11 @@ a:hover{
   background-color: #4CAF50;
   color: white;
   border: 1px solid #4CAF50;
+}
+
+.pagination a.active:hover {
+  background-color: #57cc5b;
+  border: 1px solid #57cc5b;
 }
 
 .pagination a:hover:not(.active) {background-color: #ddd;}

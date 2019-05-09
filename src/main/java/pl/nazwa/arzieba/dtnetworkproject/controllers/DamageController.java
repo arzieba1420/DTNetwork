@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -85,16 +86,38 @@ public class DamageController {
         return "redirect:/dtnetwork";
     }
 
-    @GetMapping("/devices/{inventNumber}")
-    public String getAllForDevice(@PathVariable String inventNumber, Model model){
-        List<Damage> damages = damageDAO.findByDevice_InventNumberOrderByDamageDateDesc(inventNumber);
+    @GetMapping("/devices/{inventNumber}/{page}")
+    public String getAllForDevice(@PathVariable String inventNumber, Model model, @PathVariable int page){
+        List<Damage> damages = damageService.findByDeviceInventNumber(page-1,10,inventNumber);
         DeviceDTO dto = deviceService.findByInventNumber(inventNumber);
-        Map<Integer,DamageDTO> mapa = new LinkedHashMap<>();
 
+        Map<Integer,DamageDTO> mapa = new LinkedHashMap<>();
         for (Damage damage: damages) {
             mapa.put(damage.getDamageId(), DamageMapper.map(damage));
         }
 
+        int numberOfPages = (damageService.numberOfDamagesByDevice(inventNumber))/10 + 1;
+
+        if(damageService.numberOfDamagesByDevice(inventNumber)%10==0){
+            numberOfPages--;
+        }
+        List<Integer> morePages = new LinkedList<>();
+
+        int i = 2;
+        int lastPage = 1;
+
+        while(i<=numberOfPages){
+            morePages.add(i);
+            i++;
+            lastPage++;
+        }
+
+        model.addAttribute("amount", damageService.numberOfDamagesByDevice(inventNumber));
+        model.addAttribute("classActiveSettings","active");
+        model.addAttribute("pages",morePages);
+        model.addAttribute("currentPage",page);
+        model.addAttribute("inventNumber",inventNumber);
+        model.addAttribute("lastPage",lastPage);
         model.addAttribute("damages",mapa);
         model.addAttribute("dto",dto);
 
