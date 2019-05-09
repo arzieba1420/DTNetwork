@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Pattern;
 
 
@@ -26,7 +28,7 @@ public class DeviceCardDTO {
     private String producer;
     private String deliverer;
 
-    @Pattern(regexp = "(^[1-9]{4})", message = "Invalid year!")
+    @DecimalMax(value = "2100", message = "Incorrect year: out of bounds <1970;2100>") @DecimalMin(value = "1970",message = "Incorrect year: out of bounds <1970;2100>")
     private int buildTime;
     private String deliveryDocumentID;
     private String attachementsIDs;

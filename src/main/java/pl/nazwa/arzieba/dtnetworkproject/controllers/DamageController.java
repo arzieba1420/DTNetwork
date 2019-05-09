@@ -1,5 +1,7 @@
 package pl.nazwa.arzieba.dtnetworkproject.controllers;
 
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DamageDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceCardDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +54,19 @@ public class DamageController {
 
 
     @PostMapping("/addAsModel")
-    public String add(@ModelAttribute("dto") DamageDTO damageDTO){
+    public String add(Model model,@Valid @ModelAttribute("newDamage") DamageDTO damageDTO, BindingResult bindingResult){
+
+        if(bindingResult.hasFieldErrors()){
+            List<FieldError> allErrors;
+            allErrors = bindingResult.getFieldErrors();
+
+
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("errors",allErrors);
+
+            model.addAttribute("errorsAmount",allErrors.size());
+            return createDamage(model,damageDTO.getDeviceInventNumber());
+        }
 
         if(!damageDTO.isNewPostFlag()) {
             damageService.create(damageDTO);

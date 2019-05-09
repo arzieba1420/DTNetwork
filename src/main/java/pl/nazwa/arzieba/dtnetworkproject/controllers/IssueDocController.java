@@ -1,5 +1,6 @@
 package pl.nazwa.arzieba.dtnetworkproject.controllers;
 
+import org.springframework.validation.FieldError;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DamageDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceCardDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
@@ -16,6 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -84,9 +87,34 @@ public class IssueDocController {
     }
 
     @PostMapping("/addAsModel/stay")
-    public String  create3(Model model, @ModelAttribute("dto")  IssueDocumentDTO dto, BindingResult bindingResult, HttpServletRequest request){
-        if(bindingResult.hasErrors()){
-            return "posts/addPostForm";
+    public String  create3(Model model, @Valid @ModelAttribute("dto")  IssueDocumentDTO dto, BindingResult bindingResult, HttpServletRequest request){
+        if(bindingResult.hasFieldErrors()) {
+            List<FieldError> allErrors;
+            allErrors = bindingResult.getFieldErrors();
+            System.out.println(allErrors.size());
+
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("errors", allErrors);
+
+            model.addAttribute("errorsAmount", allErrors.size());
+            return addFormDam(dto.getDamageId(), model);
+        }
+        issueDocService.create(dto);
+        return "redirect:/devices/" + dto.getInventNumber();
+    }
+
+    @PostMapping("/addAsModel/stay2")
+    public String  create(Model model, @Valid @ModelAttribute("newDoc")  IssueDocumentDTO dto, BindingResult bindingResult, HttpServletRequest request){
+        if(bindingResult.hasFieldErrors()) {
+            List<FieldError> allErrors;
+            allErrors = bindingResult.getFieldErrors();
+            System.out.println(allErrors.size());
+
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("errors", allErrors);
+
+            model.addAttribute("errorsAmount", allErrors.size());
+            return addFormDev(dto.getInventNumber(), model);
         }
         issueDocService.create(dto);
         return "redirect:/devices/" + dto.getInventNumber();
@@ -104,10 +132,31 @@ public class IssueDocController {
 
     }
 
-    @GetMapping("/{year}")
-    public String getAllForYear(@PathVariable int year, Model model){
-        List<IssueDocumentDTO> docs= issueDocService.findByYear(year);
-        model.addAttribute("year", year);
+    @GetMapping("/{year}/{page}")
+    public String getAllForYear(@PathVariable int year, Model model,@PathVariable int page){
+
+        List<IssueDocumentDTO> docs= issueDocService.findByYear(year,page-1,10);
+        int numberOfPages = (issueDocService.numberByYear(year))/10 + 1;
+
+        if(issueDocService.numberByYear(year)%10==0){
+            numberOfPages--;
+        }
+        List<Integer> morePages = new LinkedList<>();
+
+        int i = 2;
+        int lastPage = 1;
+
+        while(i<=numberOfPages){
+            morePages.add(i);
+            i++;
+            lastPage++;
+        }
+
+        model.addAttribute("classActiveSettings","active");
+        model.addAttribute("pages",morePages);
+        model.addAttribute("currentPage",page);
+        model.addAttribute("year",year);
+        model.addAttribute("lastPage",lastPage);
         model.addAttribute("docs",docs);
         return "documents/getAllForYear";
     }

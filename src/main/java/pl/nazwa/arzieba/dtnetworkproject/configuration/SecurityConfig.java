@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails admin = User.withDefaultPasswordEncoder()
                 .username("admin")
                 .password("dtnetwork")
-                .roles("ADMIN")
+                .roles("ADMIN","USER")
                 .build();
 
         return new InMemoryUserDetailsManager(user,admin);
@@ -33,7 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .anyRequest().permitAll()
+                .antMatchers("/dev").hasRole("ADMIN")
+
+                .anyRequest().hasRole("USER")
                /*.hasAnyRole("USER","ADMIN")*/
                 .and()
                 .formLogin().permitAll()

@@ -12,7 +12,6 @@ import javax.validation.constraints.Pattern;
 @Component
 @Getter
 @Setter
-@ToString
 public class DamageDTO {
 
     @Pattern(regexp = "^[a-zA-Z0-9\\s]+$",

@@ -1,5 +1,7 @@
 package pl.nazwa.arzieba.dtnetworkproject.services.issueDocument;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DamageDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceCardDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
@@ -56,16 +58,24 @@ public class IssueDocServiceImpl implements IssueDocService {
     }
 
     @Override
-    public List<IssueDocumentDTO> findByYear(int year) {
+    public List<IssueDocumentDTO> findByYear(int year,int page, int size) {
 
+        Calendar startDate = new GregorianCalendar(year,0,1);
+        Calendar endDate = new GregorianCalendar(year,11,31);
 
+        List<IssueDocumentDTO> documentPage = issueDocumentDAO.findAllByIssueDateBetween(
+                PageRequest.of(page,size, Sort.Direction.DESC,"issueDate"),
+                startDate,endDate)
+                .get()
+                .map(IssueDocMapper::map)
+                .collect(Collectors.toList());
 
-
-        List<IssueDocumentDTO> list= issueDocumentDAO.findAll().stream()
+        /*List<IssueDocumentDTO> list= issueDocumentDAO.findAll().stream()
                 .filter(d->d.getIssueDate().get(Calendar.YEAR) ==year)
                 .map(d->IssueDocMapper.map(d))
-                .collect(Collectors.toList());
-        return list;
+                .collect(Collectors.toList());*/
+
+        return documentPage;
     }
 
     @Override
@@ -119,6 +129,15 @@ public class IssueDocServiceImpl implements IssueDocService {
             //test
 
             return sortedSet;
+        }
+
+        @Override
+        public int numberByYear(int year){
+        long l = issueDocumentDAO.findAll().stream()
+                .filter(d->d.getIssueDate().get(Calendar.YEAR)==year)
+                .count();
+
+        return (int) l;
         }
 
 

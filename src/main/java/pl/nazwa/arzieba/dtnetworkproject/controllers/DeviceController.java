@@ -1,6 +1,8 @@
 package pl.nazwa.arzieba.dtnetworkproject.controllers;
 
 
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DamageDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceCardDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
@@ -15,6 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.nazwa.arzieba.dtnetworkproject.model.Room;
 import pl.nazwa.arzieba.dtnetworkproject.model.ShortPost;
+
+import javax.validation.Valid;
+import java.util.List;
 
 
 @Controller
@@ -63,7 +68,19 @@ public class DeviceController {
 
 
     @PostMapping("/addAsModel")
-    public String create2(Model model, @ModelAttribute("dto") DeviceDTO dto ){
+    public String create2(Model model, @Valid @ModelAttribute("dto") DeviceDTO dto, BindingResult bindingResult){
+
+        if(bindingResult.hasFieldErrors()){
+            List<FieldError> allErrors;
+            allErrors = bindingResult.getFieldErrors();
+            System.out.println(allErrors.size());
+
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("errors",allErrors);
+            model.addAttribute("errorsAmount",allErrors.size());
+            return addForm(model,dto.getRoom().name());
+        }
+
         dto.setRoom(dto.getRoom());
         deviceService.create(dto);
         return "redirect:/devices/"+ dto.getInventNumber() ;

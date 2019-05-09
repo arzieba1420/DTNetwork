@@ -17,10 +17,15 @@
     <div th:replace="~{fragments/header.html::header}"></div>
     <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
 
+    <div th:if="errorsAmount!=0" class="errors">
+        <p th:each="err,iterStat :${errors}" th:text=" ${iterStat.index+1} + '. Error in field: '+
+               ${err.field.toUpperCase()}+'! Bad value: '+${err.rejectedValue}+'. Error message: '+${err.defaultMessage} " ></p>
+    </div>
+
         <div class="container" style="min-height: 100vh">
             <h1 ><span>Add new device</span></h1>
-            <form action="/action_page.php" th:action="@{'/devices/addAsModel'}" th:object="${newDevice}" method="post"
-                  modelAttribute="dto" >
+            <form  th:action="@{'/devices/addAsModel'}" th:object="${newDevice}" method="post"
+                  modelAttribute="newDevice" >
 
                 <div class="row">
                     <div class="col-25">
@@ -38,7 +43,7 @@
                     </div>
                     <div class="col-75">
                     <select  id="deviceType"  th:field="*{deviceType}">
-                        <option value="null">Choose device type</option>
+                        <option th:value="null">Choose device type</option>
                         <option th:each="type:${@listOfEnumValues.deviceTypes}" th:value="${type}" th:text="${type.name()}"></option>
                     </select>
                     </div>

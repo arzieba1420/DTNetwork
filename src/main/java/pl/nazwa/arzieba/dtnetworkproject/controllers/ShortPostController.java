@@ -1,5 +1,6 @@
 package pl.nazwa.arzieba.dtnetworkproject.controllers;
 
+import pl.nazwa.arzieba.dtnetworkproject.DtNetworkApplication;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.ShortPostDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -45,10 +47,7 @@ public class ShortPostController implements WebMvcConfigurer {
 
     }
 
-    @Bean
-    public FieldError fieldError(){
-        return new FieldError("newPost","date",new String());
-    }
+
 
 
     @GetMapping("/devices/{inv}")
@@ -75,14 +74,14 @@ public class ShortPostController implements WebMvcConfigurer {
     }
 
     @PostMapping("/addAsModel")
-    public String  create2(Model model,  @Valid @ModelAttribute("newPost")   ShortPostDTO dto, BindingResult bindingResult, HttpServletRequest request){
+    public String  create2(Model model,  @Valid @ModelAttribute("dto")   ShortPostDTO dto, BindingResult result, HttpServletRequest request){
 
-        if(bindingResult.hasFieldErrors()){
+        if(result.hasFieldErrors()){
            List<FieldError> allErrors;
-           allErrors = bindingResult.getFieldErrors();
+           allErrors = result.getFieldErrors();
             System.out.println(allErrors.size());
 
-            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("bindingResult", result);
             model.addAttribute("errors",allErrors);
 
             model.addAttribute("errorsAmount",allErrors.size());
@@ -93,13 +92,20 @@ public class ShortPostController implements WebMvcConfigurer {
     }
 
     @PostMapping("/addAsModel/stay")
-    public String  create3(Model model,@Valid @ModelAttribute("newPost")   ShortPostDTO dto, BindingResult bindingResult, HttpServletRequest request){
-        if(bindingResult.hasErrors()){
-            System.out.println(bindingResult);
-            return "posts/addPostForm";
+    public String  create3(Model model,@Valid @ModelAttribute  ShortPostDTO shortPostDTO, BindingResult bindingResult, HttpServletRequest request){
+        if(bindingResult.hasFieldErrors()){
+            System.out.println(model.asMap());
+            List<FieldError> allErrors;
+            allErrors = bindingResult.getFieldErrors();
+            System.out.println(allErrors.size());
+
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("errors",allErrors);
+            model.addAttribute("errorsAmount",allErrors.size());
+            return addForm(model,shortPostDTO.getInventNumber());
         }
-        postService.create(dto);
-        return "redirect:/posts/devices/"+dto.getInventNumber();
+        postService.create(shortPostDTO);
+        return "redirect:/posts/devices/"+shortPostDTO.getInventNumber();
     }
 
     @GetMapping("/delete/{id}")
@@ -127,13 +133,13 @@ public class ShortPostController implements WebMvcConfigurer {
             mapa.put(key,device.getDeviceDescription());
         }
         model.addAttribute("devices",mapa);
-
+        System.out.println(System.getProperty("java.io.tmpdir"));
         return "posts/addPostForm";
     }
 
     @GetMapping("/addForm/{inventNumber}")
     public String addForm(Model model, @PathVariable String inventNumber){
-        model.addAttribute("newPost",new ShortPostDTO());
+        model.addAttribute("shortPostDTO",new ShortPostDTO());
         model.addAttribute("authors", ListOfEnumValues.authors);
         model.addAttribute("inventNumber", inventNumber);
 

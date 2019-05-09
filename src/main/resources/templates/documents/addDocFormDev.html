@@ -17,10 +17,15 @@
     <div th:replace="~{fragments/header.html::header}"></div>
     <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
 
+    <div th:if="errorsAmount!=0" class="errors">
+        <p th:each="err,iterStat :${errors}" th:text=" ${iterStat.index+1} + '. Error in field: '+
+               ${err.field.toUpperCase()}+'! Bad value: '+${err.rejectedValue}+'. Error message: '+${err.defaultMessage} " ></p>
+    </div>
+
     <div class="container" style="min-height: 100vh">
         <h1 ><span>Add new document</span></h1>
-        <form action="/action_page.php" th:action="@{'/issueDocs/addAsModel/stay'}" th:object="${newDoc}" method="post"
-              modelAttribute="dto" >
+        <form  th:action="@{'/issueDocs/addAsModel/stay2'}" th:object="${newDoc}" method="post"
+              modelAttribute="newDoc" >
 
             <div class="row">
                 <div class="col-25">
@@ -76,7 +81,7 @@
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="content">Content</label>
+                    <label for="content">Details</label>
                 </div>
                 <div class="col-75">
                     <textarea id="content" name="content" placeholder="Write something.." style="height:200px" th:field="*{issueDetails}"></textarea>
