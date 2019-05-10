@@ -94,14 +94,31 @@ public class IssueDocController {
     public String  create3(Model model, @Valid @ModelAttribute("newDoc")  IssueDocumentDTO issueDocumentDTO, BindingResult bindingResult, HttpServletRequest request){
         if(bindingResult.hasFieldErrors()) {
             List<FieldError> allErrors;
+
+            if(issueDocumentDAO.existsByIssueSignature(issueDocumentDTO.getIssueSignature())){
+                FieldError fieldError = new FieldError("newDoc","issueSignature", issueDocumentDTO.getIssueSignature(),false,null,null ,"Document with this Signature already exist in database!");
+                bindingResult.addError(fieldError);
+            }
+
             allErrors = bindingResult.getFieldErrors();
             System.out.println(allErrors.size());
-
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors", allErrors);
             model.addAttribute("errorsAmount", allErrors.size());
             return addFormDamErr(issueDocumentDTO.getDamageId(), model,issueDocumentDTO);
         }
+
+        if(issueDocumentDAO.existsByIssueSignature(issueDocumentDTO.getIssueSignature())){
+            FieldError fieldError = new FieldError("newDoc","issueSignature", issueDocumentDTO.getIssueSignature(),false,null,null ,"Document with this Signature already exist in database!");
+            bindingResult.addError(fieldError);
+
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("errors", fieldError);
+            model.addAttribute("errorsAmount", 1);
+            return addFormDamErr(issueDocumentDTO.getDamageId(), model,issueDocumentDTO);
+
+        }
+
         issueDocService.create(issueDocumentDTO);
         return "redirect:/devices/" + issueDocumentDTO.getInventNumber();
     }
@@ -110,15 +127,31 @@ public class IssueDocController {
     public String  create(Model model, @Valid @ModelAttribute("newDoc")  IssueDocumentDTO dto, BindingResult bindingResult, HttpServletRequest request){
         if(bindingResult.hasFieldErrors()) {
             List<FieldError> allErrors;
+
+            if(issueDocumentDAO.existsByIssueSignature(dto.getIssueSignature())){
+                FieldError fieldError = new FieldError("newDoc","issueSignature", dto.getIssueSignature(),false,null,null ,"Document with this Signature already exist in database!");
+                bindingResult.addError(fieldError);
+            }
+
             allErrors = bindingResult.getFieldErrors();
             System.out.println(allErrors.size());
-
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors", allErrors);
-
             model.addAttribute("errorsAmount", allErrors.size());
             return addFormDevErr(dto.getInventNumber(), model,dto);
         }
+
+        if(issueDocumentDAO.existsByIssueSignature(dto.getIssueSignature())){
+            FieldError fieldError = new FieldError("newDoc","issueSignature", dto.getIssueSignature(),false,null,null ,"Document with this Signature already exist in database!");
+            bindingResult.addError(fieldError);
+
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("errors", fieldError);
+            model.addAttribute("errorsAmount", 1);
+            return addFormDevErr(dto.getInventNumber(), model,dto);
+
+        }
+
         issueDocService.create(dto);
         return "redirect:/devices/" + dto.getInventNumber();
     }

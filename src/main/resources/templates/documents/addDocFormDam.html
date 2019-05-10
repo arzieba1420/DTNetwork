@@ -43,7 +43,7 @@
                     <label for="signature">Signature</label>
                 </div>
                 <div class="col-75" >
-                    <input type="text" id="signature" name="Signature" placeholder="ACK-DTN..." th:field="*{issueSignature}" th:errorclass="errors">
+                    <input type="text" id="signature" name="Signature" placeholder="ACK-DTN..." th:field="*{issueSignature}" th:errorclass="errorsFields">
                 </div>
             </div>
             <div class="row">
@@ -51,7 +51,7 @@
                     <label for="date">Date</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="date" name="Date" placeholder="DD-MM-YYYY" th:field="*{issueDate}" th:errorclass="errors">
+                    <input type="text" id="date" name="Date" placeholder="DD-MM-YYYY" th:field="*{issueDate}" th:errorclass="errorsFields">
                 </div>
             </div>
             <!--Add select!-->
@@ -71,7 +71,7 @@
                     <label for="delivererName">Deliverer name</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="delivererName" name="Name"  th:field="*{delivererName}"th:errorclass="errors">
+                    <input type="text" id="delivererName" name="Name"  th:field="*{delivererName}"th:errorclass="errorsFields">
                 </div>
             </div>
             <div class="row">
@@ -87,7 +87,7 @@
                     <label for="title">Title</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="title" name="Title"  th:field="*{issueTittle}"th:errorclass="errors">
+                    <input type="text" id="title" name="Title"  th:field="*{issueTittle}"th:errorclass="errorsFields">
                 </div>
             </div>
             <div class="row">
@@ -95,7 +95,7 @@
                     <label for="content">Details</label>
                 </div>
                 <div class="col-75">
-                    <textarea id="content" name="content" placeholder="Write something.." style="height:200px" th:field="*{issueDetails}"th:errorclass="errors"></textarea>
+                    <textarea id="content" name="content" placeholder="Write something.." style="height:200px" th:field="*{issueDetails}"th:errorclass="errorsFields"></textarea>
                 </div>
             </div>
             <div class="row">

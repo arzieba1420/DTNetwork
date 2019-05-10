@@ -148,3 +148,11 @@ input[type=submit]:hover {
 .row.submit{
     margin-bottom: 75px;
 }
+
+.errorsFields{
+    border: 2px solid crimson ;
+}
+
+input[type=text].errorsFields{
+    border: 2px solid crimson ;
+}

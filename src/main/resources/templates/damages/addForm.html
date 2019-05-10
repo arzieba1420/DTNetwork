@@ -34,7 +34,7 @@
                     <label for="date">Date</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="date" name="Date" placeholder="DD-MM-YYYY" th:field="*{damageDate}"th:errorclass="errors">
+                    <input type="text" id="date" name="Date" placeholder="DD-MM-YYYY" th:field="*{damageDate}" th:errorclass="errorsFields">
                 </div>
             </div>
             <!--Add select!-->
@@ -54,7 +54,7 @@
                     <label for="author">Author</label>
                 </div>
                 <div class="col-75">
-                    <select id="author" name="author" th:field="*{author}" th:errorclass="errors" >
+                    <select id="author" name="author" th:field="*{author}" th:errorclass="errorsFields" >
                         <option th:value='null'>Choose author</option>
                         <option th:each="author,iterStat:${authors}" th:value="${author}" th:text="${author}">Canada</option>
 
@@ -66,7 +66,7 @@
                     <label for="content">Description</label>
                 </div>
                 <div class="col-75">
-                    <textarea id="content" name="content" placeholder="Write something.." style="height:200px" th:field="*{description}"th:errorclass="errors"></textarea>
+                    <textarea id="content" name="content" placeholder="Write something.." style="height:200px" th:field="*{description}"th:errorclass="errorsFields"></textarea>
                 </div>
             </div>
             <div class="row">

@@ -33,7 +33,7 @@
                         <label for="inventNumber">Invent Number</label>
                     </div>
                     <div class="col-75">
-                        <input type="text" id="inventNumber" name="inventNumber" placeholder="S-XXX" th:field="*{inventNumber}" th:errorclass="errors">
+                        <input type="text" id="inventNumber" name="inventNumber" placeholder="S-XXX" th:field="*{inventNumber}" th:errorclass="errorsFields">
                     </div>
                 </div>
 
@@ -43,7 +43,7 @@
                         <label for="deviceType">Device type</label>
                     </div>
                     <div class="col-75">
-                    <select  id="deviceType"  th:field="*{deviceType}" th:errorclass="errors">
+                    <select  id="deviceType"  th:field="*{deviceType}" th:errorclass="errorsFields">
                         <option th:value="null">Choose device type</option>
                         <option th:each="type:${@listOfEnumValues.deviceTypes}" th:value="${type}" th:text="${type.name()}"></option>
                     </select>
@@ -55,7 +55,7 @@
                         <label for="room">Room</label>
                     </div>
                     <div class="col-75">
-                    <select class="disabledSelect" th:readonly="readonly"  id="room" th:field="*{room}"th:errorclass="errors">
+                    <select class="disabledSelect" th:readonly="readonly"  id="room" th:field="*{room}"th:errorclass="errorsFields">
                         <option th:hidden="hidden" th:value="${room}" th:text="${room.name()}" ></option>
                     </select>
                     </div>
@@ -66,7 +66,7 @@
                         <label for="description">Description</label>
                     </div>
                     <div class="col-75">
-                        <textarea id="description" name="Description" placeholder="Np CRV 1" style="height:100px" th:field="*{deviceDescription}"th:errorclass="errors"></textarea>
+                        <textarea id="description" name="Description" placeholder="Np CRV 1" style="height:100px" th:field="*{deviceDescription}"th:errorclass="errorsFields"></textarea>
                     </div>
                 </div>
                 <div class="row">
