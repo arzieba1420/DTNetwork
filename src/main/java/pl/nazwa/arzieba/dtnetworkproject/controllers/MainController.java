@@ -3,6 +3,7 @@ package pl.nazwa.arzieba.dtnetworkproject.controllers;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +25,7 @@ import pl.nazwa.arzieba.dtnetworkproject.utils.enums.ListOfEnumValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import pl.nazwa.arzieba.dtnetworkproject.utils.exceptions.DamageNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
@@ -37,9 +39,11 @@ import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/")
-public class MainController {
+public class MainController implements ErrorController {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    private static final String PATH = "/error";
 
     private ShortPostService postService;
     private DeviceService deviceService;
@@ -174,10 +178,10 @@ public class MainController {
     @GetMapping("/dev/exc")
     public String exc(){
         try {
-            throw new RuntimeException();
-        } catch (RuntimeException rexc){
+            throw new DamageNotFoundException();
+        } catch (DamageNotFoundException rexc){
             logger.error("Runtime exc thrown by ADMIN");
-            return "/error";
+            return error();
         }
 
     }
@@ -197,9 +201,14 @@ public class MainController {
         return "build";
     }
 
-    @GetMapping("/error")
+    @GetMapping(value = PATH)
     public String error(){
         return "error";
+    }
+
+    @Override
+    public String getErrorPath() {
+        return PATH;
     }
 
  /*   @PostMapping("/perform_login")
