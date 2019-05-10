@@ -1,16 +1,13 @@
 .headerBar{
     display: flex;
-
     align-items: center;
     height: 120px;
     width: 100%;
     flex-flow: row;
     justify-content: center;
     background: linear-gradient(to bottom left, #e0e0e0, #eeeeee);
-    /*background: linear-gradient(to bottom left, #2e2be0, #ee203d);*/
-
-    /*background-image: white;*/
-    border: 2px solid #779742;
+    border: 2px solid #5a7a3d;
+    border-bottom: none;
     margin: 0px;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
@@ -24,13 +21,11 @@
     margin-left: 150px;
     margin-top: 60px;
     padding-top: 15px;
-
     text-align: right;
     font-family: arial, sans-serif;
     font-size: 1.2em;
     width: 300px;
     z-index: 99;
-    /*color: #1e9e0b;*/
     background: -webkit-linear-gradient( #9ada8c, #1e9d0b);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent
@@ -44,7 +39,6 @@
     margin-right: 10px;
     background-size: contain;
     background-repeat: no-repeat;
-
     margin-top: 10px;
     margin-bottom: 25px;
 
@@ -52,8 +46,8 @@
 
 .headerBar #logo{
 
-  height: 140px;
-    width: 260px;
+  height: 140px;!important;
+    width: 260px;!important;
     background-image: url("../images/logo.png");
     background-size: contain;
     background-repeat: no-repeat;

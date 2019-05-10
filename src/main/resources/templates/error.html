@@ -2,13 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>DTNetwork</title>
+    <title>DTN Error</title>
+    <link rel="icon" type="image/ico" href="../static/images/icoTitl.PNG" th:href="@{/images/icoTitl.PNG}" >
     <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
     <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" th:href="@{/css/tooltips.css}">
     <link rel="stylesheet" th:href="@{/css/simpleTable.css}">
-    <link rel="stylesheet" href="../static/css/overlay.css">
     <link rel="stylesheet" href="" th:href="@{/css/header.css}">
     <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
@@ -29,20 +29,21 @@
     </style>
 </head>
 <body style="min-height: 100vh; background: none">
-<script>
-    window.location.refresh();
-</script>
-<div th:replace="~{fragments/header.html::header}"></div>
-<div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
-   <div class="cont" style=" padding-top: 100px; display: flex;flex-flow: row; justify-content: space-around; align-content: center  ">
-       <img src="../static/images/error_desc.PNG" th:src="@{/images/error_desc.png}" style="width:600px;height: 500px; margin-top: -5%   " >
-       <img src="../static/images/pet2.png" th:src="@{/images/pet2.png}" style="width:800px;height: 500px;  " >
-   </div>
-<div style="margin-top: 30px; text-align: center" >
-    <a class="button" style="  text-align: center" href="index.html" th:href="@{'/dtnetwork'}">Back to home page</a>
-</div>
+    <script>
+        window.location.refresh();
+    </script>
+    <div th:replace="~{fragments/header.html::header}"></div>
+    <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
+       <div class="cont" style=" padding-top: 100px; display: flex;flex-flow: row; justify-content: space-around; align-content: center  ">
+           <img src="../static/images/error_desc.PNG" th:src="@{/images/error_desc.png}" style="width:727px;height: 500px; margin-top: -5%   " >
+           <img src="../static/images/pet2.png" th:src="@{/images/pet2.png}" style="width:800px;height: 500px;  " >
+       </div>
+    <div style="margin-top: 30px; text-align: center" >
+        <a class="button" style="  text-align: center"  onclick=" window.history.go(-1)">Back to previous site</a>
 
-<div th:insert="~{fragments/footer.html::footer}"></div>
+    </div>
+
+    <div th:insert="~{fragments/footer.html::footer}"></div>
 
 </body>
 </html>

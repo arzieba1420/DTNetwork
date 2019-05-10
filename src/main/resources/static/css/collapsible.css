@@ -1,4 +1,3 @@
-/* Style the button that is used to open and close the collapsible content */
 .collapsible {
     background-color: inherit;
     color: #444;
@@ -10,17 +9,13 @@
     font-size: inherit;
     height: inherit;
     display: table-cell;
-
-
 }
 
-/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
 .active, .collapsible:hover {
     background-color: inherit;
     color: #0065b2;
 }
 
-/* Style the collapsible content. Note: hidden by default */
 .content {
     padding: 0 18px;
     display: none;

@@ -63,11 +63,13 @@ input[type=submit]:hover {
 }
 
 .container {
-    margin-top: 100px;
+    margin-top: 60px;
     border-radius: 5px;
     background-color: rgba(240, 240, 240, 0.1);
 
+
     padding: 20px;
+
     margin-right: 10px;
 
 }
@@ -76,11 +78,20 @@ input[type=submit]:hover {
     float: left;
     width: 25%;
     margin-top: 6px;
-
+    text-align: center;
 }
 
 .col-25 h1{
     color: black;!important;
+    width: 100%; !important;
+}
+.col-25 div{
+
+    width: 100%;
+}
+
+.col-25 img{
+    margin: 0px;
 }
 
 .col-75 {
@@ -88,9 +99,10 @@ input[type=submit]:hover {
     width: 50%;
     margin-top: 6px;
 
+
 }
 
-/* Clear floats after the columns */
+
 .row:after {
     content: "";
     display: table;
@@ -114,6 +126,25 @@ input[type=submit]:hover {
 }
 
 .col-75 h1 span{
-    border: 2px solid black;
     padding: 5px;
+}
+
+.errors{
+    background-color: #ff645f;
+}
+
+.errors p{
+    padding-left: 10px;
+}
+
+.errors p:first-child{
+    padding-top: 10px;
+}
+
+.errors p:last-child{
+    padding-bottom: 10px;
+}
+
+.row.submit{
+    margin-bottom: 75px;
 }

@@ -2,7 +2,7 @@
 
 a{
   text-decoration: none;
-  color: #666666;
+  color: inherit;
 }
 
 a:hover{
@@ -13,6 +13,9 @@ a:hover{
 
   width: 100%;
   margin: 0 auto;
+  height: auto;
+  position: relative;
+  margin-bottom: 80px;
 
 }
 
@@ -20,11 +23,8 @@ a:hover{
 .formButton{
   border:0;
   background:none;
-  /*And other css to remove the default button property */
+
 }
-
-
-
 
 .container-table100 {
   width: 100%;
@@ -40,18 +40,13 @@ a:hover{
   align-items: start;
   /*align-items: center;*/
   justify-content: center;
-
-
   flex-wrap: wrap;
  /* padding: 350px 30px;*/
-  margin-top: 200px;
-
-
+  margin-top: 100px;
 }
 
 .wrap-table100 {
   width: 1300px;
-
   overflow: hidden;
   padding-bottom: 30px;
 
@@ -62,9 +57,6 @@ a:hover{
   display: table;
   margin: 0;
   margin-bottom: 30px;
-
-
-
 }
 
  h1{
@@ -77,7 +69,6 @@ a:hover{
 }
 
  h1 span{
-  border: 2px solid black;
   padding: 5px;
 }
 
@@ -85,8 +76,6 @@ a:hover{
   text-align: right;
   z-index: 11;
 }
-
-
 
 .row {
   display: table;
@@ -96,9 +85,6 @@ a:hover{
 .row.header {
   color: #ffffff;
   background: linear-gradient(45deg, #818181, #cccccc);
-
-
-
 }
 
 
@@ -119,28 +105,21 @@ a:hover{
   text-align: center;
   display: table-cell;
   vertical-align: middle;
-
-
   padding-top: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid lightgrey;
   border-right: 2px solid lightgrey;
-
   height: 30px;
-
+  word-wrap: break-word  ;
 }
 
 .row.header .cell {
   font-family: Poppins-Regular;
   font-size: 18px;
   color: #fff;
-
   /*line-height: 1.2;*/
   font-weight: unset !important;
   border-right: 2px solid lightgrey;
-
-
-
   padding-top: 9px;
   padding-bottom: 9px;
 }
@@ -150,7 +129,7 @@ a:hover{
 }
 
 .row .cell:nth-child(1) {
-  width: 100px;
+  width: 80px;
   border-left: 2px solid lightgrey;
   /*padding-left: 40px;*/
 }
@@ -160,21 +139,12 @@ a:hover{
 }
 
 .row .cell:nth-child(3) {
-  width: 100px;
+  width: 150px;
 }
-
-/*.row .cell:nth-child(4) {
-   width: 190px;
- }*/
 
 .row .cell:last-child{
-
   width: 100px;
-
-
 }
-
-
 
 .table, .row {
   width: 100% !important;
@@ -184,5 +154,35 @@ a:hover{
   background-color: #ececff;
   cursor: pointer;
 }
+
+.pagination {
+  display: inline-block;
+  text-align: center;
+  background-color: #cbcbcb;
+  margin-bottom: 100px;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+
+}
+
+.pagination a.active {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #4CAF50;
+}
+
+.pagination a.active:hover {
+  background-color: #57cc5b;
+  border: 1px solid #57cc5b;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
 
 

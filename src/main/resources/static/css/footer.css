@@ -1,44 +1,37 @@
-html{
-margin: 0px;
-    padding: 0px;
 
-}
 
 .footerContainer{
     background-color: #494949;
     color: #cccccc;
     width: 100%;
     height: 60px;
-    margin-bottom: 0px;
-    position: absolute;
+    margin: 0px;
+    margin-top: 0px;
+    position: fixed;
+    bottom: 0;
     padding-bottom: 8px;
    padding-top: 10px;
     display: flex;
     flex-flow: row;
     justify-content: space-between;
+    border-right: 4px solid #494949;
+    z-index: 99;
+
 }
 
 .ackData{
-    /*margin: 10px 10px;*/
     margin-left: 60px;
     text-align: center;
     width: 400px;
-   /* display: inline-block;*/
-
-
-
-
     align-self: center;
 }
 
 .otherData{
-    /*display: inline-block;*/
     text-align: center;
     margin-top: 10px;
     margin-left: 1000px;
     width: 400px;
     height: 40px;
-
 }
 
 #ignore{

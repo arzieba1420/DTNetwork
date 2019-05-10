@@ -3,28 +3,26 @@
 #bar{
     width: 100%;
     background: linear-gradient(to top,#23b423, #008600);
-    border: 1px solid black;
+    border-bottom: 1px solid black;
+    border-right: 2px solid #779742;
+    border-left: 2px solid  #779742;
+    border-top: none;
     position: relative;
     height: complex;
     display: flex;
     justify-content: center;
     flex-flow: row;
     height: 40px;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
     padding-top: 5px;
-
-
+    margin: 0px;
 }
-
-
-
-
 ul{
 
     padding-left: 0px;
     margin-top: 5px;
     position: relative;
-  /*  float: left;*/
+    float: left;
     display: table-cell;
     width: 100%;
     margin-bottom: 5px;
@@ -32,20 +30,18 @@ ul{
     border-collapse: collapse;
 }
 
-
-/**/
 ul li{
     display: inline;
-    margin: 0;
     padding: 0;
     float: left;
     position: relative;
     z-index: 99;
     border-collapse: collapse;
 }
+
 ul li a{
     border-right: 1px solid #fff;
-    padding: 10px 25px;
+    padding: 10px 15px;
     color: #373737;
     font-weight: bold;
     /*text-shadow: 1px 1px 0 #222;*/
@@ -58,11 +54,25 @@ ul li a{
     margin-right: 15px;
     border-bottom: 1px solid #fff;
     border-top: 1px solid #fff;
-
+    width: 100px;
+    text-align: center;
 
 }
 
+ul li a.home , ul li a.logout {
+   width: 70px;
 
+}
+
+.logout.disabled{
+    background: #8b8b8b;
+    color: white;
+}
+
+.logout.disabled:hover{
+   cursor: not-allowed;
+   border: 1px solid white;
+}
 
 ul li:hover>a{
     /*background: linear-gradient(#ff6307, #ff6510);*/
@@ -70,12 +80,12 @@ ul li:hover>a{
     border: 1px solid black;
     background: linear-gradient(to bottom left, #e0e0e0, #eeeeee);
     cursor: pointer;
-
-
 }
+
 ul li:hover>ul{
     visibility: visible;
 }
+
 ul ul,ul ul li ul{
     list-style: none;
     margin: 0;
@@ -84,20 +94,22 @@ ul ul,ul ul li ul{
     position: absolute;
     width: 180px;
 }
+
 ul ul{
     top: 40px;
     left: 0;
 }
+
 ul ul li ul{
     top: 0;
     left: 131px;
 }
+
 ul ul li a{
     background: linear-gradient(#86b278, #98da59);
     z-index: 99;
     padding: 7px 15px;
-    color: #fff;
-
+    color: #4a4a4a;
     text-decoration: none;
     display: inline-block;
     float: left;
@@ -105,8 +117,10 @@ ul ul li a{
     border-bottom: 1px dotted #fff;
     border-radius: 10px;
 }
+
 ul ul ul li a{
     background: linear-gradient(#b22222,#8b0000);
     z-index: 99;
     border-radius: 10px;
+    color: #ffffff;
 }

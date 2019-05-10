@@ -3,21 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Index</title>
+    <title>DTNetwork</title>
+    <link rel="icon" type="image/ico" href="../static/images/icoTitl.PNG" th:href="@{/images/icoTitl.PNG}" >
     <link rel="stylesheet"  th:href="@{/css/navbar.css}">
     <link rel="stylesheet"  th:href="@{/css/main.css}"> <!--href="../static/css/main.css"-->
     <link rel="stylesheet" th:href="@{/css/background.css}" href="../static/css/background.css">
     <link rel="stylesheet" href="../static/css/overlay.css">
     <link rel="stylesheet" href="" th:href="@{/css/header.css}">
     <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
-    <!--<link rel="stylesheet" href="../static/css/background.css" th:href="@{/css/background.css}">-->
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
-    <!--===============================================================================================-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
-
-
 
 </head>
 <body>
@@ -27,14 +23,14 @@
     </script>
     <div th:replace="~{fragments/header.html::header}"></div>
     <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
-   
-    
-  
+
+
+
     
     <div class="limiter">
         <div class="container-table100">
             <div class="wrap-table100">
-                <h1><span>LAST POSTS</span></h1>
+                <h1><span>Last 10 posts</span></h1>
                 <div class="table">
                     
                     <div class="row header">
@@ -51,7 +47,7 @@
                             Content
                         </div>
                         <div class="cell action">
-
+                            ---
                         </div>
 
                     </div>
@@ -67,7 +63,7 @@
                             <a href="" th:text="${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).deviceDescription}+'&roarr;'+${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).room} " th:href="@{'/devices/' + ${lastPosts.get(key).inventNumber}}"></a>
                         </div>
                         <div class="cell" data-title="Related with" th:if="${lastPosts.get(key).content.contains('damage')}" >
-                            <a href="" th:text="${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).deviceDescription}+'&roarr;'+${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).room} " th:href="@{'/damages/devices/' + ${lastPosts.get(key).inventNumber}}"></a>
+                            <a href="" th:text="${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).deviceDescription}+'&roarr;'+${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).room} " th:href="@{'/damages/devices/' + ${lastPosts.get(key).inventNumber}+'/1'}"></a>
                         </div>
                         <div class="cell" data-title="Content" th:text="${lastPosts.get(key).content}" style="white-space: pre">
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusamus alias aliquam aperiam consectetur cum cumque distinctio dolore dolores ea eaque eligendi ipsum iusto laboriosam laudantium libero maxime natus nemo neque nisi odit omnis pariatur perspiciatis porro quae quasi quibusdam quis quod recusandae reiciendis rem rerum similique sunt tempora tempore, velit vero! Atque, culpa nesciunt obcaecati qui quisquam unde veniam. Atque cum cumque debitis delectus, dolores eveniet facere id iste laborum mollitia nam necessitatibus perferendis repellat sint ullam vel voluptatibus. Amet magni, voluptatem. Adipisci cupiditate ea eius maiores modi neque nihil quisquam sint! Adipisci aspernatur aut dignissimos distinctio doloremque expedita, facere fuga fugiat illo iure neque obcaecati omnis placeat qui quo sequi vero vitae voluptate voluptatem voluptates. Atque consectetur consequuntur corporis debitis delectus deleniti doloremque ducimus earum eius expedita fugiat incidunt inventore magni modi molestias nam numquam obcaecati pariatur possimus quisquam sed suscipit, temporibus veniam vero voluptates voluptatibus voluptatum? Est fugiat iure laborum nihil unde? Culpa ex harum impedit laboriosam libero mollitia nostrum quae repellendus sapiente ut? Aliquid aspernatur commodi consequuntur culpa deleniti dicta dignissimos dolorem ea eum facilis hic ipsum itaque laborum molestias, natus placeat, quas quod totam vero voluptate? Ad aliquam aperiam incidunt inventore laboriosam nemo repudiandae temporibus. Blanditiis, incidunt, tenetur. Asperiores corporis eius eligendi enim et iure minus natus nesciunt numquam omnis pariatur placeat porro possimus quaerat quam saepe, tenetur voluptas? Deserunt doloribus, esse, ex excepturi fugiat id impedit itaque modi omnis possimus provident quam quibusdam, unde veniam vero. Eveniet, magni, nulla? Asperiores aut commodi debitis delectus laboriosam praesentium quia quidem sapiente! Accusantium architecto atque aut consectetur, culpa iusto mollitia nesciunt, nihil nulla porro quae quidem repudiandae rerum. Alias amet aperiam asperiores consequatur cupiditate dicta doloribus dolorum facilis harum ipsa ipsam maxime officia possimus quia soluta, sunt vero voluptatem. Cum dolor id impedit officia quibusdam vitae voluptas.
@@ -80,19 +76,11 @@
                             <a href="#" ><i class="fas fa-exclamation-circle" style="font-size: 200%;color: red"></i></a>
                         </div>
                     </div>
-                
                 </div>
-
-
-                <a th:href="@{/posts/addForm}"> <div th:insert="~{fragments/addButton.html::addButton}"></div></a>
-
+                 <div th:insert="~{fragments/addButton.html::addButton}"></div>
             </div>
-
         </div>
-
     </div>
-
-  
    <div th:insert="~{fragments/footer.html::footer}"></div>
 </body>
 </html>

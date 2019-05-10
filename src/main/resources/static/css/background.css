@@ -1,24 +1,19 @@
+html{
+    margin: 0px;
+    padding: 0px;
+
+}
+
 body {
-    background-image: url('../images/prometheus2.jpg');
-    background-color: rgba(221, 221, 221, 0.4);
-    /*background-color: rgb(238, 5, 44);*/
-    background-blend-mode: overlay;
+    background-image: url('../images/prometheus2.png');
     background-repeat: no-repeat;
     background-size: cover;
     margin: 0;
     padding: 0px;
     position: relative;
+    min-width: 1000px;
+    background-position: 0px 160px;
+    height: min-content;
 }
 
- /*h1 {
-    width: 100%;
-    text-align: center;
-    font-family: Poppins-Bold;
-    backface-visibility: hidden;
-    font-size: 2.0em;
-    color: #666666;
 
-     margin-top: 70px;
-
-
-}*/

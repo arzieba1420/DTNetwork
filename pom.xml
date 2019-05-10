@@ -10,6 +10,7 @@
     </parent>
     <groupId>com.arzieba</groupId>
     <artifactId>dtnetwork-project</artifactId>
+    <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <name>DTNetwork</name>
     <description>App used in DTN of Cyfronet AGH</description>
@@ -27,6 +28,13 @@
             <version>2.4.1</version>
 
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <version>2.1.4.RELEASE</version>
+        </dependency>
+
         <!--SWAGGER-->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -63,6 +71,7 @@
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-catalina</artifactId>
+
             <version>9.0.17</version>
         </dependency>
 
@@ -103,6 +112,10 @@
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf</artifactId>
             <version>3.0.11.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring5</artifactId>
         </dependency>
 
 
