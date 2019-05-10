@@ -72,6 +72,12 @@ public class DeviceController {
 
         if(bindingResult.hasFieldErrors()){
             List<FieldError> allErrors;
+
+            if(deviceDAO.existsById(dto.getInventNumber())) {
+
+                FieldError fieldError = new FieldError("newDevice", "inventNumber", dto.getInventNumber(), false, null, null, "Device with this Invent Number already exist in database!");
+                bindingResult.addError(fieldError);
+            }
             allErrors = bindingResult.getFieldErrors();
             System.out.println(allErrors.size());
 
@@ -81,6 +87,15 @@ public class DeviceController {
             return addFormErr(model,dto.getRoom().name(),dto);
         }
 
+        if(deviceDAO.existsById(dto.getInventNumber())){
+
+            FieldError fieldError = new FieldError("newDevice","inventNumber", dto.getInventNumber(),false,null,null ,"Device with this Invent Number already exist in database!");
+            bindingResult.addError(fieldError);
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("errors",fieldError);
+            model.addAttribute("errorsAmount",1);
+            return addFormErr(model,dto.getRoom().name(),dto);
+    }
         dto.setRoom(dto.getRoom());
         deviceService.create(dto);
         return "redirect:/devices/"+ dto.getInventNumber() ;

@@ -197,6 +197,11 @@ public class MainController {
         return "build";
     }
 
+    @GetMapping("/error")
+    public String error(){
+        return "error";
+    }
+
  /*   @PostMapping("/perform_login")
     public String perform(@ModelAttribute("user") UserDetails userDetails ){
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();

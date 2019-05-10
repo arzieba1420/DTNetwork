@@ -112,7 +112,7 @@
                     <label for="buildTime">Rok budowy</label>
                 </div>
                 <div class="col-75" >
-                    <input  type="number" id="buildTime"  placeholder="YYYY" th:field="*{buildTime}" th:errorclass="errors">
+                    <input  type="number" id="buildTime"  placeholder="YYYY" th:field="*{buildTime}" th:errorclass="errorsFields">
                 </div>
             </div>
 
@@ -140,7 +140,7 @@
                     <label for="deliveryDate">Data dostawy</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="deliveryDate"  placeholder="dd-MM-yyyy" th:field="*{deliveryDate}" th:errorclass="errors">
+                    <input type="text" id="deliveryDate"  placeholder="dd-MM-yyyy" th:field="*{deliveryDate}" th:errorclass="errorsFields">
                 </div>
             </div>
     
@@ -149,7 +149,7 @@
                     <label for="startdate">Rozpoczęcie ekspl.</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="startdate"  placeholder="dd-MM-yyyy" th:field="*{startDate}" th:errorclass="errors">
+                    <input type="text" id="startdate"  placeholder="dd-MM-yyyy" th:field="*{startDate}" th:errorclass="errorsFields">
                 </div>
             </div>
     
@@ -185,7 +185,7 @@
                     <label for="creationDate">Data sporządzenia</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="creationDate"  placeholder="dd-MM-yyyy" th:field="*{creationTime}" th:errorclass="errors" >
+                    <input type="text" id="creationDate"  placeholder="dd-MM-yyyy" th:field="*{creationTime}" th:errorclass="errorsFields" >
                 </div>
             </div>
     
