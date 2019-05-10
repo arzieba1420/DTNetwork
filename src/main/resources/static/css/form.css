@@ -63,11 +63,13 @@ input[type=submit]:hover {
 }
 
 .container {
-    margin-top: 100px;
+    margin-top: 60px;
     border-radius: 5px;
     background-color: rgba(240, 240, 240, 0.1);
 
+
     padding: 20px;
+
     margin-right: 10px;
 
 }
@@ -96,6 +98,7 @@ input[type=submit]:hover {
     float: left;
     width: 50%;
     margin-top: 6px;
+
 
 }
 
@@ -140,4 +143,8 @@ input[type=submit]:hover {
 
 .errors p:last-child{
     padding-bottom: 10px;
+}
+
+.row.submit{
+    margin-bottom: 75px;
 }

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>DTNetwork</title>
+    <link rel="icon" type="image/ico" href="../static/images/icoTitl.PNG" th:href="@{/images/icoTitl.PNG}" >
     <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
     <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
@@ -73,7 +74,7 @@
     
             
             
-            <div style="width:100%; display: flex;  justify-content: center; ">
+            <div class="tooltipContainer" >
                 <div class="tooltip">
                     <a href="" th:href="@{/damages/addForm/}+${dto.getInventNumber()}"> <i class="fas fa-exclamation-circle" style=" color: #640108;"></i></a>
                     <span class="tooltiptext">Add new damage</span>

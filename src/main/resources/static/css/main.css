@@ -13,6 +13,9 @@ a:hover{
 
   width: 100%;
   margin: 0 auto;
+  height: auto;
+  position: relative;
+  margin-bottom: 80px;
 
 }
 
@@ -107,6 +110,7 @@ a:hover{
   border-bottom: 1px solid lightgrey;
   border-right: 2px solid lightgrey;
   height: 30px;
+  word-wrap: break-word  ;
 }
 
 .row.header .cell {
@@ -125,7 +129,7 @@ a:hover{
 }
 
 .row .cell:nth-child(1) {
-  width: 100px;
+  width: 80px;
   border-left: 2px solid lightgrey;
   /*padding-left: 40px;*/
 }
@@ -135,7 +139,7 @@ a:hover{
 }
 
 .row .cell:nth-child(3) {
-  width: 100px;
+  width: 150px;
 }
 
 .row .cell:last-child{
@@ -155,6 +159,7 @@ a:hover{
   display: inline-block;
   text-align: center;
   background-color: #cbcbcb;
+  margin-bottom: 100px;
 }
 
 .pagination a {

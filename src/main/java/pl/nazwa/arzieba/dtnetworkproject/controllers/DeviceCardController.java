@@ -46,6 +46,8 @@ public class DeviceCardController {
         return "devices/addCardForm";
     }
 
+
+
     @PostMapping("/addAsModel")
     public String create(Model model, @Valid @ModelAttribute("newCard") DeviceCardDTO dto, BindingResult bindingResult){
 
@@ -60,11 +62,22 @@ public class DeviceCardController {
 
 
             model.addAttribute("errorsAmount",allErrors.size());
-            return addForm(model,dto.getInventNumber());
+            return addFormErr(model,dto.getInventNumber(),dto);
         }
+
+
 
         service.create(dto);
         return "redirect:/devices/"+dto.getInventNumber();
+    }
+
+
+    public String addFormErr(Model model, @PathVariable String inventNumber, DeviceCardDTO deviceCardDTO ){
+        model.addAttribute("newCard", deviceCardDTO);
+        model.addAttribute("inventNumber", inventNumber);
+        model.addAttribute("room", deviceDAO.findByInventNumber(inventNumber).getRoom());
+        model.addAttribute("type", deviceDAO.findByInventNumber(inventNumber).getDeviceType());
+        return "devices/addCardForm";
     }
 
 }

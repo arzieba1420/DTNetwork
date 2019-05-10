@@ -1,3 +1,9 @@
+html{
+    margin: 0px;
+    padding: 0px;
+
+}
+
 body {
     background-image: url('../images/prometheus2.png');
     background-repeat: no-repeat;
@@ -7,6 +13,7 @@ body {
     position: relative;
     min-width: 1000px;
     background-position: 0px 160px;
+    height: min-content;
 }
 
 

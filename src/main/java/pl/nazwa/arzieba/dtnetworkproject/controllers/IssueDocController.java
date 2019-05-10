@@ -89,8 +89,9 @@ public class IssueDocController {
         return "documents/addDocFormDam";
     }
 
+
     @PostMapping("/addAsModel/stay")
-    public String  create3(Model model, @Valid @ModelAttribute("dto")  IssueDocumentDTO dto, BindingResult bindingResult, HttpServletRequest request){
+    public String  create3(Model model, @Valid @ModelAttribute("newDoc")  IssueDocumentDTO issueDocumentDTO, BindingResult bindingResult, HttpServletRequest request){
         if(bindingResult.hasFieldErrors()) {
             List<FieldError> allErrors;
             allErrors = bindingResult.getFieldErrors();
@@ -98,12 +99,11 @@ public class IssueDocController {
 
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors", allErrors);
-
             model.addAttribute("errorsAmount", allErrors.size());
-            return addFormDam(dto.getDamageId(), model);
+            return addFormDamErr(issueDocumentDTO.getDamageId(), model,issueDocumentDTO);
         }
-        issueDocService.create(dto);
-        return "redirect:/devices/" + dto.getInventNumber();
+        issueDocService.create(issueDocumentDTO);
+        return "redirect:/devices/" + issueDocumentDTO.getInventNumber();
     }
 
     @PostMapping("/addAsModel/stay2")
@@ -117,7 +117,7 @@ public class IssueDocController {
             model.addAttribute("errors", allErrors);
 
             model.addAttribute("errorsAmount", allErrors.size());
-            return addFormDev(dto.getInventNumber(), model);
+            return addFormDevErr(dto.getInventNumber(), model,dto);
         }
         issueDocService.create(dto);
         return "redirect:/devices/" + dto.getInventNumber();
@@ -176,6 +176,29 @@ public class IssueDocController {
         model.addAttribute("docs",docs);
         return "documents/getAllForYear";
     }
+
+
+    public String addFormDamErr(@PathVariable Integer damageId, Model model, IssueDocumentDTO documentDTO){
+        model.addAttribute("newDoc", documentDTO);
+        String inventNumber = damageDAO.findById(damageId).orElse(null).getDevice().getInventNumber();
+        model.addAttribute("inventNumber", inventNumber);
+        String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
+                +" "+deviceDAO.findByInventNumber(inventNumber).getRoom();
+        model.addAttribute("text",text);
+        model.addAttribute("damageId",damageId);
+        return "documents/addDocFormDam";
+    }
+
+    public String addFormDevErr(@PathVariable String inventNumber, Model model, IssueDocumentDTO issueDocumentDTO){
+        model.addAttribute("newDoc",issueDocumentDTO);
+        model.addAttribute("inventNumber", inventNumber);
+        String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
+                +" "+deviceDAO.findByInventNumber(inventNumber).getRoom();
+        model.addAttribute("text",text);
+
+        return "documents/addDocFormDev";
+    }
+
 
 
 

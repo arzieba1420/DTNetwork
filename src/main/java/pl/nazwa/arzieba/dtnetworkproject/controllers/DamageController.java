@@ -66,7 +66,7 @@ public class DamageController {
             model.addAttribute("errors",allErrors);
 
             model.addAttribute("errorsAmount",allErrors.size());
-            return createDamage(model,damageDTO.getDeviceInventNumber());
+            return createDamageErr(model,damageDTO.getDeviceInventNumber(),damageDTO);
         }
 
         if(!damageDTO.isNewPostFlag()) {
@@ -128,6 +128,18 @@ public class DamageController {
     public String createDamage(Model model,@PathVariable String inventNumber){
 
         model.addAttribute("newDamage", new DamageDTO());
+        model.addAttribute("authors", ListOfEnumValues.authors);
+        model.addAttribute("inventNumber",inventNumber);
+        String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
+                +" "+deviceDAO.findByInventNumber(inventNumber).getRoom();
+        model.addAttribute("text",text);
+
+        return "damages/addForm";
+    }
+
+    public String createDamageErr(Model model,@PathVariable String inventNumber, DamageDTO damageDTO){
+
+        model.addAttribute("newDamage", damageDTO);
         model.addAttribute("authors", ListOfEnumValues.authors);
         model.addAttribute("inventNumber",inventNumber);
         String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()

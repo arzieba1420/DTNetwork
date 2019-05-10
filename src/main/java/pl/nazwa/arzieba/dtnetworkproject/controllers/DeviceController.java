@@ -68,7 +68,7 @@ public class DeviceController {
 
 
     @PostMapping("/addAsModel")
-    public String create2(Model model, @Valid @ModelAttribute("dto") DeviceDTO dto, BindingResult bindingResult){
+    public String create2(Model model, @Valid @ModelAttribute("newDevice") DeviceDTO dto, BindingResult bindingResult){
 
         if(bindingResult.hasFieldErrors()){
             List<FieldError> allErrors;
@@ -78,7 +78,7 @@ public class DeviceController {
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors",allErrors);
             model.addAttribute("errorsAmount",allErrors.size());
-            return addForm(model,dto.getRoom().name());
+            return addFormErr(model,dto.getRoom().name(),dto);
         }
 
         dto.setRoom(dto.getRoom());
@@ -89,6 +89,12 @@ public class DeviceController {
     @GetMapping("/addForm/{room}")
     public String addForm(Model model, @PathVariable String room){
         model.addAttribute("newDevice", new DeviceDTO());
+        model.addAttribute("room", Room.valueOf(room));
+        return "devices/addDeviceForm";
+    }
+
+    public String addFormErr(Model model, @PathVariable String room, DeviceDTO deviceDTO){
+        model.addAttribute("newDevice", deviceDTO);
         model.addAttribute("room", Room.valueOf(room));
         return "devices/addDeviceForm";
     }

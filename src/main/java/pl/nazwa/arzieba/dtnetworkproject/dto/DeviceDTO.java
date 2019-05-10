@@ -17,12 +17,12 @@ import javax.validation.constraints.Pattern;
 @ToString
 public class DeviceDTO {
 
-    @Pattern(regexp = "^[a-zA-Z0-9\\s]+$",
-            message = "Invent number cannot be empty!"  )
+    @Pattern(regexp = "^[a-zA-Z0-9\\s \\-]+$",
+            message = "Invent number cannot be empty or contains illegal character!"  )
     private String inventNumber;
 
-    @Pattern(regexp = "^[a-zA-Z0-9\\s]+$",
-            message = "Device description cannot be empty!"  )
+    @Pattern(regexp= "^(?!\\s*$).+",
+            message = "Details cannot be empty!"  )
     private String deviceDescription;
 
     @NotNull(message = "Room not specified!")

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>DTNetwork</title>
+    <link rel="icon" type="image/ico" href="../static/images/icoTitl.PNG" th:href="@{/images/icoTitl.PNG}" >
     <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
     <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
     <link rel="stylesheet"  th:href="@{/css/navbar.css}">
@@ -111,7 +112,7 @@
                     <label for="buildTime">Rok budowy</label>
                 </div>
                 <div class="col-75" >
-                    <input  type="number" id="buildTime"  placeholder="YYYY" th:field="*{buildTime}">
+                    <input  type="number" id="buildTime"  placeholder="YYYY" th:field="*{buildTime}" th:errorclass="errors">
                 </div>
             </div>
 
@@ -139,7 +140,7 @@
                     <label for="deliveryDate">Data dostawy</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="deliveryDate"  placeholder="dd-MM-yyyy" th:field="*{deliveryDate}">
+                    <input type="text" id="deliveryDate"  placeholder="dd-MM-yyyy" th:field="*{deliveryDate}" th:errorclass="errors">
                 </div>
             </div>
     
@@ -148,7 +149,7 @@
                     <label for="startdate">Rozpoczęcie ekspl.</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="startdate"  placeholder="dd-MM-yyyy" th:field="*{startDate}">
+                    <input type="text" id="startdate"  placeholder="dd-MM-yyyy" th:field="*{startDate}" th:errorclass="errors">
                 </div>
             </div>
     
@@ -184,7 +185,7 @@
                     <label for="creationDate">Data sporządzenia</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="creationDate"  placeholder="dd-MM-yyyy" th:field="*{creationTime}">
+                    <input type="text" id="creationDate"  placeholder="dd-MM-yyyy" th:field="*{creationTime}" th:errorclass="errors" >
                 </div>
             </div>
     
@@ -193,7 +194,7 @@
                     <label for="value">Wartość urządzenia</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="value"  placeholder="" th:field="*{deviceValue}">
+                    <input type="text" id="value"  placeholder="" th:field="*{deviceValue}" >
                 </div>
             </div>
     
@@ -206,7 +207,7 @@
                 </div>
             </div>
             
-            <div class="row">
+            <div class="row submit">
                 <input type="submit" value="Cancel" onclick="window.history.go(-1); return false;">
                 <input type="submit" value="Submit" style="margin-right: 20px">
             </div>

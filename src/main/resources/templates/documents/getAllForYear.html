@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>DTNetwork</title>
+    <link rel="icon" type="image/ico" href="../static/images/icoTitl.PNG" th:href="@{/images/icoTitl.PNG}" >
     <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
     <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
@@ -63,10 +64,10 @@
 
         <div  style="text-align: center">
             <div id="btnContainer"  class="pagination">
-                <a  th:href="@{'/issueDocs/all/' + ${year} + '/1'}" >&laquo;</a>
-                <a th:href="@{'/issueDocs/all/' + ${year} + '/1'}"  th:class=" ${currentPage}==1 ?'active' : '' " >1</a>
-                <a th:href="@{'/issueDocs/all/'+${year}+'/'+${page}}" th:each="page:${pages}" th:text="${page}" th:class="${currentPage}==${page}? 'active' : ''" >2</a>
-                <a th:href="@{'/issueDocs/all/' + ${year} + '/'+ ${lastPage}}">&raquo;</a>
+                <a  th:href="@{'/issueDocs/' + ${year} + '/1'}" >&laquo;</a>
+                <a th:href="@{'/issueDocs/' + ${year} + '/1'}"  th:class=" ${currentPage}==1 ?'active' : '' " >1</a>
+                <a th:href="@{'/issueDocs/'+${year}+'/'+${page}}" th:each="page:${pages}" th:text="${page}" th:class="${currentPage}==${page}? 'active' : ''" >2</a>
+                <a th:href="@{'/issueDocs/' + ${year} + '/'+ ${lastPage}}">&raquo;</a>
             </div>
         </div>
 

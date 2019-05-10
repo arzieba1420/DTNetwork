@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>DTNetwork</title>
+    <link rel="icon" type="image/ico" href="../static/images/icoTitl.PNG" th:href="@{/images/icoTitl.PNG}" >
     <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
     <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
     <link rel="stylesheet"  th:href="@{/css/navbar.css}">
@@ -32,7 +33,7 @@
                     <label for="signature">Signature</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="signature" name="Signature" placeholder="ACK-DTN..." th:field="*{issueSignature}">
+                    <input type="text" id="signature" name="Signature" placeholder="ACK-DTN..." th:field="*{issueSignature}"th:errorclass="errors">
                 </div>
             </div>
             <div class="row">
@@ -40,7 +41,7 @@
                     <label for="date">Date</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="date" name="Date" placeholder="DD-MM-YYYY" th:field="*{issueDate}">
+                    <input type="text" id="date" name="Date" placeholder="DD-MM-YYYY" th:field="*{issueDate}"th:errorclass="errors">
                 </div>
             </div>
             <!--Add select!-->
@@ -76,7 +77,7 @@
                     <label for="title">Title</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="title" name="Title"  th:field="*{issueTittle}">
+                    <input type="text" id="title" name="Title"  th:field="*{issueTittle}"th:errorclass="errors">
                 </div>
             </div>
             <div class="row">
@@ -84,7 +85,7 @@
                     <label for="content">Details</label>
                 </div>
                 <div class="col-75">
-                    <textarea id="content" name="content" placeholder="Write something.." style="height:200px" th:field="*{issueDetails}"></textarea>
+                    <textarea id="content" name="content" placeholder="Write something.." style="height:200px" th:field="*{issueDetails}"th:errorclass="errors"></textarea>
                 </div>
             </div>
             <div class="row">

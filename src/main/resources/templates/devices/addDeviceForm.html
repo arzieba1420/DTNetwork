@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>DTNetwork</title>
+    <link rel="icon" type="image/ico" href="../static/images/icoTitl.PNG" th:href="@{/images/icoTitl.PNG}" >
     <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
     <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
     <link rel="stylesheet"  th:href="@{/css/navbar.css}">
@@ -32,7 +33,7 @@
                         <label for="inventNumber">Invent Number</label>
                     </div>
                     <div class="col-75">
-                        <input type="text" id="inventNumber" name="inventNumber" placeholder="S-XXX" th:field="*{inventNumber}">
+                        <input type="text" id="inventNumber" name="inventNumber" placeholder="S-XXX" th:field="*{inventNumber}" th:errorclass="errors">
                     </div>
                 </div>
 
@@ -42,7 +43,7 @@
                         <label for="deviceType">Device type</label>
                     </div>
                     <div class="col-75">
-                    <select  id="deviceType"  th:field="*{deviceType}">
+                    <select  id="deviceType"  th:field="*{deviceType}" th:errorclass="errors">
                         <option th:value="null">Choose device type</option>
                         <option th:each="type:${@listOfEnumValues.deviceTypes}" th:value="${type}" th:text="${type.name()}"></option>
                     </select>
@@ -54,7 +55,7 @@
                         <label for="room">Room</label>
                     </div>
                     <div class="col-75">
-                    <select class="disabledSelect" th:readonly="readonly"  id="room" th:field="*{room}">
+                    <select class="disabledSelect" th:readonly="readonly"  id="room" th:field="*{room}"th:errorclass="errors">
                         <option th:hidden="hidden" th:value="${room}" th:text="${room.name()}" ></option>
                     </select>
                     </div>
@@ -65,7 +66,7 @@
                         <label for="description">Description</label>
                     </div>
                     <div class="col-75">
-                        <textarea id="description" name="Description" placeholder="Np CRV 1" style="height:100px" th:field="*{deviceDescription}"></textarea>
+                        <textarea id="description" name="Description" placeholder="Np CRV 1" style="height:100px" th:field="*{deviceDescription}"th:errorclass="errors"></textarea>
                     </div>
                 </div>
                 <div class="row">

@@ -46,8 +46,8 @@
 
 .headerBar #logo{
 
-  height: 140px;
-    width: 260px;
+  height: 140px;!important;
+    width: 260px;!important;
     background-image: url("../images/logo.png");
     background-size: contain;
     background-repeat: no-repeat;

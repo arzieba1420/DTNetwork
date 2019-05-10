@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class DeviceMapper {
 
+
+
     public static DeviceDTO map(Device device){
         DeviceDTO deviceDTO = new DeviceDTO();
         deviceDTO.setRoom(device.getRoom());

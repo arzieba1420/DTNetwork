@@ -1,6 +1,8 @@
 package pl.nazwa.arzieba.dtnetworkproject.model;
 
 import lombok.*;
+import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.context.annotation.Primary;
 
 
 import javax.persistence.*;
@@ -15,6 +17,7 @@ import java.util.List;
 public class Device {
 
     @Id
+    @Column(unique = true)
     private String inventNumber;
 
     @Column(nullable = false)
