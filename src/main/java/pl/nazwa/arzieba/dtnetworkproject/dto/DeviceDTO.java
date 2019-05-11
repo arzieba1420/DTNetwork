@@ -21,7 +21,7 @@ public class DeviceDTO {
             message = "Invent number cannot be empty or contains illegal character!"  )
     private String inventNumber;
 
-    @Pattern(regexp= "^(?!\\s*$).+",
+    @Pattern(regexp= "^[^-\\s][a-zA-Z0-9_\\s-]+$",
             message = "Details cannot be empty!"  )
     private String deviceDescription;
 

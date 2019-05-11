@@ -13,7 +13,7 @@ import javax.validation.constraints.Pattern;
 public class IssueDocumentDTO {
 
 
-    @Pattern(regexp= "^(?!\\s*$).+",
+    @Pattern(regexp= "^[^-\\s][a-zA-Z0-9_\\s-]+$",
             message = "Signature cannot be empty!"  )
     private String issueSignature;
     private String delivererName;
@@ -23,11 +23,11 @@ public class IssueDocumentDTO {
             message = "Invalid date or pattern: dd-MM-yyyy not satisfied!")
     private String issueDate;
 
-    @Pattern(regexp= "^(?!\\s*$).+",
+    @Pattern(regexp= "^[^-\\s][a-zA-Z0-9_\\s-]+$",
             message = "Tittle cannot be empty!"  )
     private String issueTittle;
 
-    @Pattern(regexp= "^(?!\\s*$).+",
+    @Pattern(regexp= "^[^-\\s][a-zA-Z0-9_\\s-]+$" ,
             message = "Details cannot be empty!"  )
     private String issueDetails;
     private Integer damageId;
