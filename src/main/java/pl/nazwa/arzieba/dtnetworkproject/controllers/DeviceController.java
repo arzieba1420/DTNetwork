@@ -75,7 +75,8 @@ public class DeviceController {
 
             if(deviceDAO.existsById(dto.getInventNumber())) {
 
-                FieldError fieldError = new FieldError("newDevice", "inventNumber", dto.getInventNumber(), false, null, null, "Device with this Invent Number already exist in database!");
+                FieldError fieldError = new FieldError("newDevice", "inventNumber", dto.getInventNumber(),
+                        false, null, null, "Device with this Invent Number already exist in database!");
                 bindingResult.addError(fieldError);
             }
             allErrors = bindingResult.getFieldErrors();
