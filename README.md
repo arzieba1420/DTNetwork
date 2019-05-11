@@ -25,4 +25,4 @@ maintained by me in my current job.
 * Java JRE installed
 * ~~application.properties file with definied ConnectionString to Your DB in resources directory~~ (I decided to provide test DB and include connection string in source code)
 * Firefox Quantum browser (I work with Firefox Quantum 65.0.2, don't guarantee that all of CSS styles will perform properly with other browsers)
-* In Spring Security login form put DTN and DTN1 as login and pass
+* In Spring Security login form put DTN and DTN1 as login and pass (test account)
