@@ -13,6 +13,7 @@ import javax.validation.constraints.Pattern;
 @Setter
 public class ShortPostDTO {
 
+
     @NotNull(message = "Author not specified!")
     private Author author;
 
