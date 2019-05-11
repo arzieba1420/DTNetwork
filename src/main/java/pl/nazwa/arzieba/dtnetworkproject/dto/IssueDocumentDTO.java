@@ -13,8 +13,8 @@ import javax.validation.constraints.Pattern;
 public class IssueDocumentDTO {
 
 
-    @Pattern(regexp= "^[^-\\s][a-zA-Z0-9_\\s-]+$",
-            message = "Signature cannot be empty!"  )
+    @Pattern(regexp= "^[^-\\s][a-zA-Z0-9_\\s-!@#$%^&*]+$",
+            message = "Signature cannot be empty or contains illegal character!"  )
     private String issueSignature;
     private String delivererName;
     private String delivererNIP;
@@ -23,12 +23,12 @@ public class IssueDocumentDTO {
             message = "Invalid date or pattern: dd-MM-yyyy not satisfied!")
     private String issueDate;
 
-    @Pattern(regexp= "^[^-\\s][a-zA-Z0-9_\\s-]+$",
+    @Pattern(regexp= "^[^-\\s][a-zA-Z0-9_\\s-!@#$%^&*]+$",
             message = "Tittle cannot be empty!"  )
     private String issueTittle;
 
-    @Pattern(regexp= "^[^-\\s][a-zA-Z0-9_\\s-]+$" ,
-            message = "Details cannot be empty!"  )
+    @Pattern(regexp= "^[^-\\s][a-zA-Z0-9_\\s-!@#$%^&*]+$" ,
+            message = "Details cannot be empty or contains illegal character!"  )
     private String issueDetails;
     private Integer damageId;
     private String inventNumber;

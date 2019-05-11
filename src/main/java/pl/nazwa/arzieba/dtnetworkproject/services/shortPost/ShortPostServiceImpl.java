@@ -77,6 +77,15 @@ public class ShortPostServiceImpl implements ShortPostService {
     }
 
     @Override
+    public List<ShortPost> findAllByYear(int year) {
+        Calendar startDate = new GregorianCalendar(year,0,1);
+        Calendar endDateDate = new GregorianCalendar(year,11,31);
+
+
+        return postDAO.findAllByPostDateBetween(startDate,endDateDate);
+    }
+
+    @Override
     public int numberByYear(int year){
        long l= postDAO.findAll().stream()
                 .filter(d->d.getPostDate().get(Calendar.YEAR)==year)
@@ -149,4 +158,22 @@ public class ShortPostServiceImpl implements ShortPostService {
 
         return sortedSet;
     }
+
+    public boolean areAllForDamage(int year){
+        Calendar startDate = new GregorianCalendar(year,0,1);
+        Calendar endDateDate = new GregorianCalendar(year,11,31);
+        List<ShortPost> allPosts = postDAO.findAllByPostDateBetween(startDate,endDateDate);
+        boolean allForDamage =true;
+
+        for (ShortPost post: allPosts) {
+
+            if (!post.getContent().contains("damage")){
+                allForDamage = false;
+            }
+
+        }
+
+        return allForDamage;
+    }
+
 }
