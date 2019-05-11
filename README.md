@@ -10,7 +10,7 @@ maintained by me in my current job.
 
 **The app is not ready yet to use, it will take about one month to release first stable version [written: 4 April 2019 ]**
 
-[UPDATE 11-05-2019]
+[UPDATE 11-05-2019]  
 **1st stable version of my project is available and ready to be tested by You on branch master. Any further version will appear in the future**
 
 
