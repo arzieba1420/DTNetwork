@@ -37,7 +37,7 @@
 
                 <li><a href="#">Documents &raquo;</a>
                     <ul>
-                        <li th:each="year:${@issueDocServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}">Corel Draw</a></li>
+                        <li th:each="year:${@issueDocServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}"></a></li>
                     </ul>
                 </li>
 
