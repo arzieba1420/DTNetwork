@@ -3,7 +3,7 @@ package pl.nazwa.arzieba.dtnetworkproject.model;
 public enum Author {
     Artur,
     Arek,
-    Damian,
+    Pan_Kierownik,
     Sebastian,
     Rafał,
     Bartek,

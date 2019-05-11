@@ -14,7 +14,7 @@ import javax.validation.constraints.Pattern;
 @Setter
 public class DamageDTO {
 
-    @Pattern(regexp= "^[^-\\s][a-zA-Z0-9_\\s-]+$",
+    @Pattern(regexp= "^[^-\\s][a-zA-Z0-9_\\s-!@#$%^&*]+$",
             message = "Description cannot be empty!"  )
     private String description;
 

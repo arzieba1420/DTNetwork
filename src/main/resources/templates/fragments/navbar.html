@@ -43,7 +43,7 @@
 
                 <li><a href="#">Posts &raquo;</a>
                     <ul>
-                        <li th:each="year:${@shortPostServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/posts/all/'+${year}+'/1' }" th:text= "${year}" >Test</a></li>
+                        <li th:if="${!@shortPostServiceImpl.areAllForDamage(year)}" th:each="year:${@shortPostServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/posts/all/'+${year}+'/1' }" th:text= "${year}" >Test</a></li>
                     </ul>
                 </li>
 

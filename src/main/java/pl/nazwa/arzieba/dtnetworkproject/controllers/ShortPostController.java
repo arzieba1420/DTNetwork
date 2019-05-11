@@ -168,6 +168,15 @@ public class ShortPostController implements WebMvcConfigurer {
            numberOfPages--;
        }
        List<Integer> morePages = new LinkedList<>();
+       List<ShortPost> allPosts = postService.findAllByYear(year);
+
+        int amount = postService.numberByYear(year);
+
+        for (ShortPost post: allPosts ) {
+            if (post.getContent().contains("damage")){
+                amount--;
+            }
+        }
 
        int i = 2;
        int lastPage = 1;
@@ -178,7 +187,7 @@ public class ShortPostController implements WebMvcConfigurer {
            lastPage++;
        }
 
-       model.addAttribute("amount",postService.numberByYear(year));
+       model.addAttribute("amount",amount);
        model.addAttribute("classActiveSettings","active");
        model.addAttribute("posts",mapa);
        model.addAttribute("pages",morePages);

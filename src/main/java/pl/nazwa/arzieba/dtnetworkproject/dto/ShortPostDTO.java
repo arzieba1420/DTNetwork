@@ -16,7 +16,7 @@ public class ShortPostDTO {
     @NotNull(message = "Author not specified!")
     private Author author;
 
-    @Pattern(regexp= "^[^-\\s][a-zA-Z0-9_\\s-]+$",
+    @Pattern(regexp= "^[^-\\s][a-zA-Z0-9_\\s-!@#$%^&*]+$",
             message = "Content cannot be empty!"  )
     private String content;
 

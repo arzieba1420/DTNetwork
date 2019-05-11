@@ -17,6 +17,7 @@ public interface ShortPostDAO extends PagingAndSortingRepository<ShortPost,Integ
     Page<ShortPost> findAll(Pageable pageRequest);
 
     Page<ShortPost> findAllByPostDateBetween (Pageable pageRequest, Calendar start, Calendar end);
+    List<ShortPost> findAllByPostDateBetween ( Calendar start, Calendar end);
     ShortPost findByPostId(Integer id);
     List<ShortPost> findTop10ByOrderByDateDesc();
     List<ShortPost> findAllByAuthor(Author author);
