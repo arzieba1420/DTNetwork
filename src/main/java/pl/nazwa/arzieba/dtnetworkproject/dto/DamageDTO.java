@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Component
@@ -15,7 +16,6 @@ import javax.validation.constraints.Pattern;
 @Setter
 public class DamageDTO {
 
-    @NotBlank(
             message = "Description cannot be empty!"  )
     private String description;
 

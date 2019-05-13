@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Component
@@ -18,6 +19,7 @@ import javax.validation.constraints.Pattern;
 @ToString
 public class DeviceDTO {
 
+
     @NotBlank(
             message = "Invent number cannot be empty!"  )
 
@@ -25,6 +27,7 @@ public class DeviceDTO {
 
     @NotBlank(
             message = "Description cannot be empty!"  )
+
     private String deviceDescription;
 
     @NotNull(message = "Room not specified!")
