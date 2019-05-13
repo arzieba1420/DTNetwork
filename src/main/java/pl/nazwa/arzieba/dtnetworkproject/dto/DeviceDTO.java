@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -17,12 +18,13 @@ import javax.validation.constraints.Pattern;
 @ToString
 public class DeviceDTO {
 
-    @Pattern(regexp = "^[a-zA-Z0-9\\s \\- \\/]+$",
-            message = "Invent number cannot be empty or contains illegal character!"  )
+    @NotBlank(
+            message = "Invent number cannot be empty!"  )
+
     private String inventNumber;
 
-    @Pattern(regexp= "^[^-\\s][a-zA-Z0-9_\\s-!@#$%^&*]+$",
-            message = "Details cannot be empty!"  )
+    @NotBlank(
+            message = "Description cannot be empty!"  )
     private String deviceDescription;
 
     @NotNull(message = "Room not specified!")

@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -14,7 +15,7 @@ import javax.validation.constraints.Pattern;
 @Setter
 public class DamageDTO {
 
-    @Pattern(regexp= "^[^-\\s][a-zA-Z0-9_\\s-!@#$%^&*]+$",
+    @NotBlank(
             message = "Description cannot be empty!"  )
     private String description;
 
