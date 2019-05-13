@@ -1,5 +1,6 @@
 package pl.nazwa.arzieba.dtnetworkproject.configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,17 +17,27 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Value("${my.adminPass}")
+    private String adminPass;
+
+
+
+    @Value("${my.userPass}")
+    private String userPass;
+
     @Bean
     public UserDetailsService userDetailsService(){
+
+
         UserDetails user = User.withDefaultPasswordEncoder()
                 .username("DTN")
-                .password("DTN1")
+                .password(userPass)
                 .roles("USER")
                 .build();
 
         UserDetails admin = User.withDefaultPasswordEncoder()
                 .username("admin")
-                .password(("dtnetwork"))
+                .password(adminPass)
                 .roles("ADMIN","USER")
                 .build();
 
