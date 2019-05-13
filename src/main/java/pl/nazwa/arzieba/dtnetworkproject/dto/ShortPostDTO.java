@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Component
@@ -17,7 +18,7 @@ public class ShortPostDTO {
     @NotNull(message = "Author not specified!")
     private Author author;
 
-    @Pattern(regexp= "^[^-\\s][a-zA-Z0-9_\\s-!@#$%^&*]+$",
+   @NotBlank(
             message = "Content cannot be empty!"  )
     private String content;
 
