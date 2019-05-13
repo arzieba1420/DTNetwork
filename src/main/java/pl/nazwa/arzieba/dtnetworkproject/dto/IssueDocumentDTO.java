@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -14,8 +15,11 @@ import javax.validation.constraints.Pattern;
 public class IssueDocumentDTO {
 
 
+
+
    @NotBlank(
             message = "Signature cannot be empty!"  )
+
     private String issueSignature;
     private String delivererName;
     private String delivererNIP;
@@ -24,12 +28,14 @@ public class IssueDocumentDTO {
             message = "Invalid date or pattern: dd-MM-yyyy not satisfied!")
     private String issueDate;
 
-   @NotBlank(
-            message = "Title cannot be empty!"  )
+
+    @NotBlank(
+            message = "Description cannot be empty!"  )
     private String issueTittle;
 
     @NotBlank(
             message = "Details cannot be empty!"  )
+
     private String issueDetails;
     private Integer damageId;
     private String inventNumber;

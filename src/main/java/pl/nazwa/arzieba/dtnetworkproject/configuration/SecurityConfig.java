@@ -1,5 +1,6 @@
 package pl.nazwa.arzieba.dtnetworkproject.configuration;
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,13 +16,11 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableWebSecurity
+@EnableEncryptableProperties
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${my.adminPass}")
     private String adminPass;
-
-
-
     @Value("${my.userPass}")
     private String userPass;
 
@@ -50,17 +49,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+
                 .antMatchers("/dev").hasRole("ADMIN")
 
                 .anyRequest().hasRole("USER")
                /*.hasAnyRole("USER","ADMIN")*/
                 .and()
+                .csrf().disable()
                 .formLogin().permitAll()
                 /*.loginPage("/login2")
                 .loginProcessingUrl("/perform_login")
 */
                 .and()
-                .logout().permitAll();
+
+                .logout().permitAll()
+        ;
     }
 
 }
