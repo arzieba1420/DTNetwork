@@ -5,18 +5,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.bind.annotation.*;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.ShortPostDAO;
+import pl.nazwa.arzieba.dtnetworkproject.dao.UserDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.Author;
 import pl.nazwa.arzieba.dtnetworkproject.model.Device;
+import pl.nazwa.arzieba.dtnetworkproject.model.User;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
 import pl.nazwa.arzieba.dtnetworkproject.services.issueDocument.IssueDocService;
 import pl.nazwa.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
@@ -50,15 +51,17 @@ public class MainController implements ErrorController {
     private ShortPostDAO dao;
     private DeviceDAO deviceDAO;
     private IssueDocService issueDocService;
+    private UserDAO userDAO;
     public static Authentication authentication;
 
     @Autowired
-    public MainController(IssueDocService issueDocService, DeviceDAO deviceDAO, ShortPostService postService, DeviceService deviceService, ShortPostDAO dao) {
+    public MainController(UserDAO userDAO, IssueDocService issueDocService, DeviceDAO deviceDAO, ShortPostService postService, DeviceService deviceService, ShortPostDAO dao) {
         this.postService = postService;
         this.deviceService = deviceService;
         this.dao = dao;
         this.deviceDAO=deviceDAO;
         this.issueDocService=issueDocService;
+        this.userDAO = userDAO;
     }
 
     // required because login form redirects to localhost:8080/ not to /dtnetwork
@@ -209,6 +212,16 @@ public class MainController implements ErrorController {
     @Override
     public String getErrorPath() {
         return PATH;
+    }
+
+    @GetMapping("/users")
+    private @ResponseBody List<User> allUsers(){
+        return userDAO.findAll();
+    }
+
+    @GetMapping("/users/remove")
+    private @ResponseBody void removeUsers(){
+        userDAO.deleteAll();
     }
 
  /*   @PostMapping("/perform_login")
