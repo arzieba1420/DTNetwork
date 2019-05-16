@@ -51,10 +51,11 @@
 
                 </li>
 
-                <li  ><a style="padding-bottom: 7px" class="logout" href="#"  th:text=" '&#9673; '    +${@mainController.authentication.getName()}" >Logout</a>
+                <li><a style="padding-bottom: 7px" class="logout" href="#"   th:text=" '&#9673; '+ ${@mainController.getUser()} " >Logout</a>
                     <ul>
-                        <li ><a class="logout" href="#" th:href="@{/logout}" >Logout</a></li>
-                        <li th:if="${@mainController.authentication.getName()}=='admin'" ><a class="logout" href="#" th:href="@{/dev}" >Dev panel</a></li>
+                        <li><a class="logout" href="" th:href="@{/logout}" th:text="Logout"></a></li>
+                        <li th:if="${@mainController.getUser()}=='admin'" ><a class="logout" href="#" th:href="@{/dev}" >Dev panel</a></li>
+                        <li th:if="${@mainController.getUser()}=='admin'" ><a class="logout" href="#" th:href="@{/users}" >Users</a></li>
                     </ul>
                 </li>
             </ul>

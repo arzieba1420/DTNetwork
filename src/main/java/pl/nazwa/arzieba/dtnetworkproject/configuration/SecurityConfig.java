@@ -1,6 +1,7 @@
 package pl.nazwa.arzieba.dtnetworkproject.configuration;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import pl.nazwa.arzieba.dtnetworkproject.services.users.UserPrincipalDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -25,42 +27,40 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String adminPass;
     @Value("${my.userPass}")
     private String userPass;
+    private UserPrincipalDetailsService userPrincipalDetailsService;
+
+    @Autowired
+    public SecurityConfig(UserPrincipalDetailsService userPrincipalDetailsService){
+        this.userPrincipalDetailsService = userPrincipalDetailsService;
+    }
+
+
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth){
 
+        auth.authenticationProvider(authenticationProvider());
 
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username("DTN")
-                .password(userPass)
-                .roles("USER")
-                .authorities("ROLE_USER")
-                .build();
-
-        UserDetails admin = User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password(adminPass)
-                .roles("ADMIN","USER")
-                .authorities("ROLE_ADMIN","ROLE_USER")
-                .build();
     }
 
     //TODO configure permitions
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/dtnetwork").hasAuthority("ROLE_USER")
+                .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
 
-                .antMatchers("/dev").hasAuthority("ROLE_ADMIN")
-                .antMatchers("/users").hasAuthority("ROLE_ADMIN")
 
-                .anyRequest().hasAuthority("ROLE_USER")
+                .anyRequest().authenticated()
+
                /*.hasAnyRole("USER","ADMIN")*/
                 .and()
                 .csrf().disable()
-                .formLogin().permitAll()
-                /*.loginPage("/login2")
-                .loginProcessingUrl("/perform_login")
-*/
+                .formLogin()
+                .loginPage("/login")
+
+                .permitAll()
+
                 .and()
 
                 .logout().permitAll()
@@ -75,6 +75,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(userPrincipalDetailsService);
+        return daoAuthenticationProvider;
 
     }
 
