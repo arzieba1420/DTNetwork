@@ -22,7 +22,7 @@
           modelAttribute="user" method="post" >
             <div class="imgcontainer">
                 <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-                <img src="../static/images/icoTitl.PNG" th:src="@{/images/logo.png}" alt="Avatar" class="avatar">
+                <img src="../static/images/icoTitl.PNG" th:src="@{/images/AVATAR.JPG}" alt="Avatar" class="avatar">
             </div>
             
             <div class="container">
@@ -32,12 +32,15 @@
                 <label for="password"><b>Password</b></label>
                 <input style="align-self: center" type="password" placeholder="Enter Password" id="password" name="password" required>
                 
-                <button style="align-self: center" type="submit">Login</button>
+                <div style="display: flex; flex-flow: row; justify-content: center">
+                
+                <button style="align-self: center;margin-right: 30px" type="submit">Login</button>
+                <button style="align-self: center; " type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+                
+                </div>
             </div>
             
-            <div class="container" style="padding-top: 0px" >
-                <button style="align-self: center" type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-            </div>
+           
         </form>
     </div>
     

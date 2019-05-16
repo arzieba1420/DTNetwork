@@ -246,8 +246,5 @@ public class MainController implements ErrorController {
         return currentUserName;
     }
 
-    @Bean
-    PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+
 }
