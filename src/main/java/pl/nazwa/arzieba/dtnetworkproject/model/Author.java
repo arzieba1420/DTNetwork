@@ -8,6 +8,8 @@ public enum Author {
     Rafał,
     Bartek,
     Grzesiek,
-    Tomek;
+    Tomek,
+    ADMIN,
+    DEFAULT;
 
 }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/ico" href="../static/images/icoTitl.PNG" th:href="@{/images/icoTitl.PNG}" >
+    
+    <link rel="stylesheet" href="../static/css/header.css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" href="../static/css/myLogin.css" th:href="@{/css/myLogin.css}">
+   
+</head>
+<body style="text-align: center">
+    
+    
+    
+    <h2 style="margin-top: 200px; font-size: 3em" >Welcome to DTNetwork<sup style="font-size: 0.5em">&copy;</sup> application!</h2>
+    
+    <button class="login" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Enter</button>
+    
+    <div id="id01" class="modal" style="display: none;">
+        
+        <form class="modal-content animate" action="/perform_login" th:action="@{/login}"
+          modelAttribute="user" method="post" >
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                <img src="../static/images/icoTitl.PNG" th:src="@{/images/AVATAR.JPG}" alt="Avatar" class="avatar">
+            </div>
+            
+            <div class="container">
+                <label for="username"><b>Username</b></label>
+                <input style="align-self: center" type="text" placeholder="Enter Username" id="username" name="username" required>
+                
+                <label for="password"><b>Password</b></label>
+                <input style="align-self: center" type="password" placeholder="Enter Password" id="password" name="password" required>
+                
+                <div style="display: flex; flex-flow: row; justify-content: center">
+                
+                <button style="align-self: center;margin-right: 30px" type="submit">Login</button>
+                <button style="align-self: center; " type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+                
+                </div>
+            </div>
+            
+           
+        </form>
+    </div>
+    
+    <script>
+       
+        var modal = document.getElementById('id01');
+
+      
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
