@@ -3,7 +3,7 @@
 .footerContainer{
     background-color: #494949;
     color: #cccccc;
-    width: 100%;
+    min-width: 1900px;
     height: 60px;
     margin: 0px;
     margin-top: 0px;
@@ -22,7 +22,7 @@
 .ackData{
     margin-left: 60px;
     text-align: center;
-    width: 400px;
+    min-width: 400px;
     align-self: center;
 }
 
@@ -30,7 +30,7 @@
     text-align: center;
     margin-top: 10px;
     margin-left: 1000px;
-    width: 400px;
+    min-width: 400px;
     height: 40px;
 }
 

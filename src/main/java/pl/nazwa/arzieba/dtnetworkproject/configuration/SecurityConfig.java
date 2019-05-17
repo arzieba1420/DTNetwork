@@ -1,6 +1,8 @@
 package pl.nazwa.arzieba.dtnetworkproject.configuration;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+import org.jasypt.util.password.BasicPasswordEncryptor;
+import org.jasypt.util.text.BasicTextEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import pl.nazwa.arzieba.dtnetworkproject.services.users.UserPrincipalDetailsService;
 
 @Configuration
@@ -48,23 +51,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/dtnetwork").hasAuthority("ROLE_USER")
+                .antMatchers("/dev/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
-
-
                 .anyRequest().authenticated()
-
-               /*.hasAnyRole("USER","ADMIN")*/
                 .and()
                 .csrf().disable()
                 .formLogin()
-                .loginPage("/login")
-
-                .permitAll()
-
+                .loginPage("/login").permitAll()
                 .and()
-
-                .logout().permitAll()
-        ;
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")) .logoutSuccessUrl("/login");
     }
 
     @Bean
