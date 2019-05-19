@@ -118,6 +118,13 @@ public class IssueDocServiceImpl implements IssueDocService {
     }
 
     @Override
+    public List<IssueDocumentDTO> findByDevice(String inv, int page, int size) {
+        return issueDocumentDAO.findAllByInventNumber(inv,PageRequest.of(page, size, Sort.Direction.DESC,"issueDate"))
+                .get().map(IssueDocMapper::map)
+                .collect(Collectors.toList());
+    }
+
+    @Override
         public Set<Integer> setOfYears(){
 
             List<Integer> yearsList= issueDocumentDAO.findAll().stream()
@@ -131,7 +138,12 @@ public class IssueDocServiceImpl implements IssueDocService {
             return sortedSet;
         }
 
-        @Override
+    @Override
+    public int numberByDevice(String inv) {
+        return (int) issueDocumentDAO.findByInventNumber(inv).stream().count();
+    }
+
+    @Override
         public int numberByYear(int year){
         long l = issueDocumentDAO.findAll().stream()
                 .filter(d->d.getIssueDate().get(Calendar.YEAR)==year)

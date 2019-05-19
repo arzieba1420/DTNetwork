@@ -66,14 +66,21 @@
                 <td>Number of posts</td>
                 <td th:text="${posts}"></td>
                 <td th:if="${posts==0}" th:text="'---'" ></td>
-                <td th:if="${posts!=0}" ><a th:href="@{'/posts/devices/'+${dto.getInventNumber()}}" th:text="' &#8981;'+'Show posts'" ></a></td>
+                <td th:if="${posts!=0}" ><a th:href="@{'/posts/devices/'+${dto.getInventNumber()}+'/1'}" th:text="' &#8981;'+'Show posts'" ></a></td>
 
             </tr>
             <tr>
                 <td>Number of documents</td>
                 <td th:text="${issueDAO.findByInventNumber(dto.getInventNumber()).size()}"></td>
                 <td th:if="${issueDAO.findByInventNumber(dto.getInventNumber()).size()==0}" th:text="'---'" ></td>
-                <td th:if="${issueDAO.findByInventNumber(dto.getInventNumber()).size()!=0}" ><a href="" th:href="@{'/issueDocs/devices/'+${dto.getInventNumber()}}" th:text="' &#8981;'+'Show documents'" ></a></td>
+                <td th:if="${issueDAO.findByInventNumber(dto.getInventNumber()).size()!=0}" ><a href="" th:href="@{'/issueDocs/devices/'+${dto.getInventNumber()}+'/1'}" th:text="' &#8981;'+'Show documents'" ></a></td>
+            </tr>
+
+            <tr th:if="${dto.getDeviceType().name().equals('GENERATOR')}">
+                <td>Date of last activity</td>
+                <td th:text="${lastTest}+' '+${activityType}"></td>
+                <td th:if="${dao.getTests().isEmpty()}" th:text="'---'"></td>
+                <td th:if="${!dao.getTests().isEmpty()}" th:text="'---'"><a href="" th:text="' &#8981;'+'Show activities'"></a></td>
 
             </tr>
 
@@ -98,6 +105,10 @@
             <div class="tooltip"  th:if="${dao.getDeviceCard()!= null}" >
                 <a href="" th:href="@{/inBuild}" ><i class="far fa-id-card" style=" color: #55003b;"></i></a>
                 <span class="tooltiptext">Show device card</span>
+            </div>
+            <div class="tooltip" th:if="${dto.getDeviceType().name().equals('GENERATOR')}" >
+                <a href=""  ><i class="fas fa-power-off" style="color: orangered"></i></a>
+                <span class="tooltiptext">Add generator activity</span>
             </div>
         </div>
     </div>

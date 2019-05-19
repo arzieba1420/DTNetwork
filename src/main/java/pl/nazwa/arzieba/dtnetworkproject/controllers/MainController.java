@@ -108,13 +108,15 @@ public class MainController implements ErrorController {
         public String getInitData(){
 
 
+
+
         IntStream.range(10,25).forEach(i->{
 
             ShortPostDTO postDTO = new ShortPostDTO();
             postDTO.setInventNumber("S-001");
             postDTO.setContent(i-9+". Test content\nTest whitespace");
             postDTO.setAuthor(Author.Arek);
-            postDTO.setDate(i+"-01-2012");
+            postDTO.setDate("2012-01-"+i);
 
             postService.create(postDTO);
 
@@ -126,7 +128,7 @@ public class MainController implements ErrorController {
             postDTO.setInventNumber("S-002");
             postDTO.setContent(i+". Test content\nTest whitespace");
             postDTO.setAuthor(Author.Arek);
-            postDTO.setDate("02-01-201"+i);
+            postDTO.setDate("201"+i+"-02-01");
 
             postService.create(postDTO);
 
@@ -139,7 +141,7 @@ public class MainController implements ErrorController {
             documentDTO.setDelivererName("Zeto");
             documentDTO.setDelivererNIP("NIP");
             documentDTO.setIssueSignature("ACK-DTN-"+i);
-            documentDTO.setIssueDate(i+10+"-02-2020");
+            documentDTO.setIssueDate("2020-02-"+i+10);
             documentDTO.setIssueDetails("Some text\nSome text 2");
 
             issueDocService.create(documentDTO);
@@ -307,6 +309,10 @@ public class MainController implements ErrorController {
             currentUserName = authentication.getName();
         }
         return currentUserName;
+    }
+
+    public Author string2Aut(String name){
+        return Author.valueOf(name);
     }
 
 

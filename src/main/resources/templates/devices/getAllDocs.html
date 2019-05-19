@@ -72,6 +72,14 @@
                     <span class="tooltiptext">Back to previous site</span>
                 </div>
             </div>
+            <div  style="text-align: center">
+                <div id="btnContainer"  class="pagination" style="margin-bottom: 30px" >
+                    <a  th:href="@{'/issueDocs/devices/' + ${dto.getInventNumber()} + '/1'}" >&laquo;</a>
+                    <a th:href="@{'/issueDocs/devices/' + ${dto.getInventNumber()} + '/1'}"  th:class=" ${currentPage}==1 ?'active' : '' " >1</a>
+                    <a th:href="@{'/issueDocs/devices/'+${dto.getInventNumber()}+'/'+${page}}" th:each="page:${pages}" th:text="${page}" th:class="${currentPage}==${page}? 'active' : ''" >2</a>
+                    <a th:href="@{'/issueDocs/devices/' + ${dto.getInventNumber()} + '/'+ ${lastPage}}">&raquo;</a>
+                </div>
+            </div>
         </div>
     
     </div>

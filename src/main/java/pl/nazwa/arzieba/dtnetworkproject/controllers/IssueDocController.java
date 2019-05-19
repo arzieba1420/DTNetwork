@@ -1,5 +1,6 @@
 package pl.nazwa.arzieba.dtnetworkproject.controllers;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.FieldError;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DamageDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceCardDAO;
@@ -34,6 +35,9 @@ public class IssueDocController {
     private IssueDocService issueDocService;
     private DeviceService deviceService;
 
+    @Value("${my.pagesize}")
+    int pagesize;
+
     @Autowired
     public IssueDocController(DamageService damageService, DeviceService deviceService, DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, IssueDocService issueDocService) {
         this.deviceDAO = deviceDAO;
@@ -46,14 +50,41 @@ public class IssueDocController {
     }
 
 
-    @GetMapping("/devices/{inventNumber}")
-    public String findByInventNumber(@PathVariable String inventNumber, Model model){
+    @GetMapping("/devices/{inventNumber}/{page}")
+    public String findByInventNumber(@PathVariable String inventNumber, Model model, @PathVariable int page){
 
         List<IssueDocumentDTO> docs = deviceService.getIssueDocuments(inventNumber);
         DeviceDTO dto = deviceService.findByInventNumber(inventNumber);
 
+        List<IssueDocumentDTO> page1= issueDocService.findByDevice(inventNumber,page-1,pagesize);
+
+        List<String> numbers = docs.stream().map(d->d.getInventNumber()).collect(Collectors.toList());
+
+
+        int numberOfPages = (issueDocService.numberByDevice(inventNumber))/pagesize + 1;
+
+        if(issueDocService.numberByDevice(inventNumber)%pagesize==0){
+            numberOfPages--;
+        }
+        List<Integer> morePages = new LinkedList<>();
+
+        int i = 2;
+        int lastPage = 1;
+
+        while(i<=numberOfPages){
+            morePages.add(i);
+            i++;
+            lastPage++;
+        }
+
+
+        model.addAttribute("numbers",numbers);
+        model.addAttribute("classActiveSettings","active");
+        model.addAttribute("pages",morePages);
+        model.addAttribute("currentPage",page);
+        model.addAttribute("lastPage",lastPage);
+        model.addAttribute("docs",page1);
         model.addAttribute("amount", docs.size());
-        model.addAttribute("docs", docs);
         model.addAttribute("dto", dto);
 
         return "devices/getAllDocs";

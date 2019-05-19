@@ -3,10 +3,7 @@ package pl.nazwa.arzieba.dtnetworkproject.controllers;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import pl.nazwa.arzieba.dtnetworkproject.dao.DamageDAO;
-import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceCardDAO;
-import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
-import pl.nazwa.arzieba.dtnetworkproject.dao.IssueDocumentDAO;
+import pl.nazwa.arzieba.dtnetworkproject.dao.*;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.Device;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
@@ -16,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.nazwa.arzieba.dtnetworkproject.model.Room;
-import pl.nazwa.arzieba.dtnetworkproject.model.ShortPost;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -31,12 +27,13 @@ public class DeviceController {
                             DamageDAO damageDAO,
                             IssueDocumentDAO issueDocumentDAO,
                             DeviceCardDAO deviceCardDAO,
-                            DeviceService deviceService) {
+                            DeviceService deviceService, GeneratorTestDAO generatorTestDAO) {
         this.deviceDAO = deviceDAO;
         this.damageDAO = damageDAO;
         this.issueDocumentDAO = issueDocumentDAO;
         this.deviceCardDAO = deviceCardDAO;
         this.deviceService = deviceService;
+        this.generatorTestDAO = generatorTestDAO;
     }
 
     private DeviceDAO deviceDAO;
@@ -44,6 +41,7 @@ public class DeviceController {
     private IssueDocumentDAO issueDocumentDAO;
     private DeviceCardDAO deviceCardDAO;
     private DeviceService deviceService;
+    private GeneratorTestDAO generatorTestDAO;
 
 
 
@@ -52,16 +50,30 @@ public class DeviceController {
     public String findByInventNumber(@PathVariable String inventNumber, Model model){
          DeviceDTO dto= deviceService.findByInventNumber(inventNumber);
          Device device= deviceDAO.findByInventNumber(inventNumber);
+
+         String lastTest = "Not known";
+        String activityType = "(not known)";
+
+         if(device.getTests().size()!=0){
+             lastTest = CalendarUtil.cal2string(generatorTestDAO.findTopByDevice_InventNumberOrderByDateDesc(inventNumber).getDate()) ;
+
+             if(generatorTestDAO.findTopByDevice_InventNumberOrderByDateDesc(inventNumber).isForLoss()){
+                 activityType = "(loss of power)";
+             } else{
+                 activityType="(test)";
+             }
+         }
+
+
+
+
+         model.addAttribute("activityType", activityType);
          model.addAttribute("dto",dto);
          model.addAttribute("dao",device);
          model.addAttribute("issueDAO", issueDocumentDAO);
          model.addAttribute("CalUtil", new CalendarUtil());
+         model.addAttribute("lastTest", lastTest);
          int posts = device.getShortPosts().size();
-        for (ShortPost post: device.getShortPosts()) {
-            if (post.getContent().contains("damage")){
-                posts--;
-            }
-        }
         model.addAttribute("posts",posts);
          return "devices/deviceInfo";
     }

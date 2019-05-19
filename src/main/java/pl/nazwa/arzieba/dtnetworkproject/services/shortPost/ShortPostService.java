@@ -17,8 +17,10 @@ public interface ShortPostService {
     List<ShortPostDTO> findLast5();
     List<ShortPostDTO> findAll(int items,int size);
     List<ShortPost> findAllByYear(int year);
+    Map<Integer,ShortPostDTO> findAllByDevice(String number, int page, int size);
 
     int numberByYear(int year);
+    int numberByDevice(String inventNumber);
 
     Map<Integer,ShortPostDTO> findAll(int year, int page, int size);
 

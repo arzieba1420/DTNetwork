@@ -51,8 +51,7 @@
 
                 </div>
 
-                <div class="row"  th:each="key, iterStat: ${posts.keySet()} "
-                     th:if="${!posts.get(key).content.contains('damage')}" >
+                <div class="row"  th:each="key, iterStat: ${posts.keySet()} ">
                     <div class="cell" data-title="Date" th:text="${posts.get(key).date}" >
                         11-11-2011
                     </div>
@@ -71,6 +70,9 @@
                 </div>
 
             </div>
+
+
+
             <div class="tooltipContainer" >
                 <div class="tooltip">
                     <a th:href="@{/posts/addForm/}+${dto.getInventNumber()}"><i class="fas fa-clipboard-list" style=" color: #051f64;"></i></a>
@@ -85,9 +87,18 @@
                     <span class="tooltiptext">Back to previous site</span>
                 </div>
             </div>
+            <div  style="text-align: center">
+                <div id="btnContainer"  class="pagination" style="margin-top: 20px" >
+                    <a  th:href="@{'/posts/devices/' + ${inv} + '/1'}" >&laquo;</a>
+                    <a th:href="@{'/posts/devices/' + ${inv} + '/1'}"  th:class=" ${currentPage}==1 ?'active' : '' " >1</a>
+                    <a th:href="@{'/posts/devices/'+${inv}+'/'+${page}}" th:each="page:${pages}" th:text="${page}" th:class="${currentPage}==${page}? 'active' : ''" >2</a>
+                    <a th:href="@{'/posts/devices/' + ${inv} + '/'+ ${lastPage}}">&raquo;</a>
+                </div>
+            </div>
         </div>
-        
+
     </div>
+
     <div th:insert="~{fragments/footer.html::footer}"></div>
 </body>
 </html>

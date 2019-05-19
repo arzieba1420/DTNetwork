@@ -34,7 +34,7 @@
                     <label for="postDdate">Date</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="postDdate" name="postDate" placeholder="DD-MM-YYYY" th:field="*{date}" th:errorclass="errorsFields">
+                    <input type="date" id="postDdate" name="postDate" placeholder="YYYY-MM-DD" th:field="*{date}" th:errorclass="errorsFields">
                 </div>
 
             </div>
@@ -56,10 +56,8 @@
                     <label for="author">Author</label>
                 </div>
                 <div class="col-75">
-                    <select id="author" name="author" th:field="*{author}" th:errorclass="errorsFields">
-                        <option th:value='null' >Choose author</option>
-                        <option th:each="author,iterStat:${authors}" th:value="${author}" th:text="${author}">Canada</option>
-                        
+                    <select class="disabledSelect" id="author" name="Author"  th:field="*{author}">
+                        <option th:hidden="hidden" th:readonly="readonly"  th:value="${@mainController.getUser()}" th:text="${@mainController.getUser()}"></option>
                     </select>
                 </div>
             </div>
