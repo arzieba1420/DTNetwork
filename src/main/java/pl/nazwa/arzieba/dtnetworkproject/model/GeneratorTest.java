@@ -31,6 +31,7 @@ public class GeneratorTest {
     private Calendar date;
     private String content;
     private Status status;
-    private boolean isForLoss;
+
+    private boolean lossPowerFlag;
 
 }

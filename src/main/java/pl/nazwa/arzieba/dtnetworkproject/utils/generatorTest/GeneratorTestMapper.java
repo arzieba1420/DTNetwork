@@ -3,7 +3,6 @@ package pl.nazwa.arzieba.dtnetworkproject.utils.generatorTest;
 
 import org.springframework.stereotype.Component;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
-import pl.nazwa.arzieba.dtnetworkproject.dao.GeneratorTestDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.GeneratorTestDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.GeneratorTest;
 import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
@@ -17,7 +16,7 @@ public class GeneratorTestMapper {
         generatorTest.setContent(dto.getContent());
         generatorTest.setDate(CalendarUtil.string2cal(dto.getDate()));
         generatorTest.setDevice(deviceDAO.findByInventNumber(dto.getInventNumber()));
-        generatorTest.setForLoss(dto.isForLoss());
+        generatorTest.setLossPowerFlag(dto.isLossPowerFlag());
         generatorTest.setStatus(dto.getStatus());
         return generatorTest;
     }
@@ -27,7 +26,7 @@ public class GeneratorTestMapper {
         GeneratorTestDTO dto = new GeneratorTestDTO();
         dto.setContent(test.getContent());
         dto.setDate(CalendarUtil.cal2string(test.getDate()));
-        dto.setForLoss(test.isForLoss());
+        dto.setLossPowerFlag(test.isLossPowerFlag());
         dto.setInventNumber(test.getDevice().getInventNumber());
         dto.setStatus(test.getStatus());
         return dto;

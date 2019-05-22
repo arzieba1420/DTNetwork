@@ -78,9 +78,9 @@
 
             <tr th:if="${dto.getDeviceType().name().equals('GENERATOR')}">
                 <td>Date of last activity</td>
-                <td th:text="${lastTest}+' '+${activityType}"></td>
+                <td th:utext="${lastTest}+' </br> '+${activityType}"></td>
                 <td th:if="${dao.getTests().isEmpty()}" th:text="'---'"></td>
-                <td th:if="${!dao.getTests().isEmpty()}" th:text="'---'"><a href="" th:text="' &#8981;'+'Show activities'"></a></td>
+                <td th:if="${!dao.getTests().isEmpty()}" ><a href="" th:href="@{'/generators/' + ${dto.getInventNumber()} + '/1'}"  th:text="' &#8981;'+'Show activities'"></a></td>
 
             </tr>
 
@@ -107,7 +107,7 @@
                 <span class="tooltiptext">Show device card</span>
             </div>
             <div class="tooltip" th:if="${dto.getDeviceType().name().equals('GENERATOR')}" >
-                <a href=""  ><i class="fas fa-power-off" style="color: orangered"></i></a>
+                <a href="" th:href="@{/devices/activityForm/} + ${dto.getInventNumber()}"  ><i class="fas fa-power-off" style="color: orangered"></i></a>
                 <span class="tooltiptext">Add generator activity</span>
             </div>
         </div>

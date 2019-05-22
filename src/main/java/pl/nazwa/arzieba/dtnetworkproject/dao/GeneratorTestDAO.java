@@ -11,9 +11,11 @@ import java.util.List;
 @Repository
 public interface GeneratorTestDAO extends PagingAndSortingRepository<GeneratorTest,Integer> {
 
-    Page<GeneratorTest> findByDevice_InventNumber(String inventNumber, Pageable pageable);
+    Page<GeneratorTest> findByDevice_InventNumberOrderByDateDesc(String inventNumber, Pageable pageable);
     List<GeneratorTest> findAllByDevice_InventNumber(String inventNumber);
-    Page<GeneratorTest> findAllByForLoss(boolean condition, Pageable pageable);
+    Page<GeneratorTest> findAllByLossPowerFlag(boolean condition, Pageable pageable);
     GeneratorTest findTopByDevice_InventNumberOrderByDateDesc(String inv);
+
+
 
 }
