@@ -20,12 +20,12 @@ public class CalendarUtil {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         String stringDay = day<10? "0"+day:""+day;
 
-        return stringDay+"-"+stringMonth+"-"+year;
+        return year+"-"+stringMonth+"-"+stringDay;
     }
 
     public static Calendar string2cal(String dateToParse) {
         String stringDate = dateToParse;
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         Date date;
         {

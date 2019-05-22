@@ -13,6 +13,7 @@ import java.util.List;
 public interface IssueDocumentDAO extends PagingAndSortingRepository<IssueDocument,String> {
 
     Page<IssueDocument> findAllByIssueDateBetween(Pageable pageable, Calendar start,Calendar end);
+    Page<IssueDocument> findAllByInventNumber(String string, Pageable pageable);
     List<IssueDocument> findAll();
     IssueDocument findByIssueSignature(String signature);
     List<IssueDocument> findByDamage_DamageId(Integer id);

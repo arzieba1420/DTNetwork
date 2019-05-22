@@ -22,6 +22,7 @@ public interface ShortPostDAO extends PagingAndSortingRepository<ShortPost,Integ
     List<ShortPost> findTop10ByOrderByDateDesc();
     List<ShortPost> findAllByAuthor(Author author);
     List<ShortPost> findAllByDevice_InventNumber(String number);
+    Page<ShortPost> findAllByDevice_InventNumber(String inventNumber, Pageable pageable);
     List<ShortPost> findAllByDevice_InventNumberOrderByDateDesc(String number);
     List<ShortPost> findTop10ByDevice_InventNumberOrderByDateDesc(String number);
     void removeByPostId(Integer id);

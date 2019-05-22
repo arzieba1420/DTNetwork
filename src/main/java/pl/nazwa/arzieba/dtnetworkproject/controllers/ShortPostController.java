@@ -1,6 +1,7 @@
 package pl.nazwa.arzieba.dtnetworkproject.controllers;
 
-import pl.nazwa.arzieba.dtnetworkproject.DtNetworkApplication;
+import org.springframework.beans.factory.annotation.Value;
+import pl.nazwa.arzieba.dtnetworkproject.configuration.MyPropertiesConfig;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.ShortPostDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
@@ -9,13 +10,12 @@ import pl.nazwa.arzieba.dtnetworkproject.model.Device;
 import pl.nazwa.arzieba.dtnetworkproject.model.ShortPost;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
 import pl.nazwa.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
+import pl.nazwa.arzieba.dtnetworkproject.utils.device.DeviceMapper;
 import pl.nazwa.arzieba.dtnetworkproject.utils.enums.ListOfEnumValues;
 import pl.nazwa.arzieba.dtnetworkproject.utils.shortPost.ShortPostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -34,45 +34,60 @@ public class ShortPostController implements WebMvcConfigurer {
     private DeviceDAO deviceDAO;
     private ShortPostService postService;
     private DeviceService deviceService;
+    private MyPropertiesConfig myPropertiesConfig;
+
+    @Value("${my.pagesize}")
+    int pagesize;
 
 
 
 
     @Autowired
-    public ShortPostController(ShortPostDAO postDAO, DeviceDAO deviceDAO, ShortPostService postService, DeviceService deviceService) {
+    public ShortPostController(ShortPostDAO postDAO, DeviceDAO deviceDAO, ShortPostService postService, DeviceService deviceService, MyPropertiesConfig myPropertiesConfig) {
         this.postDAO = postDAO;
         this.deviceDAO = deviceDAO;
         this.postService = postService;
         this.deviceService=deviceService;
-
+        this.myPropertiesConfig = myPropertiesConfig;
     }
 
 
 
 
-    @GetMapping("/devices/{inv}")
-    public String getAllForDevice(@PathVariable String inv, Model model){
-       List<ShortPost> shortPosts= postDAO.findAllByDevice_InventNumberOrderByDateDesc(inv);
-        DeviceDTO dto= deviceService.findByInventNumber(inv);
-        Map<Integer,ShortPostDTO> mapa = new LinkedHashMap<>();
+    @GetMapping("/devices/{inv}/{page}")
+    public String getAllForDevice(@PathVariable String inv, Model model,@PathVariable int page){
 
-        for (ShortPost post: shortPosts) {
-            mapa.put(post.getPostId(), ShortPostMapper.map(post));
+      DeviceDTO dto = DeviceMapper.map(deviceDAO.findByInventNumber(inv));
+      List<ShortPost> all = postDAO.findAllByDevice_InventNumber(inv);
+      Map<Integer,ShortPostDTO> mapa = postService.findAllByDevice(inv,page-1, pagesize);
+
+        int amount = postService.numberByDevice(inv);
+
+
+
+        int numberOfPages = (postService.numberByDevice(inv))/pagesize + 1;
+
+        if(postService.numberByDevice(inv)%pagesize==0){
+            numberOfPages--;
         }
 
-         List<ShortPostDTO> list= postService.findByDevice(inv);
+        List<Integer> morePages = new LinkedList<>();
+        int i = 2;
+        int lastPage = 1;
 
-        int amount = shortPosts.size();
-
-        for (ShortPost post: shortPosts) {
-            if (post.getContent().contains("damage")){
-                amount--;
-            }
+        while(i<=numberOfPages){
+            morePages.add(i);
+            i++;
+            lastPage++;
         }
-
         model.addAttribute("amount",amount);
          model.addAttribute("posts",mapa);
          model.addAttribute("dto",dto);
+        model.addAttribute("classActiveSettings","active");
+        model.addAttribute("lastPage",lastPage);
+        model.addAttribute("pages",morePages);
+        model.addAttribute("currentPage",page);
+        model.addAttribute("inv",inv);
         return "posts/allPostsForDevice";
     }
 

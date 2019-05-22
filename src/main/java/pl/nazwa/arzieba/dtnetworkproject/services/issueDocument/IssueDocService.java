@@ -17,7 +17,9 @@ public interface IssueDocService {
     IssueDocumentDTO create(IssueDocumentDTO documentDTO);
     IssueDocumentDTO update(IssueDocumentDTO documentDTO);
     IssueDocumentDTO remove(String signature);
+    List<IssueDocumentDTO> findByDevice(String inv, int page, int size);
     Set<Integer> setOfYears();
 
+    int numberByDevice(String inv);
     int numberByYear(int year);
 }

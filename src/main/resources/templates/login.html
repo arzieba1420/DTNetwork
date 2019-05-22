@@ -9,10 +9,11 @@
    
 </head>
 <body style="text-align: center">
-    
-    
-    
-    <h2 style="margin-top: 200px; font-size: 3em" >Welcome to DTNetwork<sup style="font-size: 0.5em">&copy;</sup> application!</h2>
+
+    <div style="padding-left: 70px">
+    <img style="margin-bottom: 0px; margin-top: 30px " src="../static/images/AVATAR.JPG" th:src="@{/images/AVATAR.JPG}" alt="Avatar" >
+    </div>
+    <h2 style="margin-top: 70px; font-size: 3em" >Welcome to DTNetwork<sup style="font-size: 0.5em">&copy;</sup> application!</h2>
     
     <button class="login" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Enter</button>
     
@@ -22,7 +23,7 @@
           modelAttribute="user" method="post" >
             <div class="imgcontainer">
                 <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-                <img src="../static/images/icoTitl.PNG" th:src="@{/images/AVATAR.JPG}" alt="Avatar" class="avatar">
+                <img src="../static/images/dtn.PNG" th:src="@{/images/dtn.PNG}" alt="Avatar" class="avatar">
             </div>
             
             <div class="container">

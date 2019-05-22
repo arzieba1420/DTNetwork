@@ -5,14 +5,15 @@ html{
 }
 
 body {
-    background-image: url('../images/back2.jpg');
+    background-image: url('../images/green-frame-transparent-backgr.png');
     background-repeat: no-repeat;
     background-size: cover;
+    background-position-y: 140px;
     margin: 0;
     padding: 0px;
     position: relative;
     min-width: 1900px;
-    background-position: 0px 160px;
+
     height: min-content;
 }
 

@@ -1,6 +1,6 @@
 
 
-input[type=text],input[type=password],  textarea {
+input[type=text],input[type=password],input[type=date],  textarea {
     width: 95%;
     padding: 12px;
     border: 1px solid #ccc;
@@ -18,7 +18,7 @@ select {
     resize: vertical;
 }
 
-input[type=text]:focus, input[type=password]:focus ,textarea:focus, select:focus{
+input[type=text]:focus, input[type=password]:focus ,input[type=date]:focus,textarea:focus, select:focus{
     border: 1.1px solid #327530;
 }
 
@@ -153,6 +153,6 @@ input[type=submit]:hover {
     border: 2px solid crimson ;
 }
 
-input[type=text].errorsFields,input[type=password].errorsFields {
+input[type=text].errorsFields,input[type=password].errorsFields,input[type=date].errorsFields {
     border: 2px solid crimson ;
 }

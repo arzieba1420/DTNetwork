@@ -3,20 +3,24 @@ package pl.nazwa.arzieba.dtnetworkproject.controllers;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import pl.nazwa.arzieba.dtnetworkproject.dao.DamageDAO;
-import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceCardDAO;
-import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
-import pl.nazwa.arzieba.dtnetworkproject.dao.IssueDocumentDAO;
+import pl.nazwa.arzieba.dtnetworkproject.dao.*;
+import pl.nazwa.arzieba.dtnetworkproject.dto.DamageDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
+import pl.nazwa.arzieba.dtnetworkproject.dto.GeneratorTestDTO;
+import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
+import pl.nazwa.arzieba.dtnetworkproject.model.Author;
 import pl.nazwa.arzieba.dtnetworkproject.model.Device;
+import pl.nazwa.arzieba.dtnetworkproject.model.Status;
+import pl.nazwa.arzieba.dtnetworkproject.services.damage.DamageService;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
+import pl.nazwa.arzieba.dtnetworkproject.services.generator.GeneratorService;
+import pl.nazwa.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
 import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.nazwa.arzieba.dtnetworkproject.model.Room;
-import pl.nazwa.arzieba.dtnetworkproject.model.ShortPost;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -31,12 +35,18 @@ public class DeviceController {
                             DamageDAO damageDAO,
                             IssueDocumentDAO issueDocumentDAO,
                             DeviceCardDAO deviceCardDAO,
-                            DeviceService deviceService) {
+                            DeviceService deviceService, GeneratorTestDAO generatorTestDAO, GeneratorService generatorService, MainController mainController, ShortPostService postService, DamageService damageService, DamageController damageController) {
         this.deviceDAO = deviceDAO;
         this.damageDAO = damageDAO;
         this.issueDocumentDAO = issueDocumentDAO;
         this.deviceCardDAO = deviceCardDAO;
         this.deviceService = deviceService;
+        this.generatorTestDAO = generatorTestDAO;
+        this.generatorService = generatorService;
+        this.mainController = mainController;
+        this.postService = postService;
+        this.damageService = damageService;
+        this.damageController = damageController;
     }
 
     private DeviceDAO deviceDAO;
@@ -44,6 +54,12 @@ public class DeviceController {
     private IssueDocumentDAO issueDocumentDAO;
     private DeviceCardDAO deviceCardDAO;
     private DeviceService deviceService;
+    private GeneratorTestDAO generatorTestDAO;
+    private GeneratorService generatorService;
+    private MainController mainController;
+    private ShortPostService postService;
+    private DamageService damageService;
+    private DamageController damageController;
 
 
 
@@ -52,16 +68,30 @@ public class DeviceController {
     public String findByInventNumber(@PathVariable String inventNumber, Model model){
          DeviceDTO dto= deviceService.findByInventNumber(inventNumber);
          Device device= deviceDAO.findByInventNumber(inventNumber);
+
+         String lastTest = "Not known";
+        String activityType = "(not known)";
+
+         if(device.getTests().size()!=0){
+             lastTest = CalendarUtil.cal2string(generatorTestDAO.findTopByDevice_InventNumberOrderByDateDesc(inventNumber).getDate()) ;
+
+             if(generatorTestDAO.findTopByDevice_InventNumberOrderByDateDesc(inventNumber).isLossPowerFlag()){
+                 activityType = "(loss of power)";
+             } else{
+                 activityType="(test)";
+             }
+         }
+
+
+
+
+         model.addAttribute("activityType", activityType);
          model.addAttribute("dto",dto);
          model.addAttribute("dao",device);
          model.addAttribute("issueDAO", issueDocumentDAO);
          model.addAttribute("CalUtil", new CalendarUtil());
+         model.addAttribute("lastTest", lastTest);
          int posts = device.getShortPosts().size();
-        for (ShortPost post: device.getShortPosts()) {
-            if (post.getContent().contains("damage")){
-                posts--;
-            }
-        }
         model.addAttribute("posts",posts);
          return "devices/deviceInfo";
     }
@@ -118,6 +148,91 @@ public class DeviceController {
     @GetMapping("/home")
     public String home(){
         return "index.html";
+    }
+
+    @GetMapping("/activityForm/{inv}")
+    public String addActForm(Model model, @PathVariable String inv){
+
+        String text = deviceDAO.findByInventNumber(inv).getDeviceDescription()
+                +" "+deviceDAO.findByInventNumber(inv).getRoom();
+        model.addAttribute("text",text);
+
+        model.addAttribute("newTest", new GeneratorTestDTO());
+        model.addAttribute("device", inv);
+        return "devices/addActForm";
+    }
+
+
+    public String addActFormErr(Model model, String inv, GeneratorTestDTO testDTO ){
+
+        model.addAttribute("newTest", testDTO);
+        model.addAttribute("device", inv);
+        return "devices/addActForm";
+    }
+
+    @PostMapping("/addTest")
+    public String addTest( Model model, @Valid @ModelAttribute("newTest") GeneratorTestDTO testDTO,  BindingResult bindingResult ){
+
+
+        if(bindingResult.hasFieldErrors()){
+            List<FieldError> allErrors;
+            allErrors = bindingResult.getFieldErrors();
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("errors",allErrors);
+            model.addAttribute("errorsAmount",allErrors.size());
+            return addActFormErr(model, testDTO.getInventNumber(), testDTO );
+        }
+
+        if( testDTO.isLossPowerFlag()==false && testDTO.getStatus()!= Status.DAMAGE ) {
+            generatorService.create(testDTO);
+            return "redirect:/generators/" + testDTO.getInventNumber()+"/1";
+        }
+        if(testDTO.isLossPowerFlag()==true && testDTO.getStatus()!= Status.DAMAGE){
+
+            ShortPostDTO postDTO = new ShortPostDTO();
+            postDTO.setDate(testDTO.getDate());
+            postDTO.setAuthor(Author.valueOf(mainController.getUser()));
+            postDTO.setInventNumber(testDTO.getInventNumber());
+            postDTO.setContent("Generator's work during loss of power");
+            generatorService.create(testDTO);
+            postService.create(postDTO);
+            return "redirect:/generators/" + testDTO.getInventNumber()+"/1";
+        }
+        if(testDTO.isLossPowerFlag()==false && testDTO.getStatus()== Status.DAMAGE){
+            DamageDTO damageDTO = new DamageDTO();
+            damageDTO.setDescription(testDTO.getContent());
+            damageDTO.setDeviceInventNumber(testDTO.getInventNumber());
+            damageDTO.setAuthor(Author.valueOf(mainController.getUser()));
+            damageDTO.setDamageDate(testDTO.getDate());
+            damageDTO.setNewPostFlag(true);
+            generatorService.create(testDTO);
+            damageController.add(model,damageDTO,bindingResult);
+            return "redirect:/dtnetwork";
+        }
+
+        if(testDTO.isLossPowerFlag()==true && testDTO.getStatus()== Status.DAMAGE){
+
+
+
+            ShortPostDTO postDTO = new ShortPostDTO();
+            postDTO.setDate(testDTO.getDate());
+            postDTO.setAuthor(Author.valueOf(mainController.getUser()));
+            postDTO.setInventNumber(testDTO.getInventNumber());
+            postDTO.setContent("Generator's work during loss of power");
+            DamageDTO damageDTO = new DamageDTO();
+            damageDTO.setDescription(testDTO.getContent());
+            damageDTO.setDeviceInventNumber(testDTO.getInventNumber());
+            damageDTO.setAuthor(Author.valueOf(mainController.getUser()));
+            damageDTO.setDamageDate(testDTO.getDate());
+            damageDTO.setNewPostFlag(true);
+            generatorService.create(testDTO);
+            postService.create(postDTO);
+            damageController.add( model , damageDTO,bindingResult );
+
+            return "redirect:/dtnetwork";
+        }
+
+        return "redirect:/error";
     }
 
 

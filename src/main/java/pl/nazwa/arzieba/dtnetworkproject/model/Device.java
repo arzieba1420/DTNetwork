@@ -38,5 +38,8 @@ public class Device {
     @OneToMany(mappedBy = "device")
     private List<ShortPost> shortPosts;
 
+    @OneToMany(mappedBy = "device")
+    private List<GeneratorTest> tests;
+
 
 }

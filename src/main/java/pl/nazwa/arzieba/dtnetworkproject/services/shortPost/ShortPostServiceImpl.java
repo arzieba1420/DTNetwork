@@ -3,9 +3,11 @@ package pl.nazwa.arzieba.dtnetworkproject.services.shortPost;
 import org.springframework.data.domain.PageImpl;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.ShortPostDAO;
+import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.Author;
 import pl.nazwa.arzieba.dtnetworkproject.model.ShortPost;
+import pl.nazwa.arzieba.dtnetworkproject.utils.device.DeviceMapper;
 import pl.nazwa.arzieba.dtnetworkproject.utils.shortPost.ShortPostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -86,6 +88,25 @@ public class ShortPostServiceImpl implements ShortPostService {
     }
 
     @Override
+    public Map<Integer, ShortPostDTO> findAllByDevice(String number, int page, int size) {
+        DeviceDTO deviceDTO = DeviceMapper.map(deviceDAO.findByInventNumber(number));
+        Map<Integer,ShortPostDTO> mapa = new LinkedHashMap<>();
+
+        Page<ShortPost> page1 = postDAO.findAllByDevice_InventNumber(number,PageRequest.of(page,size, Sort.Direction.DESC,"postDate"));
+        Set<Integer> keys = new LinkedHashSet<>();
+
+        for (ShortPost post:page1) {
+            keys.add(post.getPostId());
+        }
+
+        for (Integer key: keys) {
+            mapa.put(key,findById(key));
+        }
+
+        return mapa;
+    }
+
+    @Override
     public int numberByYear(int year){
        long l= postDAO.findAll().stream()
                 .filter(d->d.getPostDate().get(Calendar.YEAR)==year)
@@ -93,6 +114,12 @@ public class ShortPostServiceImpl implements ShortPostService {
 
         return (int)l;
 
+    }
+
+    @Override
+    public int numberByDevice(String inventNumber) {
+        long l= postDAO.findAllByDevice_InventNumber(inventNumber).stream().count();
+        return (int)l;
     }
 
     @Override
@@ -111,9 +138,7 @@ public class ShortPostServiceImpl implements ShortPostService {
             if(post.getPostDate().get(Calendar.YEAR)==year){
                 keys.add(post.getPostId());
             }
-
         }
-
 
         for (Integer key: keys) {
             mapa.put(key,findById(key));

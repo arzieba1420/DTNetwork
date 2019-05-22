@@ -5,7 +5,11 @@
     width: 100%;
     flex-flow: row;
     justify-content: center;
-    background: linear-gradient(to bottom left, #e0e0e0, #eeeeee);
+    /*background: linear-gradient(to bottom left, #e0e0e0, #eeeeee);*/
+    background-image: url("../images/green-header-png-12.png");
+
+    background-repeat: no-repeat;
+    background-size: cover;
     border: 2px solid #5a7a3d;
     border-bottom: none;
     margin: 0px;
@@ -26,13 +30,14 @@
     font-size: 1.2em;
     width: 300px;
     z-index: 99;
-    background: -webkit-linear-gradient( #9ada8c, #1e9d0b);
+
+    background: -webkit-linear-gradient( #555555, #555555);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent
 }
 
 .headerBar #desc{
-    background-image: url("../images/logo_desc.png");
+    background-image: url("../images/logo_desc3.png");
     width: 500px;
     height: 60px;
     text-align: center;
@@ -64,12 +69,21 @@
 
     padding-right: 30px;
     font-family: 'Pacifico', cursive;
-    color: #1cb50b;
-    font-size: 3em ;
-    border-bottom: 3px solid green;
-    border-bottom-right-radius: 50px 50px;
+    background-image:url("../images/name.PNG");
+    background-size: cover;
+    color: #008600;
+    font-size: 3em;
+    border-bottom: 3px solid #b40000;
+    border-top: 3px solid #b40000;
+    border-bottom-right-radius: 40px 40px;
+    border-bottom-left-radius: 20px 20px;
+    border-top-left-radius: 40px 40px;
+    border-top-right-radius: 20px 20px;
     display: flex;
     flex-flow: row;
+    padding-left: 10px;
+
+
 
 }
 .headerBar  a{
@@ -78,6 +92,7 @@
     color: inherit;
     margin-right: 40%;
     margin-left: 20px;
+    text-align: center;
 
 }
 
