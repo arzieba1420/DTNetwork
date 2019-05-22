@@ -8,7 +8,7 @@ This is my first Spring project created only by myself!
 It is kind of WebApp which will be used as a repository (or database) of information about some technical devices 
 maintained by me in my current job.
 
-**The app is not ready yet to use, it will take about one month to release first stable version [written: 4 April 2019 ]**
+~~**The app is not ready yet to use, it will take about one month to release first stable version [written: 4 April 2019 ]**
 
 [UPDATE 11-05-2019]  
 **1st stable version of my project is available and ready to be tested on branch master. Any further version will appear in the future**  
