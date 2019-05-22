@@ -21,8 +21,10 @@ maintained by me in my current job.
 **Used technologies:**
 -----------------------
 * Java 8
-* Spring v.5 and SpringBoot v.2 (includes Spring Security, Spring Validator, JPA, Hibernate, Lombok, etc.)
-* Thymeleaf
+* Spring v.5 and SpringBoot v.2 (Spring Security, Spring Validator, JPA, Hibernate)  
+* Thymeleaf  
+* Project Lombok
+* Jasypt
 * HTML5+CSS+JS
 * IntelliJ 2018 as an IDE
 * Cooperates with DB based on MariaDB engine
