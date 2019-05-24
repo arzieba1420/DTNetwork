@@ -26,20 +26,20 @@
     <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
 
     <div class="container" style="min-height: 100vh;" >
-        <h1><span th:text="'Documents in ' +${year}+ ' ('+ ${amount} +')' "> </span></h1>
+        <h1><span th:text="'Zamówienia w ' +${year}+ ' roku ('+ ${amount} +')' "> </span></h1>
     <div style="display: flex;flex-flow: row;justify-content: center">
     <table style=" width: 80%;  margin: 10px 30px">
         <tr id="topBar">
-            <th >Signature</th>
-            <th>Device</th>
+            <th >Sygnatura</th>
+            <th>Urządzenie</th>
             
-            <th>Date</th>
-            <th>Name</th>
+            <th>Data</th>
+            <th>Nazaw firmy</th>
             
-            <th style="width:600px">Title</th>
-            <th>Value</th>
+            <th style="width:600px">Tytuł sprawy</th>
+            <th>Wartość zamówienia</th>
          
-            <th>Action</th>
+            <th>Akcja</th>
         </tr>
         <tr th:each="doc:${docs}">
             <td style="white-space:pre-wrap;" th:text="${doc.issueSignature}">Invent Number</td>

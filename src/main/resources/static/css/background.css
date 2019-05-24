@@ -17,4 +17,11 @@ body {
     height: min-content;
 }
 
+.cancelbtn {
+    float: left;
+    width: 10%;
+    padding: 14px 20px;
+    background-color: #f44336;
+}
+
 

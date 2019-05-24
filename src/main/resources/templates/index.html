@@ -30,21 +30,21 @@
     <div class="limiter">
         <div class="container-table100">
             <div class="wrap-table100">
-                <h1><span>Last 10 posts</span></h1>
+                <h1><span>Najnowsze posty</span></h1>
                 <div class="table">
                     
                     <div class="row header">
                         <div class="cell">
-                            Date
+                            Data
                         </div>
                         <div class="cell">
-                            Author
+                            Autor
                         </div>
                         <div class="cell">
-                            Target
+                            Urządzenie
                         </div>
                         <div class="cell" >
-                            Content
+                            Treść
                         </div>
                         <div class="cell action">
                             ---
@@ -80,7 +80,7 @@
                             <a href="#" ><i class="fas fa-bolt" style="font-size: 200%; color: orangered"></i></a>
                         </div>
                         <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('damage') and !lastPosts.get(key).content.contains('loss')}">
-                            <a href="#" th:href="@{'/posts/delete/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Remove post</span></a>
+                            <a href="#" th:href="@{'/posts/delete/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Usuń post</span></a>
                         </div>
                     </div>
                 </div>

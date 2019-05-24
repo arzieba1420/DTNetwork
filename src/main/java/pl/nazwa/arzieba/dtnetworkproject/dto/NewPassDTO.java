@@ -15,15 +15,15 @@ import javax.validation.constraints.Size;
 public class NewPassDTO {
 
     @NotBlank
-    @Size(min = 8,message = "Password is too short: min 8 chars")
+    @Size(min = 6,message = "Hasło za krótkie: minimum 6 znaków")
     private String newPass;
 
-    @NotBlank(message = "Field cannot be empty")
+    @NotBlank(message = "Pole nie może być puste")
     private String newPassConfirmed;
 
     private String login;
 
-    @NotBlank(message = "Field cannot be empty")
+    @NotBlank(message = "Pole nie może być puste")
     private String oldPass;
 
 

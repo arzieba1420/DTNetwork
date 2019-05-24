@@ -25,13 +25,13 @@
     </div>
     <div class="container" style="min-height: 100vh">
        
-        <h1 ><span>Add new post</span></h1>
+        <h1 ><span>Dodaj nowy post</span></h1>
         <form  th:action="@{'/posts/addAsModel'}" th:object="${newPost}" method="post"
         modelAttribute="newPost" >
 
             <div class="row">
                 <div class="col-25">
-                    <label for="postDdate">Date</label>
+                    <label for="postDdate">Data</label>
                 </div>
                 <div class="col-75">
                     <input type="date" id="postDdate" name="postDate" placeholder="YYYY-MM-DD" th:field="*{date}" th:errorclass="errorsFields">
@@ -41,11 +41,11 @@
             <!--Add select!-->
             <div class="row">
                 <div class="col-25">
-                    <label for="device">Device</label>
+                    <label for="device">Urządzenie</label>
                 </div>
                 <div class="col-75">
                 <select id="device" name="Device"  th:field="*{inventNumber}">
-                    <option th:value="'NOT SPECIFIED'">Choose device</option>
+                    <option th:value="'NOT SPECIFIED'">Wybierz urządzenie</option>
                     <option th:if="${key}!='NOT SPECIFIED'" th:each="key,iterStat:${devices.keySet()}" th:value="${key}" th:text="${@deviceDAO.findByInventNumber(key).deviceDescription}+' '+${@deviceDAO.findByInventNumber(key).room}"></option>
                 </select>
                 </div>
@@ -53,7 +53,7 @@
             
             <div class="row">
                 <div class="col-25">
-                    <label for="author">Author</label>
+                    <label for="author">Autor</label>
                 </div>
                 <div class="col-75">
                     <select class="disabledSelect" id="author" name="Author"  th:field="*{author}">
@@ -63,15 +63,15 @@
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="content">Content</label>
+                    <label for="content">Treść</label>
                 </div>
                 <div class="col-75">
                     <textarea id="content" name="content" placeholder="Write something.." style="height:200px" th:field="*{content}"th:errorclass="errorsFields"></textarea>
                 </div>
             </div>
             <div class="row">
-                <input type="submit" value="Cancel" onclick="window.history.go(-1); return false;">
-                <input type="submit" value="Submit" style="margin-right: 20px">
+                <input type="submit" class="cancelbtn" value="Anulujl" onclick="window.history.go(-1); return false;">
+                <input type="submit"  value="Wyślij" style="margin-right: 20px">
             </div>
         </form>
     </div>

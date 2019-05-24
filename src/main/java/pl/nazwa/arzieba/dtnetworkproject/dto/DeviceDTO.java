@@ -21,18 +21,18 @@ public class DeviceDTO {
 
 
     @NotBlank(
-            message = "Invent number cannot be empty!"  )
+            message = "Podaj numer inwentaryzacyjny!"  )
 
     private String inventNumber;
 
     @NotBlank(
-            message = "Description cannot be empty!"  )
+            message = "Podaj opis urządzenia!"  )
 
     private String deviceDescription;
 
-    @NotNull(message = "Room not specified!")
+    @NotNull(message = "Podaj halę!")
     private Room room;
 
-    @NotNull(message = "Device type not specified!")
+    @NotNull(message = "Podaj typ urządzenia")
     private DeviceType deviceType;
 }

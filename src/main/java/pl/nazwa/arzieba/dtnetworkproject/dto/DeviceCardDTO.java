@@ -28,17 +28,17 @@ public class DeviceCardDTO {
     private String producer;
     private String deliverer;
 
-    @DecimalMax(value = "2100", message = "Incorrect year: out of bounds <1970;2100>") @DecimalMin(value = "1970",message = "Incorrect year: out of bounds <1970;2100>")
+    @DecimalMax(value = "2100", message = "Niepoprawny rok: poza zakresem <1970;2100>") @DecimalMin(value = "1970",message = "Niepoprawny rok: poza zakresem <1970;2100>")
     private int buildTime;
     private String deliveryDocumentID;
     private String attachementsIDs;
 
     @Pattern(regexp="(^(19|[2-9][0-9])\\d\\d[\\-]((0[1-9]|1[012])[\\-]((0[1-9]|1[0-9]|2[0-8]))|((0[13578]|1[02])[\\-](29|30|31))|((0[4,6,9]|11)[\\-](29|30))))$|(^(19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)[\\-]02[\\-]29[\\-]$)",
-            message = "Invalid date or pattern: yyyy-MM-dd not satisfied!")
+            message = "Niewłaściwa data lub niepoprawny format!")
     private String deliveryDate;
 
     @Pattern(regexp="(^(19|[2-9][0-9])\\d\\d[\\-]((0[1-9]|1[012])[\\-]((0[1-9]|1[0-9]|2[0-8]))|((0[13578]|1[02])[\\-](29|30|31))|((0[4,6,9]|11)[\\-](29|30))))$|(^(19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)[\\-]02[\\-]29[\\-]$)",
-            message = "Invalid date or pattern: yyyy-MM-dd not satisfied!")
+            message = "Niewłaściwa data lub niepoprawny format!")
     private String startDate;
     private String signatureNumber;
     private String financeSource;
@@ -47,7 +47,7 @@ public class DeviceCardDTO {
 
    @Pattern(regexp="(^(19|[2-9][0-9])\\d\\d[\\-]((0[1-9]|1[012])[\\-]((0[1-9]|1[0-9]|2[0-8]))|((0[13578]|1[02])[\\-](29|30|31))|((0[4,6,9]|11)[\\-](29|30))))$|(^(19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)[\\-]02[\\-]29[\\-]$)",
 
-            message = "Invalid date or pattern: yyyy-MM-dd not satisfied!")
+            message = "Niewłaściwa data lub niepoprawny format!")
     private String creationTime;
     private Double deviceValue;
     private String inventNumber;

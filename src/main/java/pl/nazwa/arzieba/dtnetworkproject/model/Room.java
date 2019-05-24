@@ -14,6 +14,6 @@ public enum  Room {
     H105,
     HM,
     HM_ROOF,
-    OTHER;
+    Inne;
 
 }

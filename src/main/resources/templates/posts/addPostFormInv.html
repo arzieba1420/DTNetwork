@@ -28,13 +28,13 @@
 
 
     <div class="container" style="min-height: 100vh">
-        <h1 ><span>Add new post</span></h1>
+        <h1 ><span>Dodaj nowy post</span></h1>
         <form  th:action="@{'/posts/addAsModel/stay'}" th:object="${shortPostDTO}" method="post"
                modelAttribute="shortPostDTO"
          >
             <div class="row">
                 <div class="col-25">
-                    <label for="date">Date</label>
+                    <label for="date">Data</label>
                 </div>
                 <div class="col-75" >
                     <input  type="date" id="date" name="Date" placeholder="YYYY-MM-DD" th:field="*{date}" th:errorclass="errorsFields">
@@ -44,7 +44,7 @@
             <!--Add select!-->
             <div class="row">
                 <div class="col-25">
-                    <label for="device">Device</label>
+                    <label for="device">Urządzenie</label>
                 </div>
                 <div class="col-75">
                 <select class="disabledSelect" id="device" name="Device" th:readonly="readonly"   th:field="*{inventNumber}" >
@@ -55,7 +55,7 @@
             
             <div class="row">
                 <div class="col-25">
-                    <label for="author">Author</label>
+                    <label for="author">Autor</label>
                 </div>
                 <div class="col-75">
                     <select class="disabledSelect" id="author" name="Author"  th:field="*{author}">
@@ -65,15 +65,15 @@
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="content">Content</label>
+                    <label for="content">Treść</label>
                 </div>
                 <div class="col-75">
                     <textarea id="content" name="content" placeholder="Write something.." style="height:200px" th:field="*{content}"th:errorclass="errorsFields"></textarea>
                 </div>
             </div>
             <div class="row">
-                <input type="submit" value="Cancel" onclick="window.history.go(-1); return false;">
-                <input type="submit" value="Submit" style="margin-right: 20px">
+                <input type="submit" class="cancelbtn" value="Anuluj" onclick="window.history.go(-1); return false;">
+                <input type="submit"  value="Wyślij" style="margin-right: 20px">
 
             </div>
         </form>

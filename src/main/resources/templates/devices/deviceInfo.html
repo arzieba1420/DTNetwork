@@ -37,50 +37,50 @@
         <table>
 
             <tr id="topBar">
-                <th>Attribute</th>
-                <th>Value</th>
-                <th>Action</th>
+                <th>Atrybut</th>
+                <th>Wartość</th>
+                <th>Akcja</th>
             </tr>
             <tr>
-                <td>Invent Number</td>
+                <td>Numer inw.</td>
                 <td th:text="${dto.getInventNumber()}">Test</td>
                 <td th:text="'---'"></td>
 
             </tr>
             <tr>
-                <td>Start date</td>
-                <td th:if="${dao.getDeviceCard()== null}" th:text="'Not known'"> </td>
+                <td>Data początku ekspl.</td>
+                <td th:if="${dao.getDeviceCard()== null}" th:text="'Nieznana'"> </td>
                 <td th:if="${dao.getDeviceCard()!= null}" th:text="${CalUtil.cal2string(dao.getDeviceCard().getStartDate())}"> </td>
 
                 <td th:if="${dao.getDeviceCard()== null}"><a href="" th:text="'---'"></a> </td>
                 <td th:if="${dao.getDeviceCard()!= null}"><a href="" th:text="'---'"></a> </td>
             </tr>
             <tr>
-                <td>Number of damages</td>
+                <td>Ilość usterek</td>
                 <td th:text="${dao.getDamageList().size()}"></td>
                 <td th:if="${dao.getDamageList().size()==0}" th:text="'---'" ></td>
-                <td th:if="${dao.getDamageList().size()!=0}" ><a th:href="@{'/damages/devices/'+${dto.getInventNumber()}+'/1'}" th:text="' &#8981;'+' Show damages'" > </a></td>
+                <td th:if="${dao.getDamageList().size()!=0}" ><a th:href="@{'/damages/devices/'+${dto.getInventNumber()}+'/1'}" th:text="' &#8981;'+' Pokaż usterki'" > </a></td>
 
             </tr>
             <tr>
-                <td>Number of posts</td>
+                <td>Ilość postów</td>
                 <td th:text="${posts}"></td>
                 <td th:if="${posts==0}" th:text="'---'" ></td>
-                <td th:if="${posts!=0}" ><a th:href="@{'/posts/devices/'+${dto.getInventNumber()}+'/1'}" th:text="' &#8981;'+'Show posts'" ></a></td>
+                <td th:if="${posts!=0}" ><a th:href="@{'/posts/devices/'+${dto.getInventNumber()}+'/1'}" th:text="' &#8981;'+'Pokaż posty'" ></a></td>
 
             </tr>
             <tr>
-                <td>Number of documents</td>
+                <td>Ilość zamówień</td>
                 <td th:text="${issueDAO.findByInventNumber(dto.getInventNumber()).size()}"></td>
                 <td th:if="${issueDAO.findByInventNumber(dto.getInventNumber()).size()==0}" th:text="'---'" ></td>
-                <td th:if="${issueDAO.findByInventNumber(dto.getInventNumber()).size()!=0}" ><a href="" th:href="@{'/issueDocs/devices/'+${dto.getInventNumber()}+'/1'}" th:text="' &#8981;'+'Show documents'" ></a></td>
+                <td th:if="${issueDAO.findByInventNumber(dto.getInventNumber()).size()!=0}" ><a href="" th:href="@{'/issueDocs/devices/'+${dto.getInventNumber()}+'/1'}" th:text="' &#8981;'+'Pokaż zamówienia'" ></a></td>
             </tr>
 
             <tr th:if="${dto.getDeviceType().name().equals('GENERATOR')}">
-                <td>Date of last activity</td>
+                <td>Data ostatniej akcji</td>
                 <td th:utext="${lastTest}+' </br> '+${activityType}"></td>
                 <td th:if="${dao.getTests().isEmpty()}" th:text="'---'"></td>
-                <td th:if="${!dao.getTests().isEmpty()}" ><a href="" th:href="@{'/generators/' + ${dto.getInventNumber()} + '/1'}"  th:text="' &#8981;'+'Show activities'"></a></td>
+                <td th:if="${!dao.getTests().isEmpty()}" ><a href="" th:href="@{'/generators/' + ${dto.getInventNumber()} + '/1'}"  th:text="' &#8981;'+'Pokaż akcje'"></a></td>
 
             </tr>
 
@@ -88,27 +88,27 @@
         <div style="width:65%; display: flex;  justify-content: center; ">
             <div class="tooltip">
                 <a th:href="@{/posts/addForm/}+${dto.getInventNumber()}"><i class="fas fa-clipboard-list" style=" color: #051f64;"></i></a>
-                <span class="tooltiptext">Add new post</span>
+                <span class="tooltiptext">Dodaj nowy post</span>
             </div>
             <div class="tooltip">
                 <a href="" th:href="@{/damages/addForm/}+${dto.getInventNumber()}"> <i class="fas fa-exclamation-circle" style=" color: #640108;"></i></a>
-                <span class="tooltiptext">Add new damage</span>
+                <span class="tooltiptext">Dodaj nową usterkę</span>
             </div>
             <div class="tooltip">
                 <a th:href="@{/issueDocs/addForm/}+${dto.getInventNumber()}"><i class="fas fa-file-invoice-dollar" style=" color: darkgreen;"></i></a>
-                <span class="tooltiptext">Add new document</span>
+                <span class="tooltiptext">Dodaj nowe zamówienie</span>
             </div>
             <div class="tooltip"  th:if="${dao.getDeviceCard()== null}" >
                 <a th:href="@{/cards/addForm/}+${dto.getInventNumber()}"><i class="far fa-id-card" style=" color: #55003b;"></i></a>
-                <span class="tooltiptext">Add device card</span>
+                <span class="tooltiptext">Dodaj kartę maszyny</span>
             </div>
             <div class="tooltip"  th:if="${dao.getDeviceCard()!= null}" >
                 <a href="" th:href="@{/inBuild}" ><i class="far fa-id-card" style=" color: #55003b;"></i></a>
-                <span class="tooltiptext">Show device card</span>
+                <span class="tooltiptext">Pokaż kartę maszyny</span>
             </div>
             <div class="tooltip" th:if="${dto.getDeviceType().name().equals('GENERATOR')}" >
                 <a href="" th:href="@{/devices/activityForm/} + ${dto.getInventNumber()}"  ><i class="fas fa-power-off" style="color: orangered"></i></a>
-                <span class="tooltiptext">Add generator activity</span>
+                <span class="tooltiptext">Dodaj akcję generatora</span>
             </div>
         </div>
     </div>

@@ -27,21 +27,21 @@
     <div class="limiter">
         <div class="container-table100">
             <div class="wrap-table100">
-                <h1><span th:text="'Posts in ' + ${year}+' ('+ ${amount}+')'"></span></h1>
+                <h1><span th:text="'Posty w ' + ${year}+' roku ('+ ${amount}+')'"></span></h1>
                 <div class="table">
                     
                     <div class="row header">
                         <div class="cell">
-                            Date
+                            Data
                         </div>
                         <div class="cell">
-                            Author
+                            Autor
                         </div>
                         <div class="cell">
-                            Target
+                            Urządzenie
                         </div>
                         <div class="cell" >
-                            Content
+                            Treść
                         </div>
                         <div class="cell action">
                         
@@ -65,7 +65,7 @@
                         </div>
                         
                         <div class="cell remove " >
-                            <a href="#" th:href="@{'/posts/delete/'+ ${key}+'/stay'}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Remove post</span></a>
+                            <a href="#" th:href="@{'/posts/delete/'+ ${key}+'/stay'}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Usuń post</span></a>
                         </div>
                         
                     </div>

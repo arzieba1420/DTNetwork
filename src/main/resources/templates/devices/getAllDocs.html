@@ -30,16 +30,16 @@
         </div>
         
         <div class="col-75" style="margin-right: 0px; padding-left: 70px; width: 1200px" >
-            <h1><span th:text="'Documents for selected device (' + ${amount}+')' " ></span></h1>
+            <h1><span th:text="'Zamówienia dla tego urządzenia (' + ${amount}+')' " ></span></h1>
             <table style="width: 100%">
                 <tr id="topBar">
-                    <th style="width: 150px">Signature</th>
-                    <th>Date</th>
-                    <th>Name</th>
+                    <th style="width: 150px">Sygnatura</th>
+                    <th>Data</th>
+                    <th>Nazwa firmy</th>
                     
-                    <th style="width:600px">Title</th>
-                    <th>Value</th>
-                    <th>Action</th>
+                    <th style="width:600px">Tytuł sprawy</th>
+                    <th>Wartość zamówienia</th>
+                    <th>Akcja</th>
                 </tr>
                 <tr th:each="doc:${docs}">
                     <td style="white-space:pre-wrap;width: 150px" th:text="${doc.issueSignature}">Invent Number</td>
@@ -61,15 +61,15 @@
                 
                 <div class="tooltip">
                     <a href="" th:href="@{'/issueDocs/addForm/'+ ${dto.getInventNumber()}}"> <i class="fas fa-file-invoice-dollar" style=" color: darkgreen;"></i></a>
-                    <span class="tooltiptext">Add new document</span>
+                    <span class="tooltiptext">Dodaj nowe zamówienie</span>
                 </div>
                 <div class="tooltip">
                     <a th:href="@{'/devices/'+${dto.getInventNumber()}}"><i class="fas fa-info-circle" style=" color: aqua;"></i></a>
-                    <span class="tooltiptext">Show device info</span>
+                    <span class="tooltiptext">Info o urządzeniu</span>
                 </div>
                 <div class="tooltip">
                     <a onclick="window.history.go(-1)"><i class="fas fa-backward" style=" color: #55003b;"></i></a>
-                    <span class="tooltiptext">Back to previous site</span>
+                    <span class="tooltiptext">Wróć do poprzedniej strony</span>
                 </div>
             </div>
             <div  style="text-align: center">

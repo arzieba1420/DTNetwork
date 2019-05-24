@@ -24,13 +24,13 @@
     </div>
 
     <div class="container" style="min-height: 100vh">
-        <h1 ><span>Add new document</span></h1>
+        <h1 ><span>Dodaj nowe zamówienie</span></h1>
         <form  th:action="@{'/issueDocs/addAsModel/stay2'}" th:object="${newDoc}" method="post"
               modelAttribute="newDoc" >
 
             <div class="row">
                 <div class="col-25">
-                    <label for="signature">Signature</label>
+                    <label for="signature">Sygnatura</label>
                 </div>
                 <div class="col-75">
                     <input type="text" id="signature" name="Signature" placeholder="ACK-DTN..." th:field="*{issueSignature}"th:errorclass="errorsFields">
@@ -38,7 +38,7 @@
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="date">Date</label>
+                    <label for="date">Data</label>
                 </div>
                 <div class="col-75">
                     <input type="date" id="date" name="Date" placeholder="yyyy-MM-dd" th:field="*{issueDate}"th:errorclass="errorsFields">
@@ -47,7 +47,7 @@
             <!--Add select!-->
             <div class="row">
                 <div class="col-25">
-                    <label for="device">Device</label>
+                    <label for="device">Urządzenie</label>
                 </div>
                 <div class="col-75">
                     <select class="disabledSelect" id="device" name="Device"  th:field="*{inventNumber}"  >
@@ -58,7 +58,7 @@
 
             <div class="row">
                 <div class="col-25">
-                    <label for="delivererName">Deliverer name</label>
+                    <label for="delivererName">Nazwa firmy</label>
                 </div>
                 <div class="col-75">
                     <input type="text" id="delivererName" name="Name"  th:field="*{delivererName}">
@@ -74,7 +74,7 @@
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="title">Title</label>
+                    <label for="title">Tytuł sprawy</label>
                 </div>
                 <div class="col-75">
                     <input type="text" id="title" name="Title"  th:field="*{issueTittle}"th:errorclass="errorsFields">
@@ -82,7 +82,7 @@
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="content">Details</label>
+                    <label for="content">Szczegóły</label>
                 </div>
                 <div class="col-75">
                     <textarea id="content" name="content" placeholder="Write something.." style="height:200px" th:field="*{issueDetails}"th:errorclass="errorsFields"></textarea>
@@ -90,15 +90,15 @@
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="value">Value</label>
+                    <label for="value">Wartość zamówienia</label>
                 </div>
                 <div class="col-75">
                     <input type="text" id="value" name="Value" placeholder="19999.99" th:field="*{value}">
                 </div>
             </div>
             <div class="row">
-                <input type="submit" value="Cancel" onclick="window.history.go(-1); return false;">
-                <input type="submit" value="Submit" style="margin-right: 20px">
+                <input type="submit"  class="cancelbtn" value="Anuluj" onclick="window.history.go(-1); return false;">
+                <input type="submit" value="Wyślij" style="margin-right: 20px">
 
             </div>
         </form>
