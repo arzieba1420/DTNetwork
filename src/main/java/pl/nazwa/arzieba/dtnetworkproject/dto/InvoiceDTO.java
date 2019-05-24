@@ -5,9 +5,7 @@ import lombok.Setter;
 import org.springframework.stereotype.Component;
 import pl.nazwa.arzieba.dtnetworkproject.model.BuildingType;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 @Component
 @Getter
@@ -23,6 +21,8 @@ public class InvoiceDTO {
             message = "Invalid date or pattern: yyyy-MM-dd not satisfied!")
     private String date;
 
+    @Positive(message = "Value must be greater than 0")
+    @Digits(integer = 10, fraction = 2,message = "Too many fraction numbers")
     private double netValue;
 
 }

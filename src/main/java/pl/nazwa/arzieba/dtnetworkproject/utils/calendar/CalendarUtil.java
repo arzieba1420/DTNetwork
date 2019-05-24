@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class CalendarUtil {
@@ -40,4 +41,9 @@ public class CalendarUtil {
             return null;
         }
     }
+
+    public static String[] monthsEng = {"january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"};
+    public static String[] monthsPol = {"styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec", "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień"};
+
+
 }

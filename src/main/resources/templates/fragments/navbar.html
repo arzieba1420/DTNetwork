@@ -21,8 +21,8 @@
         <div id="bar">
         <div id="nav">
             <ul>
-                <li><a class="home" href="#" th:href="@{/dtnetwork}">Home</a></li>
-                <li><a >Devices &raquo;</a>
+                <li><a class="home mainBar" href="#" th:href="@{/dtnetwork}">Home</a></li>
+                <li><a class="mainBar" >Devices &raquo;</a>
                     <ul>
                         <li  th:each="room:${rooms}"><a href="#" th:text="${room}+' '+'&raquo;'"></a>
                             <ul>
@@ -35,23 +35,34 @@
                     </ul>
                 </li>
 
-                <li><a href="#">Documents &raquo;</a>
+                <li><a class="mainBar" href="#">Documents &raquo;</a>
                     <ul>
-                        <li th:each="year:${@issueDocServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}"></a></li>
+                        <li th:if="${@issueDocServiceImpl.setOfYears().size()<=5}" th:each="year:${@issueDocServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}"></a></li>
+                        <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}" th:each="year:${@issueDocServiceImpl.subSet()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}"></a></li>
+                        <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}"  ><a href="#" th:href="@{/dtnetwork}" th:text="'See older...'"></a></li>
                     </ul>
                 </li>
 
-                <li><a href="#">Posts &raquo;</a>
+                <li><a class="mainBar" href="#">Posts &raquo;</a>
                     <ul>
-                        <li th:if="${!@shortPostServiceImpl.areAllForDamage(year)}" th:each="year:${@shortPostServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/posts/all/'+${year}+'/1' }" th:text= "${year}" >Test</a></li>
+                        <li th:if="${!@shortPostServiceImpl.areAllForDamage(year) and @shortPostServiceImpl.setOfYears().size()<=5 }" th:each="year:${@shortPostServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/posts/all/'+${year}+'/1' }" th:text= "${year}" >Test</a></li>
+                        <li th:if="${!@shortPostServiceImpl.areAllForDamage(year) and @shortPostServiceImpl.setOfYears().size()>5 }" th:each="year:${@shortPostServiceImpl.subSet()}" ><a href="#" th:href="@{'/posts/all/'+${year}+'/1' }" th:text= "${year}" >Test</a></li>
+                        <li th:if="${@shortPostServiceImpl.setOfYears().size()>5 }" ><a href="#" th:href="@{/dtnetwork}" th:text= "'See older...'" >Test</a></li>
                     </ul>
                 </li>
 
-                <li><a th:href="@{/inBuild}" >Invoices &raquo;</a>
-
+                <li><a class="mainBar"  >Invoices &raquo;</a>
+                    <ul>
+                        <li th:each="building:${@listOfEnumValues.buildings}" ><a href="" th:text="${building.name()+' '+'&raquo;'}"></a>
+                            <ul>
+                                <li><a href="" th:href="@{/invoices/addForm/}+${building.name()}"  th:text="'+ Add new'"></a></li>
+                                <li ><a href="" th:text="'Show all'" th:href="@{'/invoices/'+${building.name()}+'/1'}" ></a></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </li>
 
-                <li><a style="padding-bottom: 7px" class="logout" href="#"   th:text=" '&#9673; '+ ${@mainController.getUser()} " >Logout</a>
+                <li><a style="padding-bottom: 7px; border-right: none" class="logout mainBar" href="#"   th:text=" '&#9673; '+ ${@mainController.getUser()} " >Logout</a>
                     <ul>
                         <li><a class="logout" href="" th:href="@{/logout}" th:text="Logout"></a></li>
                         <li><a class="logout" href="" th:href="@{'/users/' + ${@mainController.getUser()}}" th:text="'Change password'" ></a></li>

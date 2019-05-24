@@ -1,6 +1,8 @@
 package pl.nazwa.arzieba.dtnetworkproject.services.invoice;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import pl.nazwa.arzieba.dtnetworkproject.dao.InvoiceDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.InvoiceDTO;
@@ -9,7 +11,6 @@ import pl.nazwa.arzieba.dtnetworkproject.model.ElectricalInvoice;
 import pl.nazwa.arzieba.dtnetworkproject.utils.invoices.InvoiceMapper;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -60,5 +61,12 @@ public class InvoiceServiceImpl implements InvoiceService {
         }
 
         return sum;
+    }
+
+    @Override
+    public List<ElectricalInvoice> getAllInBuilding(int page, int size, BuildingType buildingType) {
+
+        return dao.findAllByBuilding(PageRequest.of(page, size, Sort.Direction.DESC,"date"),buildingType).getContent();
+
     }
 }

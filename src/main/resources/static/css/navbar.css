@@ -1,8 +1,6 @@
-
-
 #bar{
     width: 100%;
-    background: linear-gradient(to top,#23b423, #008600);
+    background: linear-gradient(to top, #0e430e, #004000);
     border-bottom: 1px solid black;
     border-right: 2px solid #779742;
     border-left: 2px solid  #779742;
@@ -13,19 +11,19 @@
     justify-content: center;
     flex-flow: row;
     height: 40px;
-    padding-bottom: 10px;
-    padding-top: 5px;
+    padding-bottom: 0px;
+    padding-top: 3px;
     margin: 0px;
 }
 ul{
 
     padding-left: 0px;
-    margin-top: 5px;
+    margin-top: 0px;
     position: relative;
     float: left;
     display: table-cell;
     width: 100%;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
     z-index: 98;
     border-collapse: collapse;
 }
@@ -47,7 +45,7 @@ ul li a{
     /*text-shadow: 1px 1px 0 #222;*/
     text-decoration: none;
     display: inline-block;
-    background: linear-gradient(to bottom left, rgba(255, 255, 255, 0.19), #e1e1e1);
+    background: linear-gradient(to bottom left, rgba(255, 255, 255, 0.52), #e1e1e1);
     z-index: 99;
     border-left: 1px solid #fff;
     border-radius: 15px;
@@ -59,8 +57,10 @@ ul li a{
 
 }
 
+
+
 ul li a.home , ul li a.logout {
-   width: 70px;
+    width: 70px;
 
 }
 
@@ -70,8 +70,8 @@ ul li a.home , ul li a.logout {
 }
 
 .logout.disabled:hover{
-   cursor: not-allowed;
-   border: 1px solid white;
+    cursor: not-allowed;
+    border: 1px solid white;
 }
 
 ul li:hover>a{
@@ -96,7 +96,7 @@ ul ul,ul ul li ul{
 }
 
 ul ul{
-    top: 40px;
+    top: 38px;
     left: 0;
 }
 
@@ -113,9 +113,10 @@ ul ul li a{
     text-decoration: none;
     display: inline-block;
     float: left;
-    width: 100px;
+    width: 98px;
     border-bottom: 1px dotted #fff;
-    border-radius: 10px;
+    border-radius: 5px;
+
 }
 
 ul ul ul li a{
@@ -123,4 +124,29 @@ ul ul ul li a{
     z-index: 99;
     border-radius: 10px;
     color: #ffffff;
+}
+
+ul li a.mainBar{
+    background: none;
+    color: white;
+    border: none;
+    border-right: 1px dotted whitesmoke;
+    border-radius: unset;
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+}
+
+
+ul li a.mainBar:hover{
+    background-color: #1e9d0b;
+    color: white;
+    border: none;
+    border-right: 1px dotted whitesmoke;
+    border-radius: unset;
+    margin-right: 0px;
+}
+
+ul li a.logout.mainBar:hover{
+    border-right: none;
 }
