@@ -206,7 +206,7 @@ public class DeviceController {
             damageDTO.setDamageDate(testDTO.getDate());
             damageDTO.setNewPostFlag(true);
             generatorService.create(testDTO);
-            damageController.add(model,damageDTO,bindingResult);
+            damageService.create(damageDTO);
             return "redirect:/dtnetwork";
         }
 
@@ -227,7 +227,7 @@ public class DeviceController {
             damageDTO.setNewPostFlag(true);
             generatorService.create(testDTO);
             postService.create(postDTO);
-            damageController.add( model , damageDTO,bindingResult );
+            damageService.create(damageDTO);
 
             return "redirect:/dtnetwork";
         }
