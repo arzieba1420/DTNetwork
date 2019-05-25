@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>DTNetwork</title>
+    <link rel="icon" type="image/ico" href="../static/images/icoTitl.PNG" th:href="@{/images/icoTitl.PNG}" >
+    <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
+    <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/collapsible.css}">
+    <link rel="stylesheet"  th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/tooltips.css}">
+    <link rel="stylesheet" th:href="@{/css/simpleTable.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/header.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
+    <script th:src="@{/js/collapsible.js}"></script>
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+</head>
+<body>
+<script>
+    window.location.refresh();
+</script>
+<div th:replace="~{fragments/header.html::header}"></div>
+<div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
+
+<div class="container" style="min-height: 100vh;" >
+    <h1><span th:text="'Invoices in ' +${building}+ ' ('+ ${amount} +')' "> </span></h1>
+    <div style="display: flex;flex-flow: row;justify-content: center">
+        <table style=" width: 50%;  margin: 10px 30px">
+            <tr id="topBar">
+                <th >ID</th>
+                <th>Duration</th>
+                <th>Date</th>
+                <th>Net value</th>
+                <th>Gross value</th>
+            </tr>
+
+            <tr th:each="invoice:${invoices}">
+                <td style="white-space:pre-wrap;" th:text="${invoice.getInvoiceId()}">ID</td>
+                <td th:text="${monthsEng.get(invoice.getDate().get(2))}+ ' '+${invoice.getDate().get(1)}" ></td>
+
+                <td th:text="${@calendarUtil.cal2string(invoice.getDate())}">Invent Number</td>
+                <td th:text="${invoice.getNetValue()}">Invent Number</td>
+                <td th:text="${invoice.getGrossValue()}">Invent Number</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    <div  style="text-align: center">
+        <div id="btnContainer"  class="pagination">
+            <a  th:href="@{'/invoices/' + ${building} + '/1'}" >&laquo;</a>
+            <a th:href="@{'/issueDocs/' + ${building} + '/1'}"  th:class=" ${currentPage}==1 ?'active' : '' " >1</a>
+            <a th:href="@{'/issueDocs/'+${building}+'/'+${page}}" th:each="page:${pages}" th:text="${page}" th:class="${currentPage}==${page}? 'active' : ''" >2</a>
+            <a th:href="@{'/issueDocs/' + ${building} + '/'+ ${lastPage}}">&raquo;</a>
+        </div>
+    </div>
+
+</div>
+<div th:insert="~{fragments/footer.html::footer}"></div>
+
+</body>
+</html>

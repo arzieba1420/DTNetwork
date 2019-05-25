@@ -25,49 +25,51 @@
 </div>
 <div class="container" style="min-height: 100vh">
 
-    <h1 ><span>Set new password</span></h1>
-    <form  th:action="@{'/dev/setPass'}" th:object="${newPass}" method="post"
-           modelAttribute="newPass" >
+    <h1 ><span>Add new post</span></h1>
+    <form  th:action="@{'/invoices/add'}" th:object="${newInvoice}" method="post"
+           modelAttribute="newInvoice" >
 
         <div class="row">
             <div class="col-25">
-                <label for="login">Login</label>
+                <label for="date">Date</label>
             </div>
             <div class="col-75">
-                <select id="login" name="Device"  th:field="*{login}">
-                    <option th:value="null">Choose user</option>
-                    <option th:each="login,iterStat:${users}" th:value="${login}" th:text="${login}"></option>
-                </select>
+                <input type="date" id="date" name="postDate" placeholder="YYYY-MM-DD" th:field="*{date}" th:errorclass="errorsFields">
             </div>
 
         </div>
         <!--Add select!-->
         <div class="row">
             <div class="col-25">
-                <label for="newPass">New pass</label>
+                <label for="building">Building</label>
             </div>
-            <div class="col-75" >
-                <input  type="password" id="newPass" name="newPass"  th:field="*{newPass}" th:errorclass="errorsFields">
+            <div class="col-75">
+                <select class="disabledSelect" id="building" name="Building"  th:field="*{building}"  >
+                    <option th:hidden="hidden" th:readonly="readonly" th:value="${building}" th:text="${building.name()}" ></option>
+                </select>
             </div>
         </div>
 
-
-
         <div class="row">
             <div class="col-25">
-                <label for="newPassConf">New pass conf</label>
+                <label for="id">ID</label>
             </div>
-            <div class="col-75" >
-                <input  type="password" id="newPassConf" name="newPassConf"  th:field="*{newPassConfirmed}" th:errorclass="errorsFields">
+            <div class="col-75">
+                <input type="text" id="id" th:field="*{invoiceId}" th:errorclass="errorsFields" >
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="value">Net value</label>
+            </div>
+            <div class="col-75">
+                <input type="text" id="value" name="Value" placeholder="19999.99" th:field="*{netValue}" th:errorclass="errorsFields">
             </div>
         </div>
         <div class="row">
             <input type="submit" class="cancelbtn" value="Cancel" onclick="window.history.go(-1); return false;">
             <input type="submit" value="Submit" style="margin-right: 20px">
         </div>
-
-        <input type="text" hidden th:field="*{oldPass}" th:value="'some old pass'"  >
-
     </form>
 </div>
 

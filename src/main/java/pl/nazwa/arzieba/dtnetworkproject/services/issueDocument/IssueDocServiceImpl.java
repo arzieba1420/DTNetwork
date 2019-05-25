@@ -135,7 +135,31 @@ public class IssueDocServiceImpl implements IssueDocService {
             sortedSet.addAll(years);
             //test
 
-            return sortedSet;
+            return sortedSet.descendingSet();
+        }
+
+        public Set<Integer> subSet(){
+
+
+            List<Integer> yearsList= issueDocumentDAO.findAll().stream()
+                    .map(d->d.getIssueDate().get( Calendar.YEAR))
+                    .collect(Collectors.toList());
+            TreeSet<Integer> sortedSet = new TreeSet<>();
+            sortedSet.addAll(yearsList);
+
+            List<Integer> sortedList = new LinkedList<>();
+            sortedList.addAll(sortedSet.descendingSet());
+
+            TreeSet<Integer> sortedSubSet = new TreeSet<>();
+
+            if(sortedSubSet.size()>0 && sortedList.size()>0) {
+                for (int i = 0; i < 5; i++) {
+                    sortedSubSet.add(sortedList.get(i));
+                }
+
+                return sortedSubSet.descendingSet();
+            }
+            return null;
         }
 
     @Override

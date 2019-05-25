@@ -180,9 +180,28 @@ public class ShortPostServiceImpl implements ShortPostService {
         Set<Integer> years =yearsList.stream().collect(Collectors.toSet());
         TreeSet<Integer> sortedSet = new TreeSet<>();
         sortedSet.addAll(years);
-
-        return sortedSet;
+        return sortedSet.descendingSet();
     }
+
+    public Set<Integer> subSet(){
+        List<Integer> yearsList= postDAO.findAll().stream()
+                .map(d->d.getPostDate().get( Calendar.YEAR))
+                .collect(Collectors.toList());
+        TreeSet<Integer> sortedSet = new TreeSet<>();
+        sortedSet.addAll(yearsList);
+
+        List<Integer> sortedList = new LinkedList<>();
+        sortedList.addAll(sortedSet.descendingSet());
+
+        TreeSet<Integer> sortedSubSet = new TreeSet<>();
+
+        for (int i = 0; i <5 ; i++) {
+            sortedSubSet.add(sortedList.get(i));
+        }
+
+        return sortedSubSet.descendingSet();
+    }
+
 
     public boolean areAllForDamage(int year){
         Calendar startDate = new GregorianCalendar(year,0,1);
@@ -192,7 +211,7 @@ public class ShortPostServiceImpl implements ShortPostService {
 
         for (ShortPost post: allPosts) {
 
-            if (!post.getContent().contains("damage")){
+            if (!post.getContent().contains("kliknięciu")){
                 allForDamage = false;
             }
 

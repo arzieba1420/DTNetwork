@@ -188,7 +188,7 @@ public class ShortPostController implements WebMvcConfigurer {
         int amount = postService.numberByYear(year);
 
         for (ShortPost post: allPosts ) {
-            if (post.getContent().contains("damage")){
+            if (post.getContent().contains("kliknięciu")){
                 amount--;
             }
         }

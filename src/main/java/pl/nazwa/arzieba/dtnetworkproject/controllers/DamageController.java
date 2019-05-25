@@ -77,7 +77,7 @@ public class DamageController {
             dto.setDate(damageDTO.getDamageDate());
             dto.setAuthor(damageDTO.getAuthor());
             dto.setInventNumber(damageDTO.getDeviceInventNumber());
-            dto.setContent("New damage! Click target for more...");
+            dto.setContent("Nowa usterka! Szczegóły po kliknięciu w Urządzenie...");
             dto.setForDamage(true);
             damageService.create(damageDTO);
             postService.create(dto);

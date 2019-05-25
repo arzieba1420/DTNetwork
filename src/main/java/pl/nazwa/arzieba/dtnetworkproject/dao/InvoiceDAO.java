@@ -16,6 +16,7 @@ public interface InvoiceDAO extends PagingAndSortingRepository<ElectricalInvoice
     List<ElectricalInvoice> findAll();
     Page<ElectricalInvoice> findAll(Pageable pageable);
     Page<ElectricalInvoice> findAllByBuilding(Pageable pageable, BuildingType buildingType);
+    List<ElectricalInvoice> findAllByBuilding(BuildingType buildingType);
     ElectricalInvoice findByInvoiceId(String id);
     List<ElectricalInvoice> findAllByDateBetweenAndBuildingOrderByDateDesc(Calendar start, Calendar end, BuildingType buildingType);
 

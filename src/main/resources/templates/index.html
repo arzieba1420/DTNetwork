@@ -59,13 +59,13 @@
                         <div class="cell" data-title="Author" th:text="${lastPosts.get(key).author}">
                             Arek
                         </div>
-                        <div class="cell" data-title="Related with" th:if="${!lastPosts.get(key).content.contains('damage') and !lastPosts.get(key).content.contains('loss')}" >
+                        <div class="cell" data-title="Related with" th:if="${!lastPosts.get(key).content.contains('kliknięciu') and !lastPosts.get(key).content.contains('zanik')}" >
                             <a href="" th:text="${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).deviceDescription}+'&roarr;'+${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).room} " th:href="@{'/devices/' + ${lastPosts.get(key).inventNumber}}"></a>
                         </div>
-                        <div class="cell" data-title="Related with" th:if="${lastPosts.get(key).content.contains('damage')}" >
+                        <div class="cell" data-title="Related with" th:if="${lastPosts.get(key).content.contains('kliknięciu')}" >
                             <a href="" th:text="${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).deviceDescription}+'&roarr;'+${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).room} " th:href="@{'/damages/devices/' + ${lastPosts.get(key).inventNumber}+'/1'}"></a>
                         </div>
-                        <div class="cell" data-title="Related with" th:if="${lastPosts.get(key).content.contains('loss')}" >
+                        <div class="cell" data-title="Related with" th:if="${lastPosts.get(key).content.contains('zanik')}" >
                             <a href="" th:text="${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).deviceDescription}" th:href="@{'/devices/' + ${lastPosts.get(key).inventNumber}}"></a>
                         </div>
                         <div class="cell" data-title="Content" th:text="${lastPosts.get(key).content}" style="white-space: pre">
@@ -73,13 +73,13 @@
                         </div>
 
 
-                        <div class="cell remove " th:if="${lastPosts.get(key).content.contains('damage') }">
+                        <div class="cell remove " th:if="${lastPosts.get(key).content.contains('kliknięciu') }">
                             <a href="#" ><i class="fas fa-exclamation-circle" style="font-size: 200%;color: red"></i></a>
                         </div>
-                        <div class="cell remove " th:if="${lastPosts.get(key).content.contains('loss')}">
+                        <div class="cell remove " th:if="${lastPosts.get(key).content.contains('zanik')}">
                             <a href="#" ><i class="fas fa-bolt" style="font-size: 200%; color: orangered"></i></a>
                         </div>
-                        <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('damage') and !lastPosts.get(key).content.contains('loss')}">
+                        <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('kliknięciu') and !lastPosts.get(key).content.contains('zanik')}">
                             <a href="#" th:href="@{'/posts/delete/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Usuń post</span></a>
                         </div>
                     </div>

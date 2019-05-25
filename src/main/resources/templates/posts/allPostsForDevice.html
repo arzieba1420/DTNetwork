@@ -76,15 +76,15 @@
             <div class="tooltipContainer" >
                 <div class="tooltip">
                     <a th:href="@{/posts/addForm/}+${dto.getInventNumber()}"><i class="fas fa-clipboard-list" style=" color: #051f64;"></i></a>
-                    <span class="tooltiptext">Add new post</span>
+                    <span class="tooltiptext">Dodaj nowy post</span>
                 </div>
                 <div class="tooltip">
                     <a th:href="@{'/devices/'+${dto.getInventNumber()}}"><i class="fas fa-info-circle" style=" color: aqua;"></i></a>
-                    <span class="tooltiptext">Show device info</span>
+                    <span class="tooltiptext">Info o urządzeniu</span>
                 </div>
                 <div class="tooltip">
                     <a onclick="window.history.go(-1)" ><i class="fas fa-backward" style=" color: #55003b;"></i></a>
-                    <span class="tooltiptext">Back to previous site</span>
+                    <span class="tooltiptext">Wróć do poprzedniej strony</span>
                 </div>
             </div>
             <div  style="text-align: center">

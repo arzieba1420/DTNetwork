@@ -65,7 +65,7 @@ public class UsersController {
         if(!passwordEncoder.matches(newPassDTO.getOldPass(),userDAO.findByUsername(newPassDTO.getLogin()).getPassword())){
             List<FieldError> allErrors;
             FieldError fieldError = new FieldError("newPass","oldPass",newPassDTO.getOldPass(),
-                    false,null,null,"Incorrect old pass!");
+                    false,null,null,"Niepoprawne aktualne hasło!");
 
             bindingResult.addError(fieldError);
             allErrors = bindingResult.getFieldErrors();
@@ -79,7 +79,7 @@ public class UsersController {
         if (!newPassDTO.getNewPass().equals(newPassDTO.getNewPassConfirmed())){
             List<FieldError> allErrors;
             FieldError fieldError = new FieldError("newPass","newPassConfirmed",newPassDTO.getNewPassConfirmed(),
-                    false,null,null,"Passwords are not equal!");
+                    false,null,null,"Hasła niezgodne!");
 
             bindingResult.addError(fieldError);
             allErrors = bindingResult.getFieldErrors();

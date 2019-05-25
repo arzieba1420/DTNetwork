@@ -30,8 +30,8 @@ public class UsersInit implements CommandLineRunner {
         userDAO.deleteAll();
 
         User arek = new User("Arek",passwordEncoder.encode("arek1") , Author.Arek,"USER,ADMIN","");
-        User admin = new User("admin",passwordEncoder.encode("dtnetwork") , Author.ADMIN,"USER,ADMIN","");
-        User dtn = new User("DTN",passwordEncoder.encode("DTN1") , Author.DEFAULT,"USER","");
+        User admin = new User("admin",passwordEncoder.encode("dtnetwork") , Author.admin,"USER,ADMIN","");
+        User dtn = new User("DTN",passwordEncoder.encode("DTN1") , Author.DTN,"USER","");
 
 
 

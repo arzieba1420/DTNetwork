@@ -284,7 +284,7 @@ public class MainController implements ErrorController {
         if (!newPassDTO.getNewPass().equals(newPassDTO.getNewPassConfirmed())){
             List<FieldError> allErrors;
             FieldError fieldError = new FieldError("newPass","newPassConfirmed",newPassDTO.getNewPassConfirmed(),
-                    false,null,null,"Passwords are not equal!");
+                    false,null,null,"Hasła niezgodne!");
 
             bindingResult.addError(fieldError);
             allErrors = bindingResult.getFieldErrors();
@@ -303,7 +303,7 @@ public class MainController implements ErrorController {
 
 
     public String getUser(){
-        String currentUserName = "NOT KNOWN";
+        String currentUserName = "Nieznany user";
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             currentUserName = authentication.getName();

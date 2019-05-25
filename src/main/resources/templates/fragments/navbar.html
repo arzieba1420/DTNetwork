@@ -21,13 +21,13 @@
         <div id="bar">
         <div id="nav">
             <ul>
-                <li><a class="home" href="#" th:href="@{/dtnetwork}">Home</a></li>
-                <li><a >Devices &raquo;</a>
+                <li><a class="home mainBar" href="#" th:href="@{/dtnetwork}">Home</a></li>
+                <li><a class="mainBar" >Urządzenia &raquo;</a>
                     <ul>
                         <li  th:each="room:${rooms}"><a href="#" th:text="${room}+' '+'&raquo;'"></a>
                             <ul>
                                 <li th:if="${device.getInventNumber()}!='NOT SPECIFIED'" th:each="device:${@deviceServiceImpl.findByRoom(room)}"><a th:href="@{/devices/}+ ${device.inventNumber}" th:text="${device.deviceDescription}"></a></li>
-                                <li><a href="#" th:text="'+' + ' Add new'" th:href="@{/devices/addForm/}+${room}" >+ add new</a></li>
+                                <li><a href="#" th:text="'+' + ' Dodaj nowe'" th:href="@{/devices/addForm/}+${room}" >+ add new</a></li>
                             </ul>
                         
                         </li>
@@ -35,26 +35,43 @@
                     </ul>
                 </li>
 
-                <li><a href="#">Documents &raquo;</a>
+                <li><a class="mainBar" href="#">Zamówienia &raquo;</a>
                     <ul>
-                        <li th:each="year:${@issueDocServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}"></a></li>
+                        <li th:if="${@issueDocServiceImpl.setOfYears().size()<=5}" th:each="year:${@issueDocServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}"></a></li>
+                        <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}" th:each="year:${@issueDocServiceImpl.subSet()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}"></a></li>
+
+                        <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}"  ><a href="#" th:href="@{/inBuild}" th:text="'Zobacz starsze...'"></a></li>
+
+                        
+
                     </ul>
                 </li>
 
-                <li><a href="#">Posts &raquo;</a>
+                <li><a class="mainBar" href="#">Posty &raquo;</a>
                     <ul>
-                        <li th:if="${!@shortPostServiceImpl.areAllForDamage(year)}" th:each="year:${@shortPostServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/posts/all/'+${year}+'/1' }" th:text= "${year}" >Test</a></li>
+                        <li th:if="${!@shortPostServiceImpl.areAllForDamage(year) and @shortPostServiceImpl.setOfYears().size()<=5 }" th:each="year:${@shortPostServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/posts/all/'+${year}+'/1' }" th:text= "${year}" >Test</a></li>
+                        <li th:if="${!@shortPostServiceImpl.areAllForDamage(year) and @shortPostServiceImpl.setOfYears().size()>5 }" th:each="year:${@shortPostServiceImpl.subSet()}" ><a href="#" th:href="@{'/posts/all/'+${year}+'/1' }" th:text= "${year}" >Test</a></li>
+
+                        <li th:if="${@shortPostServiceImpl.setOfYears().size()>5 }" ><a href="#" th:href="@{/inBuild}" th:text= "'Zobacz starsze...'" >Test</a></li>
                     </ul>
                 </li>
 
-                <li><a th:href="@{/inBuild}" >Invoices &raquo;</a>
+                <li><a class="mainBar"  >Faktury &raquo;</a>
+                    <ul>
+                        <li th:each="building:${@listOfEnumValues.buildings}" ><a href="" th:text="${building.name()+' '+'&raquo;'}"></a>
+                            <ul>
+                                <li><a href="" th:href="@{/invoices/addForm/}+${building.name()}"  th:text="'+ Dodaj nową'"></a></li>
+                                <li ><a href="" th:text="'Pokaż wszystkie'" th:href="@{'/invoices/'+${building.name()}+'/1'}" ></a></li>
+                            </ul>
+                        </li>
+                    </ul>
 
                 </li>
 
-                <li><a style="padding-bottom: 7px" class="logout" href="#"   th:text=" '&#9673; '+ ${@mainController.getUser()} " >Logout</a>
+                <li><a style="padding-bottom: 7px; border-right: none" class="logout mainBar" href="#"   th:text=" '&#9673; '+ ${@mainController.getUser()} " >Logout</a>
                     <ul>
-                        <li><a class="logout" href="" th:href="@{/logout}" th:text="Logout"></a></li>
-                        <li><a class="logout" href="" th:href="@{'/users/' + ${@mainController.getUser()}}" th:text="'Change password'" ></a></li>
+                        <li><a class="logout" href="" th:href="@{/logout}" th:text="'Wyloguj się'"></a></li>
+                        <li><a class="logout" href="" th:href="@{'/users/' + ${@mainController.getUser()}}" th:text="'Zmień hasło'" ></a></li>
                         <li th:if="${@mainController.getUser()}=='admin'" ><a class="logout" href="#" th:href="@{/dev}" >Dev panel</a></li>
                         <li th:if="${@mainController.getUser()}=='admin'" ><a class="logout" href="#" th:href="@{/users}" >Users</a></li>
                         <li th:if="${@mainController.getUser()}=='admin'" ><a class="logout" href="#" th:href="@{/dev/users/setPass}" >Set pass</a></li>
