@@ -39,7 +39,11 @@
                     <ul>
                         <li th:if="${@issueDocServiceImpl.setOfYears().size()<=5}" th:each="year:${@issueDocServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}"></a></li>
                         <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}" th:each="year:${@issueDocServiceImpl.subSet()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}"></a></li>
+
                         <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}"  ><a href="#" th:href="@{/inBuild}" th:text="'See older...'"></a></li>
+
+                        
+
                     </ul>
                 </li>
 
@@ -47,6 +51,7 @@
                     <ul>
                         <li th:if="${!@shortPostServiceImpl.areAllForDamage(year) and @shortPostServiceImpl.setOfYears().size()<=5 }" th:each="year:${@shortPostServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/posts/all/'+${year}+'/1' }" th:text= "${year}" >Test</a></li>
                         <li th:if="${!@shortPostServiceImpl.areAllForDamage(year) and @shortPostServiceImpl.setOfYears().size()>5 }" th:each="year:${@shortPostServiceImpl.subSet()}" ><a href="#" th:href="@{'/posts/all/'+${year}+'/1' }" th:text= "${year}" >Test</a></li>
+
                         <li th:if="${@shortPostServiceImpl.setOfYears().size()>5 }" ><a href="#" th:href="@{/inBuild}" th:text= "'See older...'" >Test</a></li>
                     </ul>
                 </li>
@@ -60,6 +65,7 @@
                             </ul>
                         </li>
                     </ul>
+
                 </li>
 
                 <li><a style="padding-bottom: 7px; border-right: none" class="logout mainBar" href="#"   th:text=" '&#9673; '+ ${@mainController.getUser()} " >Logout</a>
