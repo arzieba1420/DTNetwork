@@ -39,7 +39,11 @@
                     <ul>
                         <li th:if="${@issueDocServiceImpl.setOfYears().size()<=5}" th:each="year:${@issueDocServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}"></a></li>
                         <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}" th:each="year:${@issueDocServiceImpl.subSet()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}"></a></li>
-                        <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}"  ><a href="#" th:href="@{/dtnetwork}" th:text="'See older...'"></a></li>
+
+                        <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}"  ><a href="#" th:href="@{/inBuild}" th:text="'See older...'"></a></li>
+
+                        
+
                     </ul>
                 </li>
 
@@ -47,11 +51,20 @@
                     <ul>
                         <li th:if="${!@shortPostServiceImpl.areAllForDamage(year) and @shortPostServiceImpl.setOfYears().size()<=5 }" th:each="year:${@shortPostServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/posts/all/'+${year}+'/1' }" th:text= "${year}" >Test</a></li>
                         <li th:if="${!@shortPostServiceImpl.areAllForDamage(year) and @shortPostServiceImpl.setOfYears().size()>5 }" th:each="year:${@shortPostServiceImpl.subSet()}" ><a href="#" th:href="@{'/posts/all/'+${year}+'/1' }" th:text= "${year}" >Test</a></li>
-                        <li th:if="${@shortPostServiceImpl.setOfYears().size()>5 }" ><a href="#" th:href="@{/dtnetwork}" th:text= "'See older...'" >Test</a></li>
+
+                        <li th:if="${@shortPostServiceImpl.setOfYears().size()>5 }" ><a href="#" th:href="@{/inBuild}" th:text= "'See older...'" >Test</a></li>
                     </ul>
                 </li>
 
-                <li><a class="mainBar" th:href="@{/inBuild}" >Invoices &raquo;</a>
+                <li><a class="mainBar"  >Invoices &raquo;</a>
+                    <ul>
+                        <li th:each="building:${@listOfEnumValues.buildings}" ><a href="" th:text="${building.name()+' '+'&raquo;'}"></a>
+                            <ul>
+                                <li><a href="" th:href="@{/invoices/addForm/}+${building.name()}"  th:text="'+ Add new'"></a></li>
+                                <li ><a href="" th:text="'Show all'" th:href="@{'/invoices/'+${building.name()}+'/1'}" ></a></li>
+                            </ul>
+                        </li>
+                    </ul>
 
                 </li>
 

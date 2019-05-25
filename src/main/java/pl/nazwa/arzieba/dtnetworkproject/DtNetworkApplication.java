@@ -13,12 +13,16 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
 @SpringBootApplication
 @EnableEncryptableProperties
 public class DtNetworkApplication  {
     public static final Logger LOG = LoggerFactory.getLogger(DtNetworkApplication.class);
 
     public static void main(String[] args) {
+
         SpringApplication.run(DtNetworkApplication.class, args);
     }
 

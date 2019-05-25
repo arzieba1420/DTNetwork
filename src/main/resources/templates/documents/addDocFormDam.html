@@ -103,12 +103,12 @@
                     <label for="value">Value</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="value" name="Value" placeholder="19999.99" th:field="*{value}">
+                    <input type="text" id="value" name="Value" placeholder="19999.99" th:field="*{value}"th:errorclass="errorsFields">
                 </div>
             </div>
 
             <div class="row">
-                <input type="submit" value="Cancel" onclick="window.history.go(-1); return false;">
+                <input type="submit" class="cancelbtn" value="Cancel" onclick="window.history.go(-1); return false;">
                 <input type="submit" value="Submit" style="margin-right: 20px">
 
             </div>

@@ -1,10 +1,7 @@
 package pl.nazwa.arzieba.dtnetworkproject.utils.enums;
 
-import pl.nazwa.arzieba.dtnetworkproject.model.Author;
-import pl.nazwa.arzieba.dtnetworkproject.model.DeviceType;
-import pl.nazwa.arzieba.dtnetworkproject.model.Room;
+import pl.nazwa.arzieba.dtnetworkproject.model.*;
 import org.springframework.stereotype.Component;
-import pl.nazwa.arzieba.dtnetworkproject.model.Status;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,5 +23,7 @@ public class ListOfEnumValues {
             .collect(Collectors.toList());
 
     public static List<Status> statuses = Stream.of(Status.values()).collect(Collectors.toList());
+
+    public static List<BuildingType> buildings = Stream.of(BuildingType.values()).collect(Collectors.toList());
 
 }

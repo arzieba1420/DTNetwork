@@ -58,6 +58,11 @@ input[type=submit] {
     margin-top: 10px;
 }
 
+
+input[type=submit].cancelbtn {
+    background-color: #f44336;
+}
+
 input[type=submit]:hover {
     background-color: #45a049;
 }
@@ -156,3 +161,4 @@ input[type=submit]:hover {
 input[type=text].errorsFields,input[type=password].errorsFields,input[type=date].errorsFields {
     border: 2px solid crimson ;
 }
+

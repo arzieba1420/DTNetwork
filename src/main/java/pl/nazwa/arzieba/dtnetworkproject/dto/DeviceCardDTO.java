@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;
 
 
@@ -49,6 +50,8 @@ public class DeviceCardDTO {
 
             message = "Invalid date or pattern: yyyy-MM-dd not satisfied!")
     private String creationTime;
+
+    @Digits(integer = 10, fraction = 2,message = "Too many fraction numbers")
     private Double deviceValue;
     private String inventNumber;
 }
