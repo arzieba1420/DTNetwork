@@ -1,0 +1,69 @@
+/* Style the links inside the sidenav */
+
+#mySidenav{
+    position: absolute;
+    top: 200px;
+}
+#mySidenav div {
+    position: relative; /* Position them relative to the browser window */
+    margin-left: -430px; /* Position them outside of the screen */
+    transition: 0.3s; /* Add transition on hover */
+    padding: 15px 10px; /* 15px padding */
+    width: 450px; /* Set a specific width */
+    text-decoration: none; /* Remove underline */
+    font-size: 20px; /* Increase font size */
+    color: white; /* White text color */
+    border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+    z-index: 999;
+    margin-bottom: 10px;
+}
+
+#mySidenav div:hover {
+    cursor: pointer;
+    margin-left: 0; /* On mouse-over, make the elements appear as they should */
+}
+
+/* The about link: 20px from the top with a green background */
+#about {
+
+    background-color: #4CAF50;
+}
+
+#blog {
+
+    background-color: #2196F3; /* Blue */
+}
+
+#projects {
+
+    background-color: #f44336; /* Red */
+}
+
+#contact {
+
+    background-color: #555 /* Light Black */
+}
+
+
+
+
+/* Style the search box inside the navigation bar */
+input[type=text] {
+
+    padding: 6px;
+    border: none;
+    font-size: 17px;
+    margin-left: 40px;
+}
+
+button{
+
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-left: -5px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+

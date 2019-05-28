@@ -51,15 +51,15 @@
 
 .headerBar #logo{
 
-    height: 140px;!important;
-    width: 260px;!important;
+
     background-image: url("../images/logo.png");
     background-size: contain;
     background-repeat: no-repeat;
-    z-index:90;
+    height: 140px;!important;
+    width: 260px;!important;
     align-self: flex-start;
-    margin-right: 40px;
     margin-top: 15px;
+
 
 
 }
@@ -111,5 +111,11 @@
     margin-top: 0px;
     padding: 0;
 
+}
+
+.headerBar #cyf{
+    margin-right: 40px;
+    z-index:90;
+    padding-top: 20px;
 
 }
