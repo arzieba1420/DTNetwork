@@ -27,6 +27,7 @@ public interface ShortPostService {
     ShortPostDTO create(ShortPostDTO dto);
     ShortPostDTO update(ShortPostDTO dto);
     ShortPostDTO remove(Integer id);
+    Map<Integer, ShortPostDTO> searchContent(String phrase);
 
 
     Set<Integer> setOfYears();

@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script th:src="@{/js/search.js}"></script>
 
 </head>
 <body>
@@ -29,8 +30,8 @@
        <div class="search" id="about">About</div>
        <div class="search" id="blog">
                <form action="/action_page.php">
-                   <label for="search">Wyszukaj post</label>
-                   <input type="text" id="search" placeholder="Search.." name="search">
+                   <label for="search">Wyszukaj posty</label>
+                   <input type="text" id="search" placeholder="Szukana fraza..." name="search">
                    <button type="submit"><i class="fa fa-search"></i></button>
                </form>
        </div>
