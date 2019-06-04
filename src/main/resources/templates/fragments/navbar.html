@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="../../static/css/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet"  th:href="@{/css/navbar.css}">
-   
-   
+    <link rel="stylesheet" href="" th:href="@{/css/modal.css}">
+    <script th:src="@{/js/modal.js}" ></script>
+    
    
 
 </head>
@@ -52,7 +53,8 @@
                         <li th:if="${!@shortPostServiceImpl.areAllForDamage(year) and @shortPostServiceImpl.setOfYears().size()<=5 }" th:each="year:${@shortPostServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/posts/all/'+${year}+'/1' }" th:text= "${year}" >Test</a></li>
                         <li th:if="${!@shortPostServiceImpl.areAllForDamage(year) and @shortPostServiceImpl.setOfYears().size()>5 }" th:each="year:${@shortPostServiceImpl.subSet()}" ><a href="#" th:href="@{'/posts/all/'+${year}+'/1' }" th:text= "${year}" >Test</a></li>
 
-                        <li th:if="${@shortPostServiceImpl.setOfYears().size()>5 }" ><a href="#" th:href="@{/inBuild}" th:text= "'Zobacz starsze...'" >Test</a></li>
+                        <li  th:if="${@shortPostServiceImpl.setOfYears().size()>5 }" ><a><button id="myBtn" th:text= "'Zobacz starsze...'" ></button></a></li>
+                        
                     </ul>
                 </li>
 
@@ -62,6 +64,7 @@
                             <ul>
                                 <li><a href="" th:href="@{/invoices/addForm/}+${building.name()}"  th:text="'+ Dodaj nową'"></a></li>
                                 <li ><a href="" th:text="'Pokaż wszystkie'" th:href="@{'/invoices/'+${building.name()}+'/1'}" ></a></li>
+                                
                             </ul>
                         </li>
                     </ul>
@@ -80,6 +83,16 @@
             </ul>
         </div>
         </div>
+    </div>
+    
+    <div id="myModal" class="modal">
+        
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Some text in the Modal..</p>
+        </div>
+    
     </div>
 
 </body>

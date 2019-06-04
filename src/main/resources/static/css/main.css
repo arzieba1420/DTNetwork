@@ -154,6 +154,10 @@ a:hover{
   background-color: #ececff;
   cursor: pointer;
 }
+.row.header:hover {
+  background-color: #818181;
+  cursor: pointer;
+}
 
 .pagination {
   display: inline-block;

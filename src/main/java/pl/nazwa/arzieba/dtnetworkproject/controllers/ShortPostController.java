@@ -231,9 +231,20 @@ public class ShortPostController implements WebMvcConfigurer {
         model.addAttribute("text", text);
         return "posts/addPostFormInv";
     }
+
+
+    @GetMapping("/search")
+    public String search(Model model, @ModelAttribute("search") String search ){
+
+        Map<Integer,ShortPostDTO> mapa= postService.searchContent(search);
+        int amount = mapa.keySet().size();
+
+        model.addAttribute("mapa", mapa);
+        model.addAttribute("keys", mapa.keySet());
+        model.addAttribute("amount", amount);
+        model.addAttribute("phrase",search);
+        return "posts/searchResults";
+
+    }
+
 }
-
-/*    @PostMapping("/search")
-    public String search(Model model, @ModelAttribute)
-
-}*/

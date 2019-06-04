@@ -25,13 +25,13 @@
 </div>
 <div class="container" style="min-height: 100vh">
 
-    <h1 ><span>Add new post</span></h1>
+    <h1 ><span>Dodaj nową fakturę</span></h1>
     <form  th:action="@{'/invoices/add'}" th:object="${newInvoice}" method="post"
            modelAttribute="newInvoice" >
 
         <div class="row">
             <div class="col-25">
-                <label for="date">Date</label>
+                <label for="date">Data</label>
             </div>
             <div class="col-75">
                 <input type="date" id="date" name="postDate" placeholder="YYYY-MM-DD" th:field="*{date}" th:errorclass="errorsFields">
@@ -41,7 +41,7 @@
         <!--Add select!-->
         <div class="row">
             <div class="col-25">
-                <label for="building">Building</label>
+                <label for="building">Budynek</label>
             </div>
             <div class="col-75">
                 <select class="disabledSelect" id="building" name="Building"  th:field="*{building}"  >
@@ -60,15 +60,15 @@
         </div>
         <div class="row">
             <div class="col-25">
-                <label for="value">Net value</label>
+                <label for="value">Wartość netto</label>
             </div>
             <div class="col-75">
                 <input type="text" id="value" name="Value" placeholder="19999.99" th:field="*{netValue}" th:errorclass="errorsFields">
             </div>
         </div>
         <div class="row">
-            <input type="submit" class="cancelbtn" value="Cancel" onclick="window.history.go(-1); return false;">
-            <input type="submit" value="Submit" style="margin-right: 20px">
+            <input type="submit" class="cancelbtn" value="Anuluj" onclick="window.history.go(-1); return false;">
+            <input type="submit" value="Wyślij" style="margin-right: 20px">
         </div>
     </form>
 </div>

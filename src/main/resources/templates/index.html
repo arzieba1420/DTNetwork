@@ -29,7 +29,7 @@
    <div id="mySidenav" class="sidenav">
        <div class="search" id="about">About</div>
        <div class="search" id="blog">
-               <form action="/action_page.php">
+               <form action="/action_page.php" th:action="@{'/posts/search'}" modelAttribute="search" >
                    <label for="search">Wyszukaj posty</label>
                    <input type="text" id="search" placeholder="Szukana fraza..." name="search">
                    <button type="submit"><i class="fa fa-search"></i></button>
