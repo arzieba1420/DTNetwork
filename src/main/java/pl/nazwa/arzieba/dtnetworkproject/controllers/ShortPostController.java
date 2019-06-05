@@ -10,6 +10,7 @@ import pl.nazwa.arzieba.dtnetworkproject.model.Device;
 import pl.nazwa.arzieba.dtnetworkproject.model.ShortPost;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
 import pl.nazwa.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
+import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 import pl.nazwa.arzieba.dtnetworkproject.utils.device.DeviceMapper;
 import pl.nazwa.arzieba.dtnetworkproject.utils.enums.ListOfEnumValues;
 import pl.nazwa.arzieba.dtnetworkproject.utils.shortPost.ShortPostMapper;
@@ -244,7 +245,50 @@ public class ShortPostController implements WebMvcConfigurer {
         model.addAttribute("amount", amount);
         model.addAttribute("phrase",search);
         return "posts/searchResults";
-
     }
+
+    @GetMapping("/edit/{id}")
+    public String editPost(Model model,@PathVariable Integer id){
+        ShortPostDTO dto = postService.findById(id);
+        model.addAttribute("newPost", dto);
+        model.addAttribute("authors", ListOfEnumValues.authors);
+        Map<String, String> mapa = new HashMap<>();
+        List<String> keys = deviceDAO.findAll().stream().map(d -> d.getInventNumber()).collect(Collectors.toList());
+        for (String key : keys) {
+            Device device = deviceDAO.findByInventNumber(key);
+            mapa.put(key, device.getDeviceDescription());
+        }
+        model.addAttribute("devices", mapa);
+        model.addAttribute("id", id);
+        System.out.println(System.getProperty("java.io.tmpdir"));
+        return "posts/editPostForm";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String saveEditedPost( @Valid @ModelAttribute("newPost") ShortPostDTO shortPostDTO,BindingResult bindingResult, Model model, @PathVariable Integer id ){
+        if (bindingResult.hasFieldErrors()) {
+            System.out.println(model.asMap());
+            List<FieldError> allErrors;
+            allErrors = bindingResult.getFieldErrors();
+            System.out.println(allErrors.size());
+
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("errors", allErrors);
+            model.addAttribute("errorsAmount", allErrors.size());
+            return addFormErr(model, shortPostDTO.getInventNumber(), shortPostDTO);
+        }
+
+
+        ShortPost post = postDAO.findByPostId(id);
+        post.setAuthor(shortPostDTO.getAuthor());
+        post.setContent(shortPostDTO.getContent());
+        post.setPostDate(CalendarUtil.string2cal(shortPostDTO.getDate()));
+        post.setDevice(deviceDAO.findByInventNumber(shortPostDTO.getInventNumber()));
+        Calendar calendar= CalendarUtil.string2cal(shortPostDTO.getDate());
+        post.setDate(calendar.getTime());
+        postDAO.save(post);
+        return "redirect:/dtnetwork";
+    }
+
 
 }

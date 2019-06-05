@@ -20,7 +20,7 @@
 
 #mySidenav div:hover {
     cursor: pointer;
-    margin-left: 0; /* On mouse-over, make the elements appear as they should */
+    /* On mouse-over, make the elements appear as they should */
 }
 
 /* The about link: 20px from the top with a green background */

@@ -8,9 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet"  th:href="@{/css/navbar.css}">
     <link rel="stylesheet" href="" th:href="@{/css/modal.css}">
-    <script th:src="@{/js/modal.js}" ></script>
-    
-   
 
 </head>
 <body>
@@ -41,7 +38,7 @@
                         <li th:if="${@issueDocServiceImpl.setOfYears().size()<=5}" th:each="year:${@issueDocServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}"></a></li>
                         <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}" th:each="year:${@issueDocServiceImpl.subSet()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}"></a></li>
 
-                        <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}"  ><a href="#" th:href="@{/inBuild}" th:text="'Zobacz starsze...'"></a></li>
+                        <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}"  ><a href="#" th:href="@{/inBuild}" th:text="'Więcej...'"> </a></li>
 
                         
 
@@ -53,7 +50,7 @@
                         <li th:if="${!@shortPostServiceImpl.areAllForDamage(year) and @shortPostServiceImpl.setOfYears().size()<=5 }" th:each="year:${@shortPostServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/posts/all/'+${year}+'/1' }" th:text= "${year}" >Test</a></li>
                         <li th:if="${!@shortPostServiceImpl.areAllForDamage(year) and @shortPostServiceImpl.setOfYears().size()>5 }" th:each="year:${@shortPostServiceImpl.subSet()}" ><a href="#" th:href="@{'/posts/all/'+${year}+'/1' }" th:text= "${year}" >Test</a></li>
 
-                        <li  th:if="${@shortPostServiceImpl.setOfYears().size()>5 }" ><a><button id="myBtn" th:text= "'Zobacz starsze...'" ></button></a></li>
+                        <li  th:if="${@shortPostServiceImpl.setOfYears().size()>5 }" ><a id="openModal" th:text="'Więcej...'"></a></li>
                         
                     </ul>
                 </li>
@@ -83,17 +80,17 @@
             </ul>
         </div>
         </div>
-    </div>
-    
-    <div id="myModal" class="modal">
-        
-        <!-- Modal content -->
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Some text in the Modal..</p>
+        <div id="modalWindow" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Some text in the Modal..</p>
+            </div>
+
         </div>
-    
     </div>
 
+
+    <script th:src="@{/js/mymodal.js}" ></script>
 </body>
 </html>
