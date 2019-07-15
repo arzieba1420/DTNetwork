@@ -15,6 +15,7 @@
     padding-top: 3px;
     margin: 0px;
 }
+
 ul{
 
     padding-left: 0px;
@@ -153,5 +154,13 @@ ul li a.mainBar:hover{
 
 ul li a.logout.mainBar:hover{
     border-right: none;
+}
+
+a.cyfroNav{
+   color: #2196F3;
+}
+
+ a.cyfroNav:hover{
+    color: #1e9d0b;
 }
 

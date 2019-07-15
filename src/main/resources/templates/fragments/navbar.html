@@ -18,10 +18,10 @@
         <script>
             window.location.refresh;
         </script>
-        <div id="bar">
-        <div id="nav">
+        <div id="bar" >
+        <div id="nav" style="margin-left: 35%" >
             <ul>
-                <li><a class="home mainBar" href="#" th:href="@{/dtnetwork}">Home</a></li>
+                <li ><a class="home mainBar" href="#" th:href="@{/dtnetwork}">Home</a></li>
                 <li><a class="mainBar" >Urządzenia &raquo;</a>
                     <ul>
                         <li  th:each="room:${rooms}"><a href="#" th:text="${room}+' '+'&raquo;'"></a>
@@ -81,6 +81,9 @@
                 </li>
             </ul>
         </div>
+
+            <a class="cyfroNav" target="_blank" style="z-index: 1001 ;margin-left: auto; margin-right: 20px; font-size: 2em; " href="https://www.cyfronet.krakow.pl/"><i class="fas fa-home"></i></a>
+            <a class="cyfroNav"  target="_blank" style=" z-index: 1001 ;margin-right: 20px; font-size: 2em; " href="https://www.cyfronet.krakow.pl/sieci/13167,artykul,poczta_przez_www.html"><i class="fas fa-envelope"></i></a>
         </div>
         <div id="modalWindow" class="modal">
             <!-- Modal content -->

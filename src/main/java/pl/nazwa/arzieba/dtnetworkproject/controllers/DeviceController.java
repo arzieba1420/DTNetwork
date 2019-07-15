@@ -205,8 +205,15 @@ public class DeviceController {
             damageDTO.setAuthor(Author.valueOf(mainController.getUser()));
             damageDTO.setDamageDate(testDTO.getDate());
             damageDTO.setNewPostFlag(true);
+            ShortPostDTO dto = new ShortPostDTO();
+            dto.setDate(damageDTO.getDamageDate());
+            dto.setAuthor(damageDTO.getAuthor());
+            dto.setInventNumber(damageDTO.getDeviceInventNumber());
+            dto.setContent("Nowa usterka! Szczegóły po kliknięciu w Urządzenie... [SYSTEM]");
+            dto.setForDamage(true);
             generatorService.create(testDTO);
             damageService.create(damageDTO);
+            postService.create(dto);
             return "redirect:/dtnetwork";
         }
 
@@ -225,9 +232,16 @@ public class DeviceController {
             damageDTO.setAuthor(Author.valueOf(mainController.getUser()));
             damageDTO.setDamageDate(testDTO.getDate());
             damageDTO.setNewPostFlag(true);
+            ShortPostDTO dto = new ShortPostDTO();
+            dto.setDate(damageDTO.getDamageDate());
+            dto.setAuthor(damageDTO.getAuthor());
+            dto.setInventNumber(damageDTO.getDeviceInventNumber());
+            dto.setContent("Nowa usterka! Szczegóły po kliknięciu w Urządzenie... [SYSTEM]");
+            dto.setForDamage(true);
             generatorService.create(testDTO);
             postService.create(postDTO);
             damageService.create(damageDTO);
+            postService.create(dto);
 
             return "redirect:/dtnetwork";
         }

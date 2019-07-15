@@ -57,7 +57,7 @@
                </tr>
 
                <tr th:each="generator:${generators.keySet()}">
-                    <td th:text="${@deviceDAO.findByInventNumber(generator).getDeviceDescription()}"></td>
+                    <td ><a href="" th:href="@{'devices/'+${generator}}" th:text="${@deviceDAO.findByInventNumber(generator).getDeviceDescription()}"></a></td>
                     <td ><a href="" th:href="@{'/generators/' + ${generator}+'/1'}" th:text="${@calendarUtil.cal2string(generators.get(generator).getDate()) }" ></a></td>
                     <td th:text="${generators.get(generator).getStatus()}"></td>
                     <td th:if="${@mainController.betweenDates(generators.get(generator).getDate(),today)}<30" th:text="${@mainController.betweenDates(generators.get(generator).getDate(),today)}" ></td>
