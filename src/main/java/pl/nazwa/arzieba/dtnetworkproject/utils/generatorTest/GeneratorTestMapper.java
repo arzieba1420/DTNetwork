@@ -18,6 +18,7 @@ public class GeneratorTestMapper {
         generatorTest.setDevice(deviceDAO.findByInventNumber(dto.getInventNumber()));
         generatorTest.setLossPowerFlag(dto.isLossPowerFlag());
         generatorTest.setStatus(dto.getStatus());
+        generatorTest.setAlerted(dto.isAlerted());
         return generatorTest;
     }
 
@@ -29,6 +30,7 @@ public class GeneratorTestMapper {
         dto.setLossPowerFlag(test.isLossPowerFlag());
         dto.setInventNumber(test.getDevice().getInventNumber());
         dto.setStatus(test.getStatus());
+        dto.setAlerted(test.isAlerted());
         return dto;
     }
 

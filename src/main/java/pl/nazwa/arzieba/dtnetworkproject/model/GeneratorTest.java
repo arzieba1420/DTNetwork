@@ -33,5 +33,6 @@ public class GeneratorTest {
     private Status status;
 
     private boolean lossPowerFlag;
+    private boolean alerted;
 
 }

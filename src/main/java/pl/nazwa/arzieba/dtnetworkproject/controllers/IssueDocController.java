@@ -263,6 +263,12 @@ public class IssueDocController {
         return "documents/addDocFormDev";
     }
 
+  @GetMapping("/modalDocs/")
+    public String modalDocs(Model model, @ModelAttribute("docs") int year){
+
+        return getAllForYear(year,model,1);
+  }
+
 
 
 

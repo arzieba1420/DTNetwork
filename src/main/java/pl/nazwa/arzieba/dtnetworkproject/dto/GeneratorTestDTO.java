@@ -27,6 +27,7 @@ public class GeneratorTestDTO {
     @NotNull(message = "Ustaw status akcji!")
     private Status status;
     private boolean lossPowerFlag;
+    private boolean alerted;
 
 
 }

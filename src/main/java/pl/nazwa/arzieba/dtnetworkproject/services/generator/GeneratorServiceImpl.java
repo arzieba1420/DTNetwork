@@ -31,6 +31,7 @@ public class GeneratorServiceImpl implements GeneratorService {
     @Override
     public GeneratorTestDTO create(GeneratorTestDTO dto) {
 
+        dto.setAlerted(false);
         GeneratorTest test = GeneratorTestMapper.map(dto,deviceDAO);
         dao.save(test);
         return dto;

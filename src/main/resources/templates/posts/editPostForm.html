@@ -46,8 +46,8 @@
             </div>
             <div class="col-75">
                 <select id="device" name="Device"  th:field="*{inventNumber}">
-                    <option th:value="'NOT SPECIFIED'">Wybierz urządzenie</option>
-                    <option th:if="${key}!='NOT SPECIFIED'" th:each="key,iterStat:${devices.keySet()}" th:value="${key}" th:text="${@deviceDAO.findByInventNumber(key).deviceDescription}+' '+${@deviceDAO.findByInventNumber(key).room}"></option>
+                    <option th:value="'DTN'">Wybierz urządzenie</option>
+                    <option th:if="${key}!='DTN'" th:each="key,iterStat:${devices.keySet()}" th:value="${key}" th:text="${@deviceDAO.findByInventNumber(key).deviceDescription}+' '+${@deviceDAO.findByInventNumber(key).room}"></option>
                 </select>
             </div>
         </div>

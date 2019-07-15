@@ -290,5 +290,11 @@ public class ShortPostController implements WebMvcConfigurer {
         return "redirect:/dtnetwork";
     }
 
+    @GetMapping("/modalPosts/")
+    public String modalPosts (Model model, @ModelAttribute("posts") int year ){
+
+        return allByYear(model,year,1);
+    }
+
 
 }

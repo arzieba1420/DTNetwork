@@ -24,12 +24,12 @@
 }
 
 /* The about link: 20px from the top with a green background */
-#about {
+#tests {
 
-    background-color: #4CAF50;
+    background-color: #2196F3;
 }
 
-#blog {
+#searchBar {
     display: flex;
     flex-flow: row;
     justify-content: center;

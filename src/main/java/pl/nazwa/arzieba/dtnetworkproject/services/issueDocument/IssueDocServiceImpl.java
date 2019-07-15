@@ -138,6 +138,7 @@ public class IssueDocServiceImpl implements IssueDocService {
             return sortedSet.descendingSet();
         }
 
+        @Override
         public Set<Integer> subSet(){
 
 
@@ -152,7 +153,7 @@ public class IssueDocServiceImpl implements IssueDocService {
 
             TreeSet<Integer> sortedSubSet = new TreeSet<>();
 
-            if(sortedSubSet.size()>0 && sortedList.size()>0) {
+            if(sortedList.size()>0) {
                 for (int i = 0; i < 5; i++) {
                     sortedSubSet.add(sortedList.get(i));
                 }

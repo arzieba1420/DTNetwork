@@ -14,6 +14,7 @@ public interface GeneratorTestDAO extends PagingAndSortingRepository<GeneratorTe
     Page<GeneratorTest> findByDevice_InventNumberOrderByDateDesc(String inventNumber, Pageable pageable);
     List<GeneratorTest> findAllByDevice_InventNumber(String inventNumber);
     Page<GeneratorTest> findAllByLossPowerFlag(boolean condition, Pageable pageable);
+    GeneratorTest findTopByDevice_InventNumberAndLossPowerFlagOrderByDateDesc(String inv,boolean flag);
     GeneratorTest findTopByDevice_InventNumberOrderByDateDesc(String inv);
 
 

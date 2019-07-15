@@ -193,7 +193,7 @@ public class DeviceController {
             postDTO.setDate(testDTO.getDate());
             postDTO.setAuthor(Author.valueOf(mainController.getUser()));
             postDTO.setInventNumber(testDTO.getInventNumber());
-            postDTO.setContent("Generator podał napięcie podczas zaniku!");
+            postDTO.setContent("Generator podał napięcie podczas zaniku! [SYSTEM]");
             generatorService.create(testDTO);
             postService.create(postDTO);
             return "redirect:/generators/" + testDTO.getInventNumber()+"/1";
@@ -218,7 +218,7 @@ public class DeviceController {
             postDTO.setDate(testDTO.getDate());
             postDTO.setAuthor(Author.valueOf(mainController.getUser()));
             postDTO.setInventNumber(testDTO.getInventNumber());
-            postDTO.setContent("Generator podał napięcie podczas zaniku!");
+            postDTO.setContent("Generator podał napięcie podczas zaniku! [SYSTEM]");
             DamageDTO damageDTO = new DamageDTO();
             damageDTO.setDescription(testDTO.getContent());
             damageDTO.setDeviceInventNumber(testDTO.getInventNumber());

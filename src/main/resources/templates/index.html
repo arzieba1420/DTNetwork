@@ -12,13 +12,30 @@
     <link rel="stylesheet" href="" th:href="@{/css/header.css}">
     <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
     <link rel="stylesheet" href="" th:href="@{/css/search.css}">
+  <!--  <link rel="stylesheet" th:href="@{/css/simpleTable.css}">-->
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/modal.css" th:href="@{/css/modal.css}">
 
     <script  th:src="@{/js/search.js}"></script>
+    <style>
+        table, th, td {
+            cursor: auto;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
 
+        td{
+            font-size: 0.9em;
+        }
+
+        tr:hover{
+            background-color: #9c9c9c;
+            cursor: pointer;
+        }
+
+    </style>
 </head>
 <body>
    <!-- VERY IMPORTANT SCRIPT!!! (without it server will meet NullPointer after removing ShortPost from DB) -->
@@ -30,14 +47,36 @@
 
 
    <div id="mySidenav" class="sidenav">
-       <div class="search" id="about">About</div>
-       <div class="search" id="blog">
+       <div class="search" id="tests">
+           <table style="background-color: white; border: 1px solid black;color: black; text-align: center">
+               <tr id="topBar">
+                   <th>Generator</th>
+                   <th>Ostatni test</th>
+                   <th>Status</th>
+                   <th>Minęło dni</th>
+               </tr>
+
+               <tr th:each="generator:${generators.keySet()}">
+                    <td th:text="${@deviceDAO.findByInventNumber(generator).getDeviceDescription()}"></td>
+                    <td ><a href="" th:href="@{'/generators/' + ${generator}+'/1'}" th:text="${@calendarUtil.cal2string(generators.get(generator).getDate()) }" ></a></td>
+                    <td th:text="${generators.get(generator).getStatus()}"></td>
+                    <td th:if="${@mainController.betweenDates(generators.get(generator).getDate(),today)}<30" th:text="${@mainController.betweenDates(generators.get(generator).getDate(),today)}" ></td>
+                    <td style="background-color: rgba(255,0,0,0.65); color: white" th:if="${@mainController.betweenDates(generators.get(generator).getDate(),today)}>=30" th:text="${@mainController.betweenDates(generators.get(generator).getDate(),today)}" ></td>
+
+               </tr>
+
+
+           </table>
+           <i style="float:left; font-size: 130%; margin-left: 420px; margin-top: -60px" class="fas fa-angle-right" id="arr2"></i>
+
+       </div>
+       <div class="search" id="searchBar">
            <form action="/action_page.php" th:action="@{'/posts/search'}" modelAttribute="search" >
                <label for="search">Wyszukaj posty</label>
                <input type="text" id="search" placeholder="Szukana fraza..." name="search">
                <button type="submit"><i class="fa fa-search"></i></button>
            </form>
-           <i style="font-size: 130%; margin-top: 10px" class="fas fa-angle-right"></i>
+           <i style="font-size: 130%; margin-top: 10px" class="fas fa-angle-right" id="arr1"></i>
 
 
 
@@ -99,7 +138,10 @@
                         <div class="cell remove " th:if="${lastPosts.get(key).content.contains('zanik')}">
                             <a href="#" ><i class="fas fa-bolt" style="font-size: 200%; color: orangered"></i></a>
                         </div>
-                        <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('kliknięciu') and !lastPosts.get(key).content.contains('zanik')}">
+                        <div class="cell remove " th:if="${lastPosts.get(key).content.contains('Wymagany')}">
+                            <a href="#" ><i class="fas fa-exclamation-circle" style="font-size: 200%;color: red"></i></a>
+                        </div>
+                        <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('kliknięciu') and !lastPosts.get(key).content.contains('zanik')and !lastPosts.get(key).content.contains('Wymagany')}">
                             <a href="#" th:href="@{'/posts/delete/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Usuń post</span></a>
                             <br>
                             <a href="#" th:href="@{'/posts/edit/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-edit"></i> Edytuj post</span></a>

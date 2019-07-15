@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="../../static/css/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet"  th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
     <link rel="stylesheet" href="" th:href="@{/css/modal.css}">
+
 
 </head>
 <body>
@@ -38,7 +40,7 @@
                         <li th:if="${@issueDocServiceImpl.setOfYears().size()<=5}" th:each="year:${@issueDocServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}"></a></li>
                         <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}" th:each="year:${@issueDocServiceImpl.subSet()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}"></a></li>
 
-                        <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}"  ><a href="#" th:href="@{/inBuild}" th:text="'Więcej...'"> </a></li>
+                        <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}"  ><a id="openModal2"  th:text="'Więcej...'"> </a></li>
 
                         
 
@@ -84,7 +86,29 @@
             <!-- Modal content -->
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <p>Some text in the Modal..</p>
+                <form style="text-align: center; " action="/action_page.php" th:action="@{'/posts/modalPosts/'}" modelAttribute="posts" >
+
+                    <label style="font-size: 1.3em" for="posts">Wybierz rok</label>
+                    <select style="font-size: 1.3em; margin-left: 20px"  id="posts" name="posts" >
+                        <option th:each="year: ${@shortPostServiceImpl.setOfYears()}" th:value="${year}" th:text="${year}" ></option>
+                    </select>
+                    <input type="submit" value="Pokaż" style="margin-right: 20px; font-size: 1.3em; align-self: end ">
+                </form>
+            </div>
+
+        </div>
+        <div id="modalWindow2" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <form style="text-align: center; " action="/action_page.php" th:action="@{'/issueDocs/modalDocs/'}" modelAttribute="docs" >
+
+                    <label style="font-size: 1.3em" for="posts2">Wybierz rok</label>
+                    <select style="font-size: 1.3em; margin-left: 20px"  id="posts2" name="docs" >
+                        <option th:each="year: ${@issueDocServiceImpl.setOfYears()}" th:value="${year}" th:text="${year}" ></option>
+                    </select>
+                    <input type="submit" value="Pokaż" style="margin-right: 20px; font-size: 1.3em; align-self: end ">
+                </form>
             </div>
 
         </div>
