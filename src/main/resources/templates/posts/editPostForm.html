@@ -26,7 +26,7 @@
 </div>
 <div class="container" style="min-height: 100vh">
 
-    <h1 ><span>Dodaj nowy post</span></h1>
+    <h1 ><span>Edytuj post</span></h1>
     <form  th:action="@{'/posts/edit/' + ${id} }" th:object="${newPost}" method="post"
            modelAttribute="newPost" >
 

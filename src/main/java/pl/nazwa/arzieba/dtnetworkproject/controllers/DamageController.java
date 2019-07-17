@@ -13,6 +13,7 @@ import pl.nazwa.arzieba.dtnetworkproject.model.Damage;
 import pl.nazwa.arzieba.dtnetworkproject.services.damage.DamageService;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
 import pl.nazwa.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
+import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 import pl.nazwa.arzieba.dtnetworkproject.utils.damage.DamageMapper;
 import pl.nazwa.arzieba.dtnetworkproject.utils.enums.ListOfEnumValues;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -147,6 +148,57 @@ public class DamageController {
         model.addAttribute("text",text);
 
         return "damages/addForm";
+    }
+
+    public String editDamageErr(Model model, String inventNumber, DamageDTO damageDTO, Integer id ){
+        model.addAttribute("newDamage", damageDTO);
+        model.addAttribute("authors", ListOfEnumValues.authors);
+        model.addAttribute("inventNumber",inventNumber);
+        String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
+                +" "+deviceDAO.findByInventNumber(inventNumber).getRoom();
+        model.addAttribute("text",text);
+        model.addAttribute("damageId", id);
+
+        return "damages/editForm";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editDamage(Model model, @PathVariable Integer id){
+        DamageDTO damageDTO = damageService.findById(id);
+        String inventNumber = damageDTO.getDeviceInventNumber();
+        model.addAttribute("newDamage", damageDTO);
+        model.addAttribute("authors", ListOfEnumValues.authors);
+        model.addAttribute("inventNumber",inventNumber);
+        String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
+                +" "+deviceDAO.findByInventNumber(inventNumber).getRoom();
+        model.addAttribute("text",text);
+        model.addAttribute("damageId", id);
+        return "damages/editForm";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String saveEditedDamage(Model model,@Valid @ModelAttribute("newDamage") DamageDTO damageDTO, BindingResult bindingResult,@PathVariable Integer id){
+
+        if(bindingResult.hasFieldErrors()){
+            List<FieldError> allErrors;
+            allErrors = bindingResult.getFieldErrors();
+
+
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("errors",allErrors);
+
+            model.addAttribute("errorsAmount",allErrors.size());
+            return editDamageErr(model,damageDTO.getDeviceInventNumber(),damageDTO, id);
+        }
+
+        Damage damage = damageDAO.findByDamageId(id);
+        damage.setAuthor(damageDTO.getAuthor());
+        damage.setDescription(damageDTO.getDescription());
+        damage.setDamageDate(CalendarUtil.string2cal(damageDTO.getDamageDate()));
+        damage.setDevice(deviceDAO.findByInventNumber(damageDTO.getDeviceInventNumber()));
+        damageDAO.save(damage);
+
+        return "redirect:/dtnetwork";
     }
 
 }

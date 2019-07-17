@@ -100,7 +100,7 @@ public class ShortPostController implements WebMvcConfigurer {
         if (result.hasFieldErrors()) {
             List<FieldError> allErrors;
             allErrors = result.getFieldErrors();
-            System.out.println(allErrors.size());
+
 
             model.addAttribute("bindingResult", result);
             model.addAttribute("errors", allErrors);
@@ -115,10 +115,10 @@ public class ShortPostController implements WebMvcConfigurer {
     @PostMapping("/addAsModel/stay")
     public String create3(Model model, @Valid @ModelAttribute ShortPostDTO shortPostDTO, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasFieldErrors()) {
-            System.out.println(model.asMap());
+
             List<FieldError> allErrors;
             allErrors = bindingResult.getFieldErrors();
-            System.out.println(allErrors.size());
+
 
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors", allErrors);
@@ -260,22 +260,19 @@ public class ShortPostController implements WebMvcConfigurer {
         }
         model.addAttribute("devices", mapa);
         model.addAttribute("id", id);
-        System.out.println(System.getProperty("java.io.tmpdir"));
         return "posts/editPostForm";
     }
 
     @PostMapping("/edit/{id}")
     public String saveEditedPost( @Valid @ModelAttribute("newPost") ShortPostDTO shortPostDTO,BindingResult bindingResult, Model model, @PathVariable Integer id ){
         if (bindingResult.hasFieldErrors()) {
-            System.out.println(model.asMap());
             List<FieldError> allErrors;
             allErrors = bindingResult.getFieldErrors();
-            System.out.println(allErrors.size());
 
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors", allErrors);
             model.addAttribute("errorsAmount", allErrors.size());
-            return addFormErr(model, shortPostDTO.getInventNumber(), shortPostDTO);
+            return editFormErr(model, shortPostDTO.getInventNumber(), shortPostDTO, id);
         }
 
 
@@ -294,6 +291,20 @@ public class ShortPostController implements WebMvcConfigurer {
     public String modalPosts (Model model, @ModelAttribute("posts") int year ){
 
         return allByYear(model,year,1);
+    }
+
+    public String editFormErr(Model model, String inventNumber, ShortPostDTO dto, Integer id) {
+        model.addAttribute("newPost", dto);
+        model.addAttribute("authors", ListOfEnumValues.authors);
+        Map<String, String> mapa = new HashMap<>();
+        List<String> keys = deviceDAO.findAll().stream().map(d -> d.getInventNumber()).collect(Collectors.toList());
+        for (String key : keys) {
+            Device device = deviceDAO.findByInventNumber(key);
+            mapa.put(key, device.getDeviceDescription());
+        }
+        model.addAttribute("devices", mapa);
+        model.addAttribute("id", id);
+        return "posts/editPostForm";
     }
 
 
