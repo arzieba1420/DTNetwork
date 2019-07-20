@@ -112,6 +112,10 @@ public class MainController implements ErrorController {
             }
         }
 
+        String diary = userDAO.findByUsername(this.getUser()).getPersonalDiary();
+
+        model.addAttribute("username",this.getUser());
+        model.addAttribute("diary", diary);
         model.addAttribute("deviceServ", deviceService);
         model.addAttribute("lastPosts", mapa);
         model.addAttribute("rooms", rooms);

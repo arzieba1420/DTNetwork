@@ -96,6 +96,17 @@ public class UsersController {
         return "redirect:/logout";
     }
 
+    @PostMapping("/saveDiary/{username}")
+    public String saveDiary (Model model, @PathVariable String username, @ModelAttribute("diaryText") String diaryText ){
+
+        User user = userDAO.findByUsername(username);
+        user.setPersonalDiary(diaryText);
+        userDAO.save(user);
+
+        return "redirect:/dtnetwork";
+
+    }
+
 
 
 

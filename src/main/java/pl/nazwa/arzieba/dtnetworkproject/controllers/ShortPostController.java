@@ -284,7 +284,7 @@ public class ShortPostController implements WebMvcConfigurer {
         Calendar calendar= CalendarUtil.string2cal(shortPostDTO.getDate());
         post.setDate(calendar.getTime());
         postDAO.save(post);
-        return "redirect:/dtnetwork";
+        return "index";
     }
 
     @GetMapping("/modalPosts/")

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet"  th:href="@{/css/navbar.css}">
     <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
-    <link rel="stylesheet" href="" th:href="@{/css/modal.css}">
+
 
 
 </head>
@@ -89,13 +89,13 @@
             <!-- Modal content -->
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <form style="text-align: center; " action="/action_page.php" th:action="@{'/posts/modalPosts/'}" modelAttribute="posts" >
+                <form class="modform"  action="/action_page.php" th:action="@{'/posts/modalPosts/'}" modelAttribute="posts" >
 
-                    <label style="font-size: 1.3em" for="posts">Wybierz rok</label>
-                    <select style="font-size: 1.3em; margin-left: 20px"  id="posts" name="posts" >
+                    <label class="modlab"  for="posts">Wybierz rok</label>
+                    <select  class="modsel"   id="posts" name="posts" >
                         <option th:each="year: ${@shortPostServiceImpl.setOfYears()}" th:value="${year}" th:text="${year}" ></option>
                     </select>
-                    <input type="submit" value="Pokaż" style="margin-right: 20px; font-size: 1.3em; align-self: end ">
+                    <input class="modin" type="submit" value="Pokaż" >
                 </form>
             </div>
 
@@ -104,13 +104,13 @@
             <!-- Modal content -->
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <form style="text-align: center; " action="/action_page.php" th:action="@{'/issueDocs/modalDocs/'}" modelAttribute="docs" >
+                <form class="modform"  action="/action_page.php" th:action="@{'/issueDocs/modalDocs/'}" modelAttribute="docs" >
 
-                    <label style="font-size: 1.3em" for="posts2">Wybierz rok</label>
-                    <select style="font-size: 1.3em; margin-left: 20px"  id="posts2" name="docs" >
+                    <label class="modlab"  for="posts2">Wybierz rok</label>
+                    <select class="modsel"  id="posts2" name="docs" >
                         <option th:each="year: ${@issueDocServiceImpl.setOfYears()}" th:value="${year}" th:text="${year}" ></option>
                     </select>
-                    <input type="submit" value="Pokaż" style="margin-right: 20px; font-size: 1.3em; align-self: end ">
+                    <input class="modin" type="submit" value="Pokaż" >
                 </form>
             </div>
 

@@ -1,6 +1,7 @@
 package pl.nazwa.arzieba.dtnetworkproject.model;
 
 
+import com.sun.istack.Nullable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,6 +34,9 @@ public class User {
     private String roles;
 
     private String permissions;
+
+    @Nullable
+    private String personalDiary;
 
     public User(String username, String password, Author author, String roles, String permissions) {
         this.username = username;

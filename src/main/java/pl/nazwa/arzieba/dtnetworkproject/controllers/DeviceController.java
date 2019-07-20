@@ -249,8 +249,4 @@ public class DeviceController {
         return "redirect:/error";
     }
 
-
-
-
-
 }
