@@ -79,11 +79,13 @@
                         <li th:if="${@mainController.getUser()}=='admin'" ><a class="logout" href="#" th:href="@{/dev/users/setPass}" >Set pass</a></li>
                     </ul>
                 </li>
+             
             </ul>
         </div>
 
             <a class="cyfroNav" target="_blank" style="z-index: 1001 ;margin-left: auto; margin-right: 20px; font-size: 2em; " href="https://www.cyfronet.krakow.pl/"><i class="fas fa-home"></i></a>
             <a class="cyfroNav"  target="_blank" style=" z-index: 1001 ;margin-right: 20px; font-size: 2em; " href="https://www.cyfronet.krakow.pl/sieci/13167,artykul,poczta_przez_www.html"><i class="fas fa-envelope"></i></a>
+            <a class="cyfroNav" id="openNotes"  style=" z-index: 1001 ;margin-right: 20px; font-size: 2em; "><i class="fas fa-user-edit"></i></a>
         </div>
         <div id="modalWindow" class="modal">
             <!-- Modal content -->

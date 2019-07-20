@@ -7,6 +7,8 @@ window.onload=function () {
     var arrow1 = document.getElementById("arr1");
     var arrow2 = document.getElementById("arr2");
     var arrow3 = document.getElementById("arr3");
+    var openNote = document.getElementById("openNotes");
+    var sid2 = document.getElementById("mySidenav2");
 
     var tests = document.getElementById("tests");
     input.addEventListener("focus", function (event) {
@@ -50,24 +52,13 @@ window.onload=function () {
         clickCounter2++;
     })
 
-    var clickCounter3 = 0;
+
     arrow3.addEventListener("click", function () {
-        if(clickCounter3%2==0 | clickCounter3==0 ){
-            diary.style.marginRight = "0";
-            diary.getElementsByClassName("fas fa-angle-left")[0].className = "fas fa-angle-right";
-            document.getElementById("mySidenav2").style.zIndex="1999";
+        sid2.style.visibility="hidden";
+    })
 
-
-        }
-        if(clickCounter3%2==1){
-            diary.style.marginRight="-810px";
-            diary.getElementsByClassName("fas fa-angle-right")[0].className = "fas fa-angle-left";
-            document.getElementById("mySidenav2").style.zIndex="0";
-
-
-        }
-
-        clickCounter3++;
+    openNote.addEventListener("click", function (ev) {
+        sid2.style.visibility = "visible"
     })
 
 

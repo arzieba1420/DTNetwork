@@ -77,12 +77,12 @@
        </div>
    </div>
 
-   <div id="mySidenav2">
+   <div style="visibility: hidden " id="mySidenav2">
        <div class="search" id="diary">
-           <i style=" font-size: 130%; margin-top: -630px;margin-right: 820px; z-index: 1999 " class="fas fa-angle-left" id="arr3"></i>
+           <i style=" font-size: 130%; margin-top: -630px;margin-right: 20px; z-index: 1999 " class="fas fa-times" id="arr3"></i>
            <form action="/action_page.php" th:action="@{'/users/saveDiary/' + ${username} }" modelAttribute="diaryText" id="diaryForm" method="post" >
                <label id="textLabel" for="diaryText" th:text="'Notes użytkownika '+ ${username}" ></label>
-               <textarea  th:text="${diary}" id="diaryText"  name="diaryText"></textarea>
+               <textarea placeholder="Kliknij aby dodać pierwszą notatkę"  th:text="${diary}" id="diaryText"  name="diaryText"></textarea>
                <button type="submit" id="buttonDiary"  >Zapisz</button>
            </form>
 

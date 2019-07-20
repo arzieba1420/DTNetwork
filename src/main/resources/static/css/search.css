@@ -9,7 +9,7 @@
     position: absolute;
     top:200px;
     right: 0px;
-    z-index: 0;
+    z-index: 1999;
 }
 #mySidenav div {
     position: relative; /* Position them relative to the browser window */
@@ -27,7 +27,7 @@
 #mySidenav2 div {
     position: relative; /* Position them relative to the browser window */
     /* Position them outside of the screen */
-    transition: 0.3s; /* Add transition on hover */
+    /*transition: 0.3s; !* Add transition on hover *!*/
     padding: 15px 10px; /* 15px padding */
     /* Set a specific width */
     text-decoration: none; /* Remove underline */
@@ -65,11 +65,11 @@
 
 #diary{
     background-color: #004000;
-    margin-right: -810px; /* Position them outside of the screen */
+    margin-right: 0px; /* Position them outside of the screen */
     width: 850px; /* St a specific width */
     margin-bottom: 10px;
     height: 650px;
-    z-index: 0;
+    z-index: 1999;
 
 }
 
@@ -124,7 +124,7 @@ textarea {
     padding: 6px;
     color: white;
     margin-bottom: 20px;
-    margin-top: -25px;
+    margin-top: -5px;
 
 }
 
@@ -150,6 +150,15 @@ button{
 
     border: none;
     cursor: pointer;
+}
+
+#buttonDiary:hover{
+   background-color: #1e9d0b;
+    color: white;
+}
+
+#arr3:hover{
+    color:darkred;
 }
 
 
