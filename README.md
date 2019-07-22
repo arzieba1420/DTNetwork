@@ -16,6 +16,8 @@ maintained by me in my current job.
 **2nd stable version of my project is available and ready to be tested on branch master. Any further version will appear in the future**  
 [UPDATE 25-05-2019]  
 **I have just added ZIP packages with jar executable files in Releases with ENG and PL language versions (version 1.3)**
+[UPDATE 22-07-2019]  
+**ENG version of the project will no longer be developed. I focus on PL version only from now**
 
 
 
