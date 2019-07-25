@@ -16,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <script src="../../static/js/collapsible.js" th:src="@{/js/collapsible.js}" ></script>
+    <link rel="stylesheet" href="../../static/css/modal.css" th:href="@{/css/modal.css}">
 </head>
 <body>
 <script>
@@ -30,23 +31,23 @@
     </div>
 
     <div class="col-75" style="margin-right: 0px; padding-left: 70px; width: 1200px" >
-        <h1><span th:text="'Activities of selected generator (' + ${amount}+')' " ></span></h1>
+        <h1><span th:text="'Wszystkie akcje tego generatora (' + ${amount}+')' " ></span></h1>
         <table style="width: 100%">
             <tr id="topBar">
-                <th>Date</th>
-                <th style="width: 150px">Type</th>
+                <th>Data</th>
+                <th style="width: 150px">Typ</th>
 
-                <th style="width:600px">Details</th>
+                <th style="width:600px">Szczegóły </th>
                 <th>Status</th>
-                <th>Action</th>
+                <th>Akcja</th>
             </tr>
 
             <tr th:each="test:${tests}">
                 <td style="white-space:pre-wrap;width: 150px" th:text="${test.getDate()}">Date</td>
                 <td th:if="${test.lossPowerFlag==false}" th:text="'TEST'">Test</td>
-                <td th:if="${test.lossPowerFlag==true}" th:text="'WORK'">Work</td>
+                <td th:if="${test.lossPowerFlag==true}" th:text="'PRACA'">Work</td>
                 <td style="width: 600px">
-                    <button class="collapsible"  th:text="'Show details'"></button>
+                    <button class="collapsible"  th:text="'Pokaż szczegóły'"></button>
                     <div class="content">
                         <p th:text="${test.getContent()}" style="white-space: pre-wrap"></p>
                     </div>
@@ -54,7 +55,7 @@
                 <td th:if="${test.getStatus().name().equals('OK')}" th:text="${test.getStatus().name()}">Status</td>
                 <td th:if="${test.getStatus().name().equals('WARNING')}" style="color: darkorange" th:text="${test.getStatus().name()}">Status</td>
                 <td th:if="${test.getStatus().name().equals('DAMAGE')}" style="color: red" th:text="${test.getStatus().name()}">Status</td>
-                <td th:if="${test.getStatus().name().equals('DAMAGE')}" ><a href="" th:href="@{'/damages/devices/'+${test.getInventNumber()+'/1'} }" th:text="'Show damages'"></a></td>
+                <td th:if="${test.getStatus().name().equals('DAMAGE')}" ><a href="" th:href="@{'/damages/devices/'+${test.getInventNumber()+'/1'} }" th:text="'Pokaż usterki'"></a></td>
                 <td th:if="${!test.getStatus().name().equals('DAMAGE')}" th:text="'---'"></td>
             </tr>
         </table>
@@ -62,16 +63,16 @@
         <div class="tooltipContainer">
 
             <div class="tooltip">
-                <a href="" th:href="@{/devices/activityForm/} + ${dto.getInventNumber()}"  ><i class="fas fa-power-off" style="color: orangered"></i></a>
-                <span class="tooltiptext">Add generator activity</span>
+                <a href="" th:href="@{/devices/activityForm/} + ${dto.getInventNumber()}"  ><i class="fas fa-charging-station" style="color: orangered"></i></a>
+                <span class="tooltiptext">Dodaj akcję generatora</span>
             </div>
             <div class="tooltip">
                 <a th:href="@{'/devices/'+${dto.getInventNumber()}}"><i class="fas fa-info-circle" style=" color: aqua;"></i></a>
-                <span class="tooltiptext">Show device info</span>
+                <span class="tooltiptext">Info o urządzeniu</span>
             </div>
             <div class="tooltip">
                 <a onclick="window.history.go(-1)"><i class="fas fa-backward" style=" color: #55003b;"></i></a>
-                <span class="tooltiptext">Back to previous site</span>
+                <span class="tooltiptext">Wróć do poprzedniej strony</span>
             </div>
 
         </div>
@@ -86,6 +87,7 @@
     </div>
 
 </div>
+<script  th:src="@{/js/mymodal.js}"></script>
 <div th:insert="~{fragments/footer.html::footer}"></div>
 
 </body>

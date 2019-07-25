@@ -11,13 +11,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
+import pl.nazwa.arzieba.dtnetworkproject.dao.GeneratorTestDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.ShortPostDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.UserDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.NewPassDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
-import pl.nazwa.arzieba.dtnetworkproject.model.Author;
-import pl.nazwa.arzieba.dtnetworkproject.model.User;
+import pl.nazwa.arzieba.dtnetworkproject.model.*;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
 import pl.nazwa.arzieba.dtnetworkproject.services.issueDocument.IssueDocService;
 import pl.nazwa.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
@@ -34,6 +34,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -53,11 +54,12 @@ public class MainController implements ErrorController {
     private IssueDocService issueDocService;
     private UserDAO userDAO;
     private PasswordEncoder passwordEncoder;
+    private GeneratorTestDAO generatorTestDAO;
 
 
 
     @Autowired
-    public MainController(UserDAO userDAO, IssueDocService issueDocService, DeviceDAO deviceDAO, ShortPostService postService, DeviceService deviceService, ShortPostDAO dao, PasswordEncoder passwordEncoder) {
+    public MainController(UserDAO userDAO, IssueDocService issueDocService, DeviceDAO deviceDAO, ShortPostService postService, DeviceService deviceService, ShortPostDAO dao, PasswordEncoder passwordEncoder, GeneratorTestDAO generatorTestDAO) {
         this.postService = postService;
         this.deviceService = deviceService;
         this.dao = dao;
@@ -65,6 +67,7 @@ public class MainController implements ErrorController {
         this.issueDocService=issueDocService;
         this.userDAO = userDAO;
         this.passwordEncoder = passwordEncoder;
+        this.generatorTestDAO = generatorTestDAO;
     }
 
     // required because login form redirects to localhost:8080/ not to /dtnetwork
@@ -74,7 +77,7 @@ public class MainController implements ErrorController {
     }
 
     @GetMapping("/dtnetwork")
-    public String home(Model model) {
+    public String home(Model model)  {
 
         Map<Integer, ShortPostDTO> mapa = new LinkedHashMap<>();
         List<Integer> keys = dao.findTop10ByOrderByDateDesc().stream().map(d -> d.getPostId()).collect(Collectors.toList());
@@ -86,22 +89,45 @@ public class MainController implements ErrorController {
         List<String> rooms;
         rooms = ListOfEnumValues.rooms;
 
+        List<Device> generators = deviceDAO.findAllByDeviceType(DeviceType.GENERATOR);
+
+        Map<String, GeneratorTest> lastTests = new HashMap<>();
+
+        for (Device generator: generators) {
+            lastTests.put(generator.getInventNumber(),generatorTestDAO.findTopByDevice_InventNumberAndLossPowerFlagOrderByDateDesc(generator.getInventNumber(),false));
+        }
 
 
+        for (GeneratorTest test: lastTests.values()) {
 
-        /*UserDetails userDetails = new  InMemoryUserDetailsManager().loadUserByUsername(authentication.getName());
+            if (betweenDates(test.getDate(),new Date())==30&&test.isAlerted()==false){
+                ShortPost post = new ShortPost();
+                post.setDevice(test.getDevice());
+                post.setPostDate(Calendar.getInstance());
+                post.setDate(new Date());
+                post.setContent("Wymagany test generatora! [SYSTEM]");
+                post.setAuthor(Author.DTN);
+                dao.save(post);
+                test.setAlerted(true);
+            }
+        }
 
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();*/
+        String diary = userDAO.findByUsername(this.getUser()).getPersonalDiary();
 
-
-
-
+        model.addAttribute("username",this.getUser());
+        model.addAttribute("diary", diary);
         model.addAttribute("deviceServ", deviceService);
         model.addAttribute("lastPosts", mapa);
         model.addAttribute("rooms", rooms);
-
+        model.addAttribute("generators", lastTests);
+        model.addAttribute("today", Calendar.getInstance());
 
         return "index";
+    }
+
+    public static long betweenDates(Calendar firstDate, Date secondDate)
+    {
+        return ChronoUnit.DAYS.between(firstDate.toInstant(), secondDate.toInstant());
     }
 
     @GetMapping("/dev/init")
@@ -284,7 +310,7 @@ public class MainController implements ErrorController {
         if (!newPassDTO.getNewPass().equals(newPassDTO.getNewPassConfirmed())){
             List<FieldError> allErrors;
             FieldError fieldError = new FieldError("newPass","newPassConfirmed",newPassDTO.getNewPassConfirmed(),
-                    false,null,null,"Passwords are not equal!");
+                    false,null,null,"Hasła niezgodne!");
 
             bindingResult.addError(fieldError);
             allErrors = bindingResult.getFieldErrors();
@@ -303,7 +329,7 @@ public class MainController implements ErrorController {
 
 
     public String getUser(){
-        String currentUserName = "NOT KNOWN";
+        String currentUserName = "Nieznany user";
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             currentUserName = authentication.getName();

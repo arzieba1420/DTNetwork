@@ -20,6 +20,8 @@ public interface IssueDocService {
     List<IssueDocumentDTO> findByDevice(String inv, int page, int size);
     Set<Integer> setOfYears();
 
+    Set<Integer> subSet();
+
     int numberByDevice(String inv);
     int numberByYear(int year);
 }

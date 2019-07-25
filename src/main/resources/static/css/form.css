@@ -13,9 +13,13 @@ select {
     width: 98%;
     padding: 12px;
     border: 1px solid #ccc;
-
+    overflow: auto;
     border-radius: 4px;
     resize: vertical;
+}
+
+select option{
+    overflow: auto;
 }
 
 input[type=text]:focus, input[type=password]:focus ,input[type=date]:focus,textarea:focus, select:focus{
@@ -55,7 +59,12 @@ input[type=submit] {
     cursor: pointer;
     float: right;
     margin-right: 26.5%;
-    margin-top: 10px;
+    margin-top: 0px;
+}
+
+
+input[type=submit].cancelbtn {
+    background-color: #f44336;
 }
 
 

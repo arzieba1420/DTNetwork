@@ -13,9 +13,9 @@
     <div style="padding-left: 70px">
     <img style="margin-bottom: 0px; margin-top: 30px " src="../static/images/AVATAR.JPG" th:src="@{/images/AVATAR.JPG}" alt="Avatar" >
     </div>
-    <h2 style="margin-top: 70px; font-size: 3em" >Welcome to DTNetwork<sup style="font-size: 0.5em">&copy;</sup> application!</h2>
+    <h2 style="margin-top: 70px; font-size: 3em" >Witaj w aplikacji DTNetwork!<sup style="font-size: 0.5em">&copy;</sup> </h2>
     
-    <button class="login" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Enter</button>
+    <button class="login" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Wejście</button>
     
     <div id="id01" class="modal" style="display: none;">
         
@@ -27,16 +27,16 @@
             </div>
             
             <div class="container">
-                <label for="username"><b>Username</b></label>
-                <input style="align-self: center" type="text" placeholder="Enter Username" id="username" name="username" required>
+                <label for="username"><b>Login</b></label>
+                <input style="align-self: center" type="text" placeholder="Podaj login" id="username" name="username" required>
                 
-                <label for="password"><b>Password</b></label>
-                <input style="align-self: center" type="password" placeholder="Enter Password" id="password" name="password" required>
+                <label for="password"><b>Hasło</b></label>
+                <input style="align-self: center" type="password" placeholder="Podaj hasło" id="password" name="password" required>
                 
                 <div style="display: flex; flex-flow: row; justify-content: center">
                 
                 <button style="align-self: center;margin-right: 30px" type="submit">Login</button>
-                <button style="align-self: center; " type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+                <button style="align-self: center; " type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Anuluj</button>
                 
                 </div>
             </div>

@@ -5,6 +5,8 @@ import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
+import org.jasypt.util.password.BasicPasswordEncryptor;
+import org.jasypt.util.text.BasicTextEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -24,6 +26,10 @@ public class DtNetworkApplication  {
     public static void main(String[] args) {
 
         SpringApplication.run(DtNetworkApplication.class, args);
+    /*    String password = "arzieba_DTNetworkPL";
+        BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
+        String encryptedPassword = passwordEncryptor.encryptPassword(password);
+        System.out.println("USERNAME:  "+encryptedPassword);*/
     }
 
 

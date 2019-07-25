@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="" th:href="@{/css/header.css}">
     <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/modal.css" th:href="@{/css/modal.css}">
 </head>
 <body>
     <script>
@@ -24,13 +25,13 @@
     </div>
 
     <div class="container" style="min-height: 100vh">
-        <h1 ><span>Add new device card</span></h1>
+        <h1 ><span>Dodaj kartę maszyny</span></h1>
         <form  th:action="@{'/cards/addAsModel'}" th:object="${newCard}" method="post"
               modelAttribute="newCard" >
             
             <div class="row">
                 <div class="col-25">
-                    <label for="inventNumber">Invent Number</label>
+                    <label for="inventNumber">Numer inwent.</label>
                 </div>
                 <div class="col-75">
                     <select class="disabledSelect" th:readonly="readonly" name="" id="inventNumber" th:field="*{inventNumber}">
@@ -208,12 +209,14 @@
             </div>
             
             <div class="row submit">
-                <input type="submit" class="cancelbtn" value="Cancel" onclick="window.history.go(-1); return false;">
-                <input type="submit" value="Submit" style="margin-right: 20px">
+
+                <input type="submit"  class="cancelbtn" value="Anuluj" onclick="window.history.go(-1); return false;">
+                <input type="submit" value="Wyślij" style="margin-right: 20px">
+
             </div>
         </form>
     </div>
-    
+    <script  th:src="@{/js/mymodal.js}"></script>
     <div th:insert="~{fragments/footer.html::footer}"></div>
 
 

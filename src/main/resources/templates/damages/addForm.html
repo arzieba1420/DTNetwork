@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
     <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/modal.css" th:href="@{/css/modal.css}">
 </head>
 <body>
 
@@ -26,12 +27,12 @@
     </div>
 
     <div class="container" style="min-height: 100vh">
-        <h1 id="tableTitle"  ><span>Add new damage</span></h1>
+        <h1 id="tableTitle"  ><span>Dodaj nową usterkę</span></h1>
         <form action="" th:action="@{'/damages/addAsModel'}" th:object="${newDamage}" method="post"
               modelAttribute="newDamage" >
             <div class="row">
                 <div class="col-25">
-                    <label for="date">Date</label>
+                    <label for="date">Data</label>
                 </div>
                 <div class="col-75">
                     <input type="date" id="date" name="Date" placeholder="YYYY-MM-DD" th:field="*{damageDate}" th:errorclass="errorsFields">
@@ -40,7 +41,7 @@
             <!--Add select!-->
             <div class="row">
                 <div class="col-25">
-                    <label for="device">Device</label>
+                    <label for="device">Urządzenie</label>
                 </div>
                 <div class="col-75">
                     <select class="disabledSelect" id="device" name="Device"  th:field="*{deviceInventNumber}">
@@ -51,7 +52,7 @@
 
             <div class="row">
                 <div class="col-25">
-                    <label for="author">Author</label>
+                    <label for="author">Autor</label>
                 </div>
                 <div class="col-75">
                     <select class="disabledSelect" id="author" name="Author"  th:field="*{author}">
@@ -61,27 +62,29 @@
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="content">Description</label>
+                    <label for="content">Opis usterki</label>
                 </div>
                 <div class="col-75">
-                    <textarea id="content" name="content" placeholder="Write something.." style="height:200px" th:field="*{description}"th:errorclass="errorsFields"></textarea>
+                    <textarea id="content" name="content" placeholder="Dodaj opis" style="height:200px" th:field="*{description}"th:errorclass="errorsFields"></textarea>
                 </div>
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="check">Auto-create new post?</label>
+                    <label for="check">Stworzyć nowy post?</label>
                 </div>
                 <div class="col-75">
                     <input type="checkbox" id="check" name="newPostFlag"  th:checked="*{newPostFlag}">
                 </div>
             </div>
             <div class="row">
-                <input type="submit" class="cancelbtn" value="Cancel" onclick="window.history.go(-1); return false;">
-                <input type="submit" value="Submit" style="margin-right: 20px">
+
+                <input type="submit"  class="cancelbtn" value="Anuluj" onclick="window.history.go(-1); return false;">
+                <input type="submit" value="Wyślij" style="margin-right: 20px">
+
             </div>
         </form>
     </div>
-
+    <script  th:src="@{/js/mymodal.js}"></script>
     <div th:insert="~{fragments/footer.html::footer}"></div>
 </body>
 </html>

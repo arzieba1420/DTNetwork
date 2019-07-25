@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @Repository
 public interface DamageDAO extends PagingAndSortingRepository<Damage,Integer> {
+    Damage findByDamageId(Integer id);
     List<Damage> findAll();
     List<Damage> findByDevice_InventNumber(String inventNumber);
     Page<Damage> findByDevice_InventNumber(Pageable pageable, String inventNumber);

@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="" th:href="@{/css/header.css}">
     <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/modal.css" th:href="@{/css/modal.css}">
 </head>
 <body>
     <script>
@@ -24,13 +25,13 @@
     </div>
 
         <div class="container" style="min-height: 100vh">
-            <h1 ><span>Add new device</span></h1>
+            <h1 ><span>Dodaj nowe urządzenie</span></h1>
             <form  th:action="@{'/devices/addAsModel'}" th:object="${newDevice}" method="post"
                   modelAttribute="newDevice" >
 
                 <div class="row">
                     <div class="col-25">
-                        <label for="inventNumber">Invent Number</label>
+                        <label for="inventNumber">Numer inwent.</label>
                     </div>
                     <div class="col-75">
                         <input type="text" id="inventNumber" name="inventNumber" placeholder="S-XXX" th:field="*{inventNumber}" th:errorclass="errorsFields">
@@ -40,7 +41,7 @@
                 <!--Add select!-->
                 <div class="row">
                     <div class="col-25">
-                        <label for="deviceType">Device type</label>
+                        <label for="deviceType">Typ</label>
                     </div>
                     <div class="col-75">
                     <select  id="deviceType"  th:field="*{deviceType}" th:errorclass="errorsFields">
@@ -52,7 +53,7 @@
 
                 <div class="row">
                     <div class="col-25">
-                        <label for="room">Room</label>
+                        <label for="room">Hala</label>
                     </div>
                     <div class="col-75">
                     <select class="disabledSelect" th:readonly="readonly"  id="room" th:field="*{room}"th:errorclass="errorsFields">
@@ -63,19 +64,21 @@
 
                 <div class="row">
                     <div class="col-25">
-                        <label for="description">Description</label>
+                        <label for="description">Opis</label>
                     </div>
                     <div class="col-75">
                         <textarea id="description" name="Description" placeholder="Np CRV 1" style="height:100px" th:field="*{deviceDescription}"th:errorclass="errorsFields"></textarea>
                     </div>
                 </div>
                 <div class="row">
-                    <input type="submit" class="cancelbtn" value="Cancel" onclick="window.history.go(-1); return false;">
-                    <input type="submit" value="Submit" style="margin-right: 20px">
+
+                    <input type="submit"  class="cancelbtn" value="Anuluj" onclick="window.history.go(-1); return false;">
+                    <input type="submit" value="Wyślij" style="margin-right: 20px">
+
                 </div>
             </form>
         </div>
-
+    <script  th:src="@{/js/mymodal.js}"></script>
     <div th:insert="~{fragments/footer.html::footer}"></div>
 </body>
 </html>

@@ -9,5 +9,6 @@ import pl.nazwa.arzieba.dtnetworkproject.model.User;
 public interface UserDAO extends JpaRepository<User,Long> {
 
     User findByUsername(String username);
+    User save(User user);
 
 }

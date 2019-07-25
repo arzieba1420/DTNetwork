@@ -1,0 +1,164 @@
+/* Style the links inside the sidenav */
+
+#mySidenav{
+    position: absolute;
+    top: 200px;
+}
+
+#mySidenav2{
+    position: absolute;
+    top:200px;
+    right: 0px;
+    z-index: 1999;
+}
+#mySidenav div {
+    position: relative; /* Position them relative to the browser window */
+    /* Position them outside of the screen */
+    transition: 0.3s; /* Add transition on hover */
+    padding: 15px 10px; /* 15px padding */
+     /* Set a specific width */
+    text-decoration: none; /* Remove underline */
+    font-size: 20px; /* Increase font size */
+    color: white; /* White text color */
+    border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+
+    margin-bottom: 10px;
+}
+#mySidenav2 div {
+    position: relative; /* Position them relative to the browser window */
+    /* Position them outside of the screen */
+    /*transition: 0.3s; !* Add transition on hover *!*/
+    padding: 15px 10px; /* 15px padding */
+    /* Set a specific width */
+    text-decoration: none; /* Remove underline */
+    font-size: 20px; /* Increase font size */
+    color: white; /* White text color */
+    border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+
+    margin-bottom: 10px;
+}
+
+#mySidenav div:hover {
+    cursor: pointer;
+    /* On mouse-over, make the elements appear as they should */
+}
+
+/* The about link: 20px from the top with a green background */
+#tests {
+
+    background-color: #004000;
+    margin-left: -410px;
+    width: 450px;
+    z-index: 999;
+}
+
+#searchBar {
+    display: flex;
+    margin-left: -410px;
+    width: 450px;
+    flex-flow: row;
+    justify-content: center;
+    align-content: center;
+    background-color: #004000; /* Blue */
+    z-index: 999;
+}
+
+#diary{
+    background-color: #004000;
+    margin-right: 0px; /* Position them outside of the screen */
+    width: 850px; /* St a specific width */
+    margin-bottom: 10px;
+    height: 650px;
+    z-index: 1999;
+
+}
+
+#diary:hover{
+    cursor: pointer;
+}
+
+#diaryForm{
+    display: flex;
+    flex-flow: column;
+    float:left;
+}
+
+#projects {
+
+    background-color: #f44336; /* Red */
+}
+
+#contact {
+
+    background-color: #555 /* Light Black */
+}
+
+
+
+
+/* Style the search box inside the navigation bar */
+input[type=text] {
+
+    padding: 6px;
+    border: none;
+    font-size: 17px;
+    margin-left: 20px;
+}
+textarea {
+
+    padding: 6px;
+    border: none;
+    font-size: 17px;
+    margin-right: auto;
+    margin-left: 50px;
+    width: 750px;
+    height: 550px;
+    overflow-y:scroll;
+    resize: none
+}
+#textLabel{
+    text-align: center;
+    align-self: center;
+    margin-left: 50px;
+    width: 250px;
+    padding: 6px;
+    color: white;
+    margin-bottom: 20px;
+    margin-top: -5px;
+
+}
+
+button{
+
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-left: -5px;
+    margin-right: 30px;
+    background: #ddd;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+
+#buttonDiary{
+    padding: 6px 10px;
+    margin-top: 10px;
+    margin-right: 30px;
+    margin-left:auto;
+    background: #ddd;
+    font-size: 17px;
+
+    border: none;
+    cursor: pointer;
+}
+
+#buttonDiary:hover{
+   background-color: #1e9d0b;
+    color: white;
+}
+
+#arr3:hover{
+    color:darkred;
+}
+
+

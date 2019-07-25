@@ -11,10 +11,31 @@
     <link rel="stylesheet" href="../static/css/overlay.css">
     <link rel="stylesheet" href="" th:href="@{/css/header.css}">
     <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/search.css}">
+  <!--  <link rel="stylesheet" th:href="@{/css/simpleTable.css}">-->
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="" th:href="@{/css/modal.css}">
 
+    <script  th:src="@{/js/search.js}"></script>
+    <style>
+        table, th, td {
+            cursor: auto;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        td{
+            font-size: 0.9em;
+        }
+
+        tr:hover{
+            background-color: #9c9c9c;
+            cursor: pointer;
+        }
+
+    </style>
 </head>
 <body>
    <!-- VERY IMPORTANT SCRIPT!!! (without it server will meet NullPointer after removing ShortPost from DB) -->
@@ -25,26 +46,68 @@
     <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
 
 
+   <div id="mySidenav" class="sidenav">
+       <div class="search" id="tests">
+           <table style="background-color: white; border: 1px solid black;color: black; text-align: center">
+               <tr id="topBar">
+                   <th>Generator</th>
+                   <th>Ostatni test</th>
+                   <th>Status</th>
+                   <th>Minęło dni</th>
+               </tr>
 
-    
-    <div class="limiter">
+               <tr th:each="generator:${generators.keySet()}">
+                    <td ><a href="" th:href="@{'devices/'+${generator}}" th:text="${@deviceDAO.findByInventNumber(generator).getDeviceDescription()}"></a></td>
+                    <td ><a href="" th:href="@{'/generators/' + ${generator}+'/1'}" th:text="${@calendarUtil.cal2string(generators.get(generator).getDate()) }" ></a></td>
+                    <td th:text="${generators.get(generator).getStatus()}"></td>
+                    <td th:if="${@mainController.betweenDates(generators.get(generator).getDate(),today)}<30" th:text="${@mainController.betweenDates(generators.get(generator).getDate(),today)}" ></td>
+                    <td style="background-color: rgba(255,0,0,0.65); color: white" th:if="${@mainController.betweenDates(generators.get(generator).getDate(),today)}>=30" th:text="${@mainController.betweenDates(generators.get(generator).getDate(),today)}" ></td>
+               </tr>
+           </table>
+           <i style="float:left; font-size: 130%; margin-left: 420px; margin-top: -60px" class="fas fa-angle-right" id="arr2"></i>
+
+       </div>
+       <div class="search" id="searchBar">
+           <form action="/action_page.php" th:action="@{'/posts/search'}" modelAttribute="search" >
+               <label style="margin-left: 0%;font-size: 1em; margin-right: 0%" for="search">Wyszukaj posty</label>
+               <input style="margin-left: 0%;margin-right: 0%" type="text" id="search" placeholder="Szukana fraza..." name="search">
+               <button style="margin-left: -2%; margin-top: 10px;" type="submit"><i class="fa fa-search"></i></button>
+           </form>
+           <i style="font-size: 130%; margin-top: 10px" class="fas fa-angle-right" id="arr1"></i>
+       </div>
+   </div>
+
+   <div style="visibility: hidden " id="mySidenav2">
+       <div class="search" id="diary">
+           <i style=" font-size: 130%; margin-top: -630px;margin-right: 20px; z-index: 1999 " class="fas fa-times" id="arr3"></i>
+           <form action="/action_page.php" th:action="@{'/users/saveDiary/' + ${username} }" modelAttribute="diaryText" id="diaryForm" method="post" >
+               <label id="textLabel" for="diaryText" th:text="'Notes użytkownika '+ ${username}" ></label>
+               <textarea placeholder="Kliknij aby dodać pierwszą notatkę"  th:text="${diary}" id="diaryText"  name="diaryText"></textarea>
+               <button type="submit" id="buttonDiary"  >Zapisz</button>
+           </form>
+
+       </div>
+   </div>
+
+
+   <div class="limiter">
         <div class="container-table100">
             <div class="wrap-table100">
-                <h1><span>Last 10 posts</span></h1>
+                <h1><span>Najnowsze posty</span></h1>
                 <div class="table">
                     
                     <div class="row header">
                         <div class="cell">
-                            Date
+                            Data
                         </div>
                         <div class="cell">
-                            Author
+                            Autor
                         </div>
                         <div class="cell">
-                            Target
+                            Urządzenie
                         </div>
                         <div class="cell" >
-                            Content
+                            Treść
                         </div>
                         <div class="cell action">
                             ---
@@ -59,13 +122,13 @@
                         <div class="cell" data-title="Author" th:text="${lastPosts.get(key).author}">
                             Arek
                         </div>
-                        <div class="cell" data-title="Related with" th:if="${!lastPosts.get(key).content.contains('damage') and !lastPosts.get(key).content.contains('loss')}" >
+                        <div class="cell" data-title="Related with" th:if="${!lastPosts.get(key).content.contains('kliknięciu') and !lastPosts.get(key).content.contains('zanik')}" >
                             <a href="" th:text="${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).deviceDescription}+'&roarr;'+${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).room} " th:href="@{'/devices/' + ${lastPosts.get(key).inventNumber}}"></a>
                         </div>
-                        <div class="cell" data-title="Related with" th:if="${lastPosts.get(key).content.contains('damage')}" >
+                        <div class="cell" data-title="Related with" th:if="${lastPosts.get(key).content.contains('kliknięciu')}" >
                             <a href="" th:text="${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).deviceDescription}+'&roarr;'+${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).room} " th:href="@{'/damages/devices/' + ${lastPosts.get(key).inventNumber}+'/1'}"></a>
                         </div>
-                        <div class="cell" data-title="Related with" th:if="${lastPosts.get(key).content.contains('loss')}" >
+                        <div class="cell" data-title="Related with" th:if="${lastPosts.get(key).content.contains('zanik')}" >
                             <a href="" th:text="${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).deviceDescription}" th:href="@{'/devices/' + ${lastPosts.get(key).inventNumber}}"></a>
                         </div>
                         <div class="cell" data-title="Content" th:text="${lastPosts.get(key).content}" style="white-space: pre">
@@ -73,14 +136,19 @@
                         </div>
 
 
-                        <div class="cell remove " th:if="${lastPosts.get(key).content.contains('damage') }">
+                        <div class="cell remove " th:if="${lastPosts.get(key).content.contains('kliknięciu') }">
                             <a href="#" ><i class="fas fa-exclamation-circle" style="font-size: 200%;color: red"></i></a>
                         </div>
-                        <div class="cell remove " th:if="${lastPosts.get(key).content.contains('loss')}">
+                        <div class="cell remove " th:if="${lastPosts.get(key).content.contains('zanik')}">
                             <a href="#" ><i class="fas fa-bolt" style="font-size: 200%; color: orangered"></i></a>
                         </div>
-                        <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('damage') and !lastPosts.get(key).content.contains('loss')}">
-                            <a href="#" th:href="@{'/posts/delete/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Remove post</span></a>
+                        <div class="cell remove " th:if="${lastPosts.get(key).content.contains('Wymagany')}">
+                            <a href="#" ><i class="fas fa-exclamation-circle" style="font-size: 200%;color: red"></i></a>
+                        </div>
+                        <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('kliknięciu') and !lastPosts.get(key).content.contains('zanik')and !lastPosts.get(key).content.contains('Wymagany')}">
+                            <a href="#" th:href="@{'/posts/delete/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Usuń post</span></a>
+                            <br>
+                            <a href="#" th:href="@{'/posts/edit/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-edit"></i> Edytuj post</span></a>
                         </div>
                     </div>
                 </div>
@@ -88,6 +156,7 @@
             </div>
         </div>
     </div>
+   <script  th:src="@{/js/mymodal.js}"></script>
    <div th:insert="~{fragments/footer.html::footer}"></div>
 </body>
 </html>

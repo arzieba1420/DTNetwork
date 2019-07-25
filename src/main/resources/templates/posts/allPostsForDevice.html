@@ -7,13 +7,15 @@
     <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
     <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/collapsible.css}">
     <link rel="stylesheet"  th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/tooltips.css}">
-    <link rel="stylesheet" href="../static/css/overlay.css">
+    <link rel="stylesheet" th:href="@{/css/simpleTable.css}">
     <link rel="stylesheet" href="" th:href="@{/css/header.css}">
     <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../static/css/modal.css" th:href="@{/css/modal.css}">
 
 </head>
 <body>
@@ -22,28 +24,28 @@
     </script>
     <div th:replace="~{fragments/header.html::header}"></div>
     <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
-    <div class="container" style=" padding-top: 0px; ">
+    <div class="container" style="min-height: 100vh; padding-top: 50px; padding-right: 10px  ">
         <div class="col-25" style="margin-left: 50px;margin-top: 100px">
             <h1 style="text-align: center; background-color: lightgray" th:text="${dto.getDeviceDescription()}+ '&roarr;'+${dto.getRoom()}"></h1>
             <div style="text-align: center;"><img  src="" th:src="${dto.deviceType.getIMAGE()}" alt=""></div>
         </div>
 
         <div class="col-75" style="margin-left: 200px">
-            <h1 id="tableTitle"  ><span th:text="'Posts for selected device ('+ ${amount}+')' " ></span></h1>
+            <h1 id="tableTitle"  ><span th:text="'Posty dla tego urządzenia ('+ ${amount}+')' " ></span></h1>
             <div class="table">
 
                 <div class="row header">
                     <div class="cell">
-                        Date
+                        Data
                     </div>
                     <div class="cell">
-                        Author
+                        Autor
                     </div>
                     <div class="cell">
-                        Target
+                        Urządzenie
                     </div>
                     <div class="cell" >
-                        Content
+                        Treść
                     </div>
                     <div class="cell ">
 
@@ -65,7 +67,9 @@
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusamus alias aliquam aperiam consectetur cum cumque distinctio dolore dolores ea eaque eligendi ipsum iusto laboriosam laudantium libero maxime natus nemo neque nisi odit omnis pariatur perspiciatis porro quae quasi quibusdam quis quod recusandae reiciendis rem rerum similique sunt tempora tempore, velit vero! Atque, culpa nesciunt obcaecati qui quisquam unde veniam. Atque cum cumque debitis delectus, dolores eveniet facere id iste laborum mollitia nam necessitatibus perferendis repellat sint ullam vel voluptatibus. Amet magni, voluptatem. Adipisci cupiditate ea eius maiores modi neque nihil quisquam sint! Adipisci aspernatur aut dignissimos distinctio doloremque expedita, facere fuga fugiat illo iure neque obcaecati omnis placeat qui quo sequi vero vitae voluptate voluptatem voluptates. Atque consectetur consequuntur corporis debitis delectus deleniti doloremque ducimus earum eius expedita fugiat incidunt inventore magni modi molestias nam numquam obcaecati pariatur possimus quisquam sed suscipit, temporibus veniam vero voluptates voluptatibus voluptatum? Est fugiat iure laborum nihil unde? Culpa ex harum impedit laboriosam libero mollitia nostrum quae repellendus sapiente ut? Aliquid aspernatur commodi consequuntur culpa deleniti dicta dignissimos dolorem ea eum facilis hic ipsum itaque laborum molestias, natus placeat, quas quod totam vero voluptate? Ad aliquam aperiam incidunt inventore laboriosam nemo repudiandae temporibus. Blanditiis, incidunt, tenetur. Asperiores corporis eius eligendi enim et iure minus natus nesciunt numquam omnis pariatur placeat porro possimus quaerat quam saepe, tenetur voluptas? Deserunt doloribus, esse, ex excepturi fugiat id impedit itaque modi omnis possimus provident quam quibusdam, unde veniam vero. Eveniet, magni, nulla? Asperiores aut commodi debitis delectus laboriosam praesentium quia quidem sapiente! Accusantium architecto atque aut consectetur, culpa iusto mollitia nesciunt, nihil nulla porro quae quidem repudiandae rerum. Alias amet aperiam asperiores consequatur cupiditate dicta doloribus dolorum facilis harum ipsa ipsam maxime officia possimus quia soluta, sunt vero voluptatem. Cum dolor id impedit officia quibusdam vitae voluptas.
                     </div>
                     <div class="cell ">
-                        <a href="#" th:href="@{'/posts/delete/'+ ${key}+'/stay'}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Remove post</span></a>
+                        <a href="#" th:href="@{'/posts/delete/'+ ${key}+'/stay'}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Usuń post</span></a>
+                        <br>
+                        <a href="#" th:href="@{'/posts/edit/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-edit"></i> Edytuj post</span></a>
                     </div>
                 </div>
 
@@ -76,15 +80,15 @@
             <div class="tooltipContainer" >
                 <div class="tooltip">
                     <a th:href="@{/posts/addForm/}+${dto.getInventNumber()}"><i class="fas fa-clipboard-list" style=" color: #051f64;"></i></a>
-                    <span class="tooltiptext">Add new post</span>
+                    <span class="tooltiptext">Dodaj nowy post</span>
                 </div>
                 <div class="tooltip">
                     <a th:href="@{'/devices/'+${dto.getInventNumber()}}"><i class="fas fa-info-circle" style=" color: aqua;"></i></a>
-                    <span class="tooltiptext">Show device info</span>
+                    <span class="tooltiptext">Info o urządzeniu</span>
                 </div>
                 <div class="tooltip">
                     <a onclick="window.history.go(-1)" ><i class="fas fa-backward" style=" color: #55003b;"></i></a>
-                    <span class="tooltiptext">Back to previous site</span>
+                    <span class="tooltiptext">Wróć do poprzedniej strony</span>
                 </div>
             </div>
             <div  style="text-align: center">
@@ -98,7 +102,7 @@
         </div>
 
     </div>
-
+    <script  th:src="@{/js/mymodal.js}"></script>
     <div th:insert="~{fragments/footer.html::footer}"></div>
 </body>
 </html>

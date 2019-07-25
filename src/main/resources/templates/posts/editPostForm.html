@@ -10,9 +10,7 @@
     <link rel="stylesheet" href="" th:href="@{/css/header.css}">
     <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
-
     <link rel="stylesheet" href="../../static/css/modal.css" th:href="@{/css/modal.css}">
-
 </head>
 <body>
 <script>
@@ -28,65 +26,56 @@
 </div>
 <div class="container" style="min-height: 100vh">
 
-
-    <h1 ><span>Dodaj nową fakturę</span></h1>
-
-    <form  th:action="@{'/invoices/add'}" th:object="${newInvoice}" method="post"
-           modelAttribute="newInvoice" >
+    <h1 ><span>Edytuj post</span></h1>
+    <form  th:action="@{'/posts/edit/' + ${id} }" th:object="${newPost}" method="post"
+           modelAttribute="newPost" >
 
         <div class="row">
             <div class="col-25">
-
-                <label for="date">Data</label>
-
+                <label for="postDdate">Data</label>
             </div>
             <div class="col-75">
-                <input type="date" id="date" name="postDate" placeholder="YYYY-MM-DD" th:field="*{date}" th:errorclass="errorsFields">
+                <input type="date" id="postDdate" name="postDate" placeholder="YYYY-MM-DD" th:field="*{date}" th:errorclass="errorsFields">
             </div>
 
         </div>
         <!--Add select!-->
         <div class="row">
             <div class="col-25">
-
-                <label for="building">Budynek</label>
-
+                <label for="device">Urządzenie</label>
             </div>
             <div class="col-75">
-                <select class="disabledSelect" id="building" name="Building"  th:field="*{building}"  >
-                    <option th:hidden="hidden" th:readonly="readonly" th:value="${building}" th:text="${building.name()}" ></option>
+                <select id="device" name="Device"  th:field="*{inventNumber}">
+                    <option th:value="'DTN'">Wybierz urządzenie</option>
+                    <option th:if="${key}!='DTN'" th:each="key,iterStat:${devices.keySet()}" th:value="${key}" th:text="${@deviceDAO.findByInventNumber(key).deviceDescription}+' '+${@deviceDAO.findByInventNumber(key).room}"></option>
                 </select>
             </div>
         </div>
 
         <div class="row">
             <div class="col-25">
-                <label for="id">ID</label>
+                <label for="author">Autor</label>
             </div>
             <div class="col-75">
-                <input type="text" id="id" th:field="*{invoiceId}" th:errorclass="errorsFields" >
+                <select class="disabledSelect" id="author" name="Author"  th:field="*{author}">
+                    <option th:hidden="hidden" th:readonly="readonly"  th:value="${@mainController.getUser()}" th:text="${@mainController.getUser()}"></option>
+                </select>
             </div>
         </div>
         <div class="row">
             <div class="col-25">
-
-                <label for="value">Wartość netto</label>
-
+                <label for="content">Treść</label>
             </div>
             <div class="col-75">
-                <input type="text" id="value" name="Value" placeholder="19999.99" th:field="*{netValue}" th:errorclass="errorsFields">
+                <textarea id="content" name="content" placeholder="Write something.." style="height:200px" th:field="*{content}"th:errorclass="errorsFields"></textarea>
             </div>
         </div>
         <div class="row">
-
-            <input type="submit" class="cancelbtn" value="Anuluj" onclick="window.history.go(-1); return false;">
-            <input type="submit" value="Wyślij" style="margin-right: 20px">
-
+            <input type="submit" class="cancelbtn" value="Anulujl" onclick="window.history.go(-1); return false;">
+            <input type="submit"  value="Wyślij" style="margin-right: 20px">
         </div>
     </form>
 </div>
-
-
 
 <script  th:src="@{/js/mymodal.js}"></script>
 

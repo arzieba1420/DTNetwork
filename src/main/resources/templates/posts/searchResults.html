@@ -1,36 +1,34 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DTNetwork</title>
     <link rel="icon" type="image/ico" href="../static/images/icoTitl.PNG" th:href="@{/images/icoTitl.PNG}" >
-    <link rel="stylesheet"  th:href="@{/css/navbar.css}">
-    <link rel="stylesheet"  th:href="@{/css/main.css}"> <!--href="../static/css/main.css"-->
-    <link rel="stylesheet" th:href="@{/css/background.css}" href="../static/css/background.css">
+    <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
+    <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet"  th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/tooltips.css}">
     <link rel="stylesheet" href="../static/css/overlay.css">
     <link rel="stylesheet" href="" th:href="@{/css/header.css}">
     <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="../../static/css/modal.css" th:href="@{/css/modal.css}">
+
 </head>
-
 <body>
-
+    <script>
+        window.location.refresh();
+    </script>
     <div th:replace="~{fragments/header.html::header}"></div>
     <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
-    
-    
-    
     <div class="limiter">
         <div class="container-table100">
             <div class="wrap-table100">
-                <h1><span th:text="'Posty w ' + ${year}+' roku ('+ ${amount}+')'"></span></h1>
+                <h1 id="tableTitle"  ><span th:text="'Wyniki dla zapytania '+ ${phrase} +' ('+ ${amount}+')' " ></span></h1>
                 <div class="table">
-                    
+        
                     <div class="row header">
                         <div class="cell">
                             Data
@@ -44,52 +42,43 @@
                         <div class="cell" >
                             Treść
                         </div>
-                        <div class="cell action">
-                        
+                        <div class="cell ">
+            
                         </div>
-                    
+        
                     </div>
-                    
-                    <div class="row" th:each="key, iterStat: ${posts.keySet()} " th:if="${!posts.get(key).content.contains('kliknięciu')}" >
-                        <div class="cell" data-title="Date" th:text="${posts.get(key).date}" >
+        
+                    <div class="row"  th:each="key, iterStat: ${keys} ">
+                        <div class="cell" data-title="Date" th:text="${mapa.get(key).getDate()}" >
                             11-11-2011
                         </div>
-                        <div class="cell" data-title="Author" th:text="${posts.get(key).author}">
+                        <div class="cell" data-title="Author" th:text="${mapa.get(key).getAuthor()}">
                             Arek
                         </div>
-                        <div class="cell" data-title="Related with"  >
-                            <a href="" th:text="${@deviceDAO.findByInventNumber(posts.get(key).inventNumber).deviceDescription}+'&roarr;'+${@deviceDAO.findByInventNumber(posts.get(key).inventNumber).room} " th:href="@{'/devices/' + ${posts.get(key).inventNumber}}"></a>
+                        <div class="cell" data-title="Related with" th:if="${!mapa.get(key).content.contains('kliknięciu') and !mapa.get(key).content.contains('zanik')}" >
+                            <a href="" th:text="${@deviceDAO.findByInventNumber(mapa.get(key).inventNumber).deviceDescription}+'&roarr;'+${@deviceDAO.findByInventNumber(mapa.get(key).inventNumber).room} " th:href="@{'/devices/' + ${mapa.get(key).inventNumber}}"></a>
                         </div>
-                        
-                        <div class="cell" data-title="Content" th:text="${posts.get(key).content}" style="white-space: pre">
+                        <div class="cell" data-title="Related with" th:if="${mapa.get(key).content.contains('kliknięciu')}" >
+                            <a href="" th:text="${@deviceDAO.findByInventNumber(mapa.get(key).inventNumber).deviceDescription}+'&roarr;'+${@deviceDAO.findByInventNumber(mapa.get(key).inventNumber).room} " th:href="@{'/damages/devices/' + ${mapa.get(key).inventNumber}+'/1'}"></a>
+                        </div>
+                        <div class="cell" data-title="Related with" th:if="${mapa.get(key).content.contains('zanik')}" >
+                            <a href="" th:text="${@deviceDAO.findByInventNumber(mapa.get(key).inventNumber).deviceDescription}" th:href="@{'/devices/' + ${mapa.get(key).inventNumber}}"></a>
+                        </div>
+                        <div class="cell" data-title="Content" th:text="${mapa.get(key).content}" style="white-space: pre">
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusamus alias aliquam aperiam consectetur cum cumque distinctio dolore dolores ea eaque eligendi ipsum iusto laboriosam laudantium libero maxime natus nemo neque nisi odit omnis pariatur perspiciatis porro quae quasi quibusdam quis quod recusandae reiciendis rem rerum similique sunt tempora tempore, velit vero! Atque, culpa nesciunt obcaecati qui quisquam unde veniam. Atque cum cumque debitis delectus, dolores eveniet facere id iste laborum mollitia nam necessitatibus perferendis repellat sint ullam vel voluptatibus. Amet magni, voluptatem. Adipisci cupiditate ea eius maiores modi neque nihil quisquam sint! Adipisci aspernatur aut dignissimos distinctio doloremque expedita, facere fuga fugiat illo iure neque obcaecati omnis placeat qui quo sequi vero vitae voluptate voluptatem voluptates. Atque consectetur consequuntur corporis debitis delectus deleniti doloremque ducimus earum eius expedita fugiat incidunt inventore magni modi molestias nam numquam obcaecati pariatur possimus quisquam sed suscipit, temporibus veniam vero voluptates voluptatibus voluptatum? Est fugiat iure laborum nihil unde? Culpa ex harum impedit laboriosam libero mollitia nostrum quae repellendus sapiente ut? Aliquid aspernatur commodi consequuntur culpa deleniti dicta dignissimos dolorem ea eum facilis hic ipsum itaque laborum molestias, natus placeat, quas quod totam vero voluptate? Ad aliquam aperiam incidunt inventore laboriosam nemo repudiandae temporibus. Blanditiis, incidunt, tenetur. Asperiores corporis eius eligendi enim et iure minus natus nesciunt numquam omnis pariatur placeat porro possimus quaerat quam saepe, tenetur voluptas? Deserunt doloribus, esse, ex excepturi fugiat id impedit itaque modi omnis possimus provident quam quibusdam, unde veniam vero. Eveniet, magni, nulla? Asperiores aut commodi debitis delectus laboriosam praesentium quia quidem sapiente! Accusantium architecto atque aut consectetur, culpa iusto mollitia nesciunt, nihil nulla porro quae quidem repudiandae rerum. Alias amet aperiam asperiores consequatur cupiditate dicta doloribus dolorum facilis harum ipsa ipsam maxime officia possimus quia soluta, sunt vero voluptatem. Cum dolor id impedit officia quibusdam vitae voluptas.
                         </div>
-                        
-                        <div class="cell remove " >
+                        <div class="cell ">
                             <a href="#" th:href="@{'/posts/delete/'+ ${key}+'/stay'}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Usuń post</span></a>
                             <br>
                             <a href="#" th:href="@{'/posts/edit/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-edit"></i> Edytuj post</span></a>
                         </div>
-                        
                     </div>
-                
+    
                 </div>
-                <div  style="text-align: center">
-                <div id="btnContainer"  class="pagination" style="margin-bottom: 30px" >
-                    <a  th:href="@{'/posts/all/' + ${year} + '/1'}" >&laquo;</a>
-                    <a th:href="@{'/posts/all/' + ${year} + '/1'}"  th:class=" ${currentPage}==1 ?'active' : '' " >1</a>
-                    <a th:href="@{'/posts/all/'+${year}+'/'+${page}}" th:each="page:${pages}" th:text="${page}" th:class="${currentPage}==${page}? 'active' : ''" >2</a>
-                    <a th:href="@{'/posts/all/' + ${year} + '/'+ ${lastPage}}">&raquo;</a>
-                </div>
-                </div>
-                <a th:href="@{/posts/addForm}"> <div th:insert="~{fragments/addButton.html::addButton}"></div></a>
-            
+             
             </div>
-        
         </div>
-       
     </div>
-
     <script  th:src="@{/js/mymodal.js}"></script>
     <div th:insert="~{fragments/footer.html::footer}"></div>
 </body>

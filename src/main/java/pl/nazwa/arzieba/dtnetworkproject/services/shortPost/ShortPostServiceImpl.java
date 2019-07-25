@@ -1,6 +1,5 @@
 package pl.nazwa.arzieba.dtnetworkproject.services.shortPost;
 
-import org.springframework.data.domain.PageImpl;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.ShortPostDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
@@ -172,6 +171,23 @@ public class ShortPostServiceImpl implements ShortPostService {
     }
 
     @Override
+    public Map<Integer, ShortPostDTO> searchContent(String phrase) {
+
+        List<ShortPost> list = postDAO.findByContentContainingIgnoreCaseOrderByPostDateDesc(phrase);
+        Map<Integer,ShortPostDTO> mapa = new LinkedHashMap<>();
+        Set<Integer> keys = new LinkedHashSet<>();
+        for (ShortPost post:list) {
+            keys.add(post.getPostId());
+        }
+
+        for (Integer id:keys) {
+            mapa.put(id, ShortPostMapper.map(postDAO.findByPostId(id)));
+        }
+
+        return mapa;
+    }
+
+    @Override
     public Set<Integer> setOfYears(){
 
         List<Integer> yearsList= postDAO.findAll().stream()
@@ -211,7 +227,7 @@ public class ShortPostServiceImpl implements ShortPostService {
 
         for (ShortPost post: allPosts) {
 
-            if (!post.getContent().contains("damage")){
+            if (!post.getContent().contains("kliknięciu")){
                 allForDamage = false;
             }
 

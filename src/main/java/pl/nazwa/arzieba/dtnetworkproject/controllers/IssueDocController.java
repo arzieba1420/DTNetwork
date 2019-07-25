@@ -127,7 +127,7 @@ public class IssueDocController {
             List<FieldError> allErrors;
 
             if(issueDocumentDAO.existsByIssueSignature(issueDocumentDTO.getIssueSignature())){
-                FieldError fieldError = new FieldError("newDoc","issueSignature", issueDocumentDTO.getIssueSignature(),false,null,null ,"Document with this Signature already exist in database!");
+                FieldError fieldError = new FieldError("newDoc","issueSignature", issueDocumentDTO.getIssueSignature(),false,null,null ,"Zamówienie o tej sygnaturze już istnieje w bazie danych!");
                 bindingResult.addError(fieldError);
             }
 
@@ -140,7 +140,7 @@ public class IssueDocController {
         }
 
         if(issueDocumentDAO.existsByIssueSignature(issueDocumentDTO.getIssueSignature())){
-            FieldError fieldError = new FieldError("newDoc","issueSignature", issueDocumentDTO.getIssueSignature(),false,null,null ,"Document with this Signature already exist in database!");
+            FieldError fieldError = new FieldError("newDoc","issueSignature", issueDocumentDTO.getIssueSignature(),false,null,null ,"Zamówienie o tej sygnaturze już istnieje w bazie danych!");
             bindingResult.addError(fieldError);
 
             model.addAttribute("bindingResult", bindingResult);
@@ -160,7 +160,7 @@ public class IssueDocController {
             List<FieldError> allErrors;
 
             if(issueDocumentDAO.existsByIssueSignature(dto.getIssueSignature())){
-                FieldError fieldError = new FieldError("newDoc","issueSignature", dto.getIssueSignature(),false,null,null ,"Document with this Signature already exist in database!");
+                FieldError fieldError = new FieldError("newDoc","issueSignature", dto.getIssueSignature(),false,null,null ,"Zamówienie o tej sygnaturze już istnieje w bazie danych!");
                 bindingResult.addError(fieldError);
             }
 
@@ -173,7 +173,7 @@ public class IssueDocController {
         }
 
         if(issueDocumentDAO.existsByIssueSignature(dto.getIssueSignature())){
-            FieldError fieldError = new FieldError("newDoc","issueSignature", dto.getIssueSignature(),false,null,null ,"Document with this Signature already exist in database!");
+            FieldError fieldError = new FieldError("newDoc","issueSignature", dto.getIssueSignature(),false,null,null ,"Zamówienie o tej sygnaturze już istnieje w bazie danych!");
             bindingResult.addError(fieldError);
 
             model.addAttribute("bindingResult", bindingResult);
@@ -262,6 +262,12 @@ public class IssueDocController {
 
         return "documents/addDocFormDev";
     }
+
+  @GetMapping("/modalDocs/")
+    public String modalDocs(Model model, @ModelAttribute("docs") int year){
+
+        return getAllForYear(year,model,1);
+  }
 
 
 

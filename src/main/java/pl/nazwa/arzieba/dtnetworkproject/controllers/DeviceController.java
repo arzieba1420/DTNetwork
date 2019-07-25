@@ -69,14 +69,14 @@ public class DeviceController {
          DeviceDTO dto= deviceService.findByInventNumber(inventNumber);
          Device device= deviceDAO.findByInventNumber(inventNumber);
 
-         String lastTest = "Not known";
-        String activityType = "(not known)";
+         String lastTest = "Nieznana";
+        String activityType = "(nieznane)";
 
          if(device.getTests().size()!=0){
              lastTest = CalendarUtil.cal2string(generatorTestDAO.findTopByDevice_InventNumberOrderByDateDesc(inventNumber).getDate()) ;
 
              if(generatorTestDAO.findTopByDevice_InventNumberOrderByDateDesc(inventNumber).isLossPowerFlag()){
-                 activityType = "(loss of power)";
+                 activityType = "(praca)";
              } else{
                  activityType="(test)";
              }
@@ -106,7 +106,7 @@ public class DeviceController {
             if(deviceDAO.existsById(dto.getInventNumber())) {
 
                 FieldError fieldError = new FieldError("newDevice", "inventNumber", dto.getInventNumber(),
-                        false, null, null, "Device with this Invent Number already exist in database!");
+                        false, null, null, "Urządzenie o tym numerze już istnieje w bazie danych!");
                 bindingResult.addError(fieldError);
             }
             allErrors = bindingResult.getFieldErrors();
@@ -193,7 +193,7 @@ public class DeviceController {
             postDTO.setDate(testDTO.getDate());
             postDTO.setAuthor(Author.valueOf(mainController.getUser()));
             postDTO.setInventNumber(testDTO.getInventNumber());
-            postDTO.setContent("Generator's work during loss of power");
+            postDTO.setContent("Generator podał napięcie podczas zaniku! [SYSTEM]");
             generatorService.create(testDTO);
             postService.create(postDTO);
             return "redirect:/generators/" + testDTO.getInventNumber()+"/1";
@@ -205,8 +205,17 @@ public class DeviceController {
             damageDTO.setAuthor(Author.valueOf(mainController.getUser()));
             damageDTO.setDamageDate(testDTO.getDate());
             damageDTO.setNewPostFlag(true);
+            ShortPostDTO dto = new ShortPostDTO();
+            dto.setDate(damageDTO.getDamageDate());
+            dto.setAuthor(damageDTO.getAuthor());
+            dto.setInventNumber(damageDTO.getDeviceInventNumber());
+            dto.setContent("Nowa usterka! Szczegóły po kliknięciu w Urządzenie... [SYSTEM]");
+            dto.setForDamage(true);
             generatorService.create(testDTO);
             damageService.create(damageDTO);
+
+            postService.create(dto);
+
             return "redirect:/dtnetwork";
         }
 
@@ -218,25 +227,30 @@ public class DeviceController {
             postDTO.setDate(testDTO.getDate());
             postDTO.setAuthor(Author.valueOf(mainController.getUser()));
             postDTO.setInventNumber(testDTO.getInventNumber());
-            postDTO.setContent("Generator's work during loss of power");
+            postDTO.setContent("Generator podał napięcie podczas zaniku! [SYSTEM]");
             DamageDTO damageDTO = new DamageDTO();
             damageDTO.setDescription(testDTO.getContent());
             damageDTO.setDeviceInventNumber(testDTO.getInventNumber());
             damageDTO.setAuthor(Author.valueOf(mainController.getUser()));
             damageDTO.setDamageDate(testDTO.getDate());
             damageDTO.setNewPostFlag(true);
+            ShortPostDTO dto = new ShortPostDTO();
+            dto.setDate(damageDTO.getDamageDate());
+            dto.setAuthor(damageDTO.getAuthor());
+            dto.setInventNumber(damageDTO.getDeviceInventNumber());
+            dto.setContent("Nowa usterka! Szczegóły po kliknięciu w Urządzenie... [SYSTEM]");
+            dto.setForDamage(true);
             generatorService.create(testDTO);
             postService.create(postDTO);
             damageService.create(damageDTO);
+
+            postService.create(dto);
+
 
             return "redirect:/dtnetwork";
         }
 
         return "redirect:/error";
     }
-
-
-
-
 
 }
