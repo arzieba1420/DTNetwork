@@ -21,8 +21,10 @@
         <div id="bar" >
         <div id="nav" style="margin-left: 35%" >
             <ul>
+
                 <li ><a class="home mainBar" href="#" th:href="@{/dtnetwork}">Home</a></li>
                 <li><a class="mainBar" >Urządzenia &raquo;</a>
+
                     <ul>
                         <li  th:each="room:${rooms}"><a href="#" th:text="${room}+' '+'&raquo;'"></a>
                             <ul>
@@ -35,22 +37,29 @@
                     </ul>
                 </li>
 
+
                 <li><a class="mainBar" href="#">Zamówienia &raquo;</a>
+
                     <ul>
                         <li th:if="${@issueDocServiceImpl.setOfYears().size()<=5}" th:each="year:${@issueDocServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}"></a></li>
                         <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}" th:each="year:${@issueDocServiceImpl.subSet()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}"></a></li>
 
+
                         <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}"  ><a id="openModal2"  th:text="'Więcej...'"> </a></li>
+
 
                         
 
                     </ul>
                 </li>
 
+
                 <li><a class="mainBar" href="#">Posty &raquo;</a>
+
                     <ul>
                         <li th:if="${!@shortPostServiceImpl.areAllForDamage(year) and @shortPostServiceImpl.setOfYears().size()<=5 }" th:each="year:${@shortPostServiceImpl.setOfYears()}" ><a href="#" th:href="@{'/posts/all/'+${year}+'/1' }" th:text= "${year}" >Test</a></li>
                         <li th:if="${!@shortPostServiceImpl.areAllForDamage(year) and @shortPostServiceImpl.setOfYears().size()>5 }" th:each="year:${@shortPostServiceImpl.subSet()}" ><a href="#" th:href="@{'/posts/all/'+${year}+'/1' }" th:text= "${year}" >Test</a></li>
+
 
                         <li  th:if="${@shortPostServiceImpl.setOfYears().size()>5 }" ><a id="openModal" th:text="'Więcej...'"></a></li>
                         
@@ -64,6 +73,7 @@
                                 <li><a href="" th:href="@{/invoices/addForm/}+${building.name()}"  th:text="'+ Dodaj nową'"></a></li>
                                 <li ><a href="" th:text="'Pokaż wszystkie'" th:href="@{'/invoices/'+${building.name()}+'/1'}" ></a></li>
                                 
+
                             </ul>
                         </li>
                     </ul>

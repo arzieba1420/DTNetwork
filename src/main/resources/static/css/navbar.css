@@ -61,9 +61,6 @@ ul li a{
 
 
 
-
-
-
 ul li a.home , ul li a.logout {
     width: 70px;
 
@@ -163,4 +160,5 @@ a.cyfroNav{
  a.cyfroNav:hover{
     color: #1e9d0b;
 }
+
 

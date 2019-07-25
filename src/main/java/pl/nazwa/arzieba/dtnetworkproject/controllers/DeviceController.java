@@ -213,7 +213,9 @@ public class DeviceController {
             dto.setForDamage(true);
             generatorService.create(testDTO);
             damageService.create(damageDTO);
+
             postService.create(dto);
+
             return "redirect:/dtnetwork";
         }
 
@@ -241,7 +243,9 @@ public class DeviceController {
             generatorService.create(testDTO);
             postService.create(postDTO);
             damageService.create(damageDTO);
+
             postService.create(dto);
+
 
             return "redirect:/dtnetwork";
         }
