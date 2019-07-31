@@ -15,7 +15,7 @@ public enum  Room {
     HM_Prom,
     HM_Dach,
     HM_Podz,
-    Rozdzielnie,
+    Instalacje,
     Inne;
 
 }

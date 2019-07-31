@@ -229,9 +229,11 @@ button{
 
 #arr3:hover{
     color:darkred;
+    cursor: pointer;
 }
 #arr4:hover{
     color:darkred;
+    cursor: pointer;
 }
 
 

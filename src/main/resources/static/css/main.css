@@ -65,11 +65,13 @@ a:hover{
   backface-visibility: hidden;
   font-size: 2.0em;
   color: #666666;
-   margin-bottom: 20px;
+   margin-bottom: 10px;
 }
 
  h1 span{
   padding: 5px;
+
+
 }
 
 .wrap-table100:last-child{
