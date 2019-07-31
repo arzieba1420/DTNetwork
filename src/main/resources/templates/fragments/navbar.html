@@ -66,8 +66,8 @@
                     </ul>
                 </li>
 
-                <li><a class="mainBar"  >Faktury &raquo;</a>
-                    <ul>
+                <li  ><a class="mainBar" style="background-color: #666666; cursor: not-allowed" th:href="@{/inBuild}"  >Faktury &raquo;</a>
+                    <!--<ul>
                         <li th:each="building:${@listOfEnumValues.buildings}" ><a href="" th:text="${building.name()+' '+'&raquo;'}"></a>
                             <ul>
                                 <li><a href="" th:href="@{/invoices/addForm/}+${building.name()}"  th:text="'+ Dodaj nową'"></a></li>
@@ -76,7 +76,7 @@
 
                             </ul>
                         </li>
-                    </ul>
+                    </ul>-->
 
                 </li>
 
@@ -93,14 +93,15 @@
             </ul>
         </div>
 
-            <a class="cyfroNav" target="_blank" style="z-index: 1001 ;margin-left: auto; margin-right: 20px; font-size: 2em; " href="https://www.cyfronet.krakow.pl/"><i class="fas fa-home"></i></a>
-            <a class="cyfroNav"  target="_blank" style=" z-index: 1001 ;margin-right: 20px; font-size: 2em; " href="https://www.cyfronet.krakow.pl/sieci/13167,artykul,poczta_przez_www.html"><i class="fas fa-envelope"></i></a>
-            <a class="cyfroNav" id="openNotes"  style=" z-index: 1001 ;margin-right: 20px; font-size: 2em; "><i class="fas fa-user-edit"></i></a>
+            <a class="cyfroNav" target="_blank" style="z-index: 1001 ;margin-left: auto; margin-right: 20px; font-size: 1.8em; " href="https://www.cyfronet.krakow.pl/"><i class="fas fa-home"></i></a>
+            <a class="cyfroNav"  target="_blank" style=" z-index: 1001 ;margin-right: 20px; font-size: 1.8em; " href="https://www.cyfronet.krakow.pl/sieci/13167,artykul,poczta_przez_www.html"><i class="fas fa-envelope"></i></a>
+            <a class="cyfroNav" id="openNotes"  style=" z-index: 1001 ;margin-right: 20px; font-size: 1.8em; "><i class="fas fa-user-edit"></i></a>
+            <a class="cyfroNav" id="openCalendar"  style=" z-index: 1001 ;margin-right: 20px; font-size: 1.8em; "><i class="fas fa-tasks"></i></a>
         </div>
         <div id="modalWindow" class="modal">
             <!-- Modal content -->
             <div class="modal-content">
-                <span class="close">&times;</span>
+                <i style=" margin-right: 20px; float: right " class="fas fa-times" id="closePosts"></i>
                 <form class="modform"  action="/action_page.php" th:action="@{'/posts/modalPosts/'}" modelAttribute="posts" >
 
                     <label class="modlab"  for="posts">Wybierz rok</label>
@@ -115,7 +116,7 @@
         <div id="modalWindow2" class="modal">
             <!-- Modal content -->
             <div class="modal-content">
-                <span class="close">&times;</span>
+                <i style=" margin-right: 20px; float: right " class="fas fa-times" id="closeDocs"></i>
                 <form class="modform"  action="/action_page.php" th:action="@{'/issueDocs/modalDocs/'}" modelAttribute="docs" >
 
                     <label class="modlab"  for="posts2">Wybierz rok</label>
@@ -127,9 +128,10 @@
             </div>
 
         </div>
+        <script th:src="@{/js/mymodal.js}" ></script>
     </div>
 
 
-    <script th:src="@{/js/mymodal.js}" ></script>
+
 </body>
 </html>

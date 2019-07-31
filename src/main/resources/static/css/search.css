@@ -11,6 +11,12 @@
     right: 0px;
     z-index: 1999;
 }
+#mySidenav3{
+    position: absolute;
+    top:200px;
+    right: 0px;
+    z-index: 1999;
+}
 #mySidenav div {
     position: relative; /* Position them relative to the browser window */
     /* Position them outside of the screen */
@@ -37,9 +43,30 @@
 
     margin-bottom: 10px;
 }
+#mySidenav3 div {
+    position: relative; /* Position them relative to the browser window */
+    /* Position them outside of the screen */
+    /*transition: 0.3s; !* Add transition on hover *!*/
+    padding: 15px 10px; /* 15px padding */
+    /* Set a specific width */
+    text-decoration: none; /* Remove underline */
+    font-size: 20px; /* Increase font size */
+    color: white; /* White text color */
+    border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+
+    margin-bottom: 10px;
+}
 
 #mySidenav div:hover {
     cursor: pointer;
+    /* On mouse-over, make the elements appear as they should */
+}
+#mySidenav2 div:hover {
+    cursor: initial;
+    /* On mouse-over, make the elements appear as they should */
+}
+#mySidenav3 div:hover {
+    cursor: initial;
     /* On mouse-over, make the elements appear as they should */
 }
 
@@ -72,12 +99,27 @@
     z-index: 1999;
 
 }
+#calendar{
+    background-color: #004000;
+    margin-right: 0px; /* Position them outside of the screen */
+    width: 850px; /* St a specific width */
+    margin-bottom: 10px;
+    height: 650px;
+    z-index: 1999;
+
+}
 
 #diary:hover{
     cursor: pointer;
 }
 
 #diaryForm{
+     display: flex;
+     flex-flow: column;
+     float:left;
+ }
+
+#calendarForm{
     display: flex;
     flex-flow: column;
     float:left;
@@ -127,6 +169,17 @@ textarea {
     margin-top: -5px;
 
 }
+#textLabelCal{
+    text-align: center;
+    align-self: center;
+    margin-left: 50px;
+    width: 250px;
+    padding: 6px;
+    color: white;
+    margin-bottom: 20px;
+    margin-top: -5px;
+
+}
 
 button{
 
@@ -151,13 +204,33 @@ button{
     border: none;
     cursor: pointer;
 }
+#buttonCalendar{
+    padding: 6px 10px;
+    margin-top: 10px;
+    margin-right: 30px;
+    margin-left:auto;
+    background: #ddd;
+    font-size: 17px;
+
+    border: none;
+    cursor: pointer;
+}
+
 
 #buttonDiary:hover{
-   background-color: #1e9d0b;
+     background-color: #1e9d0b;
+     color: white;
+ }
+
+#buttonCalendar:hover{
+    background-color: #1e9d0b;
     color: white;
 }
 
 #arr3:hover{
+    color:darkred;
+}
+#arr4:hover{
     color:darkred;
 }
 

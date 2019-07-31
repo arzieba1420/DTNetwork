@@ -22,15 +22,29 @@
 }
 
 /* The Close Button */
-.close {
+#closePosts {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
+#closePosts:hover,
+#closePosts:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#closeDocs {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#closeDocs:hover,
+#closeDocs:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;

@@ -98,24 +98,26 @@ public class MainController implements ErrorController {
         }
 
 
-        for (GeneratorTest test: lastTests.values()) {
+        if(!lastTests.values().contains(null)) {
+            for (GeneratorTest test : lastTests.values()) {
 
-            if (betweenDates(test.getDate(),new Date())==30&&test.isAlerted()==false){
-                ShortPost post = new ShortPost();
-                post.setDevice(test.getDevice());
-                post.setPostDate(Calendar.getInstance());
-                post.setDate(new Date());
-                post.setContent("Wymagany test generatora! [SYSTEM]");
-                post.setAuthor(Author.DTN);
-                dao.save(post);
-                test.setAlerted(true);
+                if (betweenDates(test.getDate(), new Date()) == 30 && test.isAlerted() == false) {
+                    ShortPost post = new ShortPost();
+                    post.setDevice(test.getDevice());
+                    post.setPostDate(Calendar.getInstance());
+                    post.setDate(new Date());
+                    post.setContent("Wymagany test generatora! [SYSTEM]");
+                    post.setAuthor(Author.DTN);
+                    dao.save(post);
+                    test.setAlerted(true);
+                }
             }
         }
-
         String diary = userDAO.findByUsername(this.getUser()).getPersonalDiary();
 
         model.addAttribute("username",this.getUser());
         model.addAttribute("diary", diary);
+        model.addAttribute("calendarEntry", userDAO.findByUsername("DTN").getPersonalDiary() );
         model.addAttribute("deviceServ", deviceService);
         model.addAttribute("lastPosts", mapa);
         model.addAttribute("rooms", rooms);

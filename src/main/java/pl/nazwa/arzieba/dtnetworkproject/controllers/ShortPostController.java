@@ -58,6 +58,8 @@ public class ShortPostController implements WebMvcConfigurer {
         List<ShortPost> all = postDAO.findAllByDevice_InventNumber(inv);
         Map<Integer, ShortPostDTO> mapa = postService.findAllByDevice(inv, page - 1, pagesize);
 
+
+
         int amount = postService.numberByDevice(inv);
 
 
@@ -126,7 +128,7 @@ public class ShortPostController implements WebMvcConfigurer {
             return addFormErr(model, shortPostDTO.getInventNumber(), shortPostDTO);
         }
         postService.create(shortPostDTO);
-        return "redirect:/posts/devices/" + shortPostDTO.getInventNumber();
+        return "redirect:/posts/devices/" + shortPostDTO.getInventNumber()+"/1";
     }
 
     @GetMapping("/delete/{id}")
@@ -284,7 +286,7 @@ public class ShortPostController implements WebMvcConfigurer {
         Calendar calendar= CalendarUtil.string2cal(shortPostDTO.getDate());
         post.setDate(calendar.getTime());
         postDAO.save(post);
-        return "index";
+        return "redirect:/dtnetwork";
     }
 
     @GetMapping("/modalPosts/")

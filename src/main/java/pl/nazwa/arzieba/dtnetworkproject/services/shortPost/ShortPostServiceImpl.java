@@ -200,6 +200,7 @@ public class ShortPostServiceImpl implements ShortPostService {
     }
 
     public Set<Integer> subSet(){
+        if(setOfYears().size()<=5) return setOfYears();
         List<Integer> yearsList= postDAO.findAll().stream()
                 .map(d->d.getPostDate().get( Calendar.YEAR))
                 .collect(Collectors.toList());
@@ -210,6 +211,8 @@ public class ShortPostServiceImpl implements ShortPostService {
         sortedList.addAll(sortedSet.descendingSet());
 
         TreeSet<Integer> sortedSubSet = new TreeSet<>();
+
+
 
         for (int i = 0; i <5 ; i++) {
             sortedSubSet.add(sortedList.get(i));

@@ -5,10 +5,12 @@
     width: 100%;
     border: none;
     text-align: center;
+
     outline: none;
     font-size: inherit;
     height: inherit;
     display: table-cell;
+
 }
 
 .active, .collapsible:hover {
@@ -17,9 +19,9 @@
 }
 
 .content {
-    padding: 0 18px;
     display: none;
-    overflow: hidden;
+    text-align: left;
+    padding-left: 10px;
     background-color: #f1f1f1;
     border: 1px solid #aeaeae;
 }

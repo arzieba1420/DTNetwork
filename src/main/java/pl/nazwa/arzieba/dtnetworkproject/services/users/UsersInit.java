@@ -1,4 +1,5 @@
 /*
+
 package pl.nazwa.arzieba.dtnetworkproject.services.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,6 @@ public class UsersInit implements CommandLineRunner {
         User arek = new User("Arek",passwordEncoder.encode("arek1") , Author.Arek,"USER,ADMIN","");
         User admin = new User("admin",passwordEncoder.encode("dtnetwork") , Author.admin,"USER,ADMIN","");
         User dtn = new User("DTN",passwordEncoder.encode("DTN1") , Author.DTN,"USER","");
-
-
-
         User artur = new User("Artur",passwordEncoder.encode("artur1") , Author.Artur,"USER","");
         User bartek = new User("Bartek",passwordEncoder.encode("bartek1") , Author.Bartek,"USER","");
         User grzesiek = new User("Grzesiek",passwordEncoder.encode("grzesiek1") , Author.Grzesiek,"USER","");
@@ -49,4 +47,5 @@ public class UsersInit implements CommandLineRunner {
 
     }
 }
+
 */

@@ -143,7 +143,7 @@ public class IssueDocServiceImpl implements IssueDocService {
 
         public Set<Integer> subSet(){
 
-
+            if(setOfYears().size()<=5) return setOfYears();
             List<Integer> yearsList= issueDocumentDAO.findAll().stream()
                     .map(d->d.getIssueDate().get( Calendar.YEAR))
                     .collect(Collectors.toList());

@@ -191,7 +191,7 @@ public class DeviceController {
 
             ShortPostDTO postDTO = new ShortPostDTO();
             postDTO.setDate(testDTO.getDate());
-            postDTO.setAuthor(Author.valueOf(mainController.getUser()));
+            postDTO.setAuthor(Author.DTN);
             postDTO.setInventNumber(testDTO.getInventNumber());
             postDTO.setContent("Generator podał napięcie podczas zaniku! [SYSTEM]");
             generatorService.create(testDTO);
@@ -207,15 +207,13 @@ public class DeviceController {
             damageDTO.setNewPostFlag(true);
             ShortPostDTO dto = new ShortPostDTO();
             dto.setDate(damageDTO.getDamageDate());
-            dto.setAuthor(damageDTO.getAuthor());
+            dto.setAuthor(Author.DTN);
             dto.setInventNumber(damageDTO.getDeviceInventNumber());
             dto.setContent("Nowa usterka! Szczegóły po kliknięciu w Urządzenie... [SYSTEM]");
             dto.setForDamage(true);
             generatorService.create(testDTO);
             damageService.create(damageDTO);
-
             postService.create(dto);
-
             return "redirect:/dtnetwork";
         }
 
@@ -225,7 +223,7 @@ public class DeviceController {
 
             ShortPostDTO postDTO = new ShortPostDTO();
             postDTO.setDate(testDTO.getDate());
-            postDTO.setAuthor(Author.valueOf(mainController.getUser()));
+            postDTO.setAuthor(Author.DTN);
             postDTO.setInventNumber(testDTO.getInventNumber());
             postDTO.setContent("Generator podał napięcie podczas zaniku! [SYSTEM]");
             DamageDTO damageDTO = new DamageDTO();
@@ -236,16 +234,14 @@ public class DeviceController {
             damageDTO.setNewPostFlag(true);
             ShortPostDTO dto = new ShortPostDTO();
             dto.setDate(damageDTO.getDamageDate());
-            dto.setAuthor(damageDTO.getAuthor());
+            dto.setAuthor(Author.DTN);
             dto.setInventNumber(damageDTO.getDeviceInventNumber());
             dto.setContent("Nowa usterka! Szczegóły po kliknięciu w Urządzenie... [SYSTEM]");
             dto.setForDamage(true);
             generatorService.create(testDTO);
             postService.create(postDTO);
             damageService.create(damageDTO);
-
             postService.create(dto);
-
 
             return "redirect:/dtnetwork";
         }

@@ -31,7 +31,7 @@
     </div>
 
     <div class="col-75" style="margin-right: 0px; padding-left: 70px; width: 1200px" >
-        <h1><span th:text="'Wszystkie akcje tego generatora (' + ${amount}+')' " ></span></h1>
+        <h1><span th:text="'Wszystkie uruchomienia tego generatora (' + ${amount}+')' " ></span></h1>
         <table style="width: 100%">
             <tr id="topBar">
                 <th>Data</th>
@@ -64,7 +64,7 @@
 
             <div class="tooltip">
                 <a href="" th:href="@{/devices/activityForm/} + ${dto.getInventNumber()}"  ><i class="fas fa-charging-station" style="color: orangered"></i></a>
-                <span class="tooltiptext">Dodaj akcję generatora</span>
+                <span class="tooltiptext">Dodaj uruchomienie generatora</span>
             </div>
             <div class="tooltip">
                 <a th:href="@{'/devices/'+${dto.getInventNumber()}}"><i class="fas fa-info-circle" style=" color: aqua;"></i></a>

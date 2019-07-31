@@ -78,10 +78,10 @@
             </tr>
 
             <tr th:if="${dto.getDeviceType().name().equals('GENERATOR')}">
-                <td>Data ostatniej akcji</td>
+                <td>Data ostatniego </br> uruchomienia</td>
                 <td th:utext="${lastTest}+' </br> '+${activityType}"></td>
                 <td th:if="${dao.getTests().isEmpty()}" th:text="'---'"></td>
-                <td th:if="${!dao.getTests().isEmpty()}" ><a href="" th:href="@{'/generators/' + ${dto.getInventNumber()} + '/1'}"  th:text="' &#8981;'+'Pokaż akcje'"></a></td>
+                <td th:if="${!dao.getTests().isEmpty()}" ><a href="" th:href="@{'/generators/' + ${dto.getInventNumber()} + '/1'}"  th:utext="' &#8981;'+'Pokaż </br> uruchomienia'"></a></td>
 
             </tr>
 
@@ -99,17 +99,18 @@
                 <a th:href="@{/issueDocs/addForm/}+${dto.getInventNumber()}"><i class="fas fa-file-invoice-dollar" style=" color: darkgreen;"></i></a>
                 <span class="tooltiptext">Dodaj nowe zamówienie</span>
             </div>
-            <div class="tooltip"  th:if="${dao.getDeviceCard()== null}" >
-                <a th:href="@{/cards/addForm/}+${dto.getInventNumber()}"><i class="far fa-id-card" style=" color: #55003b;"></i></a>
-                <span class="tooltiptext">Dodaj kartę maszyny</span>
+            <div class="tooltip"  >
+                <!--<a th:href="@{/cards/addForm/}+${dto.getInventNumber()}"><i class="far fa-id-card" style=" color: #55003b;"></i></a>-->
+                <a th:href="@{/download1/} + ${dto.getInventNumber()} "><i class="fas fa-download" style=" color: #55003b;"></i></a>
+                <span class="tooltiptext">Pobierz kartę maszyny</span>
             </div>
             <div class="tooltip"  th:if="${dao.getDeviceCard()!= null}" >
-                <a href="" th:href="@{/inBuild}" ><i class="far fa-id-card" style=" color: #55003b;"></i></a>
-                <span class="tooltiptext">Pokaż kartę maszyny</span>
+                <a href="" th:href="@{/download1}" ><i class="fas fa-download" style=" color: #55003b;"></i></a>
+                <span class="tooltiptext">Pobierz kartę maszyny</span>
             </div>
             <div class="tooltip" th:if="${dto.getDeviceType().name().equals('GENERATOR')}" >
                 <a href="" th:href="@{/devices/activityForm/} + ${dto.getInventNumber()}"  ><i class="fas fa-charging-station" style="color: orangered"></i></a>
-                <span class="tooltiptext">Dodaj akcję generatora</span>
+                <span class="tooltiptext">Dodaj uruchomienie generatora</span>
             </div>
         </div>
     </div>

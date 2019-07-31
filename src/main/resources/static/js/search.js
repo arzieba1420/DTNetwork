@@ -4,17 +4,49 @@ window.onload=function () {
     var input = document.getElementById("search");
     var searchBox = document.getElementById("searchBar");
     var diary = document.getElementById("diary");
+    var diaryText = document.getElementById("diaryText");
+    var calendarText = document.getElementById("calendarText");
     var arrow1 = document.getElementById("arr1");
     var arrow2 = document.getElementById("arr2");
     var arrow3 = document.getElementById("arr3");
+    var arrow4 = document.getElementById("arr4");
     var openNote = document.getElementById("openNotes");
+    var openCalendar = document.getElementById("openCalendar");
     var sid2 = document.getElementById("mySidenav2");
-
+    var sid3 = document.getElementById("mySidenav3");
     var tests = document.getElementById("tests");
+
+
     input.addEventListener("focus", function (event) {
         input.placeholder = "";
 
     });
+
+
+
+    diaryText.addEventListener("focus",function () {
+        if(this.value==""){
+            this.placeholder="";
+        }
+    })
+
+    calendarText.addEventListener("focus",function () {
+        if(this.value==""){
+            this.placeholder="";
+        }
+    })
+
+    diaryText.addEventListener("blur",function () {
+        if(this.value==""){
+            this.placeholder="Kliknij aby dodać wpis...";
+        }
+    })
+
+    calendarText.addEventListener("blur",function () {
+        if(this.value==""){
+            this.placeholder="Kliknij aby dodać wpis...";
+        }
+    })
 
     input.addEventListener(type="blur",function (ev) {
         if(input.textContent==""){
@@ -57,8 +89,19 @@ window.onload=function () {
         sid2.style.visibility="hidden";
     })
 
+    arrow4.addEventListener("click", function () {
+        sid3.style.visibility="hidden";
+    })
+
     openNote.addEventListener("click", function (ev) {
+        sid3.style.visibility = "hidden";
         sid2.style.visibility = "visible"
+    })
+
+    openCalendar.addEventListener("click",function () {
+        sid2.style.visibility = "hidden";
+        sid3.style.visibility = "visible";
+
     })
 
 

@@ -8,10 +8,13 @@ import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.IssueDocumentDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DamageDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
+import pl.nazwa.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
+import pl.nazwa.arzieba.dtnetworkproject.model.Author;
 import pl.nazwa.arzieba.dtnetworkproject.model.Damage;
 import pl.nazwa.arzieba.dtnetworkproject.services.damage.DamageService;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
+import pl.nazwa.arzieba.dtnetworkproject.services.issueDocument.IssueDocService;
 import pl.nazwa.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
 import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 import pl.nazwa.arzieba.dtnetworkproject.utils.damage.DamageMapper;
@@ -40,10 +43,11 @@ public class DamageController {
     private DamageService damageService;
     private ShortPostService postService;
     private DeviceService deviceService;
+    private IssueDocService issueDocService;
 
 
     @Autowired
-    public DamageController(DeviceService deviceService, ShortPostService postService,DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, DamageService damageService) {
+    public DamageController(DeviceService deviceService, ShortPostService postService, DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, DamageService damageService, IssueDocService issueDocService) {
         this.deviceDAO = deviceDAO;
         this.damageDAO = damageDAO;
         this.issueDocumentDAO = issueDocumentDAO;
@@ -51,6 +55,7 @@ public class DamageController {
         this.damageService = damageService;
         this.postService = postService;
         this.deviceService=deviceService;
+        this.issueDocService = issueDocService;
     }
 
 
@@ -76,7 +81,7 @@ public class DamageController {
         } else{
             ShortPostDTO dto = new ShortPostDTO();
             dto.setDate(damageDTO.getDamageDate());
-            dto.setAuthor(damageDTO.getAuthor());
+            dto.setAuthor(Author.DTN);
             dto.setInventNumber(damageDTO.getDeviceInventNumber());
             dto.setContent("Nowa usterka! Szczegóły po kliknięciu w Urządzenie... [SYSTEM]");
             dto.setForDamage(true);
@@ -84,13 +89,14 @@ public class DamageController {
             postService.create(dto);
 
         }
-        return "redirect:/dtnetwork";
+        return "redirect:/damages/devices/"+damageDTO.getDeviceInventNumber()+"/1";
     }
 
     @GetMapping("/devices/{inventNumber}/{page}")
     public String getAllForDevice(@PathVariable String inventNumber, Model model, @PathVariable int page){
         List<Damage> damages = damageService.findByDeviceInventNumber(page-1,10,inventNumber);
         DeviceDTO dto = deviceService.findByInventNumber(inventNumber);
+
 
         Map<Integer,DamageDTO> mapa = new LinkedHashMap<>();
         for (Damage damage: damages) {
@@ -198,7 +204,12 @@ public class DamageController {
         damage.setDevice(deviceDAO.findByInventNumber(damageDTO.getDeviceInventNumber()));
         damageDAO.save(damage);
 
-        return "redirect:/dtnetwork";
+        return "redirect:/damages/devices/"+damageDTO.getDeviceInventNumber()+"/1";
+    }
+
+    public int amountOfDocsForDamage(int damageId){
+
+        return issueDocService.findByDamageId(damageId).size();
     }
 
 }

@@ -92,6 +92,7 @@ a:hover{
 .cell {
   display: table-cell;
   vertical-align: middle;
+
 }
 
 
@@ -110,7 +111,6 @@ a:hover{
   border-bottom: 1px solid lightgrey;
   border-right: 2px solid lightgrey;
   height: 30px;
-  word-wrap: break-word  ;
 }
 
 .row.header .cell {
@@ -122,6 +122,7 @@ a:hover{
   border-right: 2px solid lightgrey;
   padding-top: 9px;
   padding-bottom: 9px;
+  text-align: center;
 }
 
 .row.header .cell:first-child{
@@ -129,22 +130,30 @@ a:hover{
 }
 
 .row .cell:nth-child(1) {
-  width: 80px;
+  width: 80px; !important;
   border-left: 2px solid lightgrey;
   /*padding-left: 40px;*/
 }
 
 .row .cell:nth-child(2) {
-  width: 100px;
+  width: 100px; !important;
 }
 
 .row .cell:nth-child(3) {
-  width: 150px;
+  width: 150px; !important;
+
+}
+
+.row .cell:nth-child(4){
+  text-align: left;
+  padding-left: 10px;
 }
 
 .row .cell:last-child{
-  width: 100px;
+  width: 100px; !important;
 }
+
+
 
 .table, .row {
   width: 100% !important;

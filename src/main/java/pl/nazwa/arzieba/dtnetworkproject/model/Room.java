@@ -12,8 +12,10 @@ public enum  Room {
     H102,
     H124,
     H105,
-    HM,
-    HM_ROOF,
+    HM_Prom,
+    HM_Dach,
+    HM_Podz,
+    Rozdzielnie,
     Inne;
 
 }

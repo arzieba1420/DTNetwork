@@ -33,7 +33,6 @@
         window.location.refresh();
     </script>
     <div th:replace="~{fragments/header.html::header}"></div>
-    <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
     <div class="cont" style=" padding-top: 40px; text-align: center   ">
         <p style="font-size: 5em; font-family: Pacifico; color: #b24916">Strona w budowie...</p>
         <img src="../static/images/errordesc.png" th:src="@{/images/hammer.gif}" style="width: 700px ;height: 700px; margin-top: -10%   " >
