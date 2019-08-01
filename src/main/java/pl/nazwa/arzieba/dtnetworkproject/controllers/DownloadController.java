@@ -18,7 +18,7 @@ import java.io.IOException;
 
 @Controller
 public class DownloadController {
-    private static final String DIRECTORY = "C:/Users/User/Desktop/storage";
+    private static final String DIRECTORY = "C:/Users/User/Desktop/DTNetwork/storage";
     private static final String DEFAULT_FILE_NAME = "S-123.pdf";
 
     @Autowired

@@ -42,9 +42,9 @@
          
             <th>Akcja</th>
         </tr>
-        <tr th:each="doc:${docs}">
+        <tr th:each="doc:${docList}">
             <td style="white-space:pre-wrap;" th:text="${doc.issueSignature}">Invent Number</td>
-            <td ><a href="" th:href=" @{'/devices/'+${doc.inventNumber}}  "><span th:text="${doc.inventNumber}"></span></a></td>
+            <td ><a href="" th:href=" @{'/devices/'+${doc.inventNumber}}  "><span th:text="${@deviceDAO.findByInventNumber(doc.getInventNumber()).getDeviceDescription() + ' ('+@deviceDAO.findByInventNumber(doc.getInventNumber()).getRoom()+')'}"></span></a></td>
             
             <td th:text="${doc.issueDate}">Invent Number</td>
             <td th:text="${doc.delivererName}">Invent Number</td>

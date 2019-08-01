@@ -101,7 +101,7 @@ public class MainController implements ErrorController {
         if(!lastTests.values().contains(null)) {
             for (GeneratorTest test : lastTests.values()) {
 
-                if (betweenDates(test.getDate(), new Date()) == 30 && test.isAlerted() == false) {
+                if (betweenDates(test.getDate(), new Date()) == 30 && !test.isAlerted()) {
                     ShortPost post = new ShortPost();
                     post.setDevice(test.getDevice());
                     post.setPostDate(Calendar.getInstance());

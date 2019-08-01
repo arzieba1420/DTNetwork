@@ -8,9 +8,7 @@ import pl.nazwa.arzieba.dtnetworkproject.dto.DamageDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.GeneratorTestDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
-import pl.nazwa.arzieba.dtnetworkproject.model.Author;
-import pl.nazwa.arzieba.dtnetworkproject.model.Device;
-import pl.nazwa.arzieba.dtnetworkproject.model.Status;
+import pl.nazwa.arzieba.dtnetworkproject.model.*;
 import pl.nazwa.arzieba.dtnetworkproject.services.damage.DamageService;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
 import pl.nazwa.arzieba.dtnetworkproject.services.generator.GeneratorService;
@@ -20,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.nazwa.arzieba.dtnetworkproject.model.Room;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -147,7 +144,7 @@ public class DeviceController {
 
     @GetMapping("/home")
     public String home(){
-        return "index.html";
+        return "redirect:/dtnetwork";
     }
 
     @GetMapping("/activityForm/{inv}")
@@ -155,9 +152,20 @@ public class DeviceController {
 
         String text = deviceDAO.findByInventNumber(inv).getDeviceDescription()
                 +" "+deviceDAO.findByInventNumber(inv).getRoom();
-        model.addAttribute("text",text);
+        GeneratorTestDTO generatorTestDTO = new GeneratorTestDTO();
 
-        model.addAttribute("newTest", new GeneratorTestDTO());
+        generatorTestDTO.setContent(
+                "\nUwagi: \n\n\n"+
+                "Czas trwania uruchomienia: \n" +
+                "Temp:  st.C\n" +
+                "Ciśnienie oleju: bar\n" +
+                "Stan paliwa: \n" +
+                "Napiecie aku: V\n" +
+                "Całkowity czas pracy: h\n"+
+                "\n\nSporządził: ");
+
+        model.addAttribute("text",text);
+        model.addAttribute("newTest", generatorTestDTO);
         model.addAttribute("device", inv);
         return "devices/addActForm";
     }

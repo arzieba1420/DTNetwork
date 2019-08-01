@@ -237,7 +237,7 @@ public class IssueDocController {
         model.addAttribute("currentPage",page);
         model.addAttribute("year",year);
         model.addAttribute("lastPage",lastPage);
-        model.addAttribute("docs",docs);
+        model.addAttribute("docList",docs);
         return "documents/getAllForYear";
     }
 
