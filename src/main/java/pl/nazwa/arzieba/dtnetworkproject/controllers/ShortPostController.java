@@ -116,7 +116,7 @@ public class ShortPostController implements WebMvcConfigurer {
     }
 
     @PostMapping("/addAsModel/stay")
-    public String create3(Model model, @Valid @ModelAttribute ShortPostDTO shortPostDTO, BindingResult bindingResult, HttpServletRequest request) {
+    public String create3( @Valid @ModelAttribute ShortPostDTO shortPostDTO, BindingResult bindingResult,Model model, HttpServletRequest request) {
         if (bindingResult.hasFieldErrors()) {
 
             List<FieldError> allErrors;

@@ -131,7 +131,7 @@ public class DeviceController {
 
 
     @PostMapping("/addAsModel")
-    public String create2(Model model,@Valid @ModelAttribute("newDevice") DeviceDTO dto, BindingResult bindingResult){
+    public String create2(@Valid @ModelAttribute("newDevice") DeviceDTO dto, BindingResult bindingResult,Model model){
 
         if(bindingResult.hasFieldErrors()){
             List<FieldError> allErrors;
@@ -217,7 +217,7 @@ public class DeviceController {
     }
 
     @PostMapping("/addTest")
-    public String addTest( Model model, @Valid @ModelAttribute("newTest") GeneratorTestDTO testDTO,  BindingResult bindingResult ){
+    public String addTest( @Valid @ModelAttribute("newTest") GeneratorTestDTO testDTO,  BindingResult bindingResult,Model model ){
 
 
         if(bindingResult.hasFieldErrors()){

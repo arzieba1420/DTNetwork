@@ -61,7 +61,7 @@ public class DamageController {
 
 
     @PostMapping("/addAsModel")
-    public String add(Model model,@Valid @ModelAttribute("newDamage") DamageDTO damageDTO, BindingResult bindingResult){
+    public String add(@Valid @ModelAttribute("newDamage") DamageDTO damageDTO, BindingResult bindingResult,Model model){
 
         if(bindingResult.hasFieldErrors()){
             List<FieldError> allErrors;
@@ -183,7 +183,7 @@ public class DamageController {
     }
 
     @PostMapping("/edit/{id}")
-    public String saveEditedDamage(Model model,@Valid @ModelAttribute("newDamage") DamageDTO damageDTO, BindingResult bindingResult,@PathVariable Integer id){
+    public String saveEditedDamage(@Valid @ModelAttribute("newDamage") DamageDTO damageDTO, BindingResult bindingResult,@PathVariable Integer id,Model model){
 
         if(bindingResult.hasFieldErrors()){
             List<FieldError> allErrors;

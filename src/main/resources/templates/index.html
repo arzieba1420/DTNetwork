@@ -158,17 +158,22 @@
                             <a href="#" ><i class="fas fa-bolt" style="font-size: 200%; color: orangered"></i></a>
                         </div>
                         <div class="cell remove " th:if="${lastPosts.get(key).content.contains('Wymagany')}">
-                            <a href="#" ><i class="fas fa-exclamation-circle" style="font-size: 200%;color: red"></i></a>
+                            <a href="#" ><i class="fas fa-exclamation-circle" style="font-size: 200%;color: orangered"></i></a>
                         </div>
                         <div class="cell remove " th:if="${lastPosts.get(key).content.contains('Zmieniono') or lastPosts.get(key).content.contains('Usunięto') }">
                             <a href="#" ><i class="fas fa-info" style="font-size: 200%;color: #0062fe"></i></a>
                         </div>
 
-                        <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('kliknięciu') and !lastPosts.get(key).content.contains('zanik')and !lastPosts.get(key).content.contains('Wymagany') and !lastPosts.get(key).content.contains('Zmieniono') and !lastPosts.get(key).content.contains('Usunięto')}">
+                        <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('kliknięciu') and !lastPosts.get(key).content.contains('zanik')and !lastPosts.get(key).content.contains('Wymagany') and !lastPosts.get(key).content.contains('Zmieniono') and !lastPosts.get(key).content.contains('Usunięto') and (lastPosts.get(key).getAuthor().name().equals(@mainController.getUser()) or @mainController.getUser().equals('admin')) }">
                             <a href="#" th:href="@{'/posts/delete/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Usuń post</span></a>
                             <br>
                             <a href="#" th:href="@{'/posts/edit/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-edit"></i> Edytuj post</span></a>
                         </div>
+                        <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('kliknięciu') and !lastPosts.get(key).content.contains('zanik')and !lastPosts.get(key).content.contains('Wymagany') and !lastPosts.get(key).content.contains('Zmieniono') and !lastPosts.get(key).content.contains('Usunięto') and(!lastPosts.get(key).getAuthor().name().equals(@mainController.getUser()) and !@mainController.getUser().equals('admin')) }">
+                            <a href="#" > <span style="font-size: 1em;cursor:pointer"><i class="fas fa-lock"></i></span></a>
+
+                        </div>
+
                     </div>
                 </div>
                  <div th:insert="~{fragments/addButton.html::addButton}"></div>

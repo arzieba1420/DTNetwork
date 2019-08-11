@@ -122,7 +122,7 @@ public class IssueDocController {
 
 
     @PostMapping("/addAsModel/stay")
-    public String  create3(Model model, @Valid @ModelAttribute("newDoc")  IssueDocumentDTO issueDocumentDTO, BindingResult bindingResult, HttpServletRequest request){
+    public String  create3(@Valid @ModelAttribute("newDoc")  IssueDocumentDTO issueDocumentDTO, BindingResult bindingResult,Model model, HttpServletRequest request){
         if(bindingResult.hasFieldErrors()) {
             List<FieldError> allErrors;
 
@@ -155,7 +155,7 @@ public class IssueDocController {
     }
 
     @PostMapping("/addAsModel/stay2")
-    public String  create(Model model, @Valid @ModelAttribute("newDoc")  IssueDocumentDTO dto, BindingResult bindingResult, HttpServletRequest request){
+    public String  create( @Valid @ModelAttribute("newDoc")  IssueDocumentDTO dto, BindingResult bindingResult,Model model, HttpServletRequest request){
         if(bindingResult.hasFieldErrors()) {
             List<FieldError> allErrors;
 
