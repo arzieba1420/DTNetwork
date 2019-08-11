@@ -10,11 +10,14 @@ window.onload=function () {
     var arrow2 = document.getElementById("arr2");
     var arrow3 = document.getElementById("arr3");
     var arrow4 = document.getElementById("arr4");
+
     var openNote = document.getElementById("openNotes");
     var openCalendar = document.getElementById("openCalendar");
     var sid2 = document.getElementById("mySidenav2");
     var sid3 = document.getElementById("mySidenav3");
+
     var tests = document.getElementById("tests");
+    var downloadButton = document.getElementById("instrukcja");
 
 
     input.addEventListener("focus", function (event) {
@@ -87,22 +90,26 @@ window.onload=function () {
 
     arrow3.addEventListener("click", function () {
         sid2.style.visibility="hidden";
+        downloadButton.style.visibility= "visible";
     })
 
     arrow4.addEventListener("click", function () {
         sid3.style.visibility="hidden";
+        downloadButton.style.visibility= "visible";
     })
 
     openNote.addEventListener("click", function (ev) {
         sid3.style.visibility = "hidden";
         sid2.style.visibility = "visible"
+        downloadButton.style.visibility= "hidden";
     })
 
     openCalendar.addEventListener("click",function () {
         sid2.style.visibility = "hidden";
         sid3.style.visibility = "visible";
-
+        downloadButton.style.visibility= "hidden";
     })
+
 
 
 

@@ -3,11 +3,9 @@ package pl.nazwa.arzieba.dtnetworkproject.controllers;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import pl.nazwa.arzieba.dtnetworkproject.dao.*;
-import pl.nazwa.arzieba.dtnetworkproject.dto.DamageDTO;
-import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
-import pl.nazwa.arzieba.dtnetworkproject.dto.GeneratorTestDTO;
-import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
+import pl.nazwa.arzieba.dtnetworkproject.dto.*;
 import pl.nazwa.arzieba.dtnetworkproject.model.*;
 import pl.nazwa.arzieba.dtnetworkproject.services.damage.DamageService;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
@@ -18,13 +16,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.nazwa.arzieba.dtnetworkproject.utils.chillerSet.ChillerSetMapper;
 
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 
 @Controller
-@RequestMapping("devices")
+@RequestMapping("/devices")
 public class DeviceController {
 
     @Autowired
@@ -32,7 +33,7 @@ public class DeviceController {
                             DamageDAO damageDAO,
                             IssueDocumentDAO issueDocumentDAO,
                             DeviceCardDAO deviceCardDAO,
-                            DeviceService deviceService, GeneratorTestDAO generatorTestDAO, GeneratorService generatorService, MainController mainController, ShortPostService postService, DamageService damageService, DamageController damageController) {
+                            DeviceService deviceService, GeneratorTestDAO generatorTestDAO, GeneratorService generatorService, MainController mainController, ShortPostService postService, DamageService damageService, DamageController damageController, UserDAO userDAO, ChillerSetDAO chillerSetDAO) {
         this.deviceDAO = deviceDAO;
         this.damageDAO = damageDAO;
         this.issueDocumentDAO = issueDocumentDAO;
@@ -44,6 +45,8 @@ public class DeviceController {
         this.postService = postService;
         this.damageService = damageService;
         this.damageController = damageController;
+        this.userDAO = userDAO;
+        this.chillerSetDAO = chillerSetDAO;
     }
 
     private DeviceDAO deviceDAO;
@@ -57,6 +60,8 @@ public class DeviceController {
     private ShortPostService postService;
     private DamageService damageService;
     private DamageController damageController;
+    private UserDAO userDAO;
+    private ChillerSetDAO chillerSetDAO;
 
 
 
@@ -81,7 +86,7 @@ public class DeviceController {
 
 
 
-
+         model.addAttribute("chillerSetDTO", new ChillerSetDTO());
          model.addAttribute("activityType", activityType);
          model.addAttribute("dto",dto);
          model.addAttribute("dao",device);
@@ -93,9 +98,40 @@ public class DeviceController {
          return "devices/deviceInfo";
     }
 
+    public String findByInventNumberErr(String inventNumber, Model model){
+        DeviceDTO dto= deviceService.findByInventNumber(inventNumber);
+        Device device= deviceDAO.findByInventNumber(inventNumber);
+
+        String lastTest = "Nieznana";
+        String activityType = "(nieznane)";
+
+        if(device.getTests().size()!=0){
+            lastTest = CalendarUtil.cal2string(generatorTestDAO.findTopByDevice_InventNumberOrderByDateDesc(inventNumber).getDate()) ;
+
+            if(generatorTestDAO.findTopByDevice_InventNumberOrderByDateDesc(inventNumber).isLossPowerFlag()){
+                activityType = "(praca)";
+            } else{
+                activityType="(test)";
+            }
+        }
+
+
+
+        model.addAttribute("chillerSetDTO",new ChillerSetDTO());
+        model.addAttribute("activityType", activityType);
+        model.addAttribute("dto",dto);
+        model.addAttribute("dao",device);
+        model.addAttribute("issueDAO", issueDocumentDAO);
+        model.addAttribute("CalUtil", new CalendarUtil());
+        model.addAttribute("lastTest", lastTest);
+        int posts = device.getShortPosts().size();
+        model.addAttribute("posts",posts);
+        return "devices/deviceInfo";
+    }
+
 
     @PostMapping("/addAsModel")
-    public String create2(Model model, @Valid @ModelAttribute("newDevice") DeviceDTO dto, BindingResult bindingResult){
+    public String create2(Model model,@Valid @ModelAttribute("newDevice") DeviceDTO dto, BindingResult bindingResult){
 
         if(bindingResult.hasFieldErrors()){
             List<FieldError> allErrors;
@@ -175,6 +211,8 @@ public class DeviceController {
 
         model.addAttribute("newTest", testDTO);
         model.addAttribute("device", inv);
+        model.addAttribute("text",deviceDAO.findByInventNumber(inv).getDeviceDescription()
+                +" "+deviceDAO.findByInventNumber(inv).getRoom() );
         return "devices/addActForm";
     }
 
@@ -256,5 +294,60 @@ public class DeviceController {
 
         return "redirect:/error";
     }
+
+    @PostMapping("/chillerSet/{inventNumber}")
+    public String setChillerTemp( @ModelAttribute("chillerSetDTO") @Valid ChillerSetDTO chillerSetDTO, BindingResult binding, Model model, @PathVariable String inventNumber){
+
+        if(binding.hasFieldErrors()){
+            List<FieldError> allErrors;
+            allErrors = binding.getFieldErrors();
+            model.addAttribute("bindingResult", binding);
+            model.addAttribute("errors",allErrors);
+            model.addAttribute("errorsAmount",allErrors.size());
+            return findByInventNumberErr(inventNumber,model) ;
+        }
+
+
+        Device chiller = deviceDAO.findByInventNumber(inventNumber);
+        ChillerSet actualChillerSet = chiller.getChillerSet();
+        ChillerSetDTO fromForm = chillerSetDTO;
+        chillerSetDTO.setAuthor(Author.valueOf(MainController.getUser()));
+        chillerSetDTO.setInventNumber(chiller.getInventNumber());
+        chillerSetDTO.setSetDate(CalendarUtil.cal2string(Calendar.getInstance()));
+
+        if(actualChillerSet!=null){
+            chillerSetDTO.setPreviousAuthor(actualChillerSet.getAuthor());
+            chillerSetDTO.setPreviousSetDate(CalendarUtil.cal2string(actualChillerSet.getSetDate()));
+            chillerSetDTO.setPreviousSetPoint(actualChillerSet.getActualSetPoint());
+        }
+        else {
+            chillerSetDTO.setPreviousAuthor(chillerSetDTO.getAuthor());
+            chillerSetDTO.setPreviousSetDate(chillerSetDTO.getSetDate());
+            chillerSetDTO.setPreviousSetPoint(chillerSetDTO.getActualSetPoint());
+        }
+
+        ShortPostDTO shortPostDTO = new ShortPostDTO();
+        shortPostDTO.setContent("Zmieniono nastawę chillera! [SYSTEM]");
+        shortPostDTO.setAuthor(Author.DTN);
+        shortPostDTO.setInventNumber(inventNumber);
+        shortPostDTO.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
+        shortPostDTO.setForDamage(false);
+        postService.create(shortPostDTO);
+
+        ChillerSet saved =ChillerSetMapper.map(chillerSetDTO, deviceDAO);
+        chillerSetDAO.save(saved);
+        chiller.setChillerSet(saved);
+        deviceDAO.save(chiller);
+
+        if(actualChillerSet != null)
+        chillerSetDAO.delete(actualChillerSet);
+
+
+
+        return "redirect:/dtnetwork";
+        }
+
+
+
 
 }

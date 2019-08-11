@@ -11,10 +11,12 @@
     <link rel="stylesheet" th:href="@{/css/simpleTable.css}">
     <link rel="stylesheet" href="../static/css/overlay.css">
     <link rel="stylesheet" href="" th:href="@{/css/header.css}">
+
     <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="../../static/css/modal.css" th:href="@{/css/modal.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/search.css}">
     <style>
 
     </style>
@@ -27,6 +29,59 @@
     <div th:replace="~{fragments/header.html::header}"></div>
     <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
 
+
+
+            <table th:if="${dto.getDeviceType().name()=='CHILLER'}" id="chiller" style="padding: 0;margin: 10px 10px; background-color: white; border: 1px solid black;color: black; text-align: center; width: 500px">
+                <tr style=" border: 1px solid black;color: black; text-align: center" id="topBar2">
+                    <th class="sets">Nastawa</th>
+                    <th class="sets">Temp. zadana glikolu</th>
+                    <th class="sets">Data</th>
+                    <th class="sets">Ustawił</th>
+                    <th style="width: 50px" class="sets"></th>
+                </tr>
+
+                <tr >
+                    <td  class="sets" >Aktualna</td>
+                    <td  class="sets"  th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet().getActualSetPoint()}" ></td>
+                    <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() ==null}"  >Nieznana</td>
+                    <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() !=null}" th:text="${@calendarUtil.cal2string(@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet().getSetDate())}" ></td>
+                    <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() ==null}" >Nieznana</td>
+                    <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet().getAuthor()}" ></td>
+                    <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() ==null}"  >-</td>
+                    <td style="width: 50px" class="sets" id="openModal3" >Zmień</td>
+
+                </tr>
+                <tr >
+                    <td  class="sets" >Poprzednia</td>
+                    <td  class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet().getPreviousSetPoint()}" ></td>
+                    <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet()  ==null}"  >Nieznana</td>
+                    <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet()  !=null}" th:text="${@calendarUtil.cal2string(@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet().getPreviousSetDate())}" ></td>
+                    <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet()  ==null}" >Nieznana</td>
+                    <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet()  !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet().getPreviousAuthor()}" ></td>
+                    <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet()  ==null}"  >-</td>
+                    <td style="width: 50px" class="sets" >-</td>
+
+                </tr>
+            </table>
+
+
+    <div style="position: absolute; top: 300px;"  th:if="errorsAmount!=0" class="errors">
+        <p th:each="err,iterStat :${errors}" th:text=" ${iterStat.index+1} + '. Error in field: '+
+               ${err.field.toUpperCase()}+'! Bad value: '+${err.rejectedValue}+'. Error message: '+${err.defaultMessage} " ></p>
+    </div>
+    <div id="chillerSetsModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <i style=" margin-right: 20px; float: right " class="fas fa-times" id="closeChillerSets"></i>
+            <form class="modform" th:action="@{'/devices/chillerSet/' + ${dto.getInventNumber()}}" th:object="${chillerSetDTO}"  modelAttribute="chillerSetDTO" th:method="post" method="post"  >
+
+                <label class="modlab"  for="setValue">Temp. zadana</label>
+                <input type="text" class="modsel" id="setValue"  placeholder="20.0"  th:field="*{actualSetPoint}" th:errorclass="errorsFields"  >
+                <input style="padding: 6px" id="chillerSetBtn"  type="submit" value="Zapisz" >
+            </form>
+        </div>
+
+    </div>
     <div class="container" style="min-height: 100vh; padding-top: 100px; ">
     <div class="col-25" style="margin-left: 50px; ">
         <h1 style="text-align: center;  background-color: lightgray" th:text="${dto.getDeviceDescription()}+ '&roarr;'+${dto.getRoom()}"></h1>
@@ -35,8 +90,8 @@
 
     <div class="col-75" style="margin-left: 300px">
 
-        <table>
-
+        <table >
+            <h1 style="text-align: left; margin-left: 150px;margin-bottom: 20px;"><span  th:text="'Widok Główny ' + ${dto.getDeviceDescription()} " ></span></h1>
             <tr id="topBar">
                 <th>Atrybut</th>
                 <th>Wartość</th>
@@ -81,7 +136,7 @@
                 <td>Data ostatniego </br> uruchomienia</td>
                 <td th:utext="${lastTest}+' </br> '+${activityType}"></td>
                 <td th:if="${dao.getTests().isEmpty()}" th:text="'---'"></td>
-                <td th:if="${!dao.getTests().isEmpty()}" ><a href="" th:href="@{'/generators/' + ${dto.getInventNumber()} + '/1'}"  th:utext="' &#8981;'+'Pokaż </br> uruchomienia'"></a></td>
+                <td th:if="${!dao.getTests().isEmpty()}" ><a href="" th:href="@{'/generators/' + ${dto.getInventNumber()} + '/1'}"  th:utext="' &#8981;'+'Pokaż </br> dziennik pracy'"></a></td>
 
             </tr>
 
@@ -118,5 +173,6 @@
     </div>
     <script  th:src="@{/js/mymodal.js}"></script>
     <div th:insert="~{fragments/footer.html::footer}"></div>
+    <script  th:src="@{/js/chillerModal.js}"></script>
 </body>
 </html>

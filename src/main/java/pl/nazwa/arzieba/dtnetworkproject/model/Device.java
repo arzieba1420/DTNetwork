@@ -41,5 +41,10 @@ public class Device {
     @OneToMany(mappedBy = "device")
     private List<GeneratorTest> tests;
 
+    @OneToOne(mappedBy = "device")
+    private  ChillerSet chillerSet;
+
+
+
 
 }

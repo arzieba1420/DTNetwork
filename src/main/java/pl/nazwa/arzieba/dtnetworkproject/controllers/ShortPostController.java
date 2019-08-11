@@ -6,6 +6,7 @@ import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.ShortPostDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
+import pl.nazwa.arzieba.dtnetworkproject.model.Author;
 import pl.nazwa.arzieba.dtnetworkproject.model.Device;
 import pl.nazwa.arzieba.dtnetworkproject.model.ShortPost;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
@@ -169,6 +170,7 @@ public class ShortPostController implements WebMvcConfigurer {
         String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
                 + " " + deviceDAO.findByInventNumber(inventNumber).getRoom();
         model.addAttribute("text", text);
+
         return "posts/addPostFormInv";
     }
 
@@ -263,6 +265,23 @@ public class ShortPostController implements WebMvcConfigurer {
         model.addAttribute("devices", mapa);
         model.addAttribute("id", id);
         return "posts/editPostForm";
+    }
+
+    @GetMapping("/removeSystem")
+    public String removeSystem(){
+        List<ShortPost> posts = postDAO.findAll();
+        for (ShortPost post: posts) {
+            if (post.getContent().contains("SYSTEM")) postDAO.delete(post);
+        }
+
+        ShortPostDTO dto = new ShortPostDTO();
+        dto.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
+        dto.setInventNumber("DTN");
+        dto.setAuthor(Author.DTN);
+        dto.setContent("Usunięto posty systemowe! [SYSTEM]");
+        dto.setForDamage(false);
+        postService.create(dto);
+        return "redirect:/dtnetwork";
     }
 
     @PostMapping("/edit/{id}")

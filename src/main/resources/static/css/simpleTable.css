@@ -9,7 +9,11 @@ table {
 
 
 #topBar{
-    background: linear-gradient(45deg, #818181, #cccccc);
+    background:  #818181;
+
+}
+#topBar2{
+    background: #818181;
 
 }
 
@@ -40,7 +44,7 @@ th {
     border: 2px solid #dddddd;
     text-align: center;
     padding: 8px;
-    width: 100px;
+
 }
 
 
@@ -50,3 +54,6 @@ tr:hover{
 tr {
     background-color: #f0f0f0;
 }
+
+
+

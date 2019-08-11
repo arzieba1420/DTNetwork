@@ -4,6 +4,28 @@
     position: absolute;
     top: 200px;
 }
+#mySidenav4{
+    position: absolute;
+    top: 200px;
+    z-index: 9999;
+}
+
+#instrukcja{
+    position: absolute;
+    top: 180px;
+    right: 0px;
+}
+#instrButton{
+    background-color: #4CAF50;
+    color: white;
+    width: 160px;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+    margin-top: 0px;
+}
 
 #mySidenav2{
     position: absolute;
@@ -23,6 +45,19 @@
     transition: 0.3s; /* Add transition on hover */
     padding: 15px 10px; /* 15px padding */
      /* Set a specific width */
+    text-decoration: none; /* Remove underline */
+    font-size: 20px; /* Increase font size */
+    color: white; /* White text color */
+    border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+
+    margin-bottom: 10px;
+}
+#mySidenav4 div {
+    position: relative; /* Position them relative to the browser window */
+    /* Position them outside of the screen */
+    transition: 0.3s; /* Add transition on hover */
+    padding: 15px 10px; /* 15px padding */
+    /* Set a specific width */
     text-decoration: none; /* Remove underline */
     font-size: 20px; /* Increase font size */
     color: white; /* White text color */
@@ -61,6 +96,10 @@
     cursor: pointer;
     /* On mouse-over, make the elements appear as they should */
 }
+#mySidenav4 div:hover {
+    cursor: pointer;
+    /* On mouse-over, make the elements appear as they should */
+}
 #mySidenav2 div:hover {
     cursor: initial;
     /* On mouse-over, make the elements appear as they should */
@@ -78,16 +117,21 @@
     width: 450px;
     z-index: 999;
 }
+#setPoints {
+
+    background-color: #004000;
+    margin-left: -410px;
+    /*margin-left: 0px;*/
+    width: 450px;
+    z-index: 99;
+}
 
 #searchBar {
-    display: flex;
     margin-left: -410px;
     width: 450px;
-    flex-flow: row;
-    justify-content: center;
-    align-content: center;
     background-color: #004000; /* Blue */
     z-index: 999;
+    padding-left: 5px;
 }
 
 #diary{
@@ -200,7 +244,7 @@ button{
     margin-left:auto;
     background: #ddd;
     font-size: 17px;
-
+    width:80px;
     border: none;
     cursor: pointer;
 }
@@ -211,7 +255,7 @@ button{
     margin-left:auto;
     background: #ddd;
     font-size: 17px;
-
+    width:80px;
     border: none;
     cursor: pointer;
 }
@@ -234,6 +278,19 @@ button{
 #arr4:hover{
     color:darkred;
     cursor: pointer;
+}
+
+
+.sets {
+  font-size: 0.8em;
+    padding: 5px;
+    width: 150px;
+
+}
+
+
+#arr5{
+
 }
 
 

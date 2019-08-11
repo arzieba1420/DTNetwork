@@ -28,6 +28,17 @@
     font-size: 28px;
     font-weight: bold;
 }
+#closeChillerSets {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+#closeChillerSets:hover {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
 
 #closePosts:hover,
 #closePosts:focus {
@@ -76,13 +87,22 @@
     resize: vertical;
 }
 
+#setValue{
+    width: 50px;
+    border: 1px solid black;
+}
+
+#setValue:focus{
+    border: 1px solid green;
+}
+
 .modin{
     margin-right: 20px;
     font-size: 1.3em;
     align-self: end;
     background-color: #4CAF50;
     color: white;
-    padding: 12px 20px;
+    padding: 6px 6px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -91,6 +111,29 @@
 
 }
 
+#chillerSetBtn{
+    font-size: 1.2em;
+    margin-top: 7px;
+    margin-left: -90px;
+}
+
+#openModal3:hover{
+    cursor: pointer;
+    color: #0065b2;
+}
+
+#openModal3{
+    font-weight: bold;
+}
+
+#openModal4:hover{
+    cursor: pointer;
+    color: #0065b2;
+}
+
+#openModal4{
+    font-weight: bold;
+}
 
 
 

@@ -19,7 +19,7 @@
             window.location.refresh;
         </script>
         <div id="bar" >
-        <div id="nav" style="margin-left: 32%" >
+        <div id="nav" style="margin-left: 0" >
             <ul>
 
                 <li ><a class="home mainBar" href="#" th:href="@{/dtnetwork}">Home</a></li>
@@ -80,8 +80,8 @@
 
                 </li>
 
-                <li><a style="padding-bottom: 7px; border-right: none" class="logout mainBar" href="#"   th:text=" '&#9673; '+ ${@mainController.getUser()} " >Logout</a>
-                    <ul>
+                <li><a style="padding-bottom: 10px; border-right: none; width: 100px" class="logout mainBar" href="#"   th:text=" '&#9673; '+ ${@mainController.getUser()} " >Logout</a>
+                    <ul >
                         <li><a class="logout" href="" th:href="@{/logout}" th:text="'Wyloguj się'"></a></li>
                         <li><a class="logout" href="" th:href="@{'/users/' + ${@mainController.getUser()}}" th:text="'Zmień hasło'" ></a></li>
                         <li th:if="${@mainController.getUser()}=='admin'" ><a class="logout" href="#" th:href="@{/dev}" >Dev panel</a></li>
@@ -92,11 +92,12 @@
              
             </ul>
         </div>
-
+            <div class="cyfroNav">
             <a class="cyfroNav" target="_blank" style="z-index: 1001 ;margin-left: auto; margin-right: 20px; font-size: 1.8em; " href="https://www.cyfronet.krakow.pl/"><i class="fas fa-home"></i></a>
             <a class="cyfroNav"  target="_blank" style=" z-index: 1001 ;margin-right: 20px; font-size: 1.8em; " href="https://www.cyfronet.krakow.pl/sieci/13167,artykul,poczta_przez_www.html"><i class="fas fa-envelope"></i></a>
             <a class="cyfroNav" id="openNotes"  style=" z-index: 1001 ;margin-right: 20px; font-size: 1.8em; visibility: hidden "><i class="fas fa-user-edit"></i></a>
-            <a class="cyfroNav" id="openCalendar"  style=" z-index: 1001 ;margin-right: 20px; font-size: 1.8em; visibility: hidden "><i class="fas fa-tasks"></i></a>
+            <a class="cyfroNav" id="openCalendar"  style=" z-index: 1001 ; font-size: 1.8em; visibility: hidden "><i class="fas fa-tasks"></i></a>
+            </div>
         </div>
         <div id="modalWindow" class="modal">
             <!-- Modal content -->

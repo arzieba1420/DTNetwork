@@ -12,7 +12,7 @@ body {
     margin: 0;
     padding: 0px;
     position: relative;
-    min-width: 1900px;
+    width: 100%;
 
     height: min-content;
 }

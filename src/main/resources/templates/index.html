@@ -8,7 +8,6 @@
     <link rel="stylesheet"  th:href="@{/css/navbar.css}">
     <link rel="stylesheet"  th:href="@{/css/main.css}"> <!--href="../static/css/main.css"-->
     <link rel="stylesheet" th:href="@{/css/background.css}" href="../static/css/background.css">
-    <link rel="stylesheet" href="../static/css/overlay.css">
     <link rel="stylesheet" href="" th:href="@{/css/header.css}">
     <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
     <link rel="stylesheet" href="" th:href="@{/css/search.css}">
@@ -45,7 +44,7 @@
     <div th:replace="~{fragments/header.html::header}"></div>
     <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
 
-
+   <a id="instrukcja" href="" th:href="@{/download1/Instrukcja}" ><button id="instrButton">Pobierz instrukcję</button></a>
    <div id="mySidenav" class="sidenav">
        <div class="search" id="tests">
            <table style="background-color: white; border: 1px solid black;color: black; text-align: center">
@@ -67,16 +66,18 @@
                     <td style="background-color: rgba(255,0,0,0.65); color: white" th:if="${!generators.values().contains(null)&&@mainController.betweenDates(generators.get(generator).getDate(),today)>=30}" th:text="${@mainController.betweenDates(generators.get(generator).getDate(),today)}" ></td>
                </tr>
            </table>
-           <i style="float:left; font-size: 130%; margin-left: 420px; margin-top: -60px" class="fas fa-angle-right" id="arr2"></i>
+           <i style="float:left; font-size: 130%; margin-left: 425px; margin-top: -60px" class="fas fa-angle-right" id="arr2"></i>
 
        </div>
        <div class="search" id="searchBar">
-           <form action="/action_page.php" th:action="@{'/posts/search'}" modelAttribute="search" >
-               <label style="margin-left: 0%;font-size: 1em; margin-right: 7px" for="search">Wyszukaj posty</label>
-               <input style="margin-left: 0%;margin-right: 0%" type="text" id="search" placeholder="Szukana fraza..." name="search">
-               <button style="margin-left: -2%; margin-top: 10px;" type="submit"><i class="fa fa-search"></i></button>
+
+           <form style="text-align: left; display: inline-block"  action="/action_page.php" th:action="@{'/posts/search'}" modelAttribute="search" >
+               <label style="font-size: 1em; margin-right: 7px" for="search">Wyszukaj posty</label>
+               <input style="width: 200px; margin-left: 10px" type="text" id="search" placeholder="Szukana fraza..." name="search">
+               <button style="margin-right: 0%" type="submit"><i class="fa fa-search"></i></button>
            </form>
-           <i style="font-size: 130%; margin-top: 10px" class="fas fa-angle-right" id="arr1"></i>
+
+           <i style="float:right; font-size: 130%;margin-top: 10px; margin-right: 10px" class="fas fa-angle-right" id="arr1"></i>
        </div>
    </div>
 
@@ -159,7 +160,11 @@
                         <div class="cell remove " th:if="${lastPosts.get(key).content.contains('Wymagany')}">
                             <a href="#" ><i class="fas fa-exclamation-circle" style="font-size: 200%;color: red"></i></a>
                         </div>
-                        <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('kliknięciu') and !lastPosts.get(key).content.contains('zanik')and !lastPosts.get(key).content.contains('Wymagany')}">
+                        <div class="cell remove " th:if="${lastPosts.get(key).content.contains('Zmieniono') or lastPosts.get(key).content.contains('Usunięto') }">
+                            <a href="#" ><i class="fas fa-info" style="font-size: 200%;color: #0062fe"></i></a>
+                        </div>
+
+                        <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('kliknięciu') and !lastPosts.get(key).content.contains('zanik')and !lastPosts.get(key).content.contains('Wymagany') and !lastPosts.get(key).content.contains('Zmieniono') and !lastPosts.get(key).content.contains('Usunięto')}">
                             <a href="#" th:href="@{'/posts/delete/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Usuń post</span></a>
                             <br>
                             <a href="#" th:href="@{'/posts/edit/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-edit"></i> Edytuj post</span></a>

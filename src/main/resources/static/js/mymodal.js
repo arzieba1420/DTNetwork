@@ -12,7 +12,7 @@
    var notes = document.getElementById("openNotes");
    var calendar = document.getElementById("openCalendar");
 
-   if(endpoint=="/dtnetwork"){
+   if(endpoint=="/dtnetwork" || endpoint=="" || endpoint=="/"){
        notes.style.visibility = "visible";
        calendar.style.visibility = "visible";
    }

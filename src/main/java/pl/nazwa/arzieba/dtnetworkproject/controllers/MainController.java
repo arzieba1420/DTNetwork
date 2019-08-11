@@ -330,7 +330,7 @@ public class MainController implements ErrorController {
     }
 
 
-    public String getUser(){
+    public static String getUser(){
         String currentUserName = "Nieznany user";
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
