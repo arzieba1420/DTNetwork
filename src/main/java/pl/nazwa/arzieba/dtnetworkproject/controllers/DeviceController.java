@@ -3,7 +3,6 @@ package pl.nazwa.arzieba.dtnetworkproject.controllers;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
 import pl.nazwa.arzieba.dtnetworkproject.dao.*;
 import pl.nazwa.arzieba.dtnetworkproject.dto.*;
 import pl.nazwa.arzieba.dtnetworkproject.model.*;
@@ -17,9 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.nazwa.arzieba.dtnetworkproject.utils.chillerSet.ChillerSetMapper;
+import pl.nazwa.arzieba.dtnetworkproject.utils.drycoolerSet.DrycoolerSetMapper;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class DeviceController {
                             DamageDAO damageDAO,
                             IssueDocumentDAO issueDocumentDAO,
                             DeviceCardDAO deviceCardDAO,
-                            DeviceService deviceService, GeneratorTestDAO generatorTestDAO, GeneratorService generatorService, MainController mainController, ShortPostService postService, DamageService damageService, DamageController damageController, UserDAO userDAO, ChillerSetDAO chillerSetDAO) {
+                            DeviceService deviceService, GeneratorTestDAO generatorTestDAO, GeneratorService generatorService, MainController mainController, ShortPostService postService, DamageService damageService, DamageController damageController, UserDAO userDAO, ChillerSetDAO chillerSetDAO, DrycoolerSetDAO drycoolerSetDAO) {
         this.deviceDAO = deviceDAO;
         this.damageDAO = damageDAO;
         this.issueDocumentDAO = issueDocumentDAO;
@@ -47,6 +46,7 @@ public class DeviceController {
         this.damageController = damageController;
         this.userDAO = userDAO;
         this.chillerSetDAO = chillerSetDAO;
+        this.drycoolerSetDAO = drycoolerSetDAO;
     }
 
     private DeviceDAO deviceDAO;
@@ -62,6 +62,7 @@ public class DeviceController {
     private DamageController damageController;
     private UserDAO userDAO;
     private ChillerSetDAO chillerSetDAO;
+    private DrycoolerSetDAO drycoolerSetDAO;
 
 
 
@@ -85,8 +86,20 @@ public class DeviceController {
          }
 
 
+         ChillerSetDTO chillerSetDTO = new ChillerSetDTO();
+         if(device.getChillerSet()!=null)
+         chillerSetDTO.setActualSetPoint(deviceDAO.findByInventNumber(inventNumber).getChillerSet().getActualSetPoint());
 
-         model.addAttribute("chillerSetDTO", new ChillerSetDTO());
+         DrycoolerSetDTO drycoolerSetDTO = new DrycoolerSetDTO();
+         if(device.getDrycoolerSet()!=null){
+             drycoolerSetDTO.setActualSetPoint_CWL(device.getDrycoolerSet().getActualSetPoint_CWL());
+             drycoolerSetDTO.setActualSetPoint_CWR(device.getDrycoolerSet().getActualSetPoint_CWR());
+             drycoolerSetDTO.setActualSetPoint_AmbL(device.getDrycoolerSet().getActualSetPoint_AmbL());
+             drycoolerSetDTO.setActualSetPoint_AmbR(device.getDrycoolerSet().getActualSetPoint_AmbR());
+         }
+
+         model.addAttribute("chillerSetDTO", chillerSetDTO);
+         model.addAttribute("drycoolerSetDTO", drycoolerSetDTO);
          model.addAttribute("activityType", activityType);
          model.addAttribute("dto",dto);
          model.addAttribute("dao",device);
@@ -189,7 +202,7 @@ public class DeviceController {
         String text = deviceDAO.findByInventNumber(inv).getDeviceDescription()
                 +" "+deviceDAO.findByInventNumber(inv).getRoom();
         GeneratorTestDTO generatorTestDTO = new GeneratorTestDTO();
-
+    generatorTestDTO.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
         generatorTestDTO.setContent(
                 "\nUwagi: \n\n\n"+
                 "Czas trwania uruchomienia: \n" +
@@ -346,6 +359,65 @@ public class DeviceController {
 
         return "redirect:/dtnetwork";
         }
+
+    @PostMapping("/drycoolerSet/{inventNumber}")
+    public String setDrycoolerTemp( @ModelAttribute("drycoolerSetDTO") @Valid DrycoolerSetDTO drycoolerSetDTO, BindingResult binding, Model model, @PathVariable String inventNumber){
+
+        if(binding.hasFieldErrors()){
+            List<FieldError> allErrors;
+            allErrors = binding.getFieldErrors();
+            model.addAttribute("bindingResult", binding);
+            model.addAttribute("errors",allErrors);
+            model.addAttribute("errorsAmount",allErrors.size());
+            return findByInventNumberErr(inventNumber,model) ;
+        }
+
+
+        Device drycooler = deviceDAO.findByInventNumber(inventNumber);
+        DrycoolerSet actualDrycoolerSet = drycooler.getDrycoolerSet();
+        DrycoolerSetDTO fromForm = drycoolerSetDTO;
+        drycoolerSetDTO.setAuthor(Author.valueOf(MainController.getUser()));
+        drycoolerSetDTO.setInventNumber(drycooler.getInventNumber());
+        drycoolerSetDTO.setSetDate(CalendarUtil.cal2string(Calendar.getInstance()));
+
+        if(actualDrycoolerSet!=null){
+            drycoolerSetDTO.setPreviousAuthor(actualDrycoolerSet.getAuthor());
+            drycoolerSetDTO.setPreviousSetDate(CalendarUtil.cal2string(actualDrycoolerSet.getSetDate()));
+            drycoolerSetDTO.setPreviousSetPoint_CWL(actualDrycoolerSet.getActualSetPoint_CWL());
+            drycoolerSetDTO.setPreviousSetPoint_CWR(actualDrycoolerSet.getActualSetPoint_CWR());
+            drycoolerSetDTO.setPreviousSetPoint_AmbL(actualDrycoolerSet.getActualSetPoint_AmbL());
+            drycoolerSetDTO.setPreviousSetPoint_AmbR(actualDrycoolerSet.getActualSetPoint_AmbR());
+        }
+        else {
+            drycoolerSetDTO.setPreviousAuthor(drycoolerSetDTO.getAuthor());
+            drycoolerSetDTO.setPreviousSetDate(drycoolerSetDTO.getSetDate());
+            drycoolerSetDTO.setPreviousSetPoint_CWL(drycoolerSetDTO.getActualSetPoint_CWL());
+            drycoolerSetDTO.setPreviousSetPoint_CWR(drycoolerSetDTO.getActualSetPoint_CWR());
+            drycoolerSetDTO.setPreviousSetPoint_AmbL(drycoolerSetDTO.getActualSetPoint_AmbL());
+            drycoolerSetDTO.setPreviousSetPoint_AmbR(drycoolerSetDTO.getActualSetPoint_AmbR());
+        }
+
+        ShortPostDTO shortPostDTO = new ShortPostDTO();
+        shortPostDTO.setContent("Zmieniono nastawę drycoolera! [SYSTEM]");
+        shortPostDTO.setAuthor(Author.DTN);
+        shortPostDTO.setInventNumber(inventNumber);
+        shortPostDTO.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
+        shortPostDTO.setForDamage(false);
+        postService.create(shortPostDTO);
+
+        DrycoolerSet saved = DrycoolerSetMapper.map(drycoolerSetDTO, deviceDAO);
+        drycoolerSetDAO.save(saved);
+        drycooler.setDrycoolerSet(saved);
+        deviceDAO.save(drycooler);
+
+        if(actualDrycoolerSet != null)
+            drycoolerSetDAO.delete(actualDrycoolerSet);
+
+
+
+        return "redirect:/dtnetwork";
+    }
+
 
 
 

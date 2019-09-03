@@ -25,10 +25,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/damages")
@@ -134,7 +131,9 @@ public class DamageController {
     @GetMapping("/addForm/{inventNumber}")
     public String createDamage(Model model,@PathVariable String inventNumber){
 
-        model.addAttribute("newDamage", new DamageDTO());
+        DamageDTO dto = new DamageDTO();
+        dto.setDamageDate(CalendarUtil.cal2string(Calendar.getInstance()));
+        model.addAttribute("newDamage", dto);
         model.addAttribute("authors", ListOfEnumValues.authors);
         model.addAttribute("inventNumber",inventNumber);
         String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()

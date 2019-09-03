@@ -16,9 +16,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -98,7 +100,9 @@ public class IssueDocController {
 
     @GetMapping("/addForm/{inventNumber}")
     public String addFormDev(@PathVariable String inventNumber, Model model){
-        model.addAttribute("newDoc", new IssueDocumentDTO());
+        IssueDocumentDTO dto = new IssueDocumentDTO();
+        dto.setIssueDate(CalendarUtil.cal2string(Calendar.getInstance()));
+        model.addAttribute("newDoc", dto);
         model.addAttribute("inventNumber", inventNumber);
         String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
                 +" "+deviceDAO.findByInventNumber(inventNumber).getRoom();
@@ -109,7 +113,9 @@ public class IssueDocController {
 
     @GetMapping("/addFormDam/{damageId}")
     public String addFormDam(@PathVariable Integer damageId, Model model){
-        model.addAttribute("newDoc", new IssueDocumentDTO());
+        IssueDocumentDTO dto = new IssueDocumentDTO();
+        dto.setIssueDate(CalendarUtil.cal2string(Calendar.getInstance()));
+        model.addAttribute("newDoc", dto);
         String inventNumber = damageDAO.findById(damageId).orElse(null).getDevice().getInventNumber();
         model.addAttribute("inventNumber", inventNumber);
         String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()

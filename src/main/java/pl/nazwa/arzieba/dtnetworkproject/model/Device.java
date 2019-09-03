@@ -44,6 +44,9 @@ public class Device {
     @OneToOne(mappedBy = "device")
     private  ChillerSet chillerSet;
 
+    @OneToOne (mappedBy = "device")
+    private DrycoolerSet drycoolerSet;
+
 
 
 

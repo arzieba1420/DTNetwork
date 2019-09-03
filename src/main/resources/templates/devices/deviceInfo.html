@@ -64,6 +64,57 @@
                 </tr>
             </table>
 
+    <table th:if="${dto.getDeviceType().name()=='DRY_COOLER'}" id="drycooler" style="padding: 0;margin: 10px 10px; background-color: white; border: 1px solid black;color: black; text-align: center; width: 500px">
+        <tr style=" border: 1px solid black;color: black; text-align: center" id="topBar3">
+            <th class="sets">Nastawa</th>
+            <th class="sets">Temp. zadana LS</th>
+            <th class="sets">Temp. zadana PS</th>
+            <th class="sets">Temp. zewn. LS</th>
+            <th class="sets">Temp. zewn. PS</th>
+            <th class="sets">Data</th>
+            <th class="sets">Ustawił</th>
+            <th></th>
+
+        </tr>
+
+        <tr >
+            <td  class="sets" >Aktualna</td>
+            <td  class="sets"  th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getActualSetPoint_CWL()}" ></td>
+            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() ==null}"  >Nieznana</td>
+            <td  class="sets"  th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getActualSetPoint_CWR()}" ></td>
+            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() ==null}"  >Nieznana</td>
+            <td  class="sets"  th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getActualSetPoint_AmbL()}" ></td>
+            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() ==null}"  >Nieznana</td>
+            <td  class="sets"  th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getActualSetPoint_AmbR()}" ></td>
+            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() ==null}"  >Nieznana</td>
+            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() !=null}" th:text="${@calendarUtil.cal2string(@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getSetDate())}" ></td>
+            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() ==null}" >Nieznana</td>
+            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getAuthor()}" ></td>
+            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() ==null}"  >-</td>
+            <td id="openModal5">Zmień</td>
+
+
+        </tr>
+        <tr >
+            <td  class="sets" >Poprzednia</td>
+            <td  class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getPreviousSetPoint_CWL()}" ></td>
+            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet()  ==null}"  >Nieznana</td>
+            <td  class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getPreviousSetPoint_CWR()}" ></td>
+            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet()  ==null}"  >Nieznana</td>
+            <td  class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getPreviousSetPoint_AmbL()}" ></td>
+            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet()  ==null}"  >Nieznana</td>
+            <td  class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getPreviousSetPoint_AmbR()}" ></td>
+            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet()  ==null}"  >Nieznana</td>
+            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet()  !=null}" th:text="${@calendarUtil.cal2string(@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getPreviousSetDate())}" ></td>
+            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet()  ==null}" >Nieznana</td>
+            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet()  !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getPreviousAuthor()}" ></td>
+            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet()  ==null}"  >-</td>
+            <td></td>
+
+
+        </tr>
+    </table>
+
 
     <div style="position: absolute; top: 300px;"  th:if="errorsAmount!=0" class="errors">
         <p th:each="err,iterStat :${errors}" th:text=" ${iterStat.index+1} + '. Error in field: '+
@@ -76,12 +127,36 @@
             <form class="modform" th:action="@{'/devices/chillerSet/' + ${dto.getInventNumber()}}" th:object="${chillerSetDTO}"  modelAttribute="chillerSetDTO" th:method="post" method="post"  >
 
                 <label class="modlab"  for="setValue">Temp. zadana</label>
-                <input type="text" class="modsel" id="setValue"  placeholder="20.0"  th:field="*{actualSetPoint}" th:errorclass="errorsFields"  >
+                <input type="text" class="modsel" id="setValue"     th:field="*{actualSetPoint}" th:errorclass="errorsFields"  >
                 <input style="padding: 6px" id="chillerSetBtn"  type="submit" value="Zapisz" >
             </form>
         </div>
 
     </div>
+
+    <div id="drycoolerSetsModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <i style=" margin-right: 20px; float: right " class="fas fa-times" id="closeDrycoolerSets"></i>
+            <form class="modform2" th:action="@{'/devices/drycoolerSet/' + ${dto.getInventNumber()}}" th:object="${drycoolerSetDTO}"  modelAttribute="drycoolerSetDTO" th:method="post" method="post"  >
+
+                <label class="modlab2"  for="setValue_CWL">Temp. zadana lewa</label>
+                <input type="text" style="margin-left: auto; margin-right: 400px; width: 50px" class="modsel2" id="setValue_CWL"     th:field="*{actualSetPoint_CWL}" th:errorclass="errorsFields"  >
+                </br>
+                <label class="modlab2"  for="setValue_CWR">Temp. zadana prawa</label>
+                <input type="text" style="margin-left: auto; margin-right: 400px; width: 50px" class="modsel2" id="setValue_CWR"     th:field="*{actualSetPoint_CWR}" th:errorclass="errorsFields"  >
+                </br>
+                <label class="modlab2"  for="setValue_AmbL">Temp. zewnętrzna lewa</label>
+                <input type="text" style="margin-left: auto; margin-right: 400px; width: 50px" class="modsel2" id="setValue_AmbL"     th:field="*{actualSetPoint_AmbL}" th:errorclass="errorsFields"  >
+                </br>
+                <label class="modlab2"  for="setValue_AmbR">Temp. zewnętrzna prawa</label>
+                <input type="text" style="margin-left: auto; margin-right: 400px; width: 50px" class="modsel2" id="setValue_AmbR"     th:field="*{actualSetPoint_AmbR}" th:errorclass="errorsFields"  >
+                <input style="padding: 6px" id="drycoolerSetBtn"  type="submit" value="Zapisz" >
+            </form>
+        </div>
+
+    </div>
+
     <div class="container" style="min-height: 100vh; padding-top: 100px; ">
     <div class="col-25" style="margin-left: 50px; ">
         <h1 style="text-align: center;  background-color: lightgray" th:text="${dto.getDeviceDescription()}+ '&roarr;'+${dto.getRoom()}"></h1>
@@ -174,5 +249,6 @@
     <script  th:src="@{/js/mymodal.js}"></script>
     <div th:insert="~{fragments/footer.html::footer}"></div>
     <script  th:src="@{/js/chillerModal.js}"></script>
+    <script  th:src="@{/js/drycoolerModal.js}"></script>
 </body>
 </html>

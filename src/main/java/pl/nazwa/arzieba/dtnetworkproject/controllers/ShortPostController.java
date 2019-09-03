@@ -148,7 +148,9 @@ public class ShortPostController implements WebMvcConfigurer {
 
     @GetMapping("/addForm")
     public String addForm(Model model) {
-        model.addAttribute("newPost", new ShortPostDTO());
+        ShortPostDTO dto = new ShortPostDTO();
+        dto.setDate(CalendarUtil.cal2string(Calendar.getInstance() ));
+        model.addAttribute("newPost", dto);
         model.addAttribute("authors", ListOfEnumValues.authors);
         Map<String, String> mapa = new HashMap<>();
         List<String> keys = deviceDAO.findAll().stream().map(d -> d.getInventNumber()).collect(Collectors.toList());
@@ -163,7 +165,9 @@ public class ShortPostController implements WebMvcConfigurer {
 
     @GetMapping("/addForm/{inventNumber}")
     public String addForm(Model model, @PathVariable String inventNumber) {
-        model.addAttribute("shortPostDTO", new ShortPostDTO());
+        ShortPostDTO dto = new ShortPostDTO();
+        dto.setDate(CalendarUtil.cal2string(Calendar.getInstance() ));
+        model.addAttribute("shortPostDTO", dto);
         model.addAttribute("authors", ListOfEnumValues.authors);
         model.addAttribute("inventNumber", inventNumber);
 
