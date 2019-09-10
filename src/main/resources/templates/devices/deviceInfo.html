@@ -43,7 +43,7 @@
                 <tr >
                     <td  class="sets" >Aktualna</td>
                     <td id="openModal3"  class="sets"  th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet().getActualSetPoint()}" ></td>
-                    <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() ==null}"  >Nieznana</td>
+                    <td  class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() ==null}"  >Nieznana</td>
                     <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() !=null}" th:text="${@calendarUtil.cal2string(@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet().getSetDate())}" ></td>
                     <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() ==null}" >Nieznana</td>
                     <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet().getAuthor()}" ></td>
