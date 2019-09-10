@@ -163,7 +163,7 @@ a:hover{
 
 .row:hover {
   background-color: #ececff;
-  cursor: pointer;
+  cursor: auto;
 }
 .row.header:hover {
   background-color: #818181;
