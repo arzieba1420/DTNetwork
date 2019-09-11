@@ -1,19 +1,23 @@
 package pl.nazwa.arzieba.dtnetworkproject.services.issueDocument;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import pl.nazwa.arzieba.dtnetworkproject.dao.DamageDAO;
-import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceCardDAO;
-import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
-import pl.nazwa.arzieba.dtnetworkproject.dao.IssueDocumentDAO;
+import org.springframework.web.multipart.MultipartFile;
+import pl.nazwa.arzieba.dtnetworkproject.dao.*;
 import pl.nazwa.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.IssueDocument;
+import pl.nazwa.arzieba.dtnetworkproject.model.IssueFiles;
+import pl.nazwa.arzieba.dtnetworkproject.services.issueFiles.UploadPathService;
 import pl.nazwa.arzieba.dtnetworkproject.utils.exceptions.IssueDocumentNotFoundException;
 import pl.nazwa.arzieba.dtnetworkproject.utils.issueDocument.IssueDocMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -21,17 +25,21 @@ import java.util.stream.Collectors;
 @Transactional
 public class IssueDocServiceImpl implements IssueDocService {
     @Autowired
-    public IssueDocServiceImpl(DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO) {
+    public IssueDocServiceImpl(DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, UploadPathService uploadPathService, IssueFilesDAO issueFilesDAO) {
         this.deviceDAO = deviceDAO;
         this.damageDAO = damageDAO;
         this.issueDocumentDAO = issueDocumentDAO;
         this.deviceCardDAO = deviceCardDAO;
+        this.uploadPathService = uploadPathService;
+        this.issueFilesDAO = issueFilesDAO;
     }
 
     private DeviceDAO deviceDAO;
     private DamageDAO damageDAO;
     private IssueDocumentDAO issueDocumentDAO;
     private DeviceCardDAO deviceCardDAO;
+    private UploadPathService uploadPathService;
+    private IssueFilesDAO issueFilesDAO;
 
 
 
@@ -87,8 +95,48 @@ public class IssueDocServiceImpl implements IssueDocService {
 
     @Override
     public IssueDocumentDTO create(IssueDocumentDTO documentDTO) {
-        IssueDocument saved = issueDocumentDAO.save(IssueDocMapper.map(documentDTO,damageDAO));
+        IssueDocument saved = IssueDocMapper.map(documentDTO,damageDAO);
+
+
+        System.out.println();
+
+        if(saved!=null && documentDTO.getIssueFiles()!=null && documentDTO.getIssueFiles().size()>0){
+
+            for (MultipartFile file: saved.getFiles() ) {
+
+                String fileName = file.getOriginalFilename();
+                String modifiedFileName = FilenameUtils.getBaseName(fileName)+"_"+System.currentTimeMillis()+"."+FilenameUtils.getExtension(fileName);
+                File storeFile = uploadPathService.getFilePath(modifiedFileName, "files");
+
+                if(storeFile!=null){
+                    try {
+                        FileUtils.writeByteArrayToFile(storeFile,file.getBytes());
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+
+
+
+                IssueFiles files = new IssueFiles();
+                files.setFileExtension(FilenameUtils.getExtension(fileName));
+                files.setFileName(fileName);
+                files.setModifiedFileName(modifiedFileName);
+                files.setIssueDocument(saved);
+                issueFilesDAO.save(files);
+                issueDocumentDAO.save(saved);
+
+            }
+
+        } else issueDocumentDAO.save(saved);
+
         return IssueDocMapper.map(saved);
+    }
+
+    @Override
+    public IssueDocumentDTO createWithFiles(IssueDocumentDTO documentDTO){
+
+        return null;
     }
 
     @Override

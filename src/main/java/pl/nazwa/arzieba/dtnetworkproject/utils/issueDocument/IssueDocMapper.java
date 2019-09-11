@@ -1,10 +1,13 @@
 package pl.nazwa.arzieba.dtnetworkproject.utils.issueDocument;
 
+import org.springframework.web.multipart.MultipartFile;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DamageDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.IssueDocument;
 import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 
 @Component
 public class IssueDocMapper {
@@ -24,6 +27,13 @@ public class IssueDocMapper {
         document.setInventNumber(documentDTO.getInventNumber());
         else document.setInventNumber(damageDAO.findById(documentDTO.getDamageId()).orElse(null).getDevice().getInventNumber());
         document.setValue(documentDTO.getValue());
+
+        document.setFiles(documentDTO.getIssueFiles());
+
+
+        document.setFilesToRemove(documentDTO.getFilesToRemove());
+
+
         return document;
     }
 
@@ -33,6 +43,7 @@ public class IssueDocMapper {
             documentDTO.setDamageId(null);
         }else
         documentDTO.setDamageId(document.getDamage().getDamageId());
+
         documentDTO.setDelivererName(document.getDelivererName());
         documentDTO.setDelivererNIP(document.getDelivererNIP());
         documentDTO.setInventNumber(document.getInventNumber());
@@ -41,6 +52,13 @@ public class IssueDocMapper {
         documentDTO.setIssueSignature(document.getIssueSignature());
         documentDTO.setIssueDetails(document.getIssueDetails());
         documentDTO.setValue(document.getValue());
+
+         documentDTO.setIssueFiles(document.getFiles());
+
+
+        documentDTO.setFilesToRemove(document.getFilesToRemove());
+
+
         return documentDTO;
     }
 

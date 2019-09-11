@@ -19,7 +19,7 @@ public class IssueFileUploadController {
     private IssueDocService issueDocService;
     private IssueDocumentDAO issueDocumentDAO;
 
-    @GetMapping("/")
+    @GetMapping("/issueFileUpload")
     public String issueDocs(Model model){
         List<IssueDocument> issueDocuments = issueDocumentDAO.findAll();
         model.addAttribute("documents", issueDocuments);

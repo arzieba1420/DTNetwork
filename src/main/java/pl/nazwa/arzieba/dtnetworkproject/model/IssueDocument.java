@@ -21,7 +21,6 @@ import java.util.List;
 @NoArgsConstructor
 public class IssueDocument implements Serializable {
 
-    private static final long serialVersionUID = 506172098L;
 
     @Id
     private String issueSignature;
@@ -43,9 +42,12 @@ public class IssueDocument implements Serializable {
     private Damage damage;
 
     @Transient
-    @OneToMany(mappedBy = "issueDocument",fetch = FetchType.LAZY)
-    private List<MultipartFile> files = new ArrayList<>();
+    private List<MultipartFile> files;
 
     @Transient
     private List<String> filesToRemove = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "issueDocument", cascade = CascadeType.ALL)
+    private List<IssueFiles> issueFiles;
 }

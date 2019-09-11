@@ -6,4 +6,7 @@ import pl.nazwa.arzieba.dtnetworkproject.model.IssueFiles;
 
 @Repository
 public interface IssueFilesDAO extends PagingAndSortingRepository<IssueFiles,Long> {
+
+    IssueFiles save(IssueFiles issueFiles);
+
 }

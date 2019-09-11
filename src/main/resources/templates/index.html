@@ -160,16 +160,16 @@
                         <div class="cell remove " th:if="${lastPosts.get(key).content.contains('Wymagany test generatora')}">
                             <i class="fas fa-exclamation-circle" style="font-size: 200%;color: orangered"></i>
                         </div>
-                        <div class="cell remove " th:if="${lastPosts.get(key).content.contains('Zmieniono nastawę') or lastPosts.get(key).content.contains('Usunięto posty systemowe') }">
+                        <div class="cell remove " th:if="${lastPosts.get(key).content.contains('Zmieniono nastawę') or lastPosts.get(key).content.contains('Usunięto posty systemowe') or lastPosts.get(key).content.contains('Wprowadzono nowe zamówienie dla') }">
                             <i class="fas fa-info" style="font-size: 200%;color: #0062fe"></i>
                         </div>
 
-                        <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('kliknięciu') and !lastPosts.get(key).content.contains('zaniku! [SYSTEM]')and !lastPosts.get(key).content.contains('Wymagany test generatora') and !lastPosts.get(key).content.contains('Zmieniono nastawę') and !lastPosts.get(key).content.contains('Usunięto posty systemowe') and (lastPosts.get(key).getAuthor().name().equals(@mainController.getUser()) or @mainController.getUser().equals('admin')) }">
+                        <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('kliknięciu') and !lastPosts.get(key).content.contains('zaniku! [SYSTEM]')and !lastPosts.get(key).content.contains('Wymagany test generatora') and !lastPosts.get(key).content.contains('Zmieniono nastawę') and !lastPosts.get(key).content.contains('Usunięto posty systemowe') and !lastPosts.get(key).content.contains('Wprowadzono nowe zamówienie dla') and (lastPosts.get(key).getAuthor().name().equals(@mainController.getUser()) or @mainController.getUser().equals('admin')) }">
                             <a href="#" th:href="@{'/posts/delete/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Usuń post</span></a>
                             <br>
                             <a href="#" th:href="@{'/posts/edit/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-edit"></i> Edytuj post</span></a>
                         </div>
-                        <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('kliknięciu') and !lastPosts.get(key).content.contains('zaniku! [SYSTEM]')and !lastPosts.get(key).content.contains('Wymagany test generatora') and !lastPosts.get(key).content.contains('Zmieniono nastawę') and !lastPosts.get(key).content.contains('Usunięto posty systemowe') and(!lastPosts.get(key).getAuthor().name().equals(@mainController.getUser()) and !@mainController.getUser().equals('admin')) }">
+                        <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('kliknięciu') and !lastPosts.get(key).content.contains('zaniku! [SYSTEM]')and !lastPosts.get(key).content.contains('Wymagany test generatora') and !lastPosts.get(key).content.contains('Zmieniono nastawę') and !lastPosts.get(key).content.contains('Usunięto posty systemowe') and !lastPosts.get(key).content.contains('Wprowadzono nowe zamówienie dla')and(!lastPosts.get(key).getAuthor().name().equals(@mainController.getUser()) and !@mainController.getUser().equals('admin')) }">
                             <span style="font-size: 1em"><i class="fas fa-lock"></i></span>
 
                         </div>

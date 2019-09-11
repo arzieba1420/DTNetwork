@@ -27,7 +27,7 @@
     <div class="container" style="min-height: 100vh">
         <h1 ><span>Dodaj nowe zamówienie</span></h1>
         <form  th:action="@{'/issueDocs/addAsModel/stay'}" th:object="${newDoc}" method="post"
-              modelAttribute="newDoc" >
+              modelAttribute="newDoc" enctype="multipart/form-data" >
             <div class="row">
                 <div class="col-25">
                     <label for="damage">ID usterki</label>
@@ -106,6 +106,16 @@
                 <div class="col-75">
 
                     <input type="text" id="value" name="Value" placeholder="19999.99" th:field="*{value}" th:errorclass="errorsFields" >
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="files">Dodaj pliki</label>
+                </div>
+                <div class="col-75">
+
+                    <input type="file" id="files" name="Files"  th:field="*{issueFiles}" th:errorclass="errorsFields" >
 
                 </div>
             </div>

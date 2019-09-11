@@ -15,6 +15,11 @@ public interface IssueDocService {
     List<IssueDocumentDTO> findByYear(int year, int page, int size);
     List<IssueDocumentDTO> findByDamageId(Integer id);
     IssueDocumentDTO create(IssueDocumentDTO documentDTO);
+
+
+
+    IssueDocumentDTO createWithFiles(IssueDocumentDTO documentDTO);
+
     IssueDocumentDTO update(IssueDocumentDTO documentDTO);
     IssueDocumentDTO remove(String signature);
     List<IssueDocumentDTO> findByDevice(String inv, int page, int size);

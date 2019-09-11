@@ -3,9 +3,12 @@ package pl.nazwa.arzieba.dtnetworkproject.dto;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @Getter
@@ -40,6 +43,9 @@ public class IssueDocumentDTO {
  @Positive(message = "Value must be greater than 0")
  @Digits(integer = 10, fraction = 2,message = "Too many fraction numbers")
     private double value;
+
+ private List<MultipartFile> issueFiles ;
+ private List<String> filesToRemove;
 
 
 }

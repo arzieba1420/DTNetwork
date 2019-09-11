@@ -2,12 +2,12 @@ package pl.nazwa.arzieba.dtnetworkproject.controllers;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.FieldError;
-import pl.nazwa.arzieba.dtnetworkproject.dao.DamageDAO;
-import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceCardDAO;
-import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
-import pl.nazwa.arzieba.dtnetworkproject.dao.IssueDocumentDAO;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import pl.nazwa.arzieba.dtnetworkproject.dao.*;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
+import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
+import pl.nazwa.arzieba.dtnetworkproject.model.Author;
 import pl.nazwa.arzieba.dtnetworkproject.services.damage.DamageService;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
 import pl.nazwa.arzieba.dtnetworkproject.services.issueDocument.IssueDocService;
@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.nazwa.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
 import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,12 +37,13 @@ public class IssueDocController {
     private DamageService damageService;
     private IssueDocService issueDocService;
     private DeviceService deviceService;
+   private ShortPostService postService;
 
     @Value("${my.pagesize}")
     int pagesize;
 
     @Autowired
-    public IssueDocController(DamageService damageService, DeviceService deviceService, DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, IssueDocService issueDocService) {
+    public IssueDocController(DamageService damageService, DeviceService deviceService, DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, IssueDocService issueDocService, ShortPostDAO postDAO, ShortPostService postService) {
         this.deviceDAO = deviceDAO;
         this.damageDAO = damageDAO;
         this.issueDocumentDAO = issueDocumentDAO;
@@ -49,6 +51,8 @@ public class IssueDocController {
         this.issueDocService = issueDocService;
         this.deviceService=deviceService;
         this.damageService=damageService;
+        this.postService = postService;
+
     }
 
 
@@ -157,11 +161,20 @@ public class IssueDocController {
         }
 
         issueDocService.create(issueDocumentDTO);
-        return "redirect:/devices/" + issueDocumentDTO.getInventNumber();
+        ShortPostDTO dto = new ShortPostDTO();
+        dto.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
+        dto.setForDamage(false);
+        dto.setContent("Wprowadzono nowe zamówienie dla usterki! [SYSTEM]");
+        dto.setAuthor(Author.DTN);
+        dto.setInventNumber(issueDocumentDTO.getInventNumber());
+        postService.create(dto);
+
+        return "redirect:/dtnetwork";
     }
 
     @PostMapping("/addAsModel/stay2")
-    public String  create( @Valid @ModelAttribute("newDoc")  IssueDocumentDTO dto, BindingResult bindingResult,Model model, HttpServletRequest request){
+    public String  create(@Valid @ModelAttribute("newDoc")  IssueDocumentDTO dto, BindingResult bindingResult, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        System.out.println();
         if(bindingResult.hasFieldErrors()) {
             List<FieldError> allErrors;
 
@@ -190,7 +203,14 @@ public class IssueDocController {
         }
 
         issueDocService.create(dto);
-        return "redirect:/devices/" + dto.getInventNumber();
+        ShortPostDTO postDTO = new ShortPostDTO();
+        postDTO.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
+        postDTO.setForDamage(false);
+        postDTO.setContent("Wprowadzono nowe zamówienie dla urządzenia! [SYSTEM]");
+        postDTO.setAuthor(Author.DTN);
+        postDTO.setInventNumber(dto.getInventNumber());
+        postService.create(postDTO);
+        return "redirect:/dtnetwork";
     }
 
     @GetMapping("/damages/{damageId}")
