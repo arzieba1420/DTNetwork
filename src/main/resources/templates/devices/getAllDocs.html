@@ -54,7 +54,7 @@
                         </div>
                     </td>
                     <td th:text="${doc.value}">Invent Number</td>
-                    <td th:text="'---'"></td>
+                    <td ><a href="" th:href="@{'/issueDocs/showFiles/'+${doc.issueSignature}}">Pokaż pliki</a></td>
                 </tr>
             </table>
 

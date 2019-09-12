@@ -23,6 +23,7 @@ public class IssueFiles implements Serializable {
     private String fileExtension;
 
     @ManyToOne
+    @JoinColumn(name="issue_signature")
     private IssueDocument issueDocument;
 
 }

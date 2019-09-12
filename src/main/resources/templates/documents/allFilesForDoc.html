@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>DTNetwork</title>
+    <link rel="icon" type="image/ico" href="../static/images/icoTitl.PNG" th:href="@{/images/icoTitl.PNG}" >
+    <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
+    <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" th:href="@{/css/tooltips.css}">
+    <link rel="stylesheet" th:href="@{/css/simpleTable.css}">
+
+    <link rel="stylesheet" href="" th:href="@{/css/header.css}">
+
+    <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../static/css/modal.css" th:href="@{/css/filesModal.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/search.css}">
+
+
+</head>
+<body>
+<script>
+    window.location.refresh();
+</script>
+<div th:replace="~{fragments/header.html::header}"></div>
+
+
+<div id="filesModal"  class="filesModal">
+    <!-- Modal content -->
+    <div class="modal-content2">
+        <i style=" margin-right: 20px; float: right " class="fas fa-times" ></i>
+        sdfgfdgdf
+    </div>
+
+</div>
+
+
+
+
+
+
+<div th:insert="~{fragments/footer.html::footer}"></div>
+<script  th:src="@{/js/filesModal.js}"></script>
+</body>
+</html>

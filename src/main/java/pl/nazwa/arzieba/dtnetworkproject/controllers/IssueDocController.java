@@ -8,6 +8,7 @@ import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.Author;
+import pl.nazwa.arzieba.dtnetworkproject.model.IssueFiles;
 import pl.nazwa.arzieba.dtnetworkproject.services.damage.DamageService;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
 import pl.nazwa.arzieba.dtnetworkproject.services.issueDocument.IssueDocService;
@@ -293,6 +294,16 @@ public class IssueDocController {
     public String modalDocs(Model model, @ModelAttribute("docs") int year){
 
         return getAllForYear(year,model,1);
+  }
+
+  @GetMapping("/showFiles/{signature}")
+    public String allFilesForDoc(@PathVariable String signature, Model model){
+
+        List<IssueFiles> files = issueDocService.getFilesForDoc(signature);
+        model.addAttribute("files", files);
+        model.addAttribute("signature", signature);
+        model.addAttribute("size", files.size());
+        return "documents/allFilesForDoc";
   }
 
 

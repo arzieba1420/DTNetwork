@@ -11,7 +11,7 @@ import java.io.File;
 @Transactional
 public class UploadPathServiceImpl implements UploadPathService {
 
-    public static final String DIRECTORY = "C://Users/pc/Desktop/DTNetwork/storage/";
+    public static final String DIRECTORY = "C://Users/User/Desktop/DTNetwork/storage/";
 
     @Autowired
     ServletContext context;

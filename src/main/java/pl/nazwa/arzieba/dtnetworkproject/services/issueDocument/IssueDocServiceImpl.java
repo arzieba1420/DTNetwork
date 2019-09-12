@@ -222,7 +222,7 @@ public class IssueDocServiceImpl implements IssueDocService {
     }
 
     @Override
-        public int numberByYear(int year){
+    public int numberByYear(int year){
         long l = issueDocumentDAO.findAll().stream()
                 .filter(d->d.getIssueDate().get(Calendar.YEAR)==year)
                 .count();
@@ -230,6 +230,10 @@ public class IssueDocServiceImpl implements IssueDocService {
         return (int) l;
         }
 
+    @Override
+    public List<IssueFiles> getFilesForDoc(String signature){
 
+        return issueFilesDAO.findAllByIssueDocument_IssueSignature(signature);
+    }
 
 }

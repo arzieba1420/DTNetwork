@@ -2,6 +2,7 @@ package pl.nazwa.arzieba.dtnetworkproject.services.issueDocument;
 
 import pl.nazwa.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import org.springframework.stereotype.Service;
+import pl.nazwa.arzieba.dtnetworkproject.model.IssueFiles;
 
 
 import java.util.List;
@@ -29,4 +30,6 @@ public interface IssueDocService {
 
     int numberByDevice(String inv);
     int numberByYear(int year);
+
+    List<IssueFiles> getFilesForDoc(String signature);
 }
