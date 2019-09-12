@@ -96,13 +96,14 @@ public class IssueDocServiceImpl implements IssueDocService {
     @Override
     public IssueDocumentDTO create(IssueDocumentDTO documentDTO) {
         IssueDocument saved = IssueDocMapper.map(documentDTO,damageDAO);
+        IssueDocument saved2 = issueDocumentDAO.save(saved);
 
 
         System.out.println();
 
         if(saved!=null && documentDTO.getIssueFiles()!=null && documentDTO.getIssueFiles().size()>0){
 
-            for (MultipartFile file: saved.getFiles() ) {
+            for (MultipartFile file: documentDTO.getIssueFiles() ) {
 
                 String fileName = file.getOriginalFilename();
                 String modifiedFileName = FilenameUtils.getBaseName(fileName)+"_"+System.currentTimeMillis()+"."+FilenameUtils.getExtension(fileName);
@@ -122,13 +123,13 @@ public class IssueDocServiceImpl implements IssueDocService {
                 files.setFileExtension(FilenameUtils.getExtension(fileName));
                 files.setFileName(fileName);
                 files.setModifiedFileName(modifiedFileName);
-                files.setIssueDocument(saved);
+                files.setIssueDocument(saved2);
                 issueFilesDAO.save(files);
-                issueDocumentDAO.save(saved);
+
 
             }
 
-        } else issueDocumentDAO.save(saved);
+        }
 
         return IssueDocMapper.map(saved);
     }

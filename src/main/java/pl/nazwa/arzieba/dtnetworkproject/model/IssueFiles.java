@@ -16,14 +16,13 @@ import java.io.Serializable;
 public class IssueFiles implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long issueFilesId;
     private String fileName;
     private String modifiedFileName;
     private String fileExtension;
 
     @ManyToOne
-    @JoinColumn(name = "issueSignature")
     private IssueDocument issueDocument;
 
 }

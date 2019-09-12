@@ -43,11 +43,11 @@ public class IssueDocument implements Serializable {
 
     @Transient
     private List<MultipartFile> files;
-
     @Transient
-    private List<String> filesToRemove = new ArrayList<>();
+    private List<String> filesToRemove;
 
-
-    @OneToMany(mappedBy = "issueDocument", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "issueDocument")
     private List<IssueFiles> issueFiles;
+
+
 }
