@@ -17,9 +17,30 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="../../static/css/modal.css" th:href="@{/css/filesModal.css}">
     <link rel="stylesheet" href="" th:href="@{/css/search.css}">
-
-
+    
+    <style>
+        table, th, td {
+            cursor: auto;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        table{
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        td{
+            font-size: 0.9em;
+        }
+        
+        tr:hover{
+            background-color: #9c9c9c;
+            cursor: pointer;
+        }
+    
+    </style>
 </head>
+
 <body>
 <script>
     window.location.refresh();
@@ -30,8 +51,22 @@
 <div id="filesModal"  class="filesModal">
     <!-- Modal content -->
     <div class="modal-content2">
-        <i style=" margin-right: 20px; float: right " class="fas fa-times" ></i>
-        sdfgfdgdf
+        <table th:if="${files.size()!=0}" style="background-color: white; border: 1px solid black;color: black; text-align: center">
+            <tr id="topBar">
+                <th>L.p.</th>
+                <th>Nazwa pliku</th>
+                <th>Akcja</th>
+            </tr>
+        
+            <tr th:each="file, iterStat:${files}">
+                <td th:text="${iterStat.count}" ></td>
+                <td ><a href="" th:href="@{'/downloadDocFile/'+${file.getIssueFilesId()}}" th:text="${file.getFileName()}" ></a></td>
+                <td ><a href="" th:href="@{'/generators/' }" >Usuń</a></td>
+            </tr>
+        </table>
+        <div style="margin: auto; text-align: center" th:if="${files.size()==0}">Brak plików!</div>
+        <i style=" margin-right: 20px;  float: right " class="fas fa-times" ></i>
+        
     </div>
 
 </div>

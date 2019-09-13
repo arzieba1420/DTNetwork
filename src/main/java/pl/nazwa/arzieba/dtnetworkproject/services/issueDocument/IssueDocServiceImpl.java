@@ -105,8 +105,8 @@ public class IssueDocServiceImpl implements IssueDocService {
 
             for (MultipartFile file: documentDTO.getIssueFiles() ) {
 
-                String fileName = file.getOriginalFilename();
-                String modifiedFileName = FilenameUtils.getBaseName(fileName)+"_"+System.currentTimeMillis()+"."+FilenameUtils.getExtension(fileName);
+                String fileName = file.getOriginalFilename().replaceAll(" ","_");
+                String modifiedFileName = FilenameUtils.getBaseName(fileName).replaceAll(" ","_")+"_"+System.currentTimeMillis()+"."+FilenameUtils.getExtension(fileName);
                 File storeFile = uploadPathService.getFilePath(modifiedFileName, "files");
 
                 if(storeFile!=null){
@@ -122,6 +122,7 @@ public class IssueDocServiceImpl implements IssueDocService {
                 IssueFiles files = new IssueFiles();
                 files.setFileExtension(FilenameUtils.getExtension(fileName));
                 files.setFileName(fileName);
+                files.setFileNameNoExt(modifiedFileName.substring(0,modifiedFileName.indexOf('.')));
                 files.setModifiedFileName(modifiedFileName);
                 files.setIssueDocument(saved2);
                 issueFilesDAO.save(files);

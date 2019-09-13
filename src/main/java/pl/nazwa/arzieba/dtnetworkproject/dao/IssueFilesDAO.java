@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface IssueFilesDAO extends PagingAndSortingRepository<IssueFiles,Long> {
 
+    IssueFiles findByIssueFilesId(Long id);
     IssueFiles save(IssueFiles issueFiles);
     List<IssueFiles> findAllByIssueDocument_IssueSignature(String signature);
 

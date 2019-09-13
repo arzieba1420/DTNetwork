@@ -19,6 +19,7 @@ public class IssueFiles implements Serializable {
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long issueFilesId;
     private String fileName;
+    private String fileNameNoExt;
     private String modifiedFileName;
     private String fileExtension;
 

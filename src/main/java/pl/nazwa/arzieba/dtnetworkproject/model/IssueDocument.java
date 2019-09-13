@@ -47,7 +47,7 @@ public class IssueDocument implements Serializable {
     private List<String> filesToRemove;
 
     @OneToMany(mappedBy = "issueDocument")
-    private List<IssueFiles> issueFiles;
+    private List<IssueFiles> issueFiles = new ArrayList<>();
 
 
 }

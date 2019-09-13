@@ -6,9 +6,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.nazwa.arzieba.dtnetworkproject.dao.IssueFilesDAO;
+import pl.nazwa.arzieba.dtnetworkproject.model.IssueFiles;
 import pl.nazwa.arzieba.dtnetworkproject.utils.media.MediaTypeUtils;
 
 import javax.servlet.ServletContext;
@@ -19,11 +22,14 @@ import java.io.IOException;
 
 @Controller
 public class DownloadController {
-    private static final String DIRECTORY = "C:/Users/User/Desktop/DTNetwork/storage";
+    private static final String DIRECTORY = "C:/Users/pc/Desktop/DTNetwork/storage";
+    private static final String FILE_DIRECTORY = "C:/Users/pc/Desktop/DTNetwork/storage/files";
     private static final String DEFAULT_FILE_NAME = "EmptyCard.pdf";
 
     @Autowired
     private ServletContext servletContext;
+    @Autowired
+    IssueFilesDAO filesDAO;
 
     // http://localhost:8080/download1?fileName=abc.zip
     // Using ResponseEntity<InputStreamResource>
@@ -38,6 +44,46 @@ public class DownloadController {
         InputStreamResource resource = null;
         try {
             file = new File(DIRECTORY + "/" + fileName+".pdf");
+
+            resource = new InputStreamResource(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            file = new File(DIRECTORY + "/" + DEFAULT_FILE_NAME);
+            resource = new InputStreamResource(new FileInputStream(file));
+            return ResponseEntity.ok()
+                    // Content-Disposition
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+                    // Content-Type
+                    .contentType(mediaType)
+                    // Contet-Length
+                    .contentLength(file.length()) //
+                    .body(resource);
+        }
+
+
+
+        return ResponseEntity.ok()
+                // Content-Disposition
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+                // Content-Type
+                .contentType(mediaType)
+                // Contet-Length
+                .contentLength(file.length()) //
+                .body(resource);
+    }
+
+    @GetMapping("/downloadDocFile/{fileID}")
+    public ResponseEntity<InputStreamResource> downloadFile2(
+            @PathVariable Long fileID) throws IOException {
+
+        IssueFiles issueFile = filesDAO.findByIssueFilesId(fileID);
+        MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.servletContext, issueFile.getFileNameNoExt());
+
+
+        File file = null;
+        InputStreamResource resource = null;
+        try {
+            file = new File(FILE_DIRECTORY + "/" + issueFile.getFileNameNoExt()+"."+issueFile.getFileExtension());
+
             resource = new InputStreamResource(new FileInputStream(file));
         } catch (FileNotFoundException e) {
             file = new File(DIRECTORY + "/" + DEFAULT_FILE_NAME);
@@ -55,11 +101,12 @@ public class DownloadController {
 
         return ResponseEntity.ok()
                 // Content-Disposition
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + issueFile.getFileName())
                 // Content-Type
                 .contentType(mediaType)
                 // Contet-Length
                 .contentLength(file.length()) //
                 .body(resource);
     }
+
 }
