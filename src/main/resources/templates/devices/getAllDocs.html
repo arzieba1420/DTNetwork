@@ -54,7 +54,7 @@
                         </div>
                     </td>
                     <td th:text="${doc.value}">Invent Number</td>
-                    <td ><a href="" th:href="@{'/issueDocs/showFiles/'+${doc.issueSignature}}" th:text="'Pokaż pliki ('+${@issueDocumentDAO.findByIssueSignature(doc.getIssueSignature()).getIssueFiles().size()}+')'"></a></td>
+                    <td ><a href="" th:href="@{'/issueDocs/showFiles/'+${@issueDocumentDAO.findByIssueSignature(doc.getIssueSignature()).getIssueId()}}" th:text="'Pokaż pliki ('+${@issueDocumentDAO.findByIssueSignature(doc.getIssueSignature()).getIssueFiles().size()}+')'"></a></td>
                 </tr>
             </table>
 

@@ -31,5 +31,7 @@ public interface IssueDocService {
     int numberByDevice(String inv);
     int numberByYear(int year);
 
-    List<IssueFiles> getFilesForDoc(String signature);
+
+
+    List<IssueFiles> getFilesForDoc(Integer id);
 }

@@ -25,6 +25,10 @@ public class IssueDocument implements Serializable {
     @Id
     private String issueSignature;
 
+
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer issueId;
+
     private String delivererName;
     private String delivererNIP;
 

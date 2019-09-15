@@ -37,6 +37,11 @@
             background-color: #9c9c9c;
             cursor: pointer;
         }
+        
+        i:hover{
+            cursor: pointer;
+            color: #f30a02;
+        }
     
     </style>
 </head>
@@ -61,11 +66,11 @@
             <tr th:each="file, iterStat:${files}">
                 <td th:text="${iterStat.count}" ></td>
                 <td ><a href="" th:href="@{'/downloadDocFile/'+${file.getIssueFilesId()}}" th:text="${file.getFileName()}" ></a></td>
-                <td ><a href="" th:href="@{'/generators/' }" >Usuń</a></td>
+                <td ><a  >Usuń</a></td>
             </tr>
         </table>
         <div style="margin: auto; text-align: center" th:if="${files.size()==0}">Brak plików!</div>
-        <i style=" margin-right: 20px;  float: right " class="fas fa-times" ></i>
+        <i onclick="window.history.go(-1)" style=" margin-right: 20px;  float: right; font-size: 1.5em " class="fas fa-times" ></i>
         
     </div>
 

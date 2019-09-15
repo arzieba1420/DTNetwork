@@ -122,7 +122,7 @@ public class IssueDocServiceImpl implements IssueDocService {
                 IssueFiles files = new IssueFiles();
                 files.setFileExtension(FilenameUtils.getExtension(fileName));
                 files.setFileName(fileName);
-                files.setFileNameNoExt(modifiedFileName.substring(0,modifiedFileName.indexOf('.')));
+                files.setFileNameNoExt(modifiedFileName.substring(0,modifiedFileName.lastIndexOf('.')));
                 files.setModifiedFileName(modifiedFileName);
                 files.setIssueDocument(saved2);
                 issueFilesDAO.save(files);
@@ -232,9 +232,9 @@ public class IssueDocServiceImpl implements IssueDocService {
         }
 
     @Override
-    public List<IssueFiles> getFilesForDoc(String signature){
+    public List<IssueFiles> getFilesForDoc(Integer id){
 
-        return issueFilesDAO.findAllByIssueDocument_IssueSignature(signature);
+        return issueFilesDAO.findAllByIssueDocument_IssueId(id);
     }
 
 }

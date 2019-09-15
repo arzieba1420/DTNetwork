@@ -296,12 +296,11 @@ public class IssueDocController {
         return getAllForYear(year,model,1);
   }
 
-  @GetMapping("/showFiles/{signature}")
-    public String allFilesForDoc(@PathVariable String signature, Model model){
+  @GetMapping("/showFiles/{id}")
+    public String allFilesForDoc(@PathVariable Integer id, Model model){
 
-        List<IssueFiles> files = issueDocService.getFilesForDoc(signature);
+        List<IssueFiles> files = issueDocService.getFilesForDoc(id);
         model.addAttribute("files", files);
-        model.addAttribute("signature", signature);
         model.addAttribute("size", files.size());
         return "documents/allFilesForDoc";
   }
