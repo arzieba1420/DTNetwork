@@ -33,5 +33,5 @@ public interface IssueDocService {
 
 
 
-    List<IssueFiles> getFilesForDoc(Integer id);
+    List<IssueFiles> getFilesForDoc(String signature);
 }

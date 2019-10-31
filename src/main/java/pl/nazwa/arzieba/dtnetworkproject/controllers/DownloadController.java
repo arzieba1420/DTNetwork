@@ -22,8 +22,8 @@ import java.io.IOException;
 
 @Controller
 public class DownloadController {
-    private static final String DIRECTORY = "C:/Users/pc/Desktop/DTNetwork/storage";
-    private static final String FILE_DIRECTORY = "C:/Users/pc/Desktop/DTNetwork/storage/files";
+    private static final String DIRECTORY = "C:/Users/User/Desktop/DTNetwork/storage";
+    private static final String FILE_DIRECTORY = "C:/Users/User/Desktop/DTNetwork/storage/files";
     private static final String DEFAULT_FILE_NAME = "EmptyCard.pdf";
 
     @Autowired

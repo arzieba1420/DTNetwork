@@ -42,6 +42,17 @@ public class CalendarUtil {
         }
     }
 
+    public static String invertDateString(String date){
+
+        String[] strings = date.split("-");
+        String result = strings[2]+"-"+strings[1]+"-"+strings[0];
+        return result;
+    }
+    public static String invertDateCal(Calendar calendar){
+        String stringDate = cal2string(calendar);
+        return invertDateString(stringDate);
+    }
+
     public static String[] monthsEng = {"january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"};
     public static String[] monthsPol = {"styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec", "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień"};
 

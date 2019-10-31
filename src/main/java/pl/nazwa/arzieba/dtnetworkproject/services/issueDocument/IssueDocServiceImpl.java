@@ -95,11 +95,18 @@ public class IssueDocServiceImpl implements IssueDocService {
 
     @Override
     public IssueDocumentDTO create(IssueDocumentDTO documentDTO) {
-        IssueDocument saved = IssueDocMapper.map(documentDTO,damageDAO);
-        IssueDocument saved2 = issueDocumentDAO.save(saved);
+        IssueDocument saved = IssueDocMapper.map(documentDTO, damageDAO);
+        if(issueDocumentDAO.existsByIssueSignature(documentDTO.getIssueSignature()) && issueDocumentDAO.findByIssueSignature(documentDTO.getIssueSignature()).getDamage()!=null ) {
+            saved.setDamage(issueDocumentDAO.findByIssueSignature(documentDTO.getIssueSignature()).getDamage());
+            saved.setIssueId(issueDocumentDAO.findByIssueSignature(documentDTO.getIssueSignature()).getIssueId());
+        }
+        if(issueDocumentDAO.existsByIssueSignature(documentDTO.getIssueSignature()) ) {
+            saved.setIssueId(issueDocumentDAO.findByIssueSignature(documentDTO.getIssueSignature()).getIssueId());
+        }
 
 
-        System.out.println();
+            IssueDocument saved2 = issueDocumentDAO.save(saved);
+
 
         if(saved!=null && documentDTO.getIssueFiles()!=null && documentDTO.getIssueFiles().size()>0){
 
@@ -232,9 +239,10 @@ public class IssueDocServiceImpl implements IssueDocService {
         }
 
     @Override
-    public List<IssueFiles> getFilesForDoc(Integer id){
-
-        return issueFilesDAO.findAllByIssueDocument_IssueId(id);
+    public List<IssueFiles> getFilesForDoc(String signature) {
+        return issueFilesDAO.findAllByIssueDocument_IssueSignature(signature);
     }
+
+
 
 }

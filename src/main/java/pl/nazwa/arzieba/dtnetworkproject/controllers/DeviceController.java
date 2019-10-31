@@ -210,8 +210,8 @@ public class DeviceController {
                 "Ciśnienie oleju: bar\n" +
                 "Stan paliwa: \n" +
                 "Napiecie aku: V\n" +
-                "Całkowity czas pracy: h\n"+
-                "\n\nSporządził: ");
+                "Całkowity czas pracy: h\n"
+                );
 
         model.addAttribute("text",text);
         model.addAttribute("newTest", generatorTestDTO);

@@ -49,7 +49,7 @@
                     </div>
         
                     <div class="row"  th:each="key, iterStat: ${keys} ">
-                        <div class="cell" data-title="Date" th:text="${mapa.get(key).getDate()}" >
+                        <div class="cell" data-title="Date" th:text="${@calendarUtil.invertDateString(mapa.get(key).getDate())}" >
                             11-11-2011
                         </div>
                         <div class="cell" data-title="Author" th:text="${mapa.get(key).getAuthor()}">

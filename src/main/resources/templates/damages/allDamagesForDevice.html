@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="row" th:each="key, iterStat: ${damages.keySet()} ">
-                    <div class="cell" data-title="Date" th:text="${damages.get(key).damageDate}" >
+                    <div class="cell" data-title="Date" th:text="${@calendarUtil.invertDateString(damages.get(key).damageDate)}" >
                         11-11-2011
                     </div>
                     <div class="cell" data-title="Author" th:text="${damages.get(key).author}">

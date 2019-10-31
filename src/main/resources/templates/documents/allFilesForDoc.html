@@ -58,15 +58,13 @@
     <div class="modal-content2">
         <table th:if="${files.size()!=0}" style="background-color: white; border: 1px solid black;color: black; text-align: center">
             <tr id="topBar">
-                <th>L.p.</th>
+                <th style="width: 30px">L.p.</th>
                 <th>Nazwa pliku</th>
-                <th>Akcja</th>
             </tr>
         
             <tr th:each="file, iterStat:${files}">
-                <td th:text="${iterStat.count}" ></td>
+                <td style="width: 30px" th:text="${iterStat.count}" ></td>
                 <td ><a href="" th:href="@{'/downloadDocFile/'+${file.getIssueFilesId()}}" th:text="${file.getFileName()}" ></a></td>
-                <td ><a  >Usuń</a></td>
             </tr>
         </table>
         <div style="margin: auto; text-align: center" th:if="${files.size()==0}">Brak plików!</div>

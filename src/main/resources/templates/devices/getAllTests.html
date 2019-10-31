@@ -43,7 +43,7 @@
             </tr>
 
             <tr th:each="test:${tests}">
-                <td style="white-space:pre-wrap;width: 150px" th:text="${test.getDate()}">Date</td>
+                <td style="white-space:pre-wrap;width: 150px" th:text="${@calendarUtil.invertDateString(test.getDate())}">Date</td>
                 <td th:if="${test.lossPowerFlag==false}" th:text="'TEST'">Test</td>
                 <td th:if="${test.lossPowerFlag==true}" th:text="'PRACA'">Work</td>
                 <td style="width: 600px">

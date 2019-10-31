@@ -71,10 +71,27 @@
         </div>
         <div class="row">
             <div class="col-25">
-                <label for="check">Praca podczas zaniku?</label>
+                <label for="authors">Sporządził</label>
             </div>
-            <div class="col-75">
-                <input type="checkbox" id="check" name="lossPowerFlag"  th:checked="*{lossPowerFlag}">
+            <div  class="col-75" style="width: 20%;border: 1px solid #ccc;padding-left: 10px" >
+                <ul style="width:50%;border: none" id="authors" name="authors" th:each="author:${@listOfEnumValues.authors}" th:if="!${author.equals('admin') || author.equals('DTN')}"  >
+                    <label style="margin-left: 0px" th:for="${#ids.next('authors')}" th:text="${author}">Covered</label>
+                    <input type="checkbox" th:field="*{authors}" th:value="${author}" th:errorclass="errorsFields" >
+                </ul>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px">
+            <div class="col-25">
+                <label for="check">Tryb pracy</label>
+            </div>
+            <div class="col-75" >
+                <ul style="width: 40%;padding-left: 10px" id="check" name="set"   >
+                    <label style="margin-left: 0px" for="test" th:text="'Test generatora'">Covered</label>
+                    <input type="radio" id="test" name="test" th:field="*{lossPowerFlag}" th:value="false" th:errorclass="errorsFields" >
+                    <br>
+                    <label style="margin-left: 0px" for="loss" th:text="'Praca podczas zaniku'">Covered</label>
+                    <input type="radio" id="loss" name="loss" th:field="*{lossPowerFlag}" th:value="true" th:errorclass="errorsFields" >
+                </ul>
             </div>
         </div>
         <div class="row">

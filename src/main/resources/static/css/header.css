@@ -6,8 +6,9 @@
     flex-flow: row;
     justify-content: center;
     /*background: linear-gradient(to bottom left, #e0e0e0, #eeeeee);*/
-    background-image: url("../images/green-header-png-12.png");
-
+    background-image: url("../images/headerback.jpg");
+    background-blend-mode: lighten;
+    z-index: 99999999;
     background-repeat: no-repeat;
     background-size: cover;
     border: 2px solid #5a7a3d;
@@ -69,7 +70,7 @@
 
     padding-right: 30px;
     font-family: 'Pacifico', cursive;
-    background-image:url("../images/name.PNG");
+    background-image:url("../images/name.png");
     background-size: cover;
     color: #008600;
     font-size: 3em;

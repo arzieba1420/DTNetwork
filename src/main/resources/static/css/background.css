@@ -1,20 +1,26 @@
 html{
     margin: 0px;
     padding: 0px;
+    min-height: 100%;
+
 
 }
 
 body {
-    background-image: url('../images/green-frame-transparent-backgr.png');
-    background-repeat: no-repeat;
+  /*  background-image: url('../images/green-frame-transparent-backgr.png');
+    background-repeat: r;*/
+
+    background: url('../images/green-frame-transparent-backgr.png') no-repeat center center fixed ;
     background-size: cover;
-    background-position-y: 140px;
+
+
     margin: 0;
     padding: 0px;
-    position: relative;
-    width: 100%;
 
-    height: min-content;
+    width: 100%;
+    min-height: 100%;
+
+
 }
 
 

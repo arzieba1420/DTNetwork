@@ -57,7 +57,7 @@
 
                <tr th:each="generator:${generators.keySet()}">
                     <td ><a href="" th:href="@{'devices/'+${generator}}" th:text="${@deviceDAO.findByInventNumber(generator).getDeviceDescription()}"></a></td>
-                    <td th:if="!${generators.values().contains(null)}" ><a href="" th:href="@{'/generators/' + ${generator}+'/1'}" th:text="${@calendarUtil.cal2string(generators.get(generator).getDate()) }" ></a></td>
+                    <td th:if="!${generators.values().contains(null)}" ><a href="" th:href="@{'/generators/' + ${generator}+'/1'}" th:text="${@calendarUtil.invertDateCal(generators.get(generator).getDate()) }" ></a></td>
                     <td th:if="${generators.values().contains(null)}" ><a href="" th:href="@{'/generators/' + ${generator}+'/1'}" >Brak testu</a></td>
                     <td th:if="!${generators.values().contains(null)}"  th:text="${generators.get(generator).getStatus()}"></td>
                     <td th:if="${generators.values().contains(null)}"  >Nieznany</td>
@@ -131,7 +131,7 @@
                     </div>
                     
                     <div class="row" th:each="key, iterStat: ${lastPosts.keySet()} " >
-                        <div class="cell" data-title="Date" th:text="${lastPosts.get(key).date}" >
+                        <div class="cell" data-title="Date" th:text="${@calendarUtil.invertDateString(lastPosts.get(key).date)}" >
                             11-11-2011
                         </div>
                         <div class="cell" data-title="Author" th:text="${lastPosts.get(key).author}">

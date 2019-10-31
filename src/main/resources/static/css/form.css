@@ -35,7 +35,7 @@ select.disabledSelect{
 }
 
 select.disabledSelect:focus{
-    border: none;
+    border: 1.1px solid darkgrey;
 
 }
 
@@ -48,6 +48,10 @@ label {
     padding: 12px 12px 12px 0;
     display: inline-block;
     margin-left: 70%;
+}
+
+.col-25 label{
+    font-weight: bold;
 }
 
 input[type=submit] {
@@ -139,6 +143,12 @@ input[type=submit]:hover {
     margin-left: inherit;
 }
 
+.col-75 ul{
+    background-color: white;
+    background-repeat: repeat;
+    border: 1px solid #cccccc;
+}
+
 .col-75 h1 span{
     padding: 5px;
 }
@@ -176,3 +186,21 @@ input[type=text].errorsFields,input[type=password].errorsFields,input[type=date]
     border: 2px solid crimson ;
 }
 
+
+input.disabledInput{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background-color: darkgrey;
+    z-index: 99;
+
+}
+
+input.disabledInput:focus{
+    border: 1.1px solid darkgrey;
+
+}
+
+
+input.disabledInput:hover{
+    cursor: not-allowed;
+}

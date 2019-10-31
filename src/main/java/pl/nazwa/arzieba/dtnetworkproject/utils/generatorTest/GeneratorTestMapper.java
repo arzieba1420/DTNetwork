@@ -4,8 +4,12 @@ package pl.nazwa.arzieba.dtnetworkproject.utils.generatorTest;
 import org.springframework.stereotype.Component;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.GeneratorTestDTO;
+import pl.nazwa.arzieba.dtnetworkproject.model.Author;
 import pl.nazwa.arzieba.dtnetworkproject.model.GeneratorTest;
 import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Component
 public class GeneratorTestMapper {
@@ -19,6 +23,10 @@ public class GeneratorTestMapper {
         generatorTest.setLossPowerFlag(dto.isLossPowerFlag());
         generatorTest.setStatus(dto.getStatus());
         generatorTest.setAlerted(dto.isAlerted());
+
+        if(dto.getAuthors()==null)
+            generatorTest.setAuthors(Arrays.asList(Author.DTN));
+        else generatorTest.setAuthors(dto.getAuthors().stream().map(a-> Author.valueOf(a)).collect(Collectors.toList()));
         return generatorTest;
     }
 
@@ -31,7 +39,11 @@ public class GeneratorTestMapper {
         dto.setInventNumber(test.getDevice().getInventNumber());
         dto.setStatus(test.getStatus());
         dto.setAlerted(test.isAlerted());
+
+        if(test.getAuthors()==null){
+            dto.setAuthors(Arrays.asList("DTN"));
+        }
+        else dto.setAuthors(test.getAuthors().stream().map(a->a.name()).collect(Collectors.toList()));;
         return dto;
     }
-
 }

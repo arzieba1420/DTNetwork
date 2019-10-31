@@ -8,6 +8,7 @@ import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.Author;
+import pl.nazwa.arzieba.dtnetworkproject.model.IssueDocument;
 import pl.nazwa.arzieba.dtnetworkproject.model.IssueFiles;
 import pl.nazwa.arzieba.dtnetworkproject.services.damage.DamageService;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
@@ -296,15 +297,50 @@ public class IssueDocController {
         return getAllForYear(year,model,1);
   }
 
-  @GetMapping("/showFiles/{id}")
-    public String allFilesForDoc(@PathVariable Integer id, Model model){
+  @GetMapping("/showFiles")
+    public String allFilesForDoc(Model model,@ModelAttribute("doc1") String signature){
 
-        List<IssueFiles> files = issueDocService.getFilesForDoc(id);
+        List<IssueFiles> files = issueDocService.getFilesForDoc(signature);
         model.addAttribute("files", files);
         model.addAttribute("size", files.size());
         return "documents/allFilesForDoc";
   }
 
+  @GetMapping("/editDoc")
+    public String editDocument(Model model,@ModelAttribute("eDoc") String signature ){
+       IssueDocumentDTO documentDTO = issueDocService.findBySignature(signature);
+      model.addAttribute("editedDoc", documentDTO);
+      model.addAttribute("inventNumber", documentDTO.getInventNumber());
+      String text = deviceDAO.findByInventNumber(documentDTO.getInventNumber()).getDeviceDescription()
+              +" "+deviceDAO.findByInventNumber(documentDTO.getInventNumber()).getRoom();
+      model.addAttribute("text",text);
+      return "documents/editForm";
+  }
+
+
+    public String editFormErr(Model model, String signature, IssueDocumentDTO documentDTO ){
+        model.addAttribute("editedDoc", documentDTO);
+        model.addAttribute("inventNumber", documentDTO.getInventNumber());
+        String text = deviceDAO.findByInventNumber(documentDTO.getInventNumber()).getDeviceDescription()
+                +" "+deviceDAO.findByInventNumber(documentDTO.getInventNumber()).getRoom();
+        model.addAttribute("text",text);
+        return "documents/editForm";
+    }
+
+  @PostMapping("/editDocPost")
+    public String editDoc(@Valid @ModelAttribute ("editedDoc") IssueDocumentDTO documentDTO,BindingResult bindingResult, Model model){
+      if (bindingResult.hasFieldErrors()) {
+          List<FieldError> allErrors;
+          allErrors = bindingResult.getFieldErrors();
+
+          model.addAttribute("bindingResult", bindingResult);
+          model.addAttribute("errors", allErrors);
+          model.addAttribute("errorsAmount", allErrors.size());
+          return editFormErr(model, documentDTO.getIssueSignature(),documentDTO);
+      }
+       issueDocService.create(documentDTO);
+        return "redirect:/dtnetwork";
+  }
 
 
 

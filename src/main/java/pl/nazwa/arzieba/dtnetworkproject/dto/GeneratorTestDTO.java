@@ -3,11 +3,14 @@ package pl.nazwa.arzieba.dtnetworkproject.dto;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
+import pl.nazwa.arzieba.dtnetworkproject.model.Author;
 import pl.nazwa.arzieba.dtnetworkproject.model.Status;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.util.List;
 
 @Component
 @Getter
@@ -26,6 +29,9 @@ public class GeneratorTestDTO {
 
     @NotNull(message = "Ustaw status akcji!")
     private Status status;
+
+    @Size(min = 1,message = "Musisz wybrać conajmniej jednego pracownika DTN!")
+    private List<String> authors;
     private boolean lossPowerFlag;
     private boolean alerted;
 

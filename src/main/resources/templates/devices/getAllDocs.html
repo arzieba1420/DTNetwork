@@ -17,6 +17,23 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <script src="../../static/js/collapsible.js" th:src="@{/js/collapsible.js}" ></script>
     <link rel="stylesheet" href="../../static/css/modal.css" th:href="@{/css/modal.css}">
+    <style>
+        button {
+            background-color: Transparent;
+            background-repeat:no-repeat;
+            border: none;
+            cursor:pointer;
+            overflow: hidden;
+            outline:none;
+            font-size: 14px;
+            padding: 0;
+        }
+
+        button:hover{
+            color: #0062fe;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <script>
@@ -39,12 +56,12 @@
                     <th>Nazwa firmy</th>
                     
                     <th style="width:600px">Tytuł sprawy</th>
-                    <th>Wartość zamówienia</th>
-                    <th>Akcja</th>
+                    <th >Wartość zamówienia</th>
+                    <th style="width: 100px">Akcja</th>
                 </tr>
                 <tr th:each="doc:${docs}">
                     <td style="white-space:pre-wrap;width: 150px" th:text="${doc.issueSignature}">Invent Number</td>
-                    <td th:text="${doc.issueDate}">Invent Number</td>
+                    <td th:text="${@calendarUtil.invertDateString(doc.issueDate)}">Invent Number</td>
                     <td th:text="${doc.delivererName}">Invent Number</td>
 
                     <td style="width: 600px">
@@ -54,7 +71,17 @@
                         </div>
                     </td>
                     <td th:text="${doc.value}">Invent Number</td>
-                    <td ><a href="" th:href="@{'/issueDocs/showFiles/'+${@issueDocumentDAO.findByIssueSignature(doc.getIssueSignature()).getIssueId()}}" th:text="'Pokaż pliki ('+${@issueDocumentDAO.findByIssueSignature(doc.getIssueSignature()).getIssueFiles().size()}+')'"></a></td>
+                    <td style="width: 100px">
+                        <form th:action="@{'/issueDocs/showFiles'}" modelAttribute="doc1" >
+                            <input style="display: none" type="text" id="doc1" th:attr="value = ${doc.getIssueSignature()}"  name="doc1" >
+                            <button type="submit" th:text="'Pokaż pliki (' + ${@issueDocumentDAO.findByIssueSignature(doc.getIssueSignature()).getIssueFiles().size()}+')'"></button>
+                        </form>
+                        <form th:action="@{'/issueDocs/editDoc'}" modelAttribute="eDoc" >
+                            <input style="display: none" type="text" id="eDoc" th:attr="value = ${doc.getIssueSignature()}"  name="eDoc" >
+                            <button type="submit" th:text="'Edytuj'"></button>
+                        </form>
+
+                    </td>
                 </tr>
             </table>
 

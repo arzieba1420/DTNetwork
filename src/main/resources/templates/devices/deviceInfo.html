@@ -44,7 +44,7 @@
                     <td  class="sets" >Aktualna</td>
                     <td id="openModal3"  class="sets"  th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet().getActualSetPoint()}" ></td>
                     <td  class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() ==null}"  >Nieznana</td>
-                    <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() !=null}" th:text="${@calendarUtil.cal2string(@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet().getSetDate())}" ></td>
+                    <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() !=null}" th:text="${@calendarUtil.invertDateCal(@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet().getSetDate())}" ></td>
                     <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() ==null}" >Nieznana</td>
                     <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet().getAuthor()}" ></td>
                     <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() ==null}"  >-</td>
@@ -55,7 +55,7 @@
                     <td  class="sets" >Poprzednia</td>
                     <td  class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet().getPreviousSetPoint()}" ></td>
                     <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet()  ==null}"  >Nieznana</td>
-                    <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet()  !=null}" th:text="${@calendarUtil.cal2string(@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet().getPreviousSetDate())}" ></td>
+                    <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet()  !=null}" th:text="${@calendarUtil.invertDateCal(@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet().getPreviousSetDate())}" ></td>
                     <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet()  ==null}" >Nieznana</td>
                     <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet()  !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet().getPreviousAuthor()}" ></td>
                     <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getChillerSet()  ==null}"  >-</td>
@@ -87,7 +87,7 @@
             <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() ==null}"  >Nieznana</td>
             <td  class="sets"  th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getActualSetPoint_AmbR()}" ></td>
             <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() ==null}"  >Nieznana</td>
-            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() !=null}" th:text="${@calendarUtil.cal2string(@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getSetDate())}" ></td>
+            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() !=null}" th:text="${@calendarUtil.invertDateCal(@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getSetDate())}" ></td>
             <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() ==null}" >Nieznana</td>
             <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getAuthor()}" ></td>
             <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() ==null}"  >-</td>
@@ -105,7 +105,7 @@
             <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet()  ==null}"  >Nieznana</td>
             <td  class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet() !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getPreviousSetPoint_AmbR()}" ></td>
             <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet()  ==null}"  >Nieznana</td>
-            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet()  !=null}" th:text="${@calendarUtil.cal2string(@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getPreviousSetDate())}" ></td>
+            <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet()  !=null}" th:text="${@calendarUtil.invertDateCal(@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getPreviousSetDate())}" ></td>
             <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet()  ==null}" >Nieznana</td>
             <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet()  !=null}" th:text="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet().getPreviousAuthor()}" ></td>
             <td class="sets" th:if="${@deviceDAO.findByInventNumber(dto.getInventNumber()).getDrycoolerSet()  ==null}"  >-</td>
@@ -209,7 +209,7 @@
 
             <tr th:if="${dto.getDeviceType().name().equals('GENERATOR')}">
                 <td>Data ostatniego </br> uruchomienia</td>
-                <td th:utext="${lastTest}+' </br> '+${activityType}"></td>
+                <td th:utext="${@calendarUtil.invertDateString(lastTest)}+' </br> '+${activityType}"></td>
                 <td th:if="${dao.getTests().isEmpty()}" th:text="'---'"></td>
                 <td th:if="${!dao.getTests().isEmpty()}" ><a href="" th:href="@{'/generators/' + ${dto.getInventNumber()} + '/1'}"  th:utext="' &#8981;'+'Pokaż </br> dziennik pracy'"></a></td>
 
