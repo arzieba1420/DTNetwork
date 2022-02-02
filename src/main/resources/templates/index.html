@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DTNetwork</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <link rel="icon" type="image/ico" href="../static/images/icoTitl.PNG" th:href="@{/images/icoTitl.PNG}" >
     <link rel="stylesheet"  th:href="@{/css/navbar.css}">
     <link rel="stylesheet"  th:href="@{/css/main.css}"> <!--href="../static/css/main.css"-->
@@ -37,14 +38,12 @@
     </style>
 </head>
 <body>
-   <!-- VERY IMPORTANT SCRIPT!!! (without it server will meet NullPointer after removing ShortPost from DB) -->
-    <script>
-    window.location.refresh();
-    </script>
+
     <div th:replace="~{fragments/header.html::header}"></div>
     <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
 
    <a id="instrukcja" href="" th:href="@{/download1/Instrukcja}" ><button id="instrButton">Pobierz instrukcję</button></a>
+   <a target="_blank" id="grafik" href="https://docs.google.com/spreadsheets/d/1_joVLxWDabAU4PRAvlFkeQaKH9j9-iqq7r9KYuE40Tw/edit#gid=0" ><button id="grafikButton">Grafik on-line</button></a>
    <div id="mySidenav" class="sidenav">
        <div class="search" id="tests">
            <table style="background-color: white; border: 1px solid black;color: black; text-align: center">
@@ -180,7 +179,7 @@
             </div>
         </div>
     </div>
-   <script  th:src="@{/js/mymodal.js}"></script>
+   <script th:src="@{/js/mymodal.js}"></script>
    <div th:insert="~{fragments/footer.html::footer}"></div>
 </body>
 </html>

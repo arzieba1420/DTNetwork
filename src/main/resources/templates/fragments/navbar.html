@@ -45,7 +45,7 @@
                         <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}" th:each="year:${@issueDocServiceImpl.subSet()}" ><a href="#" th:href="@{'/issueDocs/'+${year}+'/1'}" th:text="${year}"></a></li>
 
 
-                        <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}"  ><a id="openModal2"  th:text="'Więcej...'"> </a></li>
+                        <li th:if="${@issueDocServiceImpl.setOfYears().size()>5}"  ><a id="docModal"  th:text="'Więcej...'"> </a></li>
 
 
                         

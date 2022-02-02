@@ -7,6 +7,7 @@ import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.Author;
 import pl.nazwa.arzieba.dtnetworkproject.model.ShortPost;
 import pl.nazwa.arzieba.dtnetworkproject.utils.device.DeviceMapper;
+import pl.nazwa.arzieba.dtnetworkproject.utils.mail.EmailConfiguration;
 import pl.nazwa.arzieba.dtnetworkproject.utils.shortPost.ShortPostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,11 +25,13 @@ public class ShortPostServiceImpl implements ShortPostService {
 
     private ShortPostDAO postDAO;
     private DeviceDAO deviceDAO;
+    private EmailConfiguration email;
 
     @Autowired
-    public ShortPostServiceImpl(ShortPostDAO postDAO, DeviceDAO deviceDAO) {
+    public ShortPostServiceImpl(ShortPostDAO postDAO, DeviceDAO deviceDAO, EmailConfiguration email) {
         this.postDAO = postDAO;
         this.deviceDAO = deviceDAO;
+        this.email = email;
     }
 
     @Override
@@ -149,6 +152,15 @@ public class ShortPostServiceImpl implements ShortPostService {
     @Override
     public ShortPostDTO create(ShortPostDTO dto) {
         postDAO.save(ShortPostMapper.map(dto,deviceDAO));
+
+
+        if (!dto.getContent().contains("[SYSTEM]"))   {
+            String[] receivers=new String[] {"d.trela@cyfronet.pl", "enarkadiuszzieba@gmail.com"};
+            email.sendMail(receivers,deviceDAO.findByInventNumber(dto.getInventNumber()).getDeviceDescription()+ " w: "+deviceDAO.findByInventNumber(dto.getInventNumber()).getRoom().name(),dto.getContent()
+                     ,dto.getAuthor().name());
+
+        }
+
         return dto;
     }
 

@@ -10,9 +10,12 @@ input.addEventListener("blur",function () {
     this.placeholder = "20.0";
 })
 
-openBtn.addEventListener("click", function () {
-    chillerModal.style.display = "block";
-})
+try {
+    openBtn.addEventListener("click", function () {
+        chillerModal.style.display = "block";
+    })
+} catch (e) {
+}
 
 closeBtn.addEventListener("click", function () {
     chillerModal.style.display = "none";

@@ -33,9 +33,12 @@ input4.addEventListener("blur",function () {
 })
 
 
-openBtn.addEventListener("click", function () {
-    drycoolerModal.style.display = "block";
-})
+try {
+    openBtn.addEventListener("click", function () {
+        drycoolerModal.style.display = "block";
+    })
+} catch (e) {
+}
 
 closeBtn.addEventListener("click", function () {
     drycoolerModal.style.display = "none";

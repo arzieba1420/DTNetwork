@@ -5,12 +5,14 @@
     var endpoint = window.location.pathname;
 // Get the button that opens the modal
     var btn = document.getElementById("openModal");
-    var btn2 = document.getElementById("openModal2");
+    var btn2 = document.getElementById("docModal");
 // Get the <span> element that closes the modal
    var closePosts = document.getElementById("closePosts");
    var closeDocs = document.getElementById("closeDocs");
    var notes = document.getElementById("openNotes");
    var calendar = document.getElementById("openCalendar");
+
+
 
    if(endpoint=="/dtnetwork" || endpoint=="" || endpoint=="/"){
        notes.style.visibility = "visible";
@@ -26,9 +28,13 @@
         modal.style.display = "block";
     })
 
+    try {
     btn2.addEventListener(type="click", function () {
         modal2.style.display = "block";
-    })
+    })} catch (e){
+        console.log("Null");
+        }
+
 
 // When the user clicks on <span> (x), close the modal
 

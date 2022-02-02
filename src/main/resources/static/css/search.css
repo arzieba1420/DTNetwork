@@ -27,6 +27,24 @@
     margin-top: 0px;
 }
 
+#grafik{
+    position: absolute;
+    top: 230px;
+    right: 0px;
+}
+
+#grafikButton{
+    background-color: #4CAF50;
+    color: white;
+    width: 160px;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+    margin-top: 0px;
+}
+
 #mySidenav2{
     position: absolute;
     top:200px;
