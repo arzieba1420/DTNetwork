@@ -155,7 +155,7 @@ public class ShortPostServiceImpl implements ShortPostService {
 
 
         if (!dto.getContent().contains("[SYSTEM]"))   {
-            String[] receivers=new String[] {"d.trela@cyfronet.pl", "enarkadiuszzieba@gmail.com"};
+            String[] receivers=----------------------------------------------------------------to provide
             email.sendMail(receivers,deviceDAO.findByInventNumber(dto.getInventNumber()).getDeviceDescription()+ " w: "+deviceDAO.findByInventNumber(dto.getInventNumber()).getRoom().name(),dto.getContent()
                      ,dto.getAuthor().name());
 
