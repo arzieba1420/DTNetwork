@@ -18,7 +18,51 @@ window.onload=function () {
 
     var tests = document.getElementById("tests");
     var downloadButton = document.getElementById("instrukcja");
+    var scheduleButton = document.getElementById("grafik");
+    var month = new Date().getMonth();
 
+
+
+    switch (month) {
+        case 0:
+            scheduleButton.setAttribute("href","https://docs.google.com/spreadsheets/d/1_joVLxWDabAU4PRAvlFkeQaKH9j9-iqq7r9KYuE40Tw/edit#gid=0");
+            break;
+        case 1:
+            scheduleButton.setAttribute("href","https://docs.google.com/spreadsheets/d/1_joVLxWDabAU4PRAvlFkeQaKH9j9-iqq7r9KYuE40Tw/edit#gid=1768327251");
+            break;
+        case 2:
+            scheduleButton.setAttribute("href","https://docs.google.com/spreadsheets/d/1_joVLxWDabAU4PRAvlFkeQaKH9j9-iqq7r9KYuE40Tw/edit#gid=367811845");
+            break;
+        case 3:
+            scheduleButton.setAttribute("href","https://docs.google.com/spreadsheets/d/1_joVLxWDabAU4PRAvlFkeQaKH9j9-iqq7r9KYuE40Tw/edit#gid=1254235562");
+            break;
+        case 4:
+            scheduleButton.setAttribute("href","https://docs.google.com/spreadsheets/d/1_joVLxWDabAU4PRAvlFkeQaKH9j9-iqq7r9KYuE40Tw/edit#gid=900428102");
+            break;
+        case 5:
+            scheduleButton.setAttribute("href","https://docs.google.com/spreadsheets/d/1_joVLxWDabAU4PRAvlFkeQaKH9j9-iqq7r9KYuE40Tw/edit#gid=2025169371");
+            break;
+        case 6:
+            scheduleButton.setAttribute("href","https://docs.google.com/spreadsheets/d/1_joVLxWDabAU4PRAvlFkeQaKH9j9-iqq7r9KYuE40Tw/edit#gid=1363080914");
+            break;
+        case 7:
+            scheduleButton.setAttribute("href","https://docs.google.com/spreadsheets/d/1_joVLxWDabAU4PRAvlFkeQaKH9j9-iqq7r9KYuE40Tw/edit#gid=870286028");
+            break;
+        case 8:
+            scheduleButton.setAttribute("href","https://docs.google.com/spreadsheets/d/1_joVLxWDabAU4PRAvlFkeQaKH9j9-iqq7r9KYuE40Tw/edit#gid=1932820850");
+            break;
+        case 9:
+            scheduleButton.setAttribute("href","https://docs.google.com/spreadsheets/d/1_joVLxWDabAU4PRAvlFkeQaKH9j9-iqq7r9KYuE40Tw/edit#gid=2076927743");
+            break;
+        case 10:
+            scheduleButton.setAttribute("href","https://docs.google.com/spreadsheets/d/1_joVLxWDabAU4PRAvlFkeQaKH9j9-iqq7r9KYuE40Tw/edit#gid=67999994");
+            break;
+        case 11:
+            scheduleButton.setAttribute("href","https://docs.google.com/spreadsheets/d/1_joVLxWDabAU4PRAvlFkeQaKH9j9-iqq7r9KYuE40Tw/edit#gid=397658345");
+            break;
+
+
+    }
 
     input.addEventListener("focus", function (event) {
         input.placeholder = "";
@@ -28,6 +72,7 @@ window.onload=function () {
 
 
     diaryText.addEventListener("focus",function () {
+
         if(this.value==""){
             this.placeholder="";
         }

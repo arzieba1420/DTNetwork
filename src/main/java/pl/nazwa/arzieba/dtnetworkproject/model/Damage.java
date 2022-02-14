@@ -32,8 +32,10 @@ public class Damage {
     private Device device;
 
     private String description;
+
     @Temporal(TemporalType.DATE)
     private Calendar damageDate;
+
     private Author author;
 
     @OneToMany(mappedBy = "damage", fetch =FetchType.LAZY, cascade = CascadeType.ALL)

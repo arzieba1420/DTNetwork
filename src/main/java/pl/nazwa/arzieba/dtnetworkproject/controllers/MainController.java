@@ -2,7 +2,10 @@ package pl.nazwa.arzieba.dtnetworkproject.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,6 +14,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import pl.nazwa.arzieba.dtnetworkproject.configuration.MyPropertiesConfig;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.GeneratorTestDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.ShortPostDAO;
@@ -41,7 +45,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+
+
 @Controller
+@PropertySource("classpath:application.properties")
 @RequestMapping("/")
 public class MainController implements ErrorController {
 
@@ -51,26 +58,38 @@ public class MainController implements ErrorController {
 
     private ShortPostService postService;
     private DeviceService deviceService;
-    private ShortPostDAO dao;
+    private ShortPostDAO shortPostDAO;
     private DeviceDAO deviceDAO;
     private IssueDocService issueDocService;
     private UserDAO userDAO;
     private PasswordEncoder passwordEncoder;
     private GeneratorTestDAO generatorTestDAO;
+    private MyPropertiesConfig propertiesConfig;
+    private ApplicationArguments applicationArguments;
+    @Value("${my.defaultScheduleURL}")
+    private String scheduleURL;
+
+
+
+
 
 
 
     @Autowired
-    public MainController(UserDAO userDAO, IssueDocService issueDocService, DeviceDAO deviceDAO, ShortPostService postService, DeviceService deviceService, ShortPostDAO dao, PasswordEncoder passwordEncoder, GeneratorTestDAO generatorTestDAO) {
+    public MainController(UserDAO userDAO, IssueDocService issueDocService, DeviceDAO deviceDAO, ShortPostService postService, DeviceService deviceService, ShortPostDAO shortPostDAO, PasswordEncoder passwordEncoder, GeneratorTestDAO generatorTestDAO, MyPropertiesConfig myPropertiesConfig, MyPropertiesConfig propertiesConfig, ApplicationArguments applicationArguments) {
         this.postService = postService;
         this.deviceService = deviceService;
-        this.dao = dao;
+        this.shortPostDAO = shortPostDAO;
         this.deviceDAO=deviceDAO;
         this.issueDocService=issueDocService;
         this.userDAO = userDAO;
         this.passwordEncoder = passwordEncoder;
         this.generatorTestDAO = generatorTestDAO;
+        this.propertiesConfig = propertiesConfig;
+        this.applicationArguments = applicationArguments;
     }
+
+
 
     // required because login form redirects to localhost:8080/ not to /dtnetwork
     @GetMapping
@@ -81,8 +100,9 @@ public class MainController implements ErrorController {
     @GetMapping("/dtnetwork")
     public String home(Model model)  {
 
+
         Map<Integer, ShortPostDTO> mapa = new LinkedHashMap<>();
-        List<Integer> keys = dao.findTop10ByOrderByDateDesc().stream().map(d -> d.getPostId()).collect(Collectors.toList());
+        List<Integer> keys = shortPostDAO.findTop10ByOrderByDateDesc().stream().map(d -> d.getPostId()).collect(Collectors.toList());
 
         for (int i = 0; i < keys.size(); i++) {
             ShortPostDTO dto = postService.findById(keys.get(i));
@@ -109,7 +129,7 @@ public class MainController implements ErrorController {
                     post.setDate(new Date());
                     post.setContent("Wymagany test generatora! [SYSTEM]");
                     post.setAuthor(Author.DTN);
-                    dao.save(post);
+                    shortPostDAO.save(post);
                     test.setAlerted(true);
                 }
             }
@@ -124,8 +144,16 @@ public class MainController implements ErrorController {
         model.addAttribute("rooms", rooms);
         model.addAttribute("generators", lastTests);
         model.addAttribute("today", Calendar.getInstance());
+        if (applicationArguments.getSourceArgs()[0].contains("http"))
+        model.addAttribute("scheduleURL",applicationArguments.getSourceArgs()[0]);
+        else
+            model.addAttribute("scheduleURL",scheduleURL);
+
+
 
         return "index";
+
+
     }
 
     public static long betweenDates(Calendar firstDate, Date secondDate)
@@ -137,10 +165,10 @@ public class MainController implements ErrorController {
     public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
-            System.out.println("Wylogowano pomyślnie");
+            logger.info("Wylogowano pomyślnie, "+auth.getName());
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+        return "login"; //You can redirect wherever you want, but generally it's a good practice to show login screen again.
     }
 
     @GetMapping("/dev/init")
@@ -273,7 +301,7 @@ public class MainController implements ErrorController {
         userDAO.deleteAll();
     }
 
-    @GetMapping("login")
+    @GetMapping("/login")
     public String login(){
 
         return "login";

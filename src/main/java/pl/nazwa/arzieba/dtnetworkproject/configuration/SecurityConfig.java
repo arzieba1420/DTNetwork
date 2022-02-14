@@ -1,8 +1,8 @@
 package pl.nazwa.arzieba.dtnetworkproject.configuration;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import org.jasypt.util.password.BasicPasswordEncryptor;
-import org.jasypt.util.text.BasicTextEncryptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -12,25 +12,31 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.ForwardLogoutSuccessHandler;
+import pl.nazwa.arzieba.dtnetworkproject.controllers.MainController;
 import pl.nazwa.arzieba.dtnetworkproject.services.users.UserPrincipalDetailsService;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
 @EnableEncryptableProperties
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    Logger logger = LoggerFactory.getLogger(this.getClass());
     @Value("${my.adminPass}")
     private String adminPass;
     @Value("${my.userPass}")
     private String userPass;
     private UserPrincipalDetailsService userPrincipalDetailsService;
+
 
     @Autowired
     public SecurityConfig(UserPrincipalDetailsService userPrincipalDetailsService){
@@ -38,12 +44,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth){
-
         auth.authenticationProvider(authenticationProvider());
-
     }
 
     //TODO configure permitions
@@ -53,13 +56,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/dtnetwork").hasAuthority("ROLE_USER")
                 .antMatchers("/dev/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().hasAuthority("ROLE_USER")
                 .and()
                 .csrf().disable()
                 .formLogin()
-                .loginPage("/login").permitAll();
-                /*.and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/preLogout")) .logoutSuccessUrl("/login?logout");*/
+                .loginPage("/login").permitAll()
+                .successHandler(new AuthenticationSuccessHandler() {
+                    @Override
+                    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                        logger.info("Zalogowano pomyślnie: "+authentication.getName());
+                        httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/dtnetwork");
+                    }
+                }
+                              )
+                .and()
+                .logout().logoutUrl("/logout").logoutSuccessHandler(new ForwardLogoutSuccessHandler("/login"){
+                    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                        logger.info("Wylogowano pomyslnie: "+authentication.getName());
+                        response.sendRedirect("/login");
+                    }
+                });
     }
 
     @Bean
@@ -74,5 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return daoAuthenticationProvider;
 
     }
+
+
 
 }

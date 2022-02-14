@@ -26,6 +26,9 @@
     float: right;
     margin-top: 0px;
 }
+#instrButton:hover, #grafikButton:hover {
+    background-color: #1e9d0b;
+}
 
 #grafik{
     position: absolute;
@@ -135,6 +138,11 @@
     width: 450px;
     z-index: 999;
 }
+
+#tests:hover{
+    background-color: #1e9d0b;
+}
+
 #setPoints {
 
     background-color: #004000;

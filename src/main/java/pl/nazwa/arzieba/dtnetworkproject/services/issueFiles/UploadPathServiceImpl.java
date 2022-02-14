@@ -2,6 +2,7 @@ package pl.nazwa.arzieba.dtnetworkproject.services.issueFiles;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.nazwa.arzieba.dtnetworkproject.controllers.DownloadController;
 
 import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
@@ -11,10 +12,21 @@ import java.io.File;
 @Transactional
 public class UploadPathServiceImpl implements UploadPathService {
 
-    public static final String DIRECTORY = "C://Users/User/Desktop/DTNetwork/storage/";
 
-    @Autowired
+
+
+    final
     ServletContext context;
+
+    private DownloadController downloadController;
+
+    public UploadPathServiceImpl(ServletContext context, DownloadController downloadController) {
+        this.context = context;
+        this.downloadController = downloadController;
+    }
+
+    private String DIRECTORY = downloadController.STORAGE_DIRECTORY;
+
 
     @Override
     public File getFilePath(String modifiedFileName, String path) {

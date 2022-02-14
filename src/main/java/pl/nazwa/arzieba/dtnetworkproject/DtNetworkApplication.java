@@ -9,11 +9,13 @@ import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.jasypt.util.text.BasicTextEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
+import pl.nazwa.arzieba.dtnetworkproject.configuration.MyPropertiesConfig;
 
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -23,9 +25,12 @@ import java.util.Locale;
 public class DtNetworkApplication  {
     public static final Logger LOG = LoggerFactory.getLogger(DtNetworkApplication.class);
 
+
     public static void main(String[] args) {
 
+
         SpringApplication.run(DtNetworkApplication.class, args);
+
     /*    String password = "arzieba_DTNetworkPL";
         BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
         String encryptedPassword = passwordEncryptor.encryptPassword(password);
