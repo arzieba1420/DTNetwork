@@ -12,33 +12,26 @@ import java.io.File;
 @Transactional
 public class UploadPathServiceImpl implements UploadPathService {
 
-
-
-
-    final
-    ServletContext context;
-
+    private ServletContext context;
     private DownloadController downloadController;
+    private String DIRECTORY = downloadController.STORAGE_DIRECTORY;
 
     public UploadPathServiceImpl(ServletContext context, DownloadController downloadController) {
         this.context = context;
         this.downloadController = downloadController;
     }
 
-    private String DIRECTORY = downloadController.STORAGE_DIRECTORY;
-
-
     @Override
     public File getFilePath(String modifiedFileName, String path) {
 
-
         boolean exists =new File(DIRECTORY+"/"+path+"/").exists();
+        String modifiedFilePath = DIRECTORY+"/"+path+"/"+File.separator+modifiedFileName;
+        File file = new File(modifiedFilePath);
+
         if(!exists){
             new File(DIRECTORY+"/"+path+"/").mkdir();
         }
 
-        String modifiedFilePath = DIRECTORY+"/"+path+"/"+File.separator+modifiedFileName;
-        File file = new File(modifiedFilePath);
         return file;
     }
 }

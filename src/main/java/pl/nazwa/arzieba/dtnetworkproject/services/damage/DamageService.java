@@ -14,9 +14,7 @@ public interface DamageService {
 
     List<DamageDTO> findAll();
     DamageDTO findById(Integer id);
-
     int numberOfDamagesByDevice(String inventNumber);
-
     List<Damage> findByDeviceInventNumber(int page, int size, String inventNumber);
     List<DamageDTO> findByDateBefore(String date);
     List<DamageDTO> findByDateAfter(String date);
@@ -24,8 +22,6 @@ public interface DamageService {
     DamageDTO create(DamageDTO damageDTO);
     DamageDTO update(DamageDTO damageDTO);
     DamageDTO remove(Integer id);
-
     List<IssueDocumentDTO> getIssueDocuments(Integer id);
-
 }
 

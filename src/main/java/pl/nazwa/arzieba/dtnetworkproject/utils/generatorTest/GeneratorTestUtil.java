@@ -11,13 +11,10 @@ import java.util.List;
 @Component
 public class GeneratorTestUtil {
 
-
     GeneratorTestDAO dao;
 
     @Autowired
     public GeneratorTestUtil(GeneratorTestDAO dao) {
         this.dao=dao;
     }
-
-
 }

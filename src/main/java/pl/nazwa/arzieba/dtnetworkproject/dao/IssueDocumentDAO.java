@@ -19,8 +19,4 @@ public interface IssueDocumentDAO extends PagingAndSortingRepository<IssueDocume
     List<IssueDocument> findByDamage_DamageId(Integer id);
     List<IssueDocument> findByInventNumber(String inventNumber);
     boolean existsByIssueSignature(String signature);
-
-
-
-
 }

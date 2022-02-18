@@ -13,32 +13,34 @@ import java.util.ArrayList;
 public class IssueDocMapper {
 
     public static  IssueDocument map (IssueDocumentDTO documentDTO,DamageDAO damageDAO){
+
         IssueDocument document = new IssueDocument();
+
         if (documentDTO.getDamageId()==null){
             document.setDamage(null);
         } else document.setDamage(damageDAO.findById(documentDTO.getDamageId()).orElse(null));
+
         document.setDelivererName(documentDTO.getDelivererName());
         document.setDelivererNIP(documentDTO.getDelivererNIP());
         document.setIssueDate(CalendarUtil.string2cal(documentDTO.getIssueDate()));
         document.setIssueDetails(documentDTO.getIssueDetails());
         document.setIssueSignature(documentDTO.getIssueSignature());
         document.setIssueTittle(documentDTO.getIssueTittle());
+
         if(documentDTO.getDamageId()==null)
         document.setInventNumber(documentDTO.getInventNumber());
-        else document.setInventNumber(damageDAO.findById(documentDTO.getDamageId()).orElse(null).getDevice().getInventNumber());
-        document.setValue(documentDTO.getValue());
+        else document.setInventNumber(damageDAO.findById(documentDTO.getDamageId()).orElse(null).getDevice().getInventNumber());        document.setValue(documentDTO.getValue());
 
         document.setFiles(documentDTO.getIssueFiles());
-
-
         document.setFilesToRemove(documentDTO.getFilesToRemove());
-
 
         return document;
     }
 
     public static IssueDocumentDTO map(IssueDocument document){
+
         IssueDocumentDTO documentDTO = new IssueDocumentDTO();
+
         if(document.getDamage()==null){
             documentDTO.setDamageId(null);
         }else
@@ -52,14 +54,9 @@ public class IssueDocMapper {
         documentDTO.setIssueSignature(document.getIssueSignature());
         documentDTO.setIssueDetails(document.getIssueDetails());
         documentDTO.setValue(document.getValue());
-
-         documentDTO.setIssueFiles(document.getFiles());
-
-
+        documentDTO.setIssueFiles(document.getFiles());
         documentDTO.setFilesToRemove(document.getFilesToRemove());
-
 
         return documentDTO;
     }
-
 }

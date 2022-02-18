@@ -19,5 +19,4 @@ public interface InvoiceDAO extends PagingAndSortingRepository<ElectricalInvoice
     List<ElectricalInvoice> findAllByBuilding(BuildingType buildingType);
     ElectricalInvoice findByInvoiceId(String id);
     List<ElectricalInvoice> findAllByDateBetweenAndBuildingOrderByDateDesc(Calendar start, Calendar end, BuildingType buildingType);
-
 }

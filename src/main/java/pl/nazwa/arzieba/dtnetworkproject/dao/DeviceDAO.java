@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface DeviceDAO extends CrudRepository<Device,String> {
+
     List<Device> findAll();
     List<Device> findAllByDeviceType(DeviceType deviceType);
     Device findByInventNumber(String string);

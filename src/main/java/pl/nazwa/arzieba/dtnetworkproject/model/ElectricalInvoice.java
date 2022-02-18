@@ -23,9 +23,6 @@ public class ElectricalInvoice {
     private BuildingType building;
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private double netValue;
-
     @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private double grossValue;
-
-
 }

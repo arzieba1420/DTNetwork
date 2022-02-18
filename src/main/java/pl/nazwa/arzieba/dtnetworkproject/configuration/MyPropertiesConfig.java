@@ -23,11 +23,9 @@ import pl.nazwa.arzieba.dtnetworkproject.DtNetworkApplication;
 @Setter
 @NoArgsConstructor
 public class MyPropertiesConfig {
+
     public  Integer pagesize;
     public  String defaultScheduleURL;
-
-
-
     }
 
 

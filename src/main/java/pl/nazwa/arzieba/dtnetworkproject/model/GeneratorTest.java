@@ -25,23 +25,17 @@ public class GeneratorTest {
     @Id
     @GeneratedValue
     private Integer testId;
-
     @ManyToOne
     @JoinColumn(name ="Device_INVENT")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Device device;
-
     @Temporal(TemporalType.DATE)
     private Calendar date;
     private String content;
     private Status status;
-
     @Transient
     private List<Author> authors;
-
     private String authorsCommaSeparated;
-
     private boolean lossPowerFlag;
     private boolean alerted;
-
 }

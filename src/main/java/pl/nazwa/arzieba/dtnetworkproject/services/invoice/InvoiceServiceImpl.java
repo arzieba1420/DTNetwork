@@ -21,19 +21,21 @@ import java.util.stream.Collectors;
 public class InvoiceServiceImpl implements InvoiceService {
 
     private InvoiceDAO dao;
-
     public InvoiceServiceImpl(InvoiceDAO dao) {
         this.dao = dao;
     }
 
     @Override
     public InvoiceDTO create(InvoiceDTO dto) {
+
         dao.save(InvoiceMapper.map(dto));
+
         return dto;
     }
 
     @Override
     public List<InvoiceDTO> findAll() {
+
         return dao.findAll().stream().map(InvoiceMapper::map).collect(Collectors.toList());
     }
 
@@ -44,6 +46,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public List<InvoiceDTO> getByYearInBuilding(int year, BuildingType buildingType) {
+
         Calendar start = new GregorianCalendar(year,0,1);
         Calendar end = new GregorianCalendar(year,11,31);
 
@@ -56,6 +59,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         List<ElectricalInvoice> invoices = getByYearInBuilding(year,buildingType).stream().map(InvoiceMapper::map).collect(Collectors.toList());
         double sum=0;
+
         for (ElectricalInvoice invoice: invoices) {
             sum+=invoice.getGrossValue();
         }

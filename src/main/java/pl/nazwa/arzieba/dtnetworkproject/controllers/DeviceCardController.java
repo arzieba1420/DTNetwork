@@ -32,21 +32,22 @@ public class DeviceCardController {
     //tests only
     @DeleteMapping("/delete")
     public String removeById(@RequestParam Integer id){
-        dao.deleteById(id);
-        return "Device card with id "+id+" has been removed";
 
+        dao.deleteById(id);
+
+        return "Device card with id "+id+" has been removed";
     }
 
     @GetMapping("/addForm/{inventNumber}")
     public String addForm(Model model, @PathVariable String inventNumber){
+
         model.addAttribute("newCard", new DeviceCardDTO());
         model.addAttribute("inventNumber", inventNumber);
         model.addAttribute("room", deviceDAO.findByInventNumber(inventNumber).getRoom());
         model.addAttribute("type", deviceDAO.findByInventNumber(inventNumber).getDeviceType());
+
         return "devices/addCardForm";
     }
-
-
 
     @PostMapping("/addAsModel")
     public String create(Model model, @Valid @ModelAttribute("newCard") DeviceCardDTO dto, BindingResult bindingResult){
@@ -54,29 +55,26 @@ public class DeviceCardController {
         if(bindingResult.hasFieldErrors()){
             List<FieldError> allErrors;
             allErrors = bindingResult.getFieldErrors();
-            System.out.println(allErrors.size());
-
 
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors",allErrors);
-
-
             model.addAttribute("errorsAmount",allErrors.size());
+
             return addFormErr(model,dto.getInventNumber(),dto);
         }
 
-
-
         service.create(dto);
+
         return "redirect:/devices/"+dto.getInventNumber();
     }
 
-
     public String addFormErr(Model model, @PathVariable String inventNumber, DeviceCardDTO deviceCardDTO ){
+
         model.addAttribute("newCard", deviceCardDTO);
         model.addAttribute("inventNumber", inventNumber);
         model.addAttribute("room", deviceDAO.findByInventNumber(inventNumber).getRoom());
         model.addAttribute("type", deviceDAO.findByInventNumber(inventNumber).getDeviceType());
+
         return "devices/addCardForm";
     }
 

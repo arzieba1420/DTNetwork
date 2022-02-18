@@ -20,8 +20,10 @@ private UserDAO userDAO;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+
         User user = this.userDAO.findByUsername(s);
         UserPrincipal userPrincipal = new UserPrincipal(user);
+
         return userPrincipal;
     }
 }

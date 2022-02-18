@@ -23,11 +23,10 @@ import java.util.Locale;
 @SpringBootApplication
 @EnableEncryptableProperties
 public class DtNetworkApplication  {
+
     public static final Logger LOG = LoggerFactory.getLogger(DtNetworkApplication.class);
 
-
     public static void main(String[] args) {
-
 
         SpringApplication.run(DtNetworkApplication.class, args);
 
@@ -55,16 +54,18 @@ public class DtNetworkApplication  {
 
         tomcat.addAdditionalTomcatConnectors(httpToHttpsRedirectConnector());
 
-
         return tomcat;
     }
 
     private Connector httpToHttpsRedirectConnector() {
+
         Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
+
         connector.setScheme("http");
         connector.setPort(8080);
         connector.setSecure(false);
         connector.setRedirectPort(8443);
+
         return connector;
     }
 }

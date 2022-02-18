@@ -22,7 +22,6 @@ public class UsersController {
     private NewPassDTO newPassDTO;
     private PasswordEncoder passwordEncoder;
 
-
     @Autowired
     public UsersController(UserDAO userDAO, NewPassDTO newPassDTO, PasswordEncoder passwordEncoder) {
         this.userDAO = userDAO;
@@ -34,11 +33,12 @@ public class UsersController {
     public String changePasswordForm(Model model, @PathVariable String username ){
 
         User user =userDAO.findByUsername(username);
+
         model.addAttribute("user", user);
         model.addAttribute("newPass", new NewPassDTO());
+
         return "users/changePasswordForm";
     }
-
 
     public String changePasswordFormErr(Model model,  String username, NewPassDTO newPassDTO ){
 
@@ -46,19 +46,23 @@ public class UsersController {
 
         model.addAttribute("user", user);
         model.addAttribute("newPass", newPassDTO);
+
         return "users/changePasswordForm";
     }
 
     @PostMapping("/changePass")
     public String changePass(@Valid @ModelAttribute("newPass") NewPassDTO newPassDTO, BindingResult bindingResult, Model model){
+
+        User user = userDAO.findByUsername(newPassDTO.getLogin());
+
         if(bindingResult.hasFieldErrors()){
             List<FieldError> allErrors;
             allErrors = bindingResult.getFieldErrors();
-            System.out.println(allErrors.size());
 
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors",allErrors);
             model.addAttribute("errorsAmount",allErrors.size());
+
             return changePasswordFormErr(model,newPassDTO.getLogin(),newPassDTO);
         }
 
@@ -66,13 +70,13 @@ public class UsersController {
             List<FieldError> allErrors;
             FieldError fieldError = new FieldError("newPass","oldPass",newPassDTO.getOldPass(),
                     false,null,null,"Niepoprawne aktualne hasło!");
-
             bindingResult.addError(fieldError);
             allErrors = bindingResult.getFieldErrors();
 
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors",allErrors);
             model.addAttribute("errorsAmount",allErrors.size());
+
             return changePasswordFormErr(model,newPassDTO.getLogin(),newPassDTO);
         }
 
@@ -80,19 +84,19 @@ public class UsersController {
             List<FieldError> allErrors;
             FieldError fieldError = new FieldError("newPass","newPassConfirmed",newPassDTO.getNewPassConfirmed(),
                     false,null,null,"Hasła niezgodne!");
-
             bindingResult.addError(fieldError);
             allErrors = bindingResult.getFieldErrors();
 
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors",allErrors);
             model.addAttribute("errorsAmount",allErrors.size());
+
             return changePasswordFormErr(model,newPassDTO.getLogin(),newPassDTO);
         }
 
-        User user = userDAO.findByUsername(newPassDTO.getLogin());
         user.setPassword(passwordEncoder.encode(newPassDTO.getNewPass()));
         userDAO.save(user);
+
         return "redirect:/logout";
     }
 
@@ -100,14 +104,10 @@ public class UsersController {
     public String saveDiary (Model model, @PathVariable String username, @ModelAttribute("diaryText") String diaryText ){
 
         User user = userDAO.findByUsername(username);
+
         user.setPersonalDiary(diaryText);
         userDAO.save(user);
 
         return "redirect:/dtnetwork";
-
     }
-
-
-
-
 }

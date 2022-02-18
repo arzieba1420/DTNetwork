@@ -11,6 +11,7 @@ public  class MediaTypeUtils {
         // application/xml
         // image/gif, ...
         String mineType = servletContext.getMimeType(fileName);
+
         try {
             MediaType mediaType = MediaType.parseMediaType(mineType);
             return mediaType;

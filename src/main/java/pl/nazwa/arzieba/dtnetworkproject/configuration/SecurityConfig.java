@@ -31,18 +31,17 @@ import java.io.IOException;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Value("${my.adminPass}")
     private String adminPass;
     @Value("${my.userPass}")
     private String userPass;
     private UserPrincipalDetailsService userPrincipalDetailsService;
 
-
     @Autowired
     public SecurityConfig(UserPrincipalDetailsService userPrincipalDetailsService){
         this.userPrincipalDetailsService = userPrincipalDetailsService;
     }
-
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth){
@@ -52,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //TODO configure permitions
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.authorizeRequests()
                 .antMatchers("/dtnetwork").hasAuthority("ROLE_USER")
                 .antMatchers("/dev/**").hasAuthority("ROLE_ADMIN")
@@ -84,13 +84,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     DaoAuthenticationProvider authenticationProvider(){
+
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(userPrincipalDetailsService);
+
         return daoAuthenticationProvider;
-
     }
-
-
-
 }

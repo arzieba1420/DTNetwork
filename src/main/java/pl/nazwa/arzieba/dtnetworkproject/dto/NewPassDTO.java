@@ -17,15 +17,9 @@ public class NewPassDTO {
     @NotBlank
     @Size(min = 6,message = "Hasło za krótkie: minimum 6 znaków")
     private String newPass;
-
     @NotBlank(message = "Pole nie może być puste")
     private String newPassConfirmed;
-
     private String login;
-
     @NotBlank(message = "Pole nie może być puste")
     private String oldPass;
-
-
-
 }

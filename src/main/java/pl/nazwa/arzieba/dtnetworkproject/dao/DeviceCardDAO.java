@@ -8,9 +8,9 @@ import java.util.List;
 
 @Repository
 public interface DeviceCardDAO extends CrudRepository<DeviceCard,Integer> {
+
     List<DeviceCard> findAll();
     DeviceCard findByDeviceCardID(Integer integer);
     DeviceCard findByDevice_InventNumber(String inv);
     DeviceCard findBySignatureNumber(String sign);
-
 }

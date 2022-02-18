@@ -10,8 +10,11 @@ import java.math.RoundingMode;
 
 @Component
 public class InvoiceMapper {
+
     public static InvoiceDTO map(ElectricalInvoice invoice){
+
         InvoiceDTO dto = new InvoiceDTO();
+
         dto.setBuilding(invoice.getBuilding());
         dto.setDate(CalendarUtil.cal2string(invoice.getDate()));
         dto.setInvoiceId(invoice.getInvoiceId());
@@ -20,7 +23,9 @@ public class InvoiceMapper {
     }
 
     public static ElectricalInvoice map(InvoiceDTO dto){
+
         ElectricalInvoice invoice = new ElectricalInvoice();
+
         invoice.setBuilding(dto.getBuilding());
         invoice.setDate(CalendarUtil.string2cal(dto.getDate()));
         invoice.setNetValue(dto.getNetValue());
@@ -29,13 +34,13 @@ public class InvoiceMapper {
         return invoice;
     }
 
-
     public static double round(double value, int places) {
+
         if (places < 0) throw new IllegalArgumentException();
 
         BigDecimal bd = new BigDecimal(value);
         bd = bd.setScale(places, RoundingMode.HALF_UP);
+
         return bd.doubleValue();
     }
-
 }

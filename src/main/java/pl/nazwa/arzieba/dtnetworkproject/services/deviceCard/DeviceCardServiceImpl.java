@@ -27,6 +27,7 @@ public class DeviceCardServiceImpl implements DeviceCardService {
 
     @Override
     public List<DeviceCardDTO> findAll() {
+
         return dao.findAll().stream()
                 .map(DeviceCardMapper::map)
                 .collect(Collectors.toList());
@@ -34,6 +35,7 @@ public class DeviceCardServiceImpl implements DeviceCardService {
 
     @Override
     public List<String> showAllSignatures() {
+
         return findAll().stream()
                 .map(DeviceCardDTO::getSignatureNumber)
                 .collect(Collectors.toList());
@@ -41,12 +43,13 @@ public class DeviceCardServiceImpl implements DeviceCardService {
 
     @Override
     public DeviceCardDTO findForDevice(String inv) {
-        return DeviceCardMapper.map(dao.findByDevice_InventNumber(inv));
 
+        return DeviceCardMapper.map(dao.findByDevice_InventNumber(inv));
     }
 
     @Override
     public DeviceCardDTO findForSignature(String signature) {
+
         return DeviceCardMapper.map(dao.findBySignatureNumber(signature));
     }
 
@@ -57,7 +60,9 @@ public class DeviceCardServiceImpl implements DeviceCardService {
 
     @Override
     public String create(DeviceCardDTO dto) {
+
        DeviceCard saved = dao.save(DeviceCardMapper.map(dto,deviceDAO));
+
         return saved.getSignatureNumber();
     }
 }

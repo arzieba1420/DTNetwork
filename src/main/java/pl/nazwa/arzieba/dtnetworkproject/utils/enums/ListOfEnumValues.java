@@ -11,8 +11,7 @@ import java.util.stream.Stream;
 public class ListOfEnumValues {
 
     public static List<DeviceType> deviceTypes = Stream.of(DeviceType.values())
-
-            .collect(Collectors.toList());
+                                                .collect(Collectors.toList());
 
     public static List<String> rooms = Stream.of(Room.values())
             .map(Room::name)

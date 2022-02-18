@@ -13,5 +13,4 @@ public interface IssueFilesDAO extends PagingAndSortingRepository<IssueFiles,Lon
     IssueFiles save(IssueFiles issueFiles);
     List<IssueFiles> findAllByIssueDocument_IssueSignature(String signature);
     List<IssueFiles> findAllByIssueDocument_IssueId(Integer id);
-
 }

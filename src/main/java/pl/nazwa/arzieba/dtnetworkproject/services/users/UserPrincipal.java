@@ -11,8 +11,8 @@ import java.util.Collection;
 import java.util.List;
 
 public class UserPrincipal implements UserDetails {
-    private User user;
 
+    private User user;
 
     public UserPrincipal(User user) {
         this.user = user;
@@ -27,7 +27,6 @@ public class UserPrincipal implements UserDetails {
             GrantedAuthority authority = new SimpleGrantedAuthority(p);
             authorities.add(authority);
         });
-
 
         this.user.getRoleList().forEach(r->{
             GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_"+r);

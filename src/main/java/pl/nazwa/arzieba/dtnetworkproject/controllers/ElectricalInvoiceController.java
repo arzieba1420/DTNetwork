@@ -23,6 +23,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/invoices")
 public class ElectricalInvoiceController {
+
     private InvoiceServiceImpl invoiceService;
     private InvoiceDAO invoiceDAO;
     @Value("${my.pagesize}")
@@ -39,52 +40,55 @@ public class ElectricalInvoiceController {
         model.addAttribute("newInvoice", new InvoiceDTO());
         model.addAttribute("building", BuildingType.valueOf(building) );
         model.addAttribute("buildings", ListOfEnumValues.buildings);
+
         return "invoices/addInvoiceForm";
     }
-
 
     public String createInvoiceErr(Model model, InvoiceDTO dto, BuildingType building ){
 
         model.addAttribute("newInvoice", dto);
         model.addAttribute("building", building);
+
         return "invoices/addInvoiceForm";
     }
 
     @PostMapping("/add")
     public String addInvoice( Model model, @Valid @ModelAttribute("newInvoice") InvoiceDTO dto, BindingResult bindingResult){
+
         if(bindingResult.hasFieldErrors()){
             List<FieldError> allErrors;
             allErrors = bindingResult.getFieldErrors();
+
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors",allErrors);
             model.addAttribute("errorsAmount",allErrors.size());
+
             return createInvoiceErr(model,dto,dto.getBuilding());
         }
+
         invoiceService.create(dto);
+
         return "redirect:/dtnetwork";
     }
 
     @GetMapping("/{building}/{page}")
     public String getAllForBuilding(Model model, @PathVariable String building, @PathVariable int page){
-        List<ElectricalInvoice> invoices = invoiceService.getAllInBuilding(page-1,pagesize,BuildingType.valueOf(building));
 
+        List<ElectricalInvoice> invoices = invoiceService.getAllInBuilding(page-1,pagesize,BuildingType.valueOf(building));
         int numberOfPages = (invoiceDAO.findAllByBuilding(BuildingType.valueOf(building)).size())/pagesize + 1;
+        List<Integer> morePages = new LinkedList<>();
+        int i = 2;
+        int lastPage = 1;
 
         if(invoiceDAO.findAllByBuilding(BuildingType.valueOf(building)).size()%pagesize==0){
             numberOfPages--;
         }
-        List<Integer> morePages = new LinkedList<>();
-
-        int i = 2;
-        int lastPage = 1;
 
         while(i<=numberOfPages){
             morePages.add(i);
             i++;
             lastPage++;
         }
-
-
 
         model.addAttribute("classActiveSettings","active");
         model.addAttribute("pages",morePages);
@@ -96,9 +100,6 @@ public class ElectricalInvoiceController {
         model.addAttribute("monthsEng", Arrays.asList(CalendarUtil.monthsEng));
         model.addAttribute("monthsPol",Arrays.asList(CalendarUtil.monthsPol));
 
-
-
         return "invoices/allInvoices";
     }
-
 }

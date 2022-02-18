@@ -19,13 +19,10 @@ public class DrycoolerSet {
         @Id
         @GeneratedValue
         Integer drycoolerSetId;
-
         @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "Device_INVENT")
         @OnDelete(action = OnDeleteAction.CASCADE)
         private Device device;
-
-
         private Double actualSetPoint_AmbL; //temp zadana drycoolera zewn
         private Double actualSetPoint_CWL; //temp zadana drycoolera zadana
         private Double actualSetPoint_AmbR; //temp zadana drycoolera zewn
@@ -33,7 +30,6 @@ public class DrycoolerSet {
         @Temporal(TemporalType.DATE)
         private Calendar setDate;
         private Author author;
-
         private Double previousSetPoint_AmbL; //temp zadana drycoolera zewn
         private Double previousSetPoint_CWL; //temp zadana drycoolera zadana
         private Double previousSetPoint_AmbR; //temp zadana drycoolera zewn
@@ -41,6 +37,4 @@ public class DrycoolerSet {
         @Temporal(TemporalType.DATE)
         private Calendar previousSetDate;
         private Author previousAuthor;
-
-
     }

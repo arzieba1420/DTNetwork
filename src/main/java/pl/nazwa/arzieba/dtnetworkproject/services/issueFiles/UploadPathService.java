@@ -6,5 +6,6 @@ import java.io.File;
 
 @Service
 public interface UploadPathService {
+
     File getFilePath(String modifiedFileName, String path);
 }

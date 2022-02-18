@@ -21,37 +21,26 @@ import java.util.List;
 @NoArgsConstructor
 public class IssueDocument implements Serializable {
 
-
     @Id
     private String issueSignature;
-
-
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer issueId;
-
     private String delivererName;
     private String delivererNIP;
-
     @Temporal(TemporalType.DATE)
     private Calendar issueDate;
-
     private  String issueTittle;
     private String issueDetails;
     private String inventNumber;
     private double value;
-
     @ManyToOne
     @JoinColumn(name = "damage_Id")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Damage damage;
-
     @Transient
     private List<MultipartFile> files;
     @Transient
     private List<String> filesToRemove;
-
     @OneToMany(mappedBy = "issueDocument")
     private List<IssueFiles> issueFiles = new ArrayList<>();
-
-
 }

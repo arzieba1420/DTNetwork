@@ -65,15 +65,17 @@ public class DeviceController {
     private DrycoolerSetDAO drycoolerSetDAO;
 
 
-
     //Returns DeviceDTO by ID = inventNumber
     @GetMapping("/{inventNumber}")
     public String findByInventNumber(@PathVariable String inventNumber, Model model){
-         DeviceDTO dto= deviceService.findByInventNumber(inventNumber);
-         Device device= deviceDAO.findByInventNumber(inventNumber);
 
-         String lastTest = "Nieznana";
+        DeviceDTO dto= deviceService.findByInventNumber(inventNumber);
+        Device device= deviceDAO.findByInventNumber(inventNumber);
+        String lastTest = "Nieznana";
         String activityType = "(nieznane)";
+        ChillerSetDTO chillerSetDTO = new ChillerSetDTO();
+        DrycoolerSetDTO drycoolerSetDTO = new DrycoolerSetDTO();
+        int posts = device.getShortPosts().size();
 
          if(device.getTests().size()!=0){
              lastTest = CalendarUtil.cal2string(generatorTestDAO.findTopByDevice_InventNumberOrderByDateDesc(inventNumber).getDate()) ;
@@ -86,11 +88,9 @@ public class DeviceController {
          }
 
 
-         ChillerSetDTO chillerSetDTO = new ChillerSetDTO();
          if(device.getChillerSet()!=null)
          chillerSetDTO.setActualSetPoint(deviceDAO.findByInventNumber(inventNumber).getChillerSet().getActualSetPoint());
 
-         DrycoolerSetDTO drycoolerSetDTO = new DrycoolerSetDTO();
          if(device.getDrycoolerSet()!=null){
              drycoolerSetDTO.setActualSetPoint_CWL(device.getDrycoolerSet().getActualSetPoint_CWL());
              drycoolerSetDTO.setActualSetPoint_CWR(device.getDrycoolerSet().getActualSetPoint_CWR());
@@ -106,17 +106,18 @@ public class DeviceController {
          model.addAttribute("issueDAO", issueDocumentDAO);
          model.addAttribute("CalUtil", new CalendarUtil());
          model.addAttribute("lastTest", lastTest);
-         int posts = device.getShortPosts().size();
-        model.addAttribute("posts",posts);
+         model.addAttribute("posts",posts);
+
          return "devices/deviceInfo";
     }
 
     public String findByInventNumberErr(String inventNumber, Model model){
+
         DeviceDTO dto= deviceService.findByInventNumber(inventNumber);
         Device device= deviceDAO.findByInventNumber(inventNumber);
-
         String lastTest = "Nieznana";
         String activityType = "(nieznane)";
+        int posts = device.getShortPosts().size();
 
         if(device.getTests().size()!=0){
             lastTest = CalendarUtil.cal2string(generatorTestDAO.findTopByDevice_InventNumberOrderByDateDesc(inventNumber).getDate()) ;
@@ -128,8 +129,6 @@ public class DeviceController {
             }
         }
 
-
-
         model.addAttribute("chillerSetDTO",new ChillerSetDTO());
         model.addAttribute("activityType", activityType);
         model.addAttribute("dto",dto);
@@ -137,11 +136,10 @@ public class DeviceController {
         model.addAttribute("issueDAO", issueDocumentDAO);
         model.addAttribute("CalUtil", new CalendarUtil());
         model.addAttribute("lastTest", lastTest);
-        int posts = device.getShortPosts().size();
         model.addAttribute("posts",posts);
+
         return "devices/deviceInfo";
     }
-
 
     @PostMapping("/addAsModel")
     public String create2(@Valid @ModelAttribute("newDevice") DeviceDTO dto, BindingResult bindingResult,Model model){
@@ -156,38 +154,45 @@ public class DeviceController {
                 bindingResult.addError(fieldError);
             }
             allErrors = bindingResult.getFieldErrors();
-            System.out.println(allErrors.size());
 
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors",allErrors);
             model.addAttribute("errorsAmount",allErrors.size());
+
             return addFormErr(model,dto.getRoom().name(),dto);
         }
 
         if(deviceDAO.existsById(dto.getInventNumber())){
-
             FieldError fieldError = new FieldError("newDevice","inventNumber", dto.getInventNumber(),false,null,null ,"Device with this Invent Number already exist in database!");
+
             bindingResult.addError(fieldError);
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors",fieldError);
             model.addAttribute("errorsAmount",1);
+
             return addFormErr(model,dto.getRoom().name(),dto);
     }
+
         dto.setRoom(dto.getRoom());
         deviceService.create(dto);
+
         return "redirect:/devices/"+ dto.getInventNumber() ;
     }
 
     @GetMapping("/addForm/{room}")
     public String addForm(Model model, @PathVariable String room){
+
         model.addAttribute("newDevice", new DeviceDTO());
         model.addAttribute("room", Room.valueOf(room));
+
         return "devices/addDeviceForm";
     }
 
     public String addFormErr(Model model, @PathVariable String room, DeviceDTO deviceDTO){
+
         model.addAttribute("newDevice", deviceDTO);
         model.addAttribute("room", Room.valueOf(room));
+
         return "devices/addDeviceForm";
     }
 
@@ -202,7 +207,8 @@ public class DeviceController {
         String text = deviceDAO.findByInventNumber(inv).getDeviceDescription()
                 +" "+deviceDAO.findByInventNumber(inv).getRoom();
         GeneratorTestDTO generatorTestDTO = new GeneratorTestDTO();
-    generatorTestDTO.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
+
+        generatorTestDTO.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
         generatorTestDTO.setContent(
                 "\nUwagi: \n\n\n"+
                 "Czas trwania uruchomienia: \n" +
@@ -212,13 +218,12 @@ public class DeviceController {
                 "Napiecie aku: V\n" +
                 "Całkowity czas pracy: h\n"
                 );
-
         model.addAttribute("text",text);
         model.addAttribute("newTest", generatorTestDTO);
         model.addAttribute("device", inv);
+
         return "devices/addActForm";
     }
-
 
     public String addActFormErr(Model model, String inv, GeneratorTestDTO testDTO ){
 
@@ -226,45 +231,52 @@ public class DeviceController {
         model.addAttribute("device", inv);
         model.addAttribute("text",deviceDAO.findByInventNumber(inv).getDeviceDescription()
                 +" "+deviceDAO.findByInventNumber(inv).getRoom() );
+
         return "devices/addActForm";
     }
 
     @PostMapping("/addTest")
     public String addTest( @Valid @ModelAttribute("newTest") GeneratorTestDTO testDTO,  BindingResult bindingResult,Model model ){
 
-
         if(bindingResult.hasFieldErrors()){
             List<FieldError> allErrors;
             allErrors = bindingResult.getFieldErrors();
+
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors",allErrors);
             model.addAttribute("errorsAmount",allErrors.size());
+
             return addActFormErr(model, testDTO.getInventNumber(), testDTO );
         }
 
         if( testDTO.isLossPowerFlag()==false && testDTO.getStatus()!= Status.DAMAGE ) {
             generatorService.create(testDTO);
+
             return "redirect:/generators/" + testDTO.getInventNumber()+"/1";
         }
-        if(testDTO.isLossPowerFlag()==true && testDTO.getStatus()!= Status.DAMAGE){
 
+        if(testDTO.isLossPowerFlag()==true && testDTO.getStatus()!= Status.DAMAGE){
             ShortPostDTO postDTO = new ShortPostDTO();
+
             postDTO.setDate(testDTO.getDate());
             postDTO.setAuthor(Author.DTN);
             postDTO.setInventNumber(testDTO.getInventNumber());
             postDTO.setContent("Generator podał napięcie podczas zaniku! [SYSTEM]");
             generatorService.create(testDTO);
             postService.create(postDTO);
+
             return "redirect:/generators/" + testDTO.getInventNumber()+"/1";
         }
+
         if(testDTO.isLossPowerFlag()==false && testDTO.getStatus()== Status.DAMAGE){
             DamageDTO damageDTO = new DamageDTO();
+            ShortPostDTO dto = new ShortPostDTO();
+
             damageDTO.setDescription(testDTO.getContent());
             damageDTO.setDeviceInventNumber(testDTO.getInventNumber());
             damageDTO.setAuthor(Author.valueOf(mainController.getUser()));
             damageDTO.setDamageDate(testDTO.getDate());
             damageDTO.setNewPostFlag(true);
-            ShortPostDTO dto = new ShortPostDTO();
             dto.setDate(damageDTO.getDamageDate());
             dto.setAuthor(Author.DTN);
             dto.setInventNumber(damageDTO.getDeviceInventNumber());
@@ -273,14 +285,14 @@ public class DeviceController {
             generatorService.create(testDTO);
             damageService.create(damageDTO);
             postService.create(dto);
+
             return "redirect:/dtnetwork";
         }
 
         if(testDTO.isLossPowerFlag()==true && testDTO.getStatus()== Status.DAMAGE){
-
-
-
             ShortPostDTO postDTO = new ShortPostDTO();
+            ShortPostDTO dto = new ShortPostDTO();
+
             postDTO.setDate(testDTO.getDate());
             postDTO.setAuthor(Author.DTN);
             postDTO.setInventNumber(testDTO.getInventNumber());
@@ -291,7 +303,6 @@ public class DeviceController {
             damageDTO.setAuthor(Author.valueOf(mainController.getUser()));
             damageDTO.setDamageDate(testDTO.getDate());
             damageDTO.setNewPostFlag(true);
-            ShortPostDTO dto = new ShortPostDTO();
             dto.setDate(damageDTO.getDamageDate());
             dto.setAuthor(Author.DTN);
             dto.setInventNumber(damageDTO.getDeviceInventNumber());
@@ -311,19 +322,23 @@ public class DeviceController {
     @PostMapping("/chillerSet/{inventNumber}")
     public String setChillerTemp( @ModelAttribute("chillerSetDTO") @Valid ChillerSetDTO chillerSetDTO, BindingResult binding, Model model, @PathVariable String inventNumber){
 
-        if(binding.hasFieldErrors()){
-            List<FieldError> allErrors;
-            allErrors = binding.getFieldErrors();
-            model.addAttribute("bindingResult", binding);
-            model.addAttribute("errors",allErrors);
-            model.addAttribute("errorsAmount",allErrors.size());
-            return findByInventNumberErr(inventNumber,model) ;
-        }
-
-
         Device chiller = deviceDAO.findByInventNumber(inventNumber);
         ChillerSet actualChillerSet = chiller.getChillerSet();
         ChillerSetDTO fromForm = chillerSetDTO;
+        ShortPostDTO shortPostDTO = new ShortPostDTO();
+        ChillerSet saved =ChillerSetMapper.map(chillerSetDTO, deviceDAO);
+
+        if(binding.hasFieldErrors()){
+            List<FieldError> allErrors;
+            allErrors = binding.getFieldErrors();
+
+            model.addAttribute("bindingResult", binding);
+            model.addAttribute("errors",allErrors);
+            model.addAttribute("errorsAmount",allErrors.size());
+
+            return findByInventNumberErr(inventNumber,model) ;
+        }
+
         chillerSetDTO.setAuthor(Author.valueOf(MainController.getUser()));
         chillerSetDTO.setInventNumber(chiller.getInventNumber());
         chillerSetDTO.setSetDate(CalendarUtil.cal2string(Calendar.getInstance()));
@@ -339,23 +354,17 @@ public class DeviceController {
             chillerSetDTO.setPreviousSetPoint(chillerSetDTO.getActualSetPoint());
         }
 
-        ShortPostDTO shortPostDTO = new ShortPostDTO();
         shortPostDTO.setContent("Zmieniono nastawę chillera! [SYSTEM]");
         shortPostDTO.setAuthor(Author.DTN);
         shortPostDTO.setInventNumber(inventNumber);
         shortPostDTO.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
         shortPostDTO.setForDamage(false);
         postService.create(shortPostDTO);
-
-        ChillerSet saved =ChillerSetMapper.map(chillerSetDTO, deviceDAO);
         chillerSetDAO.save(saved);
         chiller.setChillerSet(saved);
         deviceDAO.save(chiller);
 
-        if(actualChillerSet != null)
-        chillerSetDAO.delete(actualChillerSet);
-
-
+        if(actualChillerSet != null) chillerSetDAO.delete(actualChillerSet);
 
         return "redirect:/dtnetwork";
         }
@@ -363,19 +372,22 @@ public class DeviceController {
     @PostMapping("/drycoolerSet/{inventNumber}")
     public String setDrycoolerTemp( @ModelAttribute("drycoolerSetDTO") @Valid DrycoolerSetDTO drycoolerSetDTO, BindingResult binding, Model model, @PathVariable String inventNumber){
 
+        Device drycooler = deviceDAO.findByInventNumber(inventNumber);
+        DrycoolerSet actualDrycoolerSet = drycooler.getDrycoolerSet();
+        DrycoolerSetDTO fromForm = drycoolerSetDTO;
+        ShortPostDTO shortPostDTO = new ShortPostDTO();
+        DrycoolerSet saved = DrycoolerSetMapper.map(drycoolerSetDTO, deviceDAO);
+
         if(binding.hasFieldErrors()){
             List<FieldError> allErrors;
             allErrors = binding.getFieldErrors();
             model.addAttribute("bindingResult", binding);
             model.addAttribute("errors",allErrors);
             model.addAttribute("errorsAmount",allErrors.size());
+
             return findByInventNumberErr(inventNumber,model) ;
         }
 
-
-        Device drycooler = deviceDAO.findByInventNumber(inventNumber);
-        DrycoolerSet actualDrycoolerSet = drycooler.getDrycoolerSet();
-        DrycoolerSetDTO fromForm = drycoolerSetDTO;
         drycoolerSetDTO.setAuthor(Author.valueOf(MainController.getUser()));
         drycoolerSetDTO.setInventNumber(drycooler.getInventNumber());
         drycoolerSetDTO.setSetDate(CalendarUtil.cal2string(Calendar.getInstance()));
@@ -397,29 +409,18 @@ public class DeviceController {
             drycoolerSetDTO.setPreviousSetPoint_AmbR(drycoolerSetDTO.getActualSetPoint_AmbR());
         }
 
-        ShortPostDTO shortPostDTO = new ShortPostDTO();
         shortPostDTO.setContent("Zmieniono nastawę drycoolera! [SYSTEM]");
         shortPostDTO.setAuthor(Author.DTN);
         shortPostDTO.setInventNumber(inventNumber);
         shortPostDTO.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
         shortPostDTO.setForDamage(false);
         postService.create(shortPostDTO);
-
-        DrycoolerSet saved = DrycoolerSetMapper.map(drycoolerSetDTO, deviceDAO);
         drycoolerSetDAO.save(saved);
         drycooler.setDrycoolerSet(saved);
         deviceDAO.save(drycooler);
 
-        if(actualDrycoolerSet != null)
-            drycoolerSetDAO.delete(actualDrycoolerSet);
-
-
+        if(actualDrycoolerSet != null) drycoolerSetDAO.delete(actualDrycoolerSet);
 
         return "redirect:/dtnetwork";
     }
-
-
-
-
-
 }

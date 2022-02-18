@@ -37,10 +37,8 @@ public class ShortPostController implements WebMvcConfigurer {
     private ShortPostService postService;
     private DeviceService deviceService;
     private MyPropertiesConfig myPropertiesConfig;
-
     @Value("${my.pagesize}")
     int pagesize;
-
 
     @Autowired
     public ShortPostController(ShortPostDAO postDAO, DeviceDAO deviceDAO, ShortPostService postService, DeviceService deviceService, MyPropertiesConfig myPropertiesConfig) {
@@ -51,34 +49,28 @@ public class ShortPostController implements WebMvcConfigurer {
         this.myPropertiesConfig = myPropertiesConfig;
     }
 
-
     @GetMapping("/devices/{inv}/{page}")
     public String getAllForDevice(@PathVariable String inv, Model model, @PathVariable int page) {
 
         DeviceDTO dto = DeviceMapper.map(deviceDAO.findByInventNumber(inv));
         List<ShortPost> all = postDAO.findAllByDevice_InventNumber(inv);
         Map<Integer, ShortPostDTO> mapa = postService.findAllByDevice(inv, page - 1, pagesize);
-
-
-
         int amount = postService.numberByDevice(inv);
-
-
         int numberOfPages = (postService.numberByDevice(inv)) / pagesize + 1;
+        List<Integer> morePages = new LinkedList<>();
+        int i = 2;
+        int lastPage = 1;
 
         if (postService.numberByDevice(inv) % pagesize == 0) {
             numberOfPages--;
         }
-
-        List<Integer> morePages = new LinkedList<>();
-        int i = 2;
-        int lastPage = 1;
 
         while (i <= numberOfPages) {
             morePages.add(i);
             i++;
             lastPage++;
         }
+
         model.addAttribute("amount", amount);
         model.addAttribute("posts", mapa);
         model.addAttribute("dto", dto);
@@ -87,13 +79,15 @@ public class ShortPostController implements WebMvcConfigurer {
         model.addAttribute("pages", morePages);
         model.addAttribute("currentPage", page);
         model.addAttribute("inv", inv);
+
         return "posts/allPostsForDevice";
     }
 
-
     @PostMapping("/add")
     public String create(Model model, ShortPostDTO dto) {
+
         postService.create(dto);
+
         return "error";
     }
 
@@ -104,31 +98,34 @@ public class ShortPostController implements WebMvcConfigurer {
             List<FieldError> allErrors;
             allErrors = result.getFieldErrors();
 
-
             model.addAttribute("bindingResult", result);
             model.addAttribute("errors", allErrors);
-
             model.addAttribute("errorsAmount", allErrors.size());
+
             return addFormErr(model, dto);
         }
+
         postService.create(dto);
+
         return "redirect:/dtnetwork";
     }
 
     @PostMapping("/addAsModel/stay")
     public String create3( @Valid @ModelAttribute ShortPostDTO shortPostDTO, BindingResult bindingResult,Model model, HttpServletRequest request) {
-        if (bindingResult.hasFieldErrors()) {
 
+        if (bindingResult.hasFieldErrors()) {
             List<FieldError> allErrors;
             allErrors = bindingResult.getFieldErrors();
-
 
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors", allErrors);
             model.addAttribute("errorsAmount", allErrors.size());
+
             return addFormErr(model, shortPostDTO.getInventNumber(), shortPostDTO);
         }
+
         postService.create(shortPostDTO);
+
         return "redirect:/posts/devices/" + shortPostDTO.getInventNumber()+"/1";
     }
 
@@ -136,6 +133,7 @@ public class ShortPostController implements WebMvcConfigurer {
     public String remove(@PathVariable Integer id, Model model) {
 
         postService.remove(id);
+
         return "redirect:/dtnetwork";
     }
 
@@ -143,62 +141,66 @@ public class ShortPostController implements WebMvcConfigurer {
     public String removeAndStay(@PathVariable Integer id, Model model, HttpServletRequest request) {
 
         postService.remove(id);
+
         return "redirect:" + request.getHeader("Referer");
     }
 
     @GetMapping("/addForm")
     public String addForm(Model model) {
+
         ShortPostDTO dto = new ShortPostDTO();
-        dto.setDate(CalendarUtil.cal2string(Calendar.getInstance() ));
-        model.addAttribute("newPost", dto);
-        model.addAttribute("authors", ListOfEnumValues.authors);
         Map<String, String> mapa = new HashMap<>();
         List<String> keys = deviceDAO.findAll().stream().map(d -> d.getInventNumber()).collect(Collectors.toList());
+
         for (String key : keys) {
             Device device = deviceDAO.findByInventNumber(key);
             mapa.put(key, device.getDeviceDescription());
         }
+
+        dto.setDate(CalendarUtil.cal2string(Calendar.getInstance() ));
         model.addAttribute("devices", mapa);
-        System.out.println(System.getProperty("java.io.tmpdir"));
+        model.addAttribute("newPost", dto);
+        model.addAttribute("authors", ListOfEnumValues.authors);
+
         return "posts/addPostForm";
     }
 
     @GetMapping("/addForm/{inventNumber}")
     public String addForm(Model model, @PathVariable String inventNumber) {
+
         ShortPostDTO dto = new ShortPostDTO();
+        String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
+                + " " + deviceDAO.findByInventNumber(inventNumber).getRoom();
+
         dto.setDate(CalendarUtil.cal2string(Calendar.getInstance() ));
+        model.addAttribute("text", text);
         model.addAttribute("shortPostDTO", dto);
         model.addAttribute("authors", ListOfEnumValues.authors);
         model.addAttribute("inventNumber", inventNumber);
-
-        String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
-                + " " + deviceDAO.findByInventNumber(inventNumber).getRoom();
-        model.addAttribute("text", text);
 
         return "posts/addPostFormInv";
     }
 
     @GetMapping("/all/{year}/{page}")
     public String allByYear(Model model, @PathVariable int year, @PathVariable int page) {
+
         Map<Integer, ShortPostDTO> mapa = postService.findAll(year, page - 1, 10);
         int numberOfPages = (postService.numberByYear(year)) / 10 + 1;
+        List<Integer> morePages = new LinkedList<>();
+        List<ShortPost> allPosts = postService.findAllByYear(year);
+        int amount = postService.numberByYear(year);
+        int i = 2;
+        int lastPage = 1;
 
         if (postService.numberByYear(year) % 10 == 0) {
             numberOfPages--;
         }
-        List<Integer> morePages = new LinkedList<>();
-        List<ShortPost> allPosts = postService.findAllByYear(year);
-
-        int amount = postService.numberByYear(year);
 
         for (ShortPost post : allPosts) {
             if (post.getContent().contains("kliknięciu")) {
                 amount--;
             }
         }
-
-        int i = 2;
-        int lastPage = 1;
 
         while (i <= numberOfPages) {
             morePages.add(i);
@@ -213,34 +215,39 @@ public class ShortPostController implements WebMvcConfigurer {
         model.addAttribute("currentPage", page);
         model.addAttribute("year", year);
         model.addAttribute("lastPage", lastPage);
+
         return "posts/allByYear";
     }
 
     public String addFormErr(Model model, ShortPostDTO dto) {
-        model.addAttribute("newPost", dto);
-        model.addAttribute("authors", ListOfEnumValues.authors);
+
         Map<String, String> mapa = new HashMap<>();
         List<String> keys = deviceDAO.findAll().stream().map(d -> d.getInventNumber()).collect(Collectors.toList());
+
         for (String key : keys) {
             Device device = deviceDAO.findByInventNumber(key);
             mapa.put(key, device.getDeviceDescription());
         }
+
         model.addAttribute("devices", mapa);
-        System.out.println(System.getProperty("java.io.tmpdir"));
+        model.addAttribute("newPost", dto);
+        model.addAttribute("authors", ListOfEnumValues.authors);
+
         return "posts/addPostForm";
     }
 
     public String addFormErr(Model model, @PathVariable String inventNumber, ShortPostDTO dto) {
-        model.addAttribute("shortPostDTO", dto);
-        model.addAttribute("authors", ListOfEnumValues.authors);
-        model.addAttribute("inventNumber", inventNumber);
 
         String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
                 + " " + deviceDAO.findByInventNumber(inventNumber).getRoom();
+
+        model.addAttribute("shortPostDTO", dto);
+        model.addAttribute("authors", ListOfEnumValues.authors);
+        model.addAttribute("inventNumber", inventNumber);
         model.addAttribute("text", text);
+
         return "posts/addPostFormInv";
     }
-
 
     @GetMapping("/search")
     public String search(Model model, @ModelAttribute("search") String search ){
@@ -252,44 +259,56 @@ public class ShortPostController implements WebMvcConfigurer {
         model.addAttribute("keys", mapa.keySet());
         model.addAttribute("amount", amount);
         model.addAttribute("phrase",search);
+
         return "posts/searchResults";
     }
 
     @GetMapping("/edit/{id}")
     public String editPost(Model model,@PathVariable Integer id){
+
         ShortPostDTO dto = postService.findById(id);
-        model.addAttribute("newPost", dto);
-        model.addAttribute("authors", ListOfEnumValues.authors);
         Map<String, String> mapa = new HashMap<>();
         List<String> keys = deviceDAO.findAll().stream().map(d -> d.getInventNumber()).collect(Collectors.toList());
+
         for (String key : keys) {
             Device device = deviceDAO.findByInventNumber(key);
             mapa.put(key, device.getDeviceDescription());
         }
+
+        model.addAttribute("newPost", dto);
+        model.addAttribute("authors", ListOfEnumValues.authors);
         model.addAttribute("devices", mapa);
         model.addAttribute("id", id);
+
         return "posts/editPostForm";
     }
 
     @GetMapping("/removeSystem")
     public String removeSystem(){
+
         List<ShortPost> posts = postDAO.findAll();
+        ShortPostDTO dto = new ShortPostDTO();
+
         for (ShortPost post: posts) {
             if (post.getContent().contains("SYSTEM")) postDAO.delete(post);
         }
 
-        ShortPostDTO dto = new ShortPostDTO();
         dto.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
         dto.setInventNumber("DTN");
         dto.setAuthor(Author.DTN);
         dto.setContent("Usunięto posty systemowe! [SYSTEM]");
         dto.setForDamage(false);
         postService.create(dto);
+
         return "redirect:/dtnetwork";
     }
 
     @PostMapping("/edit/{id}")
     public String saveEditedPost( @Valid @ModelAttribute("newPost") ShortPostDTO shortPostDTO,BindingResult bindingResult, Model model, @PathVariable Integer id ){
+
+        ShortPost post = postDAO.findByPostId(id);
+        Calendar calendar= CalendarUtil.string2cal(shortPostDTO.getDate());
+
         if (bindingResult.hasFieldErrors()) {
             List<FieldError> allErrors;
             allErrors = bindingResult.getFieldErrors();
@@ -297,18 +316,17 @@ public class ShortPostController implements WebMvcConfigurer {
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors", allErrors);
             model.addAttribute("errorsAmount", allErrors.size());
+
             return editFormErr(model, shortPostDTO.getInventNumber(), shortPostDTO, id);
         }
 
-
-        ShortPost post = postDAO.findByPostId(id);
         post.setAuthor(shortPostDTO.getAuthor());
         post.setContent(shortPostDTO.getContent());
         post.setPostDate(CalendarUtil.string2cal(shortPostDTO.getDate()));
         post.setDevice(deviceDAO.findByInventNumber(shortPostDTO.getInventNumber()));
-        Calendar calendar= CalendarUtil.string2cal(shortPostDTO.getDate());
         post.setDate(calendar.getTime());
         postDAO.save(post);
+
         return "redirect:/dtnetwork";
     }
 
@@ -319,18 +337,20 @@ public class ShortPostController implements WebMvcConfigurer {
     }
 
     public String editFormErr(Model model, String inventNumber, ShortPostDTO dto, Integer id) {
-        model.addAttribute("newPost", dto);
-        model.addAttribute("authors", ListOfEnumValues.authors);
+
         Map<String, String> mapa = new HashMap<>();
         List<String> keys = deviceDAO.findAll().stream().map(d -> d.getInventNumber()).collect(Collectors.toList());
+
         for (String key : keys) {
             Device device = deviceDAO.findByInventNumber(key);
             mapa.put(key, device.getDeviceDescription());
         }
+
+        model.addAttribute("newPost", dto);
+        model.addAttribute("authors", ListOfEnumValues.authors);
         model.addAttribute("devices", mapa);
         model.addAttribute("id", id);
+
         return "posts/editPostForm";
     }
-
-
 }

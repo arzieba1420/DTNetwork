@@ -31,8 +31,6 @@ import java.util.*;
 @RequestMapping("/damages")
 public class DamageController {
 
-
-
     private DeviceDAO deviceDAO;
     private DamageDAO damageDAO;
     private IssueDocumentDAO issueDocumentDAO;
@@ -41,7 +39,6 @@ public class DamageController {
     private ShortPostService postService;
     private DeviceService deviceService;
     private IssueDocService issueDocService;
-
 
     @Autowired
     public DamageController(DeviceService deviceService, ShortPostService postService, DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, DamageService damageService, IssueDocService issueDocService) {
@@ -54,7 +51,6 @@ public class DamageController {
         this.deviceService=deviceService;
         this.issueDocService = issueDocService;
     }
-
 
 
     @PostMapping("/addAsModel")

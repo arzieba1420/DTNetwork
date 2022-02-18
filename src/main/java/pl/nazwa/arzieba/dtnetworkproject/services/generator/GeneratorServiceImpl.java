@@ -35,6 +35,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         GeneratorTest test = GeneratorTestMapper.map(dto,deviceDAO);
         test.setAuthorsCommaSeparated(String.join(",",dto.getAuthors()));
         dao.save(test);
+
         return dto;
     }
 

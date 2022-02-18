@@ -17,5 +17,4 @@ public interface InvoiceService {
     List<InvoiceDTO> getByYearInBuilding(int year, BuildingType buildingType);
     double sumInYearInBuilding(int year, BuildingType buildingType);
     List<ElectricalInvoice> getAllInBuilding(int page, int size, BuildingType buildingType);
-
 }

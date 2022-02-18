@@ -9,5 +9,4 @@ public interface GeneratorService {
 
     GeneratorTestDTO create(GeneratorTestDTO dto);
     List<GeneratorTestDTO> getAllTests(int page, int size, String inv);
-
 }

@@ -18,23 +18,15 @@ import java.util.List;
 @NoArgsConstructor
 public class User {
 
-
-
     @Id
     @Column(nullable = false)
     private String username;
-
     @Column(nullable = false)
     private String password;
-
     private boolean active;
-
     private Author author;
-
     private String roles;
-
     private String permissions;
-
     @Nullable
     private String personalDiary;
 
@@ -48,6 +40,7 @@ public class User {
     }
 
     public List<String> getRoleList(){
+
         if (this.roles.length()>0){
             return Arrays.asList(this.roles.split(","));
         }
@@ -56,11 +49,11 @@ public class User {
     }
 
     public List<String> getPermissionsList(){
+
         if (this.permissions.length()>0){
             return Arrays.asList(this.permissions.split(","));
         }
 
         return new ArrayList<String>();
     }
-
 }

@@ -26,6 +26,11 @@ import java.util.stream.Collectors;
 @Transactional
 public class DeviceServiceImpl implements DeviceService {
 
+    private DeviceDAO deviceDAO;
+    private DamageDAO damageDAO;
+    private IssueDocumentDAO issueDocumentDAO;
+    private DeviceCardDAO deviceCardDAO;
+
     @Autowired
     public DeviceServiceImpl(DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO) {
         this.deviceDAO = deviceDAO;
@@ -34,84 +39,86 @@ public class DeviceServiceImpl implements DeviceService {
         this.deviceCardDAO = deviceCardDAO;
     }
 
-    private DeviceDAO deviceDAO;
-    private DamageDAO damageDAO;
-    private IssueDocumentDAO issueDocumentDAO;
-    private DeviceCardDAO deviceCardDAO;
-
-
     @Override
     public List<DeviceDTO> findAll() {
+
        return deviceDAO.findAll()
                .stream()
                .map(DeviceMapper::map)
                .collect(Collectors.toList());
     }
 
-
     @Override
     public DeviceDTO findByInventNumber(String inventNumber) {
+
         if(!this.findAll().stream()
                 .map(DeviceDTO::getInventNumber)
                 .collect(Collectors.toList())
                 .contains(inventNumber)) throw new DeviceNotFoundException();
+
         return DeviceMapper.map( deviceDAO.findByInventNumber(inventNumber));
     }
 
     @Override
     public List<DeviceDTO> findByType(String name) {
 
-        System.out.println();
-
       return deviceDAO.findAll().stream()
               .filter(d->d.getDeviceType()
               .name().equals(name))
               .map(DeviceMapper::map)
               .collect(Collectors.toList());
-
     }
 
     @Override
     public DeviceDTO create(DeviceDTO toAdd) {
+
         deviceDAO.save( DeviceMapper.map(toAdd));
+
         return toAdd;
     }
 
     @Override
     public DeviceDTO update(DeviceDTO deviceDTO) {
+
         if(!this.findAll().stream()
                 .map(DeviceDTO::getInventNumber)
                 .collect(Collectors.toList())
                 .contains(deviceDTO.getInventNumber())){
+
             return  create(deviceDTO);
 
         } else{
            Device toBeUpdated = deviceDAO.findByInventNumber(deviceDTO.getInventNumber());
+
            toBeUpdated.setDeviceType(deviceDTO.getDeviceType());
            toBeUpdated.setDeviceDescription(deviceDTO.getDeviceDescription());
            toBeUpdated.setRoom(deviceDTO.getRoom());
            deviceDAO.save(toBeUpdated);
+
            return DeviceMapper.map(toBeUpdated);
         }
     }
 
     @Override
     public DeviceDTO remove(String inventNumber) {
+
         if(!this.findAll().stream()
                 .map(DeviceDTO::getInventNumber)
                 .collect(Collectors.toList())
                 .contains(inventNumber)) throw new DeviceNotFoundException("Device not found");
         else {
             DeviceDTO removed = findByInventNumber(inventNumber);
+
             deviceDAO.deleteDeviceByInventNumber(inventNumber);
             removed.setDeviceDescription("Removed " + removed.getDeviceDescription());
+
             return removed;
         }
-
     }
 
     @Override
     public List<DamageDTO> getDamages(String inventNumber) {
+
         return deviceDAO.findByInventNumber(inventNumber)
                 .getDamageList()
                 .stream()
@@ -125,20 +132,19 @@ public class DeviceServiceImpl implements DeviceService {
         return issueDocumentDAO.findByInventNumber(inventNumber).stream()
                 .map(IssueDocMapper::map)
                 .collect(Collectors.toList());
-
     }
 
     @Override
     public DeviceCardDTO getDeviceCard(String inventNumber) {
+
         return DeviceCardMapper.map(deviceCardDAO.findByDevice_InventNumber(inventNumber));
     }
 
     @Override
     public List<DeviceDTO> findByRoom(String room) {
+
         return deviceDAO.findAll().stream().filter(d->d.getRoom().equals(Room.valueOf(room)))
                 .map(DeviceMapper::map)
                 .collect(Collectors.toList());
     }
-
-
 }

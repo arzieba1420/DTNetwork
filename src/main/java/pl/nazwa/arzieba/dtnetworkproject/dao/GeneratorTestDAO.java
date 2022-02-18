@@ -16,7 +16,4 @@ public interface GeneratorTestDAO extends PagingAndSortingRepository<GeneratorTe
     Page<GeneratorTest> findAllByLossPowerFlag(boolean condition, Pageable pageable);
     GeneratorTest findTopByDevice_InventNumberAndLossPowerFlagOrderByDateDesc(String inv,boolean flag);
     GeneratorTest findTopByDevice_InventNumberOrderByDateDesc(String inv);
-
-
-
 }

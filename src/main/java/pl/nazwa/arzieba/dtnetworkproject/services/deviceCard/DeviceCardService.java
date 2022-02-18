@@ -12,5 +12,4 @@ public interface DeviceCardService {
     DeviceCardDTO findForSignature(String signature);
     DeviceCardDTO findForId(Integer id);
     String create(DeviceCardDTO dto);
-
 }

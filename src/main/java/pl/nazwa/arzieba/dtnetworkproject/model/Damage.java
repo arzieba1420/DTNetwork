@@ -20,24 +20,20 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 public class Damage {
-    //cannot exist without Device
 
+    //cannot exist without Device
     @Id
     @GeneratedValue
     private Integer damageId;
-
+    @Column(nullable = false)
     @ManyToOne
     @JoinColumn(name = "device_inventNumber")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Device device;
-
     private String description;
-
     @Temporal(TemporalType.DATE)
     private Calendar damageDate;
-
     private Author author;
-
     @OneToMany(mappedBy = "damage", fetch =FetchType.LAZY, cascade = CascadeType.ALL)
     private List<IssueDocument> issueDocumentList;
 }

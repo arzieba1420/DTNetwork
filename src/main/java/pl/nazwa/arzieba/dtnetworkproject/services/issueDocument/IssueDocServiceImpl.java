@@ -24,6 +24,14 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class IssueDocServiceImpl implements IssueDocService {
+
+    private DeviceDAO deviceDAO;
+    private DamageDAO damageDAO;
+    private IssueDocumentDAO issueDocumentDAO;
+    private DeviceCardDAO deviceCardDAO;
+    private UploadPathService uploadPathService;
+    private IssueFilesDAO issueFilesDAO;
+
     @Autowired
     public IssueDocServiceImpl(DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, UploadPathService uploadPathService, IssueFilesDAO issueFilesDAO) {
         this.deviceDAO = deviceDAO;
@@ -34,17 +42,9 @@ public class IssueDocServiceImpl implements IssueDocService {
         this.issueFilesDAO = issueFilesDAO;
     }
 
-    private DeviceDAO deviceDAO;
-    private DamageDAO damageDAO;
-    private IssueDocumentDAO issueDocumentDAO;
-    private DeviceCardDAO deviceCardDAO;
-    private UploadPathService uploadPathService;
-    private IssueFilesDAO issueFilesDAO;
-
-
-
     @Override
     public List<IssueDocumentDTO> findAll() {
+
         return issueDocumentDAO.findAll().stream()
                 .map(IssueDocMapper::map)
                 .collect(Collectors.toList());
@@ -52,6 +52,7 @@ public class IssueDocServiceImpl implements IssueDocService {
 
     @Override
     public IssueDocumentDTO findBySignature(String signature) {
+
         if(issueDocumentDAO.existsByIssueSignature(signature))
         return IssueDocMapper.map(issueDocumentDAO.findByIssueSignature(signature));
         else throw new IssueDocumentNotFoundException("Issue document not found");
@@ -59,6 +60,7 @@ public class IssueDocServiceImpl implements IssueDocService {
 
     @Override
     public List<IssueDocumentDTO> findByInventNumber(String inventNumber) {
+
         return issueDocumentDAO.findByInventNumber(inventNumber)
                 .stream()
                 .map(IssueDocMapper::map)
@@ -70,7 +72,6 @@ public class IssueDocServiceImpl implements IssueDocService {
 
         Calendar startDate = new GregorianCalendar(year,0,1);
         Calendar endDate = new GregorianCalendar(year,11,31);
-
         List<IssueDocumentDTO> documentPage = issueDocumentDAO.findAllByIssueDateBetween(
                 PageRequest.of(page,size, Sort.Direction.DESC,"issueDate"),
                 startDate,endDate)
@@ -88,6 +89,7 @@ public class IssueDocServiceImpl implements IssueDocService {
 
     @Override
     public List<IssueDocumentDTO> findByDamageId(Integer id) {
+
         return issueDocumentDAO.findByDamage_DamageId(id).stream()
                 .map(IssueDocMapper::map)
                 .collect(Collectors.toList());
@@ -95,7 +97,10 @@ public class IssueDocServiceImpl implements IssueDocService {
 
     @Override
     public IssueDocumentDTO create(IssueDocumentDTO documentDTO) {
+
         IssueDocument saved = IssueDocMapper.map(documentDTO, damageDAO);
+        IssueFiles files = new IssueFiles();
+
         if(issueDocumentDAO.existsByIssueSignature(documentDTO.getIssueSignature()) && issueDocumentDAO.findByIssueSignature(documentDTO.getIssueSignature()).getDamage()!=null ) {
             saved.setDamage(issueDocumentDAO.findByIssueSignature(documentDTO.getIssueSignature()).getDamage());
             saved.setIssueId(issueDocumentDAO.findByIssueSignature(documentDTO.getIssueSignature()).getIssueId());
@@ -103,14 +108,11 @@ public class IssueDocServiceImpl implements IssueDocService {
         if(issueDocumentDAO.existsByIssueSignature(documentDTO.getIssueSignature()) ) {
             saved.setIssueId(issueDocumentDAO.findByIssueSignature(documentDTO.getIssueSignature()).getIssueId());
         }
-
-
             IssueDocument saved2 = issueDocumentDAO.save(saved);
-
 
         if(saved!=null && documentDTO.getIssueFiles()!=null && documentDTO.getIssueFiles().size()>0){
 
-            for (MultipartFile file: documentDTO.getIssueFiles() ) {
+            for (MultipartFile file: documentDTO.getIssueFiles()) {
 
                 String fileName = file.getOriginalFilename().replaceAll(" ","_");
                 String modifiedFileName = FilenameUtils.getBaseName(fileName).replaceAll(" ","_")+"_"+System.currentTimeMillis()+"."+FilenameUtils.getExtension(fileName);
@@ -124,19 +126,13 @@ public class IssueDocServiceImpl implements IssueDocService {
                     }
                 }
 
-
-
-                IssueFiles files = new IssueFiles();
                 files.setFileExtension(FilenameUtils.getExtension(fileName));
                 files.setFileName(fileName);
                 files.setFileNameNoExt(modifiedFileName.substring(0,modifiedFileName.lastIndexOf('.')));
                 files.setModifiedFileName(modifiedFileName);
                 files.setIssueDocument(saved2);
                 issueFilesDAO.save(files);
-
-
             }
-
         }
 
         return IssueDocMapper.map(saved);
@@ -150,6 +146,7 @@ public class IssueDocServiceImpl implements IssueDocService {
 
     @Override
     public IssueDocumentDTO update(IssueDocumentDTO documentDTO) {
+
         if(!issueDocumentDAO.existsByIssueSignature(documentDTO.getIssueSignature())){
             return  create(documentDTO);
 
@@ -163,6 +160,7 @@ public class IssueDocServiceImpl implements IssueDocService {
 
     @Override
     public IssueDocumentDTO remove(String signature) {
+
         if (!issueDocumentDAO.existsByIssueSignature(signature)) {
             throw new IssueDocumentNotFoundException("Issue Document not found!");
         } else {
@@ -170,12 +168,12 @@ public class IssueDocServiceImpl implements IssueDocService {
             issueDocumentDAO.delete(issueDocumentDAO.findByIssueSignature(signature));
             removed.setIssueTittle("Removed " + removed.getIssueTittle());
             return removed;
-
         }
     }
 
     @Override
     public List<IssueDocumentDTO> findByDevice(String inv, int page, int size) {
+
         return issueDocumentDAO.findAllByInventNumber(inv,PageRequest.of(page, size, Sort.Direction.DESC,"issueDate"))
                 .get().map(IssueDocMapper::map)
                 .collect(Collectors.toList());
@@ -189,8 +187,8 @@ public class IssueDocServiceImpl implements IssueDocService {
                     .collect(Collectors.toList());
             Set<Integer> years =yearsList.stream().collect(Collectors.toSet());
             TreeSet<Integer> sortedSet = new TreeSet<>();
-            sortedSet.addAll(years);
-            //test
+
+            sortedSet.addAll(years);           //test
 
             return sortedSet.descendingSet();
         }
@@ -201,17 +199,16 @@ public class IssueDocServiceImpl implements IssueDocService {
         public Set<Integer> subSet(){
 
             if(setOfYears().size()<=5) return setOfYears();
+
             List<Integer> yearsList= issueDocumentDAO.findAll().stream()
                     .map(d->d.getIssueDate().get( Calendar.YEAR))
                     .collect(Collectors.toList());
             TreeSet<Integer> sortedSet = new TreeSet<>();
-            sortedSet.addAll(yearsList);
 
+            sortedSet.addAll(yearsList);
             List<Integer> sortedList = new LinkedList<>();
             sortedList.addAll(sortedSet.descendingSet());
-
             TreeSet<Integer> sortedSubSet = new TreeSet<>();
-
 
             if(sortedList.size()>0) {
                 for (int i = 0; i < 5; i++) {
@@ -220,8 +217,8 @@ public class IssueDocServiceImpl implements IssueDocService {
 
                 return sortedSubSet.descendingSet();
             }
-            return null;
 
+            return null;
         }
 
     @Override
@@ -231,6 +228,7 @@ public class IssueDocServiceImpl implements IssueDocService {
 
     @Override
     public int numberByYear(int year){
+
         long l = issueDocumentDAO.findAll().stream()
                 .filter(d->d.getIssueDate().get(Calendar.YEAR)==year)
                 .count();
@@ -240,6 +238,7 @@ public class IssueDocServiceImpl implements IssueDocService {
 
     @Override
     public List<IssueFiles> getFilesForDoc(String signature) {
+
         return issueFilesDAO.findAllByIssueDocument_IssueSignature(signature);
     }
 

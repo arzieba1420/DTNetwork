@@ -24,24 +24,17 @@ public class ChillerSet {
     @Id
     @GeneratedValue
     Integer chillerSetId;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Device_INVENT")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Device device;
-
     private Double actualSetPoint; //temp zadana chillera
-
     @Temporal(TemporalType.DATE)
     private Calendar setDate;
-
     private Author author;
-
     private Double previousSetPoint; //temp zadana chillera
-
     @Temporal(TemporalType.DATE)
     private Calendar previousSetDate;
-
     private Author previousAuthor;
 
     public ChillerSet() {

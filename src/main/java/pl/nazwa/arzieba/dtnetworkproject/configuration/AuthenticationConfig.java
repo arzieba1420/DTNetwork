@@ -16,13 +16,11 @@ import java.io.IOException;
 public class AuthenticationConfig extends SimpleUrlAuthenticationSuccessHandler {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
 
         logger.info("Poprawne logowanie, "+ MainController.getUser());
-
-
     }
-
 }

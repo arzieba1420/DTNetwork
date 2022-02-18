@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 
 public enum  Room {
+
     G39,
     G04,
     UPS_Naw11,
@@ -17,5 +18,4 @@ public enum  Room {
     HM_Podz,
     Instalacje,
     Inne;
-
 }

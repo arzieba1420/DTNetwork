@@ -30,7 +30,6 @@ public class GeneratorController {
     private MainController mainController;
     private ShortPostService postService;
     private DamageController damageController;
-
     @Value("${my.pagesize}")
     int pagesize;
 
@@ -50,19 +49,16 @@ public class GeneratorController {
     @GetMapping("/{inv}/{page}")
     public String getAllTests(@PathVariable String inv, Model model, @PathVariable int page){
 
-
         List<GeneratorTestDTO> testPage = generatorService.getAllTests(page-1,pagesize,inv);
         DeviceDTO dto = deviceService.findByInventNumber(inv);
-
         int numberOfPages = (generatorTestDAO.findAllByDevice_InventNumber(inv).size())/pagesize+1;
+        List<Integer> morePages = new LinkedList<>();
+        int i = 2;
+        int lastPage = 1;
+
         if(generatorTestDAO.findAllByDevice_InventNumber(inv).size()%pagesize==0){
             numberOfPages --;
         }
-
-        List<Integer> morePages = new LinkedList<>();
-
-        int i = 2;
-        int lastPage = 1;
 
         while(i<=numberOfPages){
             morePages.add(i);
@@ -77,7 +73,7 @@ public class GeneratorController {
         model.addAttribute("tests",testPage);
         model.addAttribute("amount", generatorTestDAO.findAllByDevice_InventNumber(inv).size());
         model.addAttribute("dto", dto);
+
         return "devices/getAllTests";
     }
-
 }

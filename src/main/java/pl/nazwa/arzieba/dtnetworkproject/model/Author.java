@@ -1,6 +1,7 @@
 package pl.nazwa.arzieba.dtnetworkproject.model;
 
 public enum Author {
+
     Artur,
     Arek,
     Damian,
@@ -11,5 +12,4 @@ public enum Author {
     Tomek,
     admin,
     DTN;
-
 }
