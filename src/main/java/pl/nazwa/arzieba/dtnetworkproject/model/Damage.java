@@ -25,7 +25,6 @@ public class Damage {
     @Id
     @GeneratedValue
     private Integer damageId;
-    @Column(nullable = false)
     @ManyToOne
     @JoinColumn(name = "device_inventNumber")
     @OnDelete(action = OnDeleteAction.NO_ACTION)

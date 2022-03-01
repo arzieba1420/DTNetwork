@@ -21,7 +21,7 @@ public class EmailConfiguration  {
 
         mailMessage.setFrom("DTNetwork");
         mailMessage.setTo(to);
-        mailMessage.setSubject("Nowy wpis dla: "+subject);
+        mailMessage.setSubject(subject);
         mailMessage.setText(message+ "\n\n\ndodany przez: "+author);
         mailSender.send(mailMessage);
     }

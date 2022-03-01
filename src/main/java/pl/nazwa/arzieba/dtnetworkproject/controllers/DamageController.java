@@ -1,5 +1,9 @@
 package pl.nazwa.arzieba.dtnetworkproject.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DamageDAO;
@@ -8,7 +12,6 @@ import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.IssueDocumentDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DamageDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
-import pl.nazwa.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.Author;
 import pl.nazwa.arzieba.dtnetworkproject.model.Damage;
@@ -23,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.nazwa.arzieba.dtnetworkproject.utils.mail.EmailConfiguration;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -30,6 +34,8 @@ import java.util.*;
 @Controller
 @RequestMapping("/damages")
 public class DamageController {
+
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private DeviceDAO deviceDAO;
     private DamageDAO damageDAO;
@@ -39,9 +45,13 @@ public class DamageController {
     private ShortPostService postService;
     private DeviceService deviceService;
     private IssueDocService issueDocService;
+    private EmailConfiguration emailConfiguration;
+    private ApplicationArguments applicationArguments;
+    @Value("${my.mailReceivers}")
+    private String[] mailReceivers;
 
     @Autowired
-    public DamageController(DeviceService deviceService, ShortPostService postService, DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, DamageService damageService, IssueDocService issueDocService) {
+    public DamageController(DeviceService deviceService, ShortPostService postService, DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, DamageService damageService, IssueDocService issueDocService, EmailConfiguration emailConfiguration, ApplicationArguments applicationArguments) {
         this.deviceDAO = deviceDAO;
         this.damageDAO = damageDAO;
         this.issueDocumentDAO = issueDocumentDAO;
@@ -50,6 +60,8 @@ public class DamageController {
         this.postService = postService;
         this.deviceService=deviceService;
         this.issueDocService = issueDocService;
+        this.emailConfiguration = emailConfiguration;
+        this.applicationArguments = applicationArguments;
     }
 
 
@@ -198,6 +210,15 @@ public class DamageController {
         damage.setDamageDate(CalendarUtil.string2cal(damageDTO.getDamageDate()));
         damage.setDevice(deviceDAO.findByInventNumber(damageDTO.getDeviceInventNumber()));
         damageDAO.save(damage);
+        try {
+            if (!damageDTO.getDescription().contains("[SYSTEM]")&& applicationArguments.getSourceArgs()[0].contains("mail") ){
+                emailConfiguration.sendMail(mailReceivers,"AWARIA dla: "+deviceDAO.findByInventNumber(damageDTO.getDeviceInventNumber()).getDeviceDescription()+ " w: "+deviceDAO.findByInventNumber(damageDTO.getDeviceInventNumber()).getRoom().name()+" [UPDATE]",damageDTO.getDescription()
+                        ,damageDTO.getAuthor().name());
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            logger.warn("MailSender mode is not set!");
+        }
+        /*damageService.update(damageDTO);*/
 
         return "redirect:/damages/devices/"+damageDTO.getDeviceInventNumber()+"/1";
     }

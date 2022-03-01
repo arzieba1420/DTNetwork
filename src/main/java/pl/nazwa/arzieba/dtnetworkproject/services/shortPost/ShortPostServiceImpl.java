@@ -170,7 +170,7 @@ public class ShortPostServiceImpl implements ShortPostService {
 
         try {
             if (!dto.getContent().contains("[SYSTEM]")&& applicationArguments.getSourceArgs()[0].contains("mail") ){
-                email.sendMail(mailReceivers,deviceDAO.findByInventNumber(dto.getInventNumber()).getDeviceDescription()+ " w: "+deviceDAO.findByInventNumber(dto.getInventNumber()).getRoom().name(),dto.getContent()
+                email.sendMail(mailReceivers,"Nowy post dla: "+deviceDAO.findByInventNumber(dto.getInventNumber()).getDeviceDescription()+ " w: "+deviceDAO.findByInventNumber(dto.getInventNumber()).getRoom().name(),dto.getContent()
                          ,dto.getAuthor().name());
             }
         } catch (ArrayIndexOutOfBoundsException e) {

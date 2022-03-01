@@ -1,6 +1,9 @@
 package pl.nazwa.arzieba.dtnetworkproject.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationArguments;
 import pl.nazwa.arzieba.dtnetworkproject.configuration.MyPropertiesConfig;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.ShortPostDAO;
@@ -14,7 +17,7 @@ import pl.nazwa.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
 import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 import pl.nazwa.arzieba.dtnetworkproject.utils.device.DeviceMapper;
 import pl.nazwa.arzieba.dtnetworkproject.utils.enums.ListOfEnumValues;
-import pl.nazwa.arzieba.dtnetworkproject.utils.shortPost.ShortPostMapper;
+import pl.nazwa.arzieba.dtnetworkproject.utils.mail.EmailConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +35,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/posts")
 public class ShortPostController implements WebMvcConfigurer {
 
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private ShortPostDAO postDAO;
     private DeviceDAO deviceDAO;
     private ShortPostService postService;
@@ -39,14 +44,20 @@ public class ShortPostController implements WebMvcConfigurer {
     private MyPropertiesConfig myPropertiesConfig;
     @Value("${my.pagesize}")
     int pagesize;
+    private EmailConfiguration emailConfiguration;
+    private ApplicationArguments applicationArguments;
+    @Value("${my.mailReceivers}")
+    private String[] mailReceivers;
 
     @Autowired
-    public ShortPostController(ShortPostDAO postDAO, DeviceDAO deviceDAO, ShortPostService postService, DeviceService deviceService, MyPropertiesConfig myPropertiesConfig) {
+    public ShortPostController(ShortPostDAO postDAO, DeviceDAO deviceDAO, ShortPostService postService, DeviceService deviceService, MyPropertiesConfig myPropertiesConfig, EmailConfiguration emailConfiguration, ApplicationArguments applicationArguments) {
         this.postDAO = postDAO;
         this.deviceDAO = deviceDAO;
         this.postService = postService;
         this.deviceService = deviceService;
         this.myPropertiesConfig = myPropertiesConfig;
+        this.emailConfiguration = emailConfiguration;
+        this.applicationArguments = applicationArguments;
     }
 
     @GetMapping("/devices/{inv}/{page}")
@@ -326,6 +337,14 @@ public class ShortPostController implements WebMvcConfigurer {
         post.setDevice(deviceDAO.findByInventNumber(shortPostDTO.getInventNumber()));
         post.setDate(calendar.getTime());
         postDAO.save(post);
+        try {
+            if (!shortPostDTO.getContent().contains("[SYSTEM]")&& applicationArguments.getSourceArgs()[0].contains("mail") ){
+                emailConfiguration.sendMail(mailReceivers,"Wpis dla: "+deviceDAO.findByInventNumber(shortPostDTO.getInventNumber()).getDeviceDescription()+ " w: "+deviceDAO.findByInventNumber(shortPostDTO.getInventNumber()).getRoom().name()+" [UPDATE]",shortPostDTO.getContent()
+                        ,shortPostDTO.getAuthor().name());
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            logger.warn("MailSender mode is not set!");
+        }
 
         return "redirect:/dtnetwork";
     }

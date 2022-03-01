@@ -1,8 +1,10 @@
 package pl.nazwa.arzieba.dtnetworkproject.services.damage;
 
-import org.springframework.data.domain.Page;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DamageDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceCardDAO;
@@ -18,6 +20,7 @@ import pl.nazwa.arzieba.dtnetworkproject.utils.exceptions.DamageNotFoundExceptio
 import pl.nazwa.arzieba.dtnetworkproject.utils.issueDocument.IssueDocMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.nazwa.arzieba.dtnetworkproject.utils.mail.EmailConfiguration;
 
 
 import javax.transaction.Transactional;
@@ -28,17 +31,25 @@ import java.util.stream.Collectors;
 @Transactional
 public class DamageServiceImpl implements DamageService {
 
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private DeviceDAO deviceDAO;
     private DamageDAO damageDAO;
     private IssueDocumentDAO issueDocumentDAO;
     private DeviceCardDAO deviceCardDAO;
+    private EmailConfiguration emailConfiguration;
+    private ApplicationArguments applicationArguments;
+    @Value("${my.mailReceivers}")
+    private String[] mailReceivers;
 
     @Autowired
-    public DamageServiceImpl(DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO) {
+    public DamageServiceImpl(DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, EmailConfiguration emailConfiguration, ApplicationArguments applicationArguments) {
         this.deviceDAO = deviceDAO;
         this.damageDAO = damageDAO;
         this.issueDocumentDAO = issueDocumentDAO;
         this.deviceCardDAO = deviceCardDAO;
+        this.emailConfiguration = emailConfiguration;
+        this.applicationArguments = applicationArguments;
     }
 
     @Override
@@ -104,6 +115,14 @@ public class DamageServiceImpl implements DamageService {
 
         damageDTO.setDamageId(saved.getDamageId());
 
+        try {
+            if (!damageDTO.getDescription().contains("[SYSTEM]")&& applicationArguments.getSourceArgs()[0].contains("mail") ){
+                emailConfiguration.sendMail(mailReceivers,"AWARIA dla: "+deviceDAO.findByInventNumber(damageDTO.getDeviceInventNumber()).getDeviceDescription()+ " w: "+deviceDAO.findByInventNumber(damageDTO.getDeviceInventNumber()).getRoom().name(),damageDTO.getDescription()
+                        ,damageDTO.getAuthor().name());
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            logger.warn("MailSender mode is not set!");
+        }
         return damageDTO;
     }
 
@@ -126,6 +145,15 @@ public class DamageServiceImpl implements DamageService {
                     +"\n\n"+"[UPDATE] "+dateOfUpdating+"\n"+ damageDTO.getDescription());
             toBeUpdated.setAuthor(damageDTO.getAuthor());
             damageDAO.save(toBeUpdated);
+
+            try {
+                if (!damageDTO.getDescription().contains("[SYSTEM]")&& applicationArguments.getSourceArgs()[0].contains("mail") ){
+                    emailConfiguration.sendMail(mailReceivers,"AWARIA dla: "+deviceDAO.findByInventNumber(damageDTO.getDeviceInventNumber()).getDeviceDescription()+ " w: "+deviceDAO.findByInventNumber(damageDTO.getDeviceInventNumber()).getRoom().name()+" [UPDATE]",damageDTO.getDescription()
+                            ,damageDTO.getAuthor().name());
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                logger.warn("MailSender mode is not set!");
+            }
 
             return DamageMapper.map(toBeUpdated);
         }
