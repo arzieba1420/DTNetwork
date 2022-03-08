@@ -242,8 +242,13 @@
                 <a href="" th:href="@{/devices/activityForm/} + ${dto.getInventNumber()}"  ><i class="fas fa-charging-station" style="color: orangered"></i></a>
                 <span class="tooltiptext">Dodaj uruchomienie generatora</span>
             </div>
+            <div class="tooltip" th:if="${!dto.getRoom().name().equals('Nieaktywne')}"  >
+                <a href="" th:href="@{/devices/setUnactive/} + ${dto.getInventNumber()}"  ><i class="fas fa-power-off" style="color: #6b202b"></i></a>
+                <span class="tooltiptext">Oznacz jako NIEAKTYWNE</span>
+            </div>
         </div>
     </div>
+
 
     </div>
     <script  th:src="@{/js/mymodal.js}"></script>

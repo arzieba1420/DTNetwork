@@ -32,6 +32,7 @@ button {
 button.login{
     padding: 34px 70px;
     font-size: 2em;
+    border-radius: 5px;
 }
 
 button:hover {

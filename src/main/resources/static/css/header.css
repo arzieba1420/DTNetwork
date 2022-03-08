@@ -56,8 +56,8 @@
     background-image: url("../images/logo.png");
     background-size: contain;
     background-repeat: no-repeat;
-    height: 140px;!important;
-    width: 260px;!important;
+    height: 140px !important;
+    width: 260px !important;
     align-self: flex-start;
     margin-top: 15px;
 

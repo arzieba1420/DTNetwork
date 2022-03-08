@@ -423,4 +423,10 @@ public class DeviceController {
 
         return "redirect:/dtnetwork";
     }
+
+    @GetMapping("/setUnactive/{inv}")
+    public String changeRoom (Model model, @PathVariable String inv){
+        deviceService.changeRoom(inv);
+        return findByInventNumber(inv,model);
+    }
 }

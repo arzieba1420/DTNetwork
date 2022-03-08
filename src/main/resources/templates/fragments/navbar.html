@@ -21,23 +21,17 @@
         <div id="bar" >
         <div id="nav" style="margin-left: 0" >
             <ul>
-
                 <li ><a class="home mainBar" href="#" th:href="@{/dtnetwork}">Home</a></li>
                 <li><a class="mainBar" >Urządzenia &raquo;</a>
-
                     <ul>
                         <li  th:each="room:${rooms}"><a href="#" th:text="${room}+' '+'&raquo;'"></a>
                             <ul>
                                 <li th:if="${device.getInventNumber()}!='NOT SPECIFIED'" th:each="device:${@deviceServiceImpl.findByRoom(room)}"><a th:href="@{/devices/}+ ${device.inventNumber}" th:text="${device.deviceDescription}"></a></li>
                                 <li><a href="#" th:text="'+' + ' Dodaj nowe'" th:href="@{/devices/addForm/}+${room}" >+ add new</a></li>
                             </ul>
-                        
                         </li>
-
                     </ul>
                 </li>
-
-
                 <li><a class="mainBar" href="#">Zamówienia &raquo;</a>
 
                     <ul>

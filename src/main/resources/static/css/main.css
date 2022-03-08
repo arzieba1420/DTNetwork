@@ -132,17 +132,17 @@ a:hover{
 }
 
 .row .cell:nth-child(1) {
-  width: 80px; !important;
+  width: 80px !important;
   border-left: 2px solid lightgrey;
   /*padding-left: 40px;*/
 }
 
 .row .cell:nth-child(2) {
-  width: 100px; !important;
+  width: 100px !important;
 }
 
 .row .cell:nth-child(3) {
-  width: 150px; !important;
+  width: 150px !important;
 
 }
 
@@ -152,7 +152,7 @@ a:hover{
 }
 
 .row .cell:last-child{
-  width: 100px; !important;
+  width: 100px !important;
 }
 
 

@@ -1,24 +1,20 @@
 package pl.nazwa.arzieba.dtnetworkproject.services.device;
 
-import pl.nazwa.arzieba.dtnetworkproject.dao.DamageDAO;
-import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceCardDAO;
-import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
-import pl.nazwa.arzieba.dtnetworkproject.dao.IssueDocumentDAO;
-import pl.nazwa.arzieba.dtnetworkproject.dto.DamageDTO;
-import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceCardDTO;
-import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
-import pl.nazwa.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
-import pl.nazwa.arzieba.dtnetworkproject.model.Device;
-import pl.nazwa.arzieba.dtnetworkproject.model.Room;
+import pl.nazwa.arzieba.dtnetworkproject.dao.*;
+import pl.nazwa.arzieba.dtnetworkproject.dto.*;
+import pl.nazwa.arzieba.dtnetworkproject.model.*;
+import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 import pl.nazwa.arzieba.dtnetworkproject.utils.damage.DamageMapper;
 import pl.nazwa.arzieba.dtnetworkproject.utils.device.DeviceMapper;
 import pl.nazwa.arzieba.dtnetworkproject.utils.deviceCard.DeviceCardMapper;
 import pl.nazwa.arzieba.dtnetworkproject.utils.exceptions.DeviceNotFoundException;
+import pl.nazwa.arzieba.dtnetworkproject.utils.generatorTest.GeneratorTestMapper;
 import pl.nazwa.arzieba.dtnetworkproject.utils.issueDocument.IssueDocMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,13 +26,17 @@ public class DeviceServiceImpl implements DeviceService {
     private DamageDAO damageDAO;
     private IssueDocumentDAO issueDocumentDAO;
     private DeviceCardDAO deviceCardDAO;
+    private GeneratorTestDAO generatorTestDAO;
+    private ShortPostDAO shortPostDAO;
 
     @Autowired
-    public DeviceServiceImpl(DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO) {
+    public DeviceServiceImpl(DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, GeneratorTestDAO generatorTestDAO, ShortPostDAO shortPostDAO) {
         this.deviceDAO = deviceDAO;
         this.damageDAO = damageDAO;
         this.issueDocumentDAO = issueDocumentDAO;
         this.deviceCardDAO = deviceCardDAO;
+        this.generatorTestDAO = generatorTestDAO;
+        this.shortPostDAO = shortPostDAO;
     }
 
     @Override
@@ -71,8 +71,18 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public DeviceDTO create(DeviceDTO toAdd) {
-
         deviceDAO.save( DeviceMapper.map(toAdd));
+
+        if (toAdd.getDeviceType().name()=="GENERATOR"){
+            GeneratorTestDTO generatorTestDTO = new GeneratorTestDTO();
+            generatorTestDTO.setAlerted(true);
+            generatorTestDTO.setContent("[SYSTEM ENTRY - DO NOT REMOVE!]");
+            generatorTestDTO.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
+            generatorTestDTO.setInventNumber(toAdd.getInventNumber());
+            generatorTestDTO.setStatus(Status.OK);
+            generatorTestDTO.setLossPowerFlag(false);
+            generatorTestDAO.save(GeneratorTestMapper.map(generatorTestDTO,deviceDAO));
+        }
 
         return toAdd;
     }
@@ -146,5 +156,23 @@ public class DeviceServiceImpl implements DeviceService {
         return deviceDAO.findAll().stream().filter(d->d.getRoom().equals(Room.valueOf(room)))
                 .map(DeviceMapper::map)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public DeviceDTO changeRoom(String inventNumber) {
+
+       Device device = deviceDAO.findByInventNumber(inventNumber);
+       device.setDeviceDescription(device.getDeviceDescription()+ " ("+device.getRoom()+")");
+       device.setRoom(Room.Nieaktywne);
+
+        ShortPost shortPost = new ShortPost();
+        shortPost.setAuthor(Author.DTN);
+        shortPost.setDevice(device);
+        shortPost.setContent("Urządzenie przeniesione do sekcji NIEAKTYWNE [SYSTEM]");
+        shortPost.setPostDate(Calendar.getInstance());
+        shortPost.setDate(Calendar.getInstance().getTime());
+        shortPostDAO.save(shortPost);
+
+       return DeviceMapper.map(deviceDAO.save(device));
     }
 }
