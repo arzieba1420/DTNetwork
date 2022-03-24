@@ -18,7 +18,6 @@ public class ShortPostMapper {
         post.setDevice(dao.findByInventNumber(dto.getInventNumber()));
         Calendar calendar= CalendarUtil.string2cal(dto.getDate());
         post.setPostDate(calendar);
-        post.setDate(calendar.getTime());
 
         return post;
     }

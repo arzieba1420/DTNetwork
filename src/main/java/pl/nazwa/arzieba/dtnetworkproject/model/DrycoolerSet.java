@@ -17,7 +17,7 @@ import java.util.Calendar;
 public class DrycoolerSet {
 
         @Id
-        @GeneratedValue
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         Integer drycoolerSetId;
         @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "Device_INVENT")

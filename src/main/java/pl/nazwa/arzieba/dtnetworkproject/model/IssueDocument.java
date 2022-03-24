@@ -23,13 +23,14 @@ public class IssueDocument implements Serializable {
 
     @Id
     private String issueSignature;
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer issueId;
     private String delivererName;
     private String delivererNIP;
     @Temporal(TemporalType.DATE)
     private Calendar issueDate;
     private  String issueTittle;
+    @Lob
     private String issueDetails;
     private String inventNumber;
     private double value;

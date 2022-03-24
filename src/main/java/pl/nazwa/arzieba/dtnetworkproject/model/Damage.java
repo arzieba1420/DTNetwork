@@ -23,12 +23,13 @@ public class Damage {
 
     //cannot exist without Device
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer damageId;
     @ManyToOne
     @JoinColumn(name = "device_inventNumber")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Device device;
+    @Lob
     private String description;
     @Temporal(TemporalType.DATE)
     private Calendar damageDate;

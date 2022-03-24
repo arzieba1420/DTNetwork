@@ -22,7 +22,7 @@ import java.util.Calendar;
 public class ChillerSet {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer chillerSetId;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Device_INVENT")

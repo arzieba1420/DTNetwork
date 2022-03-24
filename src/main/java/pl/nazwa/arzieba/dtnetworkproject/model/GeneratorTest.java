@@ -23,7 +23,7 @@ import java.util.List;
 public class GeneratorTest {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer testId;
     @ManyToOne
     @JoinColumn(name ="Device_INVENT")
@@ -31,6 +31,7 @@ public class GeneratorTest {
     private Device device;
     @Temporal(TemporalType.DATE)
     private Calendar date;
+    @Lob
     private String content;
     private Status status;
     @Transient

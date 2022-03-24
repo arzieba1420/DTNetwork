@@ -92,7 +92,7 @@ public class MainController implements ErrorController {
     public String home(Model model)  {
 
         Map<Integer, ShortPostDTO> mapa = new LinkedHashMap<>();
-        List<Integer> keys = shortPostDAO.findTop10ByOrderByDateDesc().stream().map(d -> d.getPostId()).collect(Collectors.toList());
+        List<Integer> keys = shortPostDAO.findTop10ByOrderByPostIdDesc().stream().map(d -> d.getPostId()).collect(Collectors.toList());
         List<String> rooms;
         rooms = ListOfEnumValues.rooms;
         List<Device> generators = deviceDAO.findAllByDeviceType(DeviceType.GENERATOR);
@@ -359,6 +359,22 @@ public class MainController implements ErrorController {
 
     public Author string2Aut(String name){
         return Author.valueOf(name);
+    }
+
+
+    @GetMapping("/changeID")
+    public String changeID(Model model) {
+
+        int i =1;
+
+        for (ShortPost post:shortPostDAO.findAll()){
+
+            post.setPostId(i);
+            i++;
+
+        }
+
+        return home(model);
     }
 
 }

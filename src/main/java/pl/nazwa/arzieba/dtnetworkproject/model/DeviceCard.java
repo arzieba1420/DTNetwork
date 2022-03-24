@@ -21,7 +21,7 @@ public class DeviceCard {
 
 //cannot exist without Device
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer deviceCardID;
     private String address;
     private final String department = "DTN";

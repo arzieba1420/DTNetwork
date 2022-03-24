@@ -16,7 +16,7 @@ import java.io.Serializable;
 public class IssueFiles implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long issueFilesId;
     private String fileName;
     private String fileNameNoExt;

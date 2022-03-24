@@ -20,14 +20,15 @@ import java.util.Date;
 public class ShortPost {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer postId;
     private Author author;
+    @Lob
     private String content;
     @Temporal(TemporalType.DATE)
     private Calendar postDate;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date date = postDate==null? Calendar.getInstance().getTime() : postDate.getTime();
+    private Date date = Calendar.getInstance().getTime();
     @ManyToOne
     @JoinColumn(name ="Device_INVENT")
     @OnDelete(action = OnDeleteAction.CASCADE)
