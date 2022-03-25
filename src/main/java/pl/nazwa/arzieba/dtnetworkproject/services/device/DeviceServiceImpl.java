@@ -162,7 +162,9 @@ public class DeviceServiceImpl implements DeviceService {
     public DeviceDTO changeRoom(String inventNumber) {
 
        Device device = deviceDAO.findByInventNumber(inventNumber);
-       device.setDeviceDescription(device.getDeviceDescription()+ " ("+device.getRoom()+")");
+
+
+       if (!device.getDeviceType().equals(DeviceType.GENERATOR))  device.setDeviceDescription(device.getDeviceDescription()+ " ("+device.getRoom()+")");
        device.setRoom(Room.Nieaktywne);
 
         ShortPost shortPost = new ShortPost();

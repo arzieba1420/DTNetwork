@@ -61,9 +61,10 @@
                     <td th:if="${generators.values().contains(null)}" ><a href="" th:href="@{'/generators/' + ${generator}+'/1'}" >Brak testu</a></td>
                     <td th:if="!${generators.values().contains(null)}"  th:text="${generators.get(generator).getStatus()}"></td>
                     <td th:if="${generators.values().contains(null)}"  >Nieznany</td>
-                    <td th:if="${!generators.values().contains(null)&&@mainController.betweenDates(generators.get(generator).getDate(),today)<30}" th:text="${@mainController.betweenDates(generators.get(generator).getDate(),today)}" ></td>
+                    <td th:if="${!generators.values().contains(null)&&@mainController.betweenDates(generators.get(generator).getDate(),today)<30&&!generators.get(generator).getDevice().getRoom().name().equals('Nieaktywne')}" th:text="${@mainController.betweenDates(generators.get(generator).getDate(),today)}" ></td>
                     <td th:if="${generators.values().contains(null)}" >0</td>
-                    <td style="background-color: rgba(255,0,0,0.65); color: white" th:if="${!generators.values().contains(null)&&@mainController.betweenDates(generators.get(generator).getDate(),today)>=30}" th:text="${@mainController.betweenDates(generators.get(generator).getDate(),today)}" ></td>
+                    <td style="background-color: rgba(255,0,0,0.65); color: white" th:if="${!generators.values().contains(null)&&@mainController.betweenDates(generators.get(generator).getDate(),today)>=30&&!generators.get(generator).getDevice().getRoom().name().equals('Nieaktywne')}" th:text="${@mainController.betweenDates(generators.get(generator).getDate(),today)}" ></td>
+                   <td th:if="${generators.get(generator).getDevice().getRoom().name().equals('Nieaktywne')}" >N/D</td>
                </tr>
            </table>
            <i style="float:left; font-size: 130%; margin-left: 425px; margin-top: -70px" class="fas fa-angle-right" id="arr2"></i>
