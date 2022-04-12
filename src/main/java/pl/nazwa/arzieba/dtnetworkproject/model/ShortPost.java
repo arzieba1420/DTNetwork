@@ -33,4 +33,6 @@ public class ShortPost {
     @JoinColumn(name ="Device_INVENT")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Device device;
+    private PostLevel postLevel = PostLevel.GENERAL;
+
 }

@@ -53,6 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
+                .antMatchers("/h2/**").permitAll()
+                .antMatchers("/console/**").permitAll()
                 .antMatchers("/dtnetwork").hasAuthority("ROLE_USER")
                 .antMatchers("/dev/**").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
@@ -73,9 +75,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().logoutUrl("/logout").logoutSuccessHandler(new ForwardLogoutSuccessHandler("/login"){
                     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                         logger.info("Wylogowano pomyslnie: "+authentication.getName());
-                        response.sendRedirect("/login");
+                        response.sendRedirect("/login")
+                                ;
                     }
-                });
+
+                })
+                .and().headers().frameOptions().disable()
+                ;
     }
 
     @Bean

@@ -15,6 +15,7 @@ import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.Author;
 import pl.nazwa.arzieba.dtnetworkproject.model.Damage;
+import pl.nazwa.arzieba.dtnetworkproject.model.PostLevel;
 import pl.nazwa.arzieba.dtnetworkproject.services.damage.DamageService;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
 import pl.nazwa.arzieba.dtnetworkproject.services.issueDocument.IssueDocService;
@@ -90,6 +91,7 @@ public class DamageController {
             dto.setInventNumber(damageDTO.getDeviceInventNumber());
             dto.setContent("Nowa usterka! Szczegóły po kliknięciu w Urządzenie... [SYSTEM]");
             dto.setForDamage(true);
+            dto.setPostLevel(PostLevel.DAMAGE);
             damageService.create(damageDTO);
             postService.create(dto);
 

@@ -1,19 +1,15 @@
 package pl.nazwa.arzieba.dtnetworkproject.utils.calendar;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 @Component
 public class CalendarUtil {
     //Calendar to String
     public static String cal2string(Calendar calendar) {
-
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int realMonth = month+1;
@@ -25,7 +21,6 @@ public class CalendarUtil {
     }
 
     public static Calendar string2cal(String dateToParse) {
-
         String stringDate = dateToParse;
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date;
@@ -42,7 +37,6 @@ public class CalendarUtil {
     }
 
     public static String invertDateString(String date){
-
         String[] strings = date.split("-");
         String result = strings[2]+"-"+strings[1]+"-"+strings[0];
 
@@ -50,7 +44,6 @@ public class CalendarUtil {
     }
 
     public static String invertDateCal(Calendar calendar){
-
         String stringDate = cal2string(calendar);
 
         return invertDateString(stringDate);

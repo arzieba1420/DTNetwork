@@ -262,6 +262,7 @@ public class DeviceController {
             postDTO.setAuthor(Author.DTN);
             postDTO.setInventNumber(testDTO.getInventNumber());
             postDTO.setContent("Generator podał napięcie podczas zaniku! [SYSTEM]");
+            postDTO.setPostLevel(PostLevel.POWER);
             generatorService.create(testDTO);
             postService.create(postDTO);
 
@@ -282,6 +283,7 @@ public class DeviceController {
             dto.setInventNumber(damageDTO.getDeviceInventNumber());
             dto.setContent("Nowa usterka! Szczegóły po kliknięciu w Urządzenie... [SYSTEM]");
             dto.setForDamage(true);
+            dto.setPostLevel(PostLevel.DAMAGE);
             generatorService.create(testDTO);
             damageService.create(damageDTO);
             postService.create(dto);
@@ -297,6 +299,7 @@ public class DeviceController {
             postDTO.setAuthor(Author.DTN);
             postDTO.setInventNumber(testDTO.getInventNumber());
             postDTO.setContent("Generator podał napięcie podczas zaniku! [SYSTEM]");
+            postDTO.setPostLevel(PostLevel.POWER);
             DamageDTO damageDTO = new DamageDTO();
             damageDTO.setDescription(testDTO.getContent());
             damageDTO.setDeviceInventNumber(testDTO.getInventNumber());
@@ -307,6 +310,7 @@ public class DeviceController {
             dto.setAuthor(Author.DTN);
             dto.setInventNumber(damageDTO.getDeviceInventNumber());
             dto.setContent("Nowa usterka! Szczegóły po kliknięciu w Urządzenie... [SYSTEM]");
+            dto.setPostLevel(PostLevel.DAMAGE);
             dto.setForDamage(true);
             generatorService.create(testDTO);
             postService.create(postDTO);
@@ -355,6 +359,7 @@ public class DeviceController {
         }
 
         shortPostDTO.setContent("Zmieniono nastawę chillera! [SYSTEM]");
+        shortPostDTO.setPostLevel(PostLevel.INFO);
         shortPostDTO.setAuthor(Author.DTN);
         shortPostDTO.setInventNumber(inventNumber);
         shortPostDTO.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
@@ -410,6 +415,7 @@ public class DeviceController {
         }
 
         shortPostDTO.setContent("Zmieniono nastawę drycoolera! [SYSTEM]");
+        shortPostDTO.setPostLevel(PostLevel.INFO);
         shortPostDTO.setAuthor(Author.DTN);
         shortPostDTO.setInventNumber(inventNumber);
         shortPostDTO.setDate(CalendarUtil.cal2string(Calendar.getInstance()));

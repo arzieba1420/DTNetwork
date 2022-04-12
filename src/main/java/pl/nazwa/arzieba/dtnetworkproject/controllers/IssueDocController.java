@@ -10,6 +10,7 @@ import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.Author;
 import pl.nazwa.arzieba.dtnetworkproject.model.IssueDocument;
 import pl.nazwa.arzieba.dtnetworkproject.model.IssueFiles;
+import pl.nazwa.arzieba.dtnetworkproject.model.PostLevel;
 import pl.nazwa.arzieba.dtnetworkproject.services.damage.DamageService;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
 import pl.nazwa.arzieba.dtnetworkproject.services.issueDocument.IssueDocService;
@@ -173,6 +174,7 @@ public class IssueDocController {
         shortPostDTO.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
         shortPostDTO.setForDamage(false);
         shortPostDTO.setContent("Wprowadzono nowe zamówienie dla usterki! [SYSTEM]");
+        shortPostDTO.setPostLevel(PostLevel.INFO);
         shortPostDTO.setAuthor(Author.DTN);
         shortPostDTO.setInventNumber(issueDocumentDTO.getInventNumber());
         postService.create(shortPostDTO);
@@ -216,6 +218,7 @@ public class IssueDocController {
         postDTO.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
         postDTO.setForDamage(false);
         postDTO.setContent("Wprowadzono nowe zamówienie dla urządzenia! [SYSTEM]");
+        postDTO.setPostLevel(PostLevel.INFO);
         postDTO.setAuthor(Author.DTN);
         postDTO.setInventNumber(dto.getInventNumber());
         postService.create(postDTO);

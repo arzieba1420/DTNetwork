@@ -171,6 +171,7 @@ public class DeviceServiceImpl implements DeviceService {
         shortPost.setAuthor(Author.DTN);
         shortPost.setDevice(device);
         shortPost.setContent("Urządzenie przeniesione do sekcji NIEAKTYWNE [SYSTEM]");
+        shortPost.setPostLevel(PostLevel.INFO);
         shortPost.setPostDate(Calendar.getInstance());
         shortPost.setDate(Calendar.getInstance().getTime());
         shortPostDAO.save(shortPost);

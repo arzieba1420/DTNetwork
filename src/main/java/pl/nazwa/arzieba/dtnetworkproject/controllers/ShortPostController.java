@@ -11,6 +11,7 @@ import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.Author;
 import pl.nazwa.arzieba.dtnetworkproject.model.Device;
+import pl.nazwa.arzieba.dtnetworkproject.model.PostLevel;
 import pl.nazwa.arzieba.dtnetworkproject.model.ShortPost;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
 import pl.nazwa.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
@@ -208,7 +209,7 @@ public class ShortPostController implements WebMvcConfigurer {
         }
 
         for (ShortPost post : allPosts) {
-            if (post.getContent().contains("kliknięciu")) {
+            if (post.getPostLevel().equals(PostLevel.DAMAGE)) {
                 amount--;
             }
         }
@@ -301,7 +302,7 @@ public class ShortPostController implements WebMvcConfigurer {
         ShortPostDTO dto = new ShortPostDTO();
 
         for (ShortPost post: posts) {
-            if (post.getContent().contains("SYSTEM")) postDAO.delete(post);
+            if (post.getPostLevel().equals(PostLevel.GENERAL)) postDAO.delete(post);
         }
 
         dto.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
@@ -309,6 +310,7 @@ public class ShortPostController implements WebMvcConfigurer {
         dto.setAuthor(Author.DTN);
         dto.setContent("Usunięto posty systemowe! [SYSTEM]");
         dto.setForDamage(false);
+        dto.setPostLevel(PostLevel.INFO);
         postService.create(dto);
 
         return "redirect:/dtnetwork";
@@ -338,7 +340,7 @@ public class ShortPostController implements WebMvcConfigurer {
         post.setDate(calendar.getTime());
         postDAO.save(post);
         try {
-            if (!shortPostDTO.getContent().contains("[SYSTEM]")&& applicationArguments.getSourceArgs()[0].contains("mail") ){
+            if ((!shortPostDTO.getPostLevel().equals(PostLevel.INFO))&& applicationArguments.getSourceArgs()[0].contains("mail") ){
                 emailConfiguration.sendMail(mailReceivers,"Wpis dla: "+deviceDAO.findByInventNumber(shortPostDTO.getInventNumber()).getDeviceDescription()+ " w: "+deviceDAO.findByInventNumber(shortPostDTO.getInventNumber()).getRoom().name()+" [UPDATE]",shortPostDTO.getContent()
                         ,shortPostDTO.getAuthor().name());
             }

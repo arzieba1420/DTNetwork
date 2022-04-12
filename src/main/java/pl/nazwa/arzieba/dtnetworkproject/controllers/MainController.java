@@ -33,6 +33,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import pl.nazwa.arzieba.dtnetworkproject.utils.exceptions.DamageNotFoundException;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -118,6 +119,7 @@ public class MainController implements ErrorController {
                     post.setDate(new Date());
                     post.setContent("Wymagany test generatora! [SYSTEM]");
                     post.setAuthor(Author.DTN);
+                    post.setPostLevel(PostLevel.INFO);
                     shortPostDAO.save(post);
                     test.setAlerted(true);
                 }

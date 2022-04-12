@@ -4,6 +4,7 @@ import pl.nazwa.arzieba.dtnetworkproject.model.Author;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
+import pl.nazwa.arzieba.dtnetworkproject.model.PostLevel;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -25,4 +26,5 @@ public class ShortPostDTO {
     @NotNull(message = "Podaj urządzenie lub wybierz Inne->DTN!")
     private String inventNumber;
     private boolean isForDamage = false;
+    private PostLevel postLevel = PostLevel.GENERAL;
 }

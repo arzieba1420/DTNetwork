@@ -9,6 +9,7 @@ import pl.nazwa.arzieba.dtnetworkproject.dao.ShortPostDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.Author;
+import pl.nazwa.arzieba.dtnetworkproject.model.PostLevel;
 import pl.nazwa.arzieba.dtnetworkproject.model.ShortPost;
 import pl.nazwa.arzieba.dtnetworkproject.utils.device.DeviceMapper;
 import pl.nazwa.arzieba.dtnetworkproject.utils.mail.EmailConfiguration;
@@ -169,8 +170,9 @@ public class ShortPostServiceImpl implements ShortPostService {
         postDAO.save(ShortPostMapper.map(dto,deviceDAO));
 
         try {
-            if (!dto.getContent().contains("[SYSTEM]")&& applicationArguments.getSourceArgs()[0].contains("mail") ){
-                email.sendMail(mailReceivers,"Nowy post dla: "+deviceDAO.findByInventNumber(dto.getInventNumber()).getDeviceDescription()+ " w: "+deviceDAO.findByInventNumber(dto.getInventNumber()).getRoom().name(),dto.getContent()
+            if (!dto.getPostLevel().equals(PostLevel.INFO)&& applicationArguments.getSourceArgs()[0].equalsIgnoreCase("mail")&&
+                !applicationArguments.getSourceArgs()[1].isEmpty()){
+                email.sendMail(new String[]{applicationArguments.getSourceArgs()[1]},"Nowy post dla: "+deviceDAO.findByInventNumber(dto.getInventNumber()).getDeviceDescription()+ " w: "+deviceDAO.findByInventNumber(dto.getInventNumber()).getRoom().name(),dto.getContent()
                          ,dto.getAuthor().name());
             }
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -261,7 +263,7 @@ public class ShortPostServiceImpl implements ShortPostService {
         boolean allForDamage =true;
 
         for (ShortPost post: allPosts) {
-            if (!post.getContent().contains("kliknięciu")){
+            if (!post.getPostLevel().equals(PostLevel.DAMAGE)){
                 allForDamage = false;
             }
         }

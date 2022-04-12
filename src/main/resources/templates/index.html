@@ -64,7 +64,7 @@
                     <td th:if="${!generators.values().contains(null)&&@mainController.betweenDates(generators.get(generator).getDate(),today)<30&&!generators.get(generator).getDevice().getRoom().name().equals('Nieaktywne')}" th:text="${@mainController.betweenDates(generators.get(generator).getDate(),today)}" ></td>
                     <td th:if="${generators.values().contains(null)}" >0</td>
                     <td style="background-color: rgba(255,0,0,0.65); color: white" th:if="${!generators.values().contains(null)&&@mainController.betweenDates(generators.get(generator).getDate(),today)>=30&&!generators.get(generator).getDevice().getRoom().name().equals('Nieaktywne')}" th:text="${@mainController.betweenDates(generators.get(generator).getDate(),today)}" ></td>
-                   <td th:if="${generators.get(generator).getDevice().getRoom().name().equals('Nieaktywne')}" >N/D</td>
+<!--                   <td th:if="${generators.get(generator).getDevice().getRoom().name().equals('Nieaktywne')}" >N/D</td>-->
                </tr>
            </table>
            <i style="float:left; font-size: 130%; margin-left: 425px; margin-top: -70px" class="fas fa-angle-right" id="arr2"></i>
@@ -138,13 +138,13 @@
                         <div class="cell" data-title="Author" th:text="${lastPosts.get(key).author}">
                             Arek
                         </div>
-                        <div class="cell" data-title="Related with" th:if="${!lastPosts.get(key).content.contains('po kliknięciu w Urządzenie') and !lastPosts.get(key).content.contains('zaniku! [SYSTEM]') and !@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).getRoom().name().equals('Nieaktywne')}" >
+                        <div class="cell" data-title="Related with" th:if="${!lastPosts.get(key).getPostLevel().name().equals('DAMAGE') and !lastPosts.get(key).getPostLevel().name().equals('POWER') and !@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).getRoom().name().equals('Nieaktywne')}" >
                             <a href="" th:text="${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).deviceDescription}+' ('+${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).room}+')' " th:href="@{'/devices/' + ${lastPosts.get(key).inventNumber}}"></a>
                         </div>
-                        <div class="cell" data-title="Related with" th:if="${lastPosts.get(key).content.contains('po kliknięciu w Urządzenie')and !@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).getRoom().name().equals('Nieaktywne')}" >
+                        <div class="cell" data-title="Related with" th:if="${lastPosts.get(key).getPostLevel().name().equals('DAMAGE')and !@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).getRoom().name().equals('Nieaktywne')}" >
                             <a href="" th:text="${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).deviceDescription}+' ('+${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).room}+')' " th:href="@{'/damages/devices/' + ${lastPosts.get(key).inventNumber}+'/1'}"></a>
                         </div>
-                        <div class="cell" data-title="Related with" th:if="${lastPosts.get(key).content.contains('zaniku! [SYSTEM]')and !@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).getRoom().name().equals('Nieaktywne')}" >
+                        <div class="cell" data-title="Related with" th:if="${lastPosts.get(key).getPostLevel().name().equals('POWER')and !@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).getRoom().name().equals('Nieaktywne')}" >
                             <a href="" th:text="${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).deviceDescription}" th:href="@{'/devices/' + ${lastPosts.get(key).inventNumber}}"></a>
                         </div>
                         <div class="cell" data-title="Related with" th:if="${@deviceDAO.findByInventNumber(lastPosts.get(key).inventNumber).getRoom().name().equals('Nieaktywne')}" >
@@ -155,25 +155,29 @@
                         </div>
 
 
-                        <div class="cell remove " th:if="${lastPosts.get(key).content.contains('po kliknięciu w Urządzenie') }">
+                        <div class="cell remove " th:if="${lastPosts.get(key).getPostLevel().name().equals('DAMAGE') }">
                             <i class="fas fa-exclamation-circle" style="font-size: 200%;color: red"></i>
                         </div>
-                        <div class="cell remove " th:if="${lastPosts.get(key).content.contains('zaniku! [SYSTEM]')}">
+                        <div class="cell remove " th:if="${lastPosts.get(key).getPostLevel().name().equals('POWER')}">
                             <i class="fas fa-bolt" style="font-size: 200%; color: orangered"></i>
+                        </div>
+
+                        <div class="cell remove " th:if="${lastPosts.get(key).getPostLevel().name().equals('INFO') and !lastPosts.get(key).content.contains('Wymagany test generatora')  }">
+                            <i class="fas fa-info" style="font-size: 200%;color: #0062fe"></i>
                         </div>
                         <div class="cell remove " th:if="${lastPosts.get(key).content.contains('Wymagany test generatora')}">
                             <i class="fas fa-exclamation-circle" style="font-size: 200%;color: orangered"></i>
                         </div>
-                        <div class="cell remove " th:if="${lastPosts.get(key).content.contains('Zmieniono nastawę') or lastPosts.get(key).content.contains('Usunięto posty systemowe') or lastPosts.get(key).content.contains('Wprowadzono nowe zamówienie dla')or lastPosts.get(key).content.contains('NIEAKTYWNE') }">
-                            <i class="fas fa-info" style="font-size: 200%;color: #0062fe"></i>
+                        <div class="cell remove " th:if="${lastPosts.get(key).getPostLevel().name().equals('UPDATE') }">
+                            <i class="fas fa-gears" style="font-size: 200%;color: #44fe00"></i>
                         </div>
 
-                        <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('kliknięciu') and !lastPosts.get(key).content.contains('zaniku! [SYSTEM]')and !lastPosts.get(key).content.contains('Wymagany test generatora') and !lastPosts.get(key).content.contains('Zmieniono nastawę') and !lastPosts.get(key).content.contains('Usunięto posty systemowe') and !lastPosts.get(key).content.contains('Wprowadzono nowe zamówienie dla') and !lastPosts.get(key).content.contains('NIEAKTYWNE') and (lastPosts.get(key).getAuthor().name().equals(@mainController.getUser()) or @mainController.getUser().equals('admin')) }">
+                        <div class="cell remove " th:if="${lastPosts.get(key).getPostLevel().name().equals('GENERAL') and (lastPosts.get(key).getAuthor().name().equals(@mainController.getUser()) or @mainController.getUser().equals('admin')) }">
                             <a href="#" th:href="@{'/posts/delete/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Usuń post</span></a>
                             <br>
                             <a href="#" th:href="@{'/posts/edit/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-edit"></i> Edytuj post</span></a>
                         </div>
-                        <div class="cell remove " th:if="${!lastPosts.get(key).content.contains('kliknięciu') and !lastPosts.get(key).content.contains('zaniku! [SYSTEM]')and !lastPosts.get(key).content.contains('Wymagany test generatora') and !lastPosts.get(key).content.contains('Zmieniono nastawę') and !lastPosts.get(key).content.contains('Usunięto posty systemowe') and !lastPosts.get(key).content.contains('Wprowadzono nowe zamówienie dla')and !lastPosts.get(key).content.contains('NIEAKTYWNE')and(!lastPosts.get(key).getAuthor().name().equals(@mainController.getUser()) and !@mainController.getUser().equals('admin')) }">
+                        <div class="cell remove " th:if="${lastPosts.get(key).getPostLevel().name().equals('GENERAL')and(!lastPosts.get(key).getAuthor().name().equals(@mainController.getUser()) and !@mainController.getUser().equals('admin')) }">
                             <span style="font-size: 1em"><i class="fas fa-lock"></i></span>
 
                         </div>

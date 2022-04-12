@@ -50,7 +50,7 @@
                     
                     </div>
                     
-                    <div class="row" th:each="key, iterStat: ${posts.keySet()} " th:if="${!posts.get(key).content.contains('kliknięciu')}" >
+                    <div class="row" th:each="key, iterStat: ${posts.keySet()} " th:if="${!posts.get(key).getPostLevel().name().equals('DAMAGE')}" >
                         <div class="cell" data-title="Date" th:text="${@calendarUtil.invertDateString(posts.get(key).date)}" >
                             11-11-2011
                         </div>
