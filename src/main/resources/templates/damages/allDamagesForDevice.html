@@ -67,7 +67,7 @@
                     </div>
                     <div class="cell " style="width: 150px">
                         <a href="#" th:href="@{'/issueDocs/addFormDam/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="fas fa-plus-square"></i> Dodaj zamówienie</span></a><br>
-                        <a th:href="@{'/issueDocs/damages/'+${key}}"><span style="font-size: 1em;cursor:pointer" th:text="'Pokaż wszystkie (' + ${@damageController.amountOfDocsForDamage(key)}+')'"><i class="fas fa-search-dollar"></i></span> </a><br>
+                        <a th:href="@{'/issueDocs/damages/'+${key}}"><span style="font-size: 1em;cursor:pointer" th:text="'Pokaż wszystkie (' + ${@issueDocServiceImpl.findByDamageId(key).size()}+')'"><i class="fas fa-search-dollar"></i></span> </a><br>
                         <a th:href="@{'/damages/edit/'+${key}}"><span style="font-size: 1em;cursor:pointer"><i class="fas fa-search-dollar"></i> Edytuj usterkę</span> </a>
                     </div>
                 </div>

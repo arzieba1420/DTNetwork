@@ -8,7 +8,6 @@ import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.Author;
-import pl.nazwa.arzieba.dtnetworkproject.model.IssueDocument;
 import pl.nazwa.arzieba.dtnetworkproject.model.IssueFiles;
 import pl.nazwa.arzieba.dtnetworkproject.model.PostLevel;
 import pl.nazwa.arzieba.dtnetworkproject.services.damage.DamageService;
@@ -67,7 +66,7 @@ public class IssueDocController {
     public String findByInventNumber(@PathVariable String inventNumber, Model model, @PathVariable int page){
 
         List<IssueDocumentDTO> docs = deviceService.getIssueDocuments(inventNumber);
-        DeviceDTO dto = deviceService.findByInventNumber(inventNumber);
+        DeviceDTO dto = deviceService.generateMainViewForDevice(inventNumber);
         List<IssueDocumentDTO> page1= issueDocService.findByDevice(inventNumber,page-1,pagesize);
         List<String> pageNumbers = docs.stream().map(d->d.getInventNumber()).collect(Collectors.toList());
         int numberOfPages = (issueDocService.numberByDevice(inventNumber))/pagesize + 1;
@@ -230,7 +229,7 @@ public class IssueDocController {
     public String getAllForDamage(@PathVariable Integer damageId, Model model){
 
         String inventNumber = damageService.findById(damageId).getDeviceInventNumber();
-        DeviceDTO deviceDTO= deviceService.findByInventNumber(inventNumber) ;
+        DeviceDTO deviceDTO= deviceService.generateMainViewForDevice(inventNumber) ;
         List<IssueDocumentDTO> docs= issueDocService.findByDamageId(damageId);
 
         model.addAttribute("amount", docs.size());

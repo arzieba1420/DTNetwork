@@ -50,7 +50,7 @@ public class GeneratorController {
     public String getAllTests(@PathVariable String inv, Model model, @PathVariable int page){
 
         List<GeneratorTestDTO> testPage = generatorService.getAllTests(page-1,pagesize,inv);
-        DeviceDTO dto = deviceService.findByInventNumber(inv);
+        DeviceDTO dto = deviceService.generateMainViewForDevice(inv);
         int numberOfPages = (generatorTestDAO.findAllByDevice_InventNumber(inv).size())/pagesize+1;
         List<Integer> morePages = new LinkedList<>();
         int i = 2;

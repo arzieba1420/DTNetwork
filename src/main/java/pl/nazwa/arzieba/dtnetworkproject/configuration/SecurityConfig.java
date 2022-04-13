@@ -4,6 +4,7 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,17 +26,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Configuration
+
 @EnableWebSecurity
 @EnableEncryptableProperties
+@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    @Value("${my.adminPass}")
-    private String adminPass;
-    @Value("${my.userPass}")
-    private String userPass;
     private UserPrincipalDetailsService userPrincipalDetailsService;
 
     @Autowired
@@ -45,13 +42,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth){
-        auth.authenticationProvider(authenticationProvider());
-    }
+        auth.authenticationProvider(authenticationProvider());   }
 
-    //TODO configure permitions
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.authorizeRequests()
                 .antMatchers("/h2/**").permitAll()
                 .antMatchers("/console/**").permitAll()
@@ -63,25 +58,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .formLogin()
                 .loginPage("/login").permitAll()
-                .successHandler(new AuthenticationSuccessHandler() {
-                    @Override
-                    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-                        logger.info("Zalogowano pomyślnie: "+authentication.getName());
-                        httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/dtnetwork");
-                    }
-                }
-                              )
+                .successHandler((httpServletRequest, httpServletResponse, authentication) -> {
+                    logger.info("Zalogowano pomyślnie: "+authentication.getName());
+                    httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/dtnetwork");
+                    })
                 .and()
                 .logout().logoutUrl("/logout").logoutSuccessHandler(new ForwardLogoutSuccessHandler("/login"){
-                    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
                         logger.info("Wylogowano pomyslnie: "+authentication.getName());
-                        response.sendRedirect("/login")
-                                ;
-                    }
-
-                })
-                .and().headers().frameOptions().disable()
-                ;
+                        response.sendRedirect("/login");
+                    }})
+                .and().headers().frameOptions().disable();
     }
 
     @Bean
@@ -89,8 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    DaoAuthenticationProvider authenticationProvider(){
-
+    public DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         daoAuthenticationProvider.setUserDetailsService(userPrincipalDetailsService);

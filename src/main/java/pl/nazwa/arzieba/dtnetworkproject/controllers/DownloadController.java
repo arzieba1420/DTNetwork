@@ -1,11 +1,8 @@
 package pl.nazwa.arzieba.dtnetworkproject.controllers;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -36,7 +33,7 @@ public class DownloadController {
     public static final String STORAGE_DIRECTORY = STORAGE_PATH + "/storage";
     private static final String FILE_DIRECTORY = STORAGE_DIRECTORY + "/files";
     //HAS TO BE PROVIDED
-    private static final String DEFAULT_FILE_NAME = "EmptyCard.pdf";
+    private static final String DEFAULT_FILE_NAME = "static/files/EmptyCard.pdf";
     private ResourceLoader resourceLoader;
 
     //-------------------------------CONSTRUCTOR--------------------------------------------------
@@ -72,7 +69,7 @@ public class DownloadController {
             FileCopyUtils.copy(inputStream, response.getOutputStream());}
 
             if(!fileName.equalsIgnoreCase("Instrukcja")) {
-                InputStream inputStream = classLoader.getResourceAsStream("EmptyCard.pdf");
+                InputStream inputStream = classLoader.getResourceAsStream("static/files/EmptyCard.pdf");
                 response.setContentType("application/pdf");
                 response.setHeader("Content-Disposition",
                         String.format("attachment; filename=EmptyCard"));

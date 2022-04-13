@@ -1,5 +1,7 @@
 package pl.nazwa.arzieba.dtnetworkproject.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import pl.nazwa.arzieba.dtnetworkproject.model.Author;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +16,8 @@ import javax.validation.constraints.Pattern;
 @Component
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ShortPostDTO {
 
     @NotNull(message = "Podaj autora posta!")

@@ -1,9 +1,7 @@
 package pl.nazwa.arzieba.dtnetworkproject.dto;
 
+import lombok.*;
 import pl.nazwa.arzieba.dtnetworkproject.model.Author;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotBlank;
@@ -14,6 +12,9 @@ import javax.validation.constraints.Pattern;
 @Component
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+
 public class DamageDTO {
 
     @NotBlank(message = "Podaj opis usterki!"  )
@@ -26,6 +27,14 @@ public class DamageDTO {
     private String deviceInventNumber;
     private Integer damageId;
     private boolean newPostFlag;  //auto-create relate shortPost or not
+
+    public DamageDTO(String description, String damageDate, Author author, String deviceInventNumber, boolean newPostFlag) {
+        this.description = description;
+        this.damageDate = damageDate;
+        this.author = author;
+        this.deviceInventNumber = deviceInventNumber;
+        this.newPostFlag = newPostFlag;
+    }
 }
 
 
