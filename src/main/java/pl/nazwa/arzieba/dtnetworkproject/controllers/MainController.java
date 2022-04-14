@@ -208,6 +208,7 @@ public class MainController implements ErrorController {
         Path sourcePath = Paths.get(System.getProperty("java.io.tmpdir")+"/logs.txt");
         Path targetPath = Paths.get(System.getProperty("java.io.tmpdir")+"/logs2.txt");
         File file = new File(System.getProperty("java.io.tmpdir")+"/logs2.txt");
+        logger.info("Absolute path to logs .txt file:"+file.getAbsolutePath());
 
         try {
             Path path = Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);//copy with REPLACE_EXISTING option

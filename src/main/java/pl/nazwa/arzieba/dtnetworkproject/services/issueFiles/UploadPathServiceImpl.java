@@ -1,8 +1,8 @@
 package pl.nazwa.arzieba.dtnetworkproject.services.issueFiles;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.nazwa.arzieba.dtnetworkproject.controllers.DownloadController;
+import pl.nazwa.arzieba.dtnetworkproject.services.download.DownloadServiceImpl;
 
 import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
@@ -13,12 +13,12 @@ import java.io.File;
 public class UploadPathServiceImpl implements UploadPathService {
 
     private ServletContext context;
-    private DownloadController downloadController;
-    private String DIRECTORY = downloadController.STORAGE_DIRECTORY;
+    private DownloadServiceImpl downloadServiceImpl;
+    private String DIRECTORY = downloadServiceImpl.STORAGE_DIRECTORY;
 
-    public UploadPathServiceImpl(ServletContext context, DownloadController downloadController) {
+    public UploadPathServiceImpl(ServletContext context, DownloadServiceImpl downloadServiceImpl) {
         this.context = context;
-        this.downloadController = downloadController;
+        this.downloadServiceImpl = downloadServiceImpl;
     }
 
     @Override

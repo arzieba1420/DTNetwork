@@ -30,4 +30,5 @@ public interface DeviceService {
 
      String setChillerTemp(ChillerSetDTO chillerSetDTO, BindingResult binding, Model model,String inventNumber);
      String setDrycoolerTemp( DrycoolerSetDTO drycoolerSetDTO, BindingResult binding, Model model,String inventNumber);
+     String getAllGeneratorTests(String inv, Model model, int page);
 }

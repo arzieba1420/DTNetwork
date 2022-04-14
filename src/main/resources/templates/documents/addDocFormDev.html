@@ -99,11 +99,11 @@
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="files">Dodaj pliki</label>
+                    <label for="files"><abbr title="Not active in Demo set">Dodaj pliki</abbr></label>
                 </div>
                 <div class="col-75">
 
-                    <input type="file" id="files" name="Files"  th:field="*{issueFiles}" th:errorclass="errorsFields" multiple="multiple" >
+                    <input disabled type="file" id="files" name="Files"  th:field="*{issueFiles}" th:errorclass="errorsFields" multiple="multiple" >
 
                 </div>
             </div>

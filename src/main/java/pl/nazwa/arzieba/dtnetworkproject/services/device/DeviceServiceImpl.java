@@ -1,5 +1,9 @@
 package pl.nazwa.arzieba.dtnetworkproject.services.device;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +30,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,10 +46,10 @@ public class DeviceServiceImpl implements DeviceService {
     private ShortPostDAO shortPostDAO;
     private GeneratorService generatorService;
     private ShortPostService postService;
-
-
     private ChillerSetDAO chillerSetDAO;
     private DrycoolerSetDAO drycoolerSetDAO;
+    @Value("${my.pagesize}")
+    private int pagesize;
 
     @Autowired
     public DeviceServiceImpl(DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, GeneratorTestDAO generatorTestDAO, ShortPostDAO shortPostDAO, GeneratorService generatorService, ShortPostService postService,  ChillerSetDAO chillerSetDAO, DrycoolerSetDAO drycoolerSetDAO) {
@@ -393,6 +398,35 @@ public class DeviceServiceImpl implements DeviceService {
         return "redirect:/dtnetwork";
     }
 
+    @Override
+    public String getAllGeneratorTests(String inv, Model model, int page) {
+        List<GeneratorTestDTO> testPage = getAllGeneratorTests(page-1,pagesize,inv);
+        DeviceDTO dto = generateMainViewForDevice(inv);
+        int numberOfPages = (generatorTestDAO.findAllByDevice_InventNumber(inv).size())/pagesize+1;
+        List<Integer> morePages = new LinkedList<>();
+        int i = 2;
+        int lastPage = 1;
+
+        if(generatorTestDAO.findAllByDevice_InventNumber(inv).size()%pagesize==0){
+            numberOfPages --;
+        }
+
+        while(i<=numberOfPages){
+            morePages.add(i);
+            i++;
+            lastPage++;
+        }
+
+        model.addAttribute("classActiveSettings","active");
+        model.addAttribute("pages",morePages);
+        model.addAttribute("currentPage",page);
+        model.addAttribute("lastPage",lastPage);
+        model.addAttribute("tests",testPage);
+        model.addAttribute("amount", generatorTestDAO.findAllByDevice_InventNumber(inv).size());
+        model.addAttribute("dto", dto);
+        return "devices/getAllTests";
+    }
+
     public String findByInventNumberErr(String inventNumber, Model model){
         DeviceDTO deviceDTO = generateMainViewForDevice(inventNumber);
         Device device= deviceDAO.findByInventNumber(inventNumber);
@@ -428,6 +462,16 @@ public class DeviceServiceImpl implements DeviceService {
         model.addAttribute("room", Room.valueOf(room));
 
         return "devices/addDeviceForm";
+    }
+
+    public List<GeneratorTestDTO> getAllGeneratorTests(int page, int size, String inv) {
+
+        Page<GeneratorTest> page1 = generatorTestDAO.findByDevice_InventNumberOrderByDateDesc(inv, PageRequest.of(
+                page, size, Sort.Direction.DESC,"date"));
+
+        return page1.stream()
+                .map(GeneratorTestMapper::map)
+                .collect(Collectors.toList());
     }
 
 }

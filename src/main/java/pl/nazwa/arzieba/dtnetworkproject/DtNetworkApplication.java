@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableAsync;
 import pl.nazwa.arzieba.dtnetworkproject.configuration.MyPropertiesConfig;
 
 import java.text.DecimalFormatSymbols;
@@ -22,6 +23,7 @@ import java.util.Locale;
 
 @SpringBootApplication
 @EnableEncryptableProperties
+@EnableAsync
 public class DtNetworkApplication  {
 
     public static final Logger LOG = LoggerFactory.getLogger(DtNetworkApplication.class);

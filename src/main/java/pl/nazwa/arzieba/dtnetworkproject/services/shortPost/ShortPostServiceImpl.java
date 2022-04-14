@@ -175,8 +175,8 @@ public class ShortPostServiceImpl implements ShortPostService {
                 email.sendMail(new String[]{applicationArguments.getSourceArgs()[1]},"Nowy post dla: "+deviceDAO.findByInventNumber(dto.getInventNumber()).getDeviceDescription()+ " w: "+deviceDAO.findByInventNumber(dto.getInventNumber()).getRoom().name(),dto.getContent()
                          ,dto.getAuthor().name());
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
-            logger.warn("MailSender mode is not set!");
+        } catch (Exception e) {
+            logger.warn("MailSender mode is not configured properly! Must be: args[0]='mail' and args[1]='example@mail.com'");
         }
 
         return dto;

@@ -20,86 +20,36 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Under development - not active yet
+ * Controller to manage electrical invoices for each building (model->BuildingType)
+ */
+
 @Controller
 @RequestMapping("/invoices")
 public class ElectricalInvoiceController {
 
+    //---------------------------------------------LOCAL VARIABLES------------------------------------------------------
     private InvoiceServiceImpl invoiceService;
-    private InvoiceDAO invoiceDAO;
-    @Value("${my.pagesize}")
-    private int pagesize;
 
-    public ElectricalInvoiceController(InvoiceServiceImpl invoiceService, InvoiceDAO invoiceDAO) {
+    //---------------------------------------------CONSTRUCTOR----------------------------------------------------------
+    public ElectricalInvoiceController(InvoiceServiceImpl invoiceService) {
         this.invoiceService = invoiceService;
-        this.invoiceDAO = invoiceDAO;
     }
 
+    //---------------------------------------------BUSINESS LOGIC-------------------------------------------------------
     @GetMapping("/addForm/{building}")
     public String createInvoice(Model model, @PathVariable String building){
-
-        model.addAttribute("newInvoice", new InvoiceDTO());
-        model.addAttribute("building", BuildingType.valueOf(building) );
-        model.addAttribute("buildings", ListOfEnumValues.buildings);
-
-        return "invoices/addInvoiceForm";
-    }
-
-    public String createInvoiceErr(Model model, InvoiceDTO dto, BuildingType building ){
-
-        model.addAttribute("newInvoice", dto);
-        model.addAttribute("building", building);
-
-        return "invoices/addInvoiceForm";
+        return invoiceService.createInvoiceForm(model, building);
     }
 
     @PostMapping("/add")
     public String addInvoice( Model model, @Valid @ModelAttribute("newInvoice") InvoiceDTO dto, BindingResult bindingResult){
-
-        if(bindingResult.hasFieldErrors()){
-            List<FieldError> allErrors;
-            allErrors = bindingResult.getFieldErrors();
-
-            model.addAttribute("bindingResult", bindingResult);
-            model.addAttribute("errors",allErrors);
-            model.addAttribute("errorsAmount",allErrors.size());
-
-            return createInvoiceErr(model,dto,dto.getBuilding());
-        }
-
-        invoiceService.create(dto);
-
-        return "redirect:/dtnetwork";
+        return invoiceService.addInvoice(model, dto, bindingResult);
     }
 
     @GetMapping("/{building}/{page}")
     public String getAllForBuilding(Model model, @PathVariable String building, @PathVariable int page){
-
-        List<ElectricalInvoice> invoices = invoiceService.getAllInBuilding(page-1,pagesize,BuildingType.valueOf(building));
-        int numberOfPages = (invoiceDAO.findAllByBuilding(BuildingType.valueOf(building)).size())/pagesize + 1;
-        List<Integer> morePages = new LinkedList<>();
-        int i = 2;
-        int lastPage = 1;
-
-        if(invoiceDAO.findAllByBuilding(BuildingType.valueOf(building)).size()%pagesize==0){
-            numberOfPages--;
-        }
-
-        while(i<=numberOfPages){
-            morePages.add(i);
-            i++;
-            lastPage++;
-        }
-
-        model.addAttribute("classActiveSettings","active");
-        model.addAttribute("pages",morePages);
-        model.addAttribute("currentPage",page);
-        model.addAttribute("lastPage",lastPage);
-        model.addAttribute("invoices",invoices);
-        model.addAttribute("amount", invoiceDAO.findAllByBuilding(BuildingType.valueOf(building)).size());
-        model.addAttribute("building",building);
-        model.addAttribute("monthsEng", Arrays.asList(CalendarUtil.monthsEng));
-        model.addAttribute("monthsPol",Arrays.asList(CalendarUtil.monthsPol));
-
-        return "invoices/allInvoices";
+       return invoiceService.getAllForBuilding(model, building, page);
     }
 }
