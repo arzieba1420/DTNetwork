@@ -1,15 +1,11 @@
 package pl.nazwa.arzieba.dtnetworkproject.controllers;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.FieldError;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.nazwa.arzieba.dtnetworkproject.dao.*;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
-import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
-import pl.nazwa.arzieba.dtnetworkproject.model.Author;
 import pl.nazwa.arzieba.dtnetworkproject.model.IssueFiles;
-import pl.nazwa.arzieba.dtnetworkproject.model.PostLevel;
 import pl.nazwa.arzieba.dtnetworkproject.services.damage.DamageService;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
 import pl.nazwa.arzieba.dtnetworkproject.services.issueDocument.IssueDocService;
@@ -19,11 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.nazwa.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
-import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,7 +26,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/issueDocs")
 public class IssueDocController {
 
-//--------------------------------------VARIABLES------------------------------------------------
+//--------------------------------------LOCAL VARIABLES-----------------------------------------------------------------
     private DeviceDAO deviceDAO;
     private DamageDAO damageDAO;
     private IssueDocumentDAO issueDocumentDAO;
@@ -41,13 +35,14 @@ public class IssueDocController {
     private IssueDocService issueDocService;
     private DeviceService deviceService;
     private ShortPostService postService;
-    @Value("${my.pagesize}")
-    int pagesize;
 
-    //--------------------------------------CONSTRUCTOR------------------------------------------------
+
+    //--------------------------------------CONSTRUCTOR-----------------------------------------------------------------
     @Autowired
     public
-    IssueDocController(DamageService damageService, DeviceService deviceService, DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, IssueDocService issueDocService, ShortPostDAO postDAO, ShortPostService postService) {
+    IssueDocController(DamageService damageService, DeviceService deviceService, DeviceDAO deviceDAO, DamageDAO damageDAO,
+                       IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, IssueDocService issueDocService,
+                       ShortPostDAO postDAO, ShortPostService postService) {
         this.deviceDAO = deviceDAO;
         this.damageDAO = damageDAO;
         this.issueDocumentDAO = issueDocumentDAO;
@@ -58,176 +53,40 @@ public class IssueDocController {
         this.postService = postService;
     }
 
-    //--------------------------------------BUSINESS LOGIC------------------------------------------------
+    //--------------------------------------BUSINESS LOGIC--------------------------------------------------------------
 
     //Shows specified page of all docs for given Device
     //Zwraca konkretną stronę z dokumentami dla danego urządzenia
     @GetMapping("/devices/{inventNumber}/{page}")
-    public String findByInventNumber(@PathVariable String inventNumber, Model model, @PathVariable int page){
-
-        List<IssueDocumentDTO> docs = deviceService.getIssueDocuments(inventNumber);
-        DeviceDTO dto = deviceService.generateMainViewForDevice(inventNumber);
-        List<IssueDocumentDTO> page1= issueDocService.findByDevice(inventNumber,page-1,pagesize);
-        List<String> pageNumbers = docs.stream().map(d->d.getInventNumber()).collect(Collectors.toList());
-        int numberOfPages = (issueDocService.numberByDevice(inventNumber))/pagesize + 1;
-        int i = 2;
-        int lastPage = 1;
-
-        //prevents empty last page
-        //zapobiega tworzeniu ostatniej pustej strony
-        if(issueDocService.numberByDevice(inventNumber)%pagesize==0){
-            numberOfPages--;
-        }
-        List<Integer> morePages = new LinkedList<>();
-
-        while(i<=numberOfPages){
-            morePages.add(i);
-            i++;
-            lastPage++;
-        }
-
-        model.addAttribute("numbers",pageNumbers);
-        model.addAttribute("classActiveSettings","active");
-        model.addAttribute("pages",morePages);
-        model.addAttribute("currentPage",page);
-        model.addAttribute("lastPage",lastPage);
-        model.addAttribute("docs",page1);
-        model.addAttribute("amount", docs.size());
-        model.addAttribute("dto", dto);
-
-        return "devices/getAllDocs";
-    }
-
-    @GetMapping("/years")
-    public String getYears(){
-
-        issueDocService.setOfYears();
-        return "OK";
+    public String showDocsforDevice(@PathVariable String inventNumber, Model model, @PathVariable int page){
+        return issueDocService.showDocsforDevice(inventNumber, model, page);
     }
 
     @GetMapping("/addForm/{inventNumber}")
     public String addFormDev(@PathVariable String inventNumber, Model model){
-
-        IssueDocumentDTO dto = new IssueDocumentDTO();
-        String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
-                +" "+deviceDAO.findByInventNumber(inventNumber).getRoom();
-
-        dto.setIssueDate(CalendarUtil.cal2string(Calendar.getInstance()));
-        model.addAttribute("newDoc", dto);
-        model.addAttribute("inventNumber", inventNumber);
-        model.addAttribute("text",text);
-
-        return "documents/addDocFormDev";
+        return issueDocService.addFormDevice(inventNumber, model);
     }
 
     @GetMapping("/addFormDam/{damageId}")
     public String addFormDam(@PathVariable Integer damageId, Model model){
-
-        IssueDocumentDTO dto = new IssueDocumentDTO();
-        String inventNumber = damageDAO.findById(damageId).orElse(null).getDevice().getInventNumber();
-        String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
-                +" "+deviceDAO.findByInventNumber(inventNumber).getRoom();
-
-        dto.setIssueDate(CalendarUtil.cal2string(Calendar.getInstance()));
-        model.addAttribute("newDoc", dto);
-        model.addAttribute("inventNumber", inventNumber);
-        model.addAttribute("text",text);
-        model.addAttribute("damageId",damageId);
-
-        return "documents/addDocFormDam";
+        return issueDocService.addFormDamage(damageId, model);
     }
 
-
     @PostMapping("/addAsModel/stay")
-    public String  create3(@Valid @ModelAttribute("newDoc")  IssueDocumentDTO issueDocumentDTO, BindingResult bindingResult,Model model, HttpServletRequest request){
-
-        if(bindingResult.hasFieldErrors()) {
-            List<FieldError> allErrors;
-            allErrors = bindingResult.getFieldErrors();
-
-            if(issueDocumentDAO.existsByIssueSignature(issueDocumentDTO.getIssueSignature())){
-                FieldError fieldError = new FieldError("newDoc","issueSignature", issueDocumentDTO.getIssueSignature(),false,null,null ,"Zamówienie o tej sygnaturze już istnieje w bazie danych!");
-                bindingResult.addError(fieldError);
-            }
-
-            model.addAttribute("bindingResult", bindingResult);
-            model.addAttribute("errors", allErrors);
-            model.addAttribute("errorsAmount", allErrors.size());
-
-            return addFormDamErr(issueDocumentDTO.getDamageId(), model,issueDocumentDTO);
-        }
-
-        if(issueDocumentDAO.existsByIssueSignature(issueDocumentDTO.getIssueSignature())){
-            FieldError fieldError = new FieldError("newDoc","issueSignature", issueDocumentDTO.getIssueSignature(),false,null,null ,"Zamówienie o tej sygnaturze już istnieje w bazie danych!");
-
-            bindingResult.addError(fieldError);
-            model.addAttribute("bindingResult", bindingResult);
-            model.addAttribute("errors", fieldError);
-            model.addAttribute("errorsAmount", 1);
-
-            return addFormDamErr(issueDocumentDTO.getDamageId(), model,issueDocumentDTO);
-        }
-
-        issueDocService.create(issueDocumentDTO);
-        ShortPostDTO shortPostDTO = new ShortPostDTO();
-        shortPostDTO.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
-        shortPostDTO.setForDamage(false);
-        shortPostDTO.setContent("Wprowadzono nowe zamówienie dla usterki! [SYSTEM]");
-        shortPostDTO.setPostLevel(PostLevel.INFO);
-        shortPostDTO.setAuthor(Author.DTN);
-        shortPostDTO.setInventNumber(issueDocumentDTO.getInventNumber());
-        postService.create(shortPostDTO);
-
-        return "redirect:/dtnetwork";
+    public String createDocument(@Valid @ModelAttribute("newDoc")  IssueDocumentDTO issueDocumentDTO,
+                                 BindingResult bindingResult, Model model, HttpServletRequest request){
+        return issueDocService.createDocumentForDamage(issueDocumentDTO, bindingResult, model, request);
     }
 
     @PostMapping("/addAsModel/stay2")
-    public String  create(@Valid @ModelAttribute("newDoc")  IssueDocumentDTO dto, BindingResult bindingResult, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes){
-
-        ShortPostDTO postDTO = new ShortPostDTO();
-
-        if(bindingResult.hasFieldErrors()) {
-            List<FieldError> allErrors;
-            allErrors = bindingResult.getFieldErrors();
-
-            if(issueDocumentDAO.existsByIssueSignature(dto.getIssueSignature())){
-                FieldError fieldError = new FieldError("newDoc","issueSignature", dto.getIssueSignature(),false,null,null ,"Zamówienie o tej sygnaturze już istnieje w bazie danych!");
-                bindingResult.addError(fieldError);
-            }
-
-            model.addAttribute("bindingResult", bindingResult);
-            model.addAttribute("errors", allErrors);
-            model.addAttribute("errorsAmount", allErrors.size());
-
-            return addFormDevErr(dto.getInventNumber(), model,dto);
-        }
-
-        if(issueDocumentDAO.existsByIssueSignature(dto.getIssueSignature())){
-            FieldError fieldError = new FieldError("newDoc","issueSignature", dto.getIssueSignature(),false,null,null ,"Zamówienie o tej sygnaturze już istnieje w bazie danych!");
-
-            bindingResult.addError(fieldError);
-            model.addAttribute("bindingResult", bindingResult);
-            model.addAttribute("errors", fieldError);
-            model.addAttribute("errorsAmount", 1);
-
-            return addFormDevErr(dto.getInventNumber(), model,dto);
-        }
-
-        issueDocService.create(dto);
-        postDTO.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
-        postDTO.setForDamage(false);
-        postDTO.setContent("Wprowadzono nowe zamówienie dla urządzenia! [SYSTEM]");
-        postDTO.setPostLevel(PostLevel.INFO);
-        postDTO.setAuthor(Author.DTN);
-        postDTO.setInventNumber(dto.getInventNumber());
-        postService.create(postDTO);
-
-        return "redirect:/dtnetwork";
+    public String createDocumentAlternative(@Valid @ModelAttribute("newDoc")  IssueDocumentDTO issueDocumentDTO,
+                                            BindingResult bindingResult, Model model, HttpServletRequest request,
+                                            RedirectAttributes redirectAttributes){
+        return issueDocService.createDocumentForDevice(issueDocumentDTO, bindingResult, model, request, redirectAttributes);
     }
 
     @GetMapping("/damages/{damageId}")
     public String getAllForDamage(@PathVariable Integer damageId, Model model){
-
         String inventNumber = damageService.findById(damageId).getDeviceInventNumber();
         DeviceDTO deviceDTO= deviceService.generateMainViewForDevice(inventNumber) ;
         List<IssueDocumentDTO> docs= issueDocService.findByDamageId(damageId);
@@ -273,32 +132,9 @@ public class IssueDocController {
         return "documents/getAllForYear";
     }
 
-    public String addFormDamErr(@PathVariable Integer damageId, Model model, IssueDocumentDTO documentDTO){
 
 
-        String inventNumber = damageDAO.findById(damageId).orElse(null).getDevice().getInventNumber();
-        String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
-                +" "+deviceDAO.findByInventNumber(inventNumber).getRoom();
 
-        model.addAttribute("newDoc", documentDTO);
-        model.addAttribute("inventNumber", inventNumber);
-        model.addAttribute("text",text);
-        model.addAttribute("damageId",damageId);
-
-        return "documents/addDocFormDam";
-    }
-
-    public String addFormDevErr(@PathVariable String inventNumber, Model model, IssueDocumentDTO issueDocumentDTO){
-
-        String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
-                +" "+deviceDAO.findByInventNumber(inventNumber).getRoom();
-
-        model.addAttribute("newDoc",issueDocumentDTO);
-        model.addAttribute("inventNumber", inventNumber);
-        model.addAttribute("text",text);
-
-        return "documents/addDocFormDev";
-    }
 
   @GetMapping("/modalDocs/")
     public String modalDocs(Model model, @ModelAttribute("docs") int year){

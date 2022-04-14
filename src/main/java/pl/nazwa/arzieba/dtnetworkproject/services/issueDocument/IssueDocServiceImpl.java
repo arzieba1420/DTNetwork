@@ -2,19 +2,33 @@ package pl.nazwa.arzieba.dtnetworkproject.services.issueDocument;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.nazwa.arzieba.dtnetworkproject.dao.*;
+import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
+import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
+import pl.nazwa.arzieba.dtnetworkproject.model.Author;
 import pl.nazwa.arzieba.dtnetworkproject.model.IssueDocument;
 import pl.nazwa.arzieba.dtnetworkproject.model.IssueFiles;
+import pl.nazwa.arzieba.dtnetworkproject.model.PostLevel;
+import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
 import pl.nazwa.arzieba.dtnetworkproject.services.issueFiles.UploadPathService;
+import pl.nazwa.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
+import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 import pl.nazwa.arzieba.dtnetworkproject.utils.exceptions.IssueDocumentNotFoundException;
 import pl.nazwa.arzieba.dtnetworkproject.utils.issueDocument.IssueDocMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
@@ -31,15 +45,21 @@ public class IssueDocServiceImpl implements IssueDocService {
     private DeviceCardDAO deviceCardDAO;
     private UploadPathService uploadPathService;
     private IssueFilesDAO issueFilesDAO;
+    private DeviceService deviceService;
+    private ShortPostService postService;
+    @Value("${my.pagesize}")
+    int pagesize;
 
     @Autowired
-    public IssueDocServiceImpl(DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, UploadPathService uploadPathService, IssueFilesDAO issueFilesDAO) {
+    public IssueDocServiceImpl(DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, UploadPathService uploadPathService, IssueFilesDAO issueFilesDAO, DeviceService deviceService, ShortPostService postService) {
         this.deviceDAO = deviceDAO;
         this.damageDAO = damageDAO;
         this.issueDocumentDAO = issueDocumentDAO;
         this.deviceCardDAO = deviceCardDAO;
         this.uploadPathService = uploadPathService;
         this.issueFilesDAO = issueFilesDAO;
+        this.deviceService = deviceService;
+        this.postService = postService;
     }
 
     @Override
@@ -237,11 +257,159 @@ public class IssueDocServiceImpl implements IssueDocService {
         }
 
     @Override
-    public List<IssueFiles> getFilesForDoc(String signature) {
+    public String showDocsforDevice(String inventNumber, Model model, int page) {
+        List<IssueDocumentDTO> docs = deviceService.getIssueDocuments(inventNumber);
+        DeviceDTO dto = deviceService.generateMainViewForDevice(inventNumber);
+        List<IssueDocumentDTO> page1= findByDevice(inventNumber,page-1,pagesize);
+        List<String> pageNumbers = docs.stream().map(d->d.getInventNumber()).collect(Collectors.toList());
+        int numberOfPages = (numberByDevice(inventNumber))/pagesize + 1;
+        int i = 2;
+        int lastPage = 1;
+        //prevents empty last page
+        //zapobiega tworzeniu ostatniej pustej strony
+        if(numberByDevice(inventNumber)%pagesize==0){
+            numberOfPages--;
+        }
+        List<Integer> morePages = new LinkedList<>();
 
-        return issueFilesDAO.findAllByIssueDocument_IssueSignature(signature);
+        while(i<=numberOfPages){
+            morePages.add(i);
+            i++;
+            lastPage++;
+        }
+
+        model.addAttribute("numbers",pageNumbers);
+        model.addAttribute("classActiveSettings","active");
+        model.addAttribute("pages",morePages);
+        model.addAttribute("currentPage",page);
+        model.addAttribute("lastPage",lastPage);
+        model.addAttribute("docs",page1);
+        model.addAttribute("amount", docs.size());
+        model.addAttribute("dto", dto);
+        return "devices/getAllDocs";
     }
 
 
+    @Override
+    public List<IssueFiles> getFilesForDoc(String signature) {
+        return issueFilesDAO.findAllByIssueDocument_IssueSignature(signature);
+    }
+
+    @Override
+    public String addFormDevice(String inventNumber, Model model) {
+        IssueDocumentDTO issueDocumentDTO = new IssueDocumentDTO();
+        String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
+                +" "+deviceDAO.findByInventNumber(inventNumber).getRoom();
+        issueDocumentDTO.setIssueDate(CalendarUtil.cal2string(Calendar.getInstance()));
+        model.addAttribute("newDoc", issueDocumentDTO);
+        model.addAttribute("inventNumber", inventNumber);
+        model.addAttribute("text",text);
+        return "documents/addDocFormDev";
+    }
+
+    @Override
+    public String addFormDamage(Integer damageId, Model model) {
+        IssueDocumentDTO dto = new IssueDocumentDTO();
+        String inventNumber = damageDAO.findById(damageId).orElse(null).getDevice().getInventNumber();
+        String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
+                +" "+deviceDAO.findByInventNumber(inventNumber).getRoom();
+
+        dto.setIssueDate(CalendarUtil.cal2string(Calendar.getInstance()));
+        model.addAttribute("newDoc", dto);
+        model.addAttribute("inventNumber", inventNumber);
+        model.addAttribute("text",text);
+        model.addAttribute("damageId",damageId);
+        return "documents/addDocFormDam";
+    }
+
+    @Override
+    @Transactional
+    public String createDocumentForDamage(IssueDocumentDTO issueDocumentDTO, BindingResult bindingResult, Model model, HttpServletRequest request) {
+        if(bindingResult.hasFieldErrors()) {
+            List<FieldError> allErrors;
+            allErrors = bindingResult.getFieldErrors();
+
+            if(issueDocumentDAO.existsByIssueSignature(issueDocumentDTO.getIssueSignature())){
+                FieldError fieldError = new FieldError("newDoc","issueSignature", issueDocumentDTO.getIssueSignature(),false,null,null ,"Zamówienie o tej sygnaturze już istnieje w bazie danych!");
+                bindingResult.addError(fieldError);
+            }
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("errors", allErrors);
+            model.addAttribute("errorsAmount", allErrors.size());
+            return addFormDamageErr(issueDocumentDTO.getDamageId(), model,issueDocumentDTO);
+        }
+
+        if(issueDocumentDAO.existsByIssueSignature(issueDocumentDTO.getIssueSignature())){
+            FieldError fieldError = new FieldError("newDoc","issueSignature", issueDocumentDTO.getIssueSignature(),false,null,null ,"Zamówienie o tej sygnaturze już istnieje w bazie danych!");
+            bindingResult.addError(fieldError);
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("errors", fieldError);
+            model.addAttribute("errorsAmount", 1);
+            return addFormDamageErr(issueDocumentDTO.getDamageId(), model,issueDocumentDTO);
+        }
+
+        create(issueDocumentDTO);
+        ShortPostDTO shortPostDTO = new ShortPostDTO(Author.DTN,"Wprowadzono nowe zamówienie dla usterki! [SYSTEM]",CalendarUtil.cal2string(Calendar.getInstance()),
+                issueDocumentDTO.getInventNumber(),false,PostLevel.INFO );
+        postService.create(shortPostDTO);
+        return "redirect:/dtnetwork";
+    }
+
+    @Override
+    @Transactional
+    public String createDocumentForDevice(IssueDocumentDTO issueDocumentDTO, BindingResult bindingResult, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        if(bindingResult.hasFieldErrors()) {
+            List<FieldError> allErrors;
+            allErrors = bindingResult.getFieldErrors();
+
+            if(issueDocumentDAO.existsByIssueSignature(issueDocumentDTO.getIssueSignature())){
+                FieldError fieldError = new FieldError("newDoc","issueSignature", issueDocumentDTO.getIssueSignature(),false,null,null ,"Zamówienie o tej sygnaturze już istnieje w bazie danych!");
+                bindingResult.addError(fieldError);
+            }
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("errors", allErrors);
+            model.addAttribute("errorsAmount", allErrors.size());
+            return addFormDeviceErr(issueDocumentDTO.getInventNumber(), model,issueDocumentDTO);
+        }
+
+        if(issueDocumentDAO.existsByIssueSignature(issueDocumentDTO.getIssueSignature())){
+            FieldError fieldError = new FieldError("newDoc","issueSignature", issueDocumentDTO.getIssueSignature(),false,null,null ,"Zamówienie o tej sygnaturze już istnieje w bazie danych!");
+
+            bindingResult.addError(fieldError);
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("errors", fieldError);
+            model.addAttribute("errorsAmount", 1);
+            return addFormDeviceErr(issueDocumentDTO.getInventNumber(), model,issueDocumentDTO);
+        }
+        ShortPostDTO postDTO = new ShortPostDTO(Author.DTN,"Wprowadzono nowe zamówienie dla urządzenia! [SYSTEM]",
+                CalendarUtil.cal2string(Calendar.getInstance()), issueDocumentDTO.getInventNumber(),false,PostLevel.INFO);
+        create(issueDocumentDTO);
+        postService.create(postDTO);
+        return "redirect:/dtnetwork";
+    }
+
+    public String addFormDamageErr(@PathVariable Integer damageId, Model model, IssueDocumentDTO documentDTO){
+        String inventNumber = damageDAO.findById(damageId).orElse(null).getDevice().getInventNumber();
+        String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
+                +" "+deviceDAO.findByInventNumber(inventNumber).getRoom();
+
+        model.addAttribute("newDoc", documentDTO);
+        model.addAttribute("inventNumber", inventNumber);
+        model.addAttribute("text",text);
+        model.addAttribute("damageId",damageId);
+        return "documents/addDocFormDam";
+    }
+
+    public String addFormDeviceErr(@PathVariable String inventNumber, Model model, IssueDocumentDTO issueDocumentDTO){
+
+        String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
+                +" "+deviceDAO.findByInventNumber(inventNumber).getRoom();
+
+        model.addAttribute("newDoc",issueDocumentDTO);
+        model.addAttribute("inventNumber", inventNumber);
+        model.addAttribute("text",text);
+
+        return "documents/addDocFormDev";
+    }
 
 }
