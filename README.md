@@ -10,6 +10,7 @@ maintained by me in my current job.
 
 ~~**The app is not ready yet to use, it will take about one month to release first stable version [written: 4 April 2019 ]**
 
+
 [UPDATE 11-05-2019]  
 **1st stable version of my project is available and ready to be tested on branch master. Any further version will appear in the future**  
 [UPDATE 17-05-2019]  
@@ -18,19 +19,21 @@ maintained by me in my current job.
 **I have just added ZIP packages with jar executable files in Releases with ENG and PL language versions (version 1.3)**
 [UPDATE 22-07-2019]  
 **ENG version of the project will no longer be developed. I focus on PL version only from now**
+[UPDATE 22-02-2022]
+**If you are interested in getting familiar with the Application just let me know.  
 
 
 
 
 **Used technologies:**
 -----------------------
-* Java 8
+* Java 13
 * Spring v.5 and SpringBoot v.2 (Spring Security, Spring Validator, JPA, Hibernate)  
 * Thymeleaf  
 * Project Lombok
 * Jasypt
 * HTML5+CSS+JS
-* IntelliJ 2018 as an IDE
+* IntelliJ 2021 as an IDE
 * Cooperates with DB based on MariaDB engine
  
 
