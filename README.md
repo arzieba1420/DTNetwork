@@ -20,8 +20,7 @@ On a daily basis it works in closed local network in my company, but I prepaired
 **I have just added ZIP packages with jar executable files in Releases with ENG and PL language versions (version 1.3)**
 [UPDATE 22-07-2019]  
 **ENG version of the project will no longer be developed. I focus on PL version only from now**
-[UPDATE 22-02-2022]
-**If you are interested in getting familiar with the Application just download and run .jar from .zip package. App starts on localhost:8080/dtnetwork**  
+ 
 
 
 
