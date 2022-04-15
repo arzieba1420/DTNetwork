@@ -32,13 +32,18 @@ import java.io.IOException;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    //--------------------------------------------------------------------LOCAL VARIABLES---------------------------------------------------------------------------------------
     Logger logger = LoggerFactory.getLogger(this.getClass());
     private UserPrincipalDetailsService userPrincipalDetailsService;
+
+    //--------------------------------------------------------------------CONSTRUCTOR---------------------------------------------------------------------------------------
 
     @Autowired
     public SecurityConfig(UserPrincipalDetailsService userPrincipalDetailsService){
         this.userPrincipalDetailsService = userPrincipalDetailsService;
     }
+
+    //--------------------------------------------------------------------CLASS METHODS---------------------------------------------------------------------------------------
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth){
@@ -80,7 +85,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         daoAuthenticationProvider.setUserDetailsService(userPrincipalDetailsService);
-
         return daoAuthenticationProvider;
     }
 }

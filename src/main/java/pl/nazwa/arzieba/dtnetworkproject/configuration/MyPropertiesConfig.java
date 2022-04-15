@@ -15,9 +15,12 @@ import org.springframework.context.annotation.PropertySource;
 @NoArgsConstructor
 public class MyPropertiesConfig {
 
+    //--------------------------------------------------------------------LOCAL VARIABLES---------------------------------------------------------------------------------------
+
     public  Integer pagesize;
     public  String defaultScheduleURL;
-    }
+
+}
 
 
 

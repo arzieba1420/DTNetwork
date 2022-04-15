@@ -2,7 +2,6 @@ package pl.nazwa.arzieba.dtnetworkproject.utils.enums;
 
 import pl.nazwa.arzieba.dtnetworkproject.model.*;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

@@ -74,14 +74,14 @@
 
                 </li>
 
-                <li><a style="padding-bottom: 10px; border-right: none; width: 100px" class="logout mainBar" href="#"   th:text=" '&#9673; '+ ${@mainController.getUser()} " >Logout</a>
+                <li><a style="padding-bottom: 10px; border-right: none; width: 100px" class="logout mainBar" href="#"   th:text=" '&#9673; '+ ${@loadServiceImpl.getUser()} " >Logout</a>
                     <ul >
                         <li><a class="logout" href="" th:href="@{/logout}" th:text="'Wyloguj się'"></a></li>
-                        <li><a class="logout" href="" th:href="@{'/users/' + ${@mainController.getUser()}}" th:text="'Zmień hasło'" ></a></li>
-                        <li th:if="${@mainController.getUser()}=='admin'" ><a class="logout" href="#" th:href="@{/dev}" >Dev panel</a></li>
-                        <li th:if="${@mainController.getUser()}=='admin'" ><a class="logout" href="#" th:href="@{/users}" >Users</a></li>
-                        <li th:if="${@mainController.getUser()}=='admin'" ><a class="logout" href="#" th:href="@{/dev/users/setPass}" >Set pass</a></li>
-                        <li th:if="${@mainController.getUser()}=='admin'" ><a class="logout" href="#" th:href="@{/posts/removeSystem}" >Remove sys posts</a></li>
+                        <li><a class="logout" href="" th:href="@{'/users/' + ${@loadServiceImpl.getUser()}}" th:text="'Zmień hasło'" ></a></li>
+                        <li th:if="${@loadServiceImpl.getUser()}=='admin'" ><a class="logout" href="#" th:href="@{/dev}" >Dev panel</a></li>
+                        <li th:if="${@loadServiceImpl.getUser()}=='admin'" ><a class="logout" href="#" th:href="@{/users}" >Users</a></li>
+                        <li th:if="${@loadServiceImpl.getUser()}=='admin'" ><a class="logout" href="#" th:href="@{/dev/users/setPass}" >Set pass</a></li>
+                        <li th:if="${@loadServiceImpl.getUser()}=='admin'" ><a class="logout" href="#" th:href="@{/posts/removeSystem}" >Remove sys posts</a></li>
                     </ul>
                 </li>
              

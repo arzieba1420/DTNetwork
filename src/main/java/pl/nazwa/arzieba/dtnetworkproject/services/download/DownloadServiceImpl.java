@@ -1,5 +1,6 @@
 package pl.nazwa.arzieba.dtnetworkproject.services.download;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -10,13 +11,14 @@ import pl.nazwa.arzieba.dtnetworkproject.controllers.MainController;
 import pl.nazwa.arzieba.dtnetworkproject.dao.IssueFilesDAO;
 import pl.nazwa.arzieba.dtnetworkproject.model.IssueFiles;
 import pl.nazwa.arzieba.dtnetworkproject.utils.media.MediaTypeUtils;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
 @Service
 public class DownloadServiceImpl implements DownloadService {
+
+    //------------------------------------------------------------LOCAL VARIABLES---------------------------------------------------------------------------------------------
 
     private final IssueFilesDAO filesDAO;
     private final ServletContext SERVLET_CONTEXT;
@@ -26,17 +28,19 @@ public class DownloadServiceImpl implements DownloadService {
     //HAS TO BE PROVIDED
     private static final String DEFAULT_FILE_NAME = "static/files/EmptyCard.pdf";
 
+    //--------------------------------------------------------------CONSTRUCTOR-----------------------------------------------------------------------------------------------
 
-
+    @Autowired
     public DownloadServiceImpl(IssueFilesDAO filesDAO, ServletContext servlet_context) {
         this.filesDAO = filesDAO;
         SERVLET_CONTEXT = servlet_context;
     }
 
+    //------------------------------------------------------------CONTROLLER METHODS---------------------------------------------------------------------------------------------
+
     @Override
     public void downloadCardsAndInstruction(String fileName, HttpServletResponse response) throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
-
 
         if (fileName.equalsIgnoreCase("Instrukcja")){
             InputStream inputStream = classLoader.getResourceAsStream("static/files/Instrukcja.pdf");

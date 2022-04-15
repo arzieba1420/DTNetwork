@@ -6,8 +6,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
-
 import javax.persistence.*;
 import java.util.Calendar;
 
@@ -18,6 +16,8 @@ import java.util.Calendar;
 @ToString
 @NoArgsConstructor
 public class DeviceCard {
+
+    //-----------------------------------------------------------------------MODEL FIELDS-----------------------------------------------------------------------------------------
 
 //cannot exist without Device
     @Id
@@ -35,13 +35,16 @@ public class DeviceCard {
     private int buildTime;
     private String deliveryDocumentID;
     private String attachementsIDs;
+
     @Temporal(TemporalType.DATE)
     private Calendar deliveryDate;
+
     @Temporal(TemporalType.DATE)
     private Calendar startDate;
     private String signatureNumber;
     private String financeSource;
     private String creatorOfDeviceCard;
+
     @Temporal(TemporalType.DATE)
     private Calendar creationTime;
     private Double deviceValue;

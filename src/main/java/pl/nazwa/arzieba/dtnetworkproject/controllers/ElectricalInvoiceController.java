@@ -1,5 +1,6 @@
 package pl.nazwa.arzieba.dtnetworkproject.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,15 +30,19 @@ import java.util.List;
 @RequestMapping("/invoices")
 public class ElectricalInvoiceController {
 
-    //---------------------------------------------LOCAL VARIABLES------------------------------------------------------
+    //--------------------------------------------------------------------LOCAL VARIABLES---------------------------------------------------------------------------------------
+
     private InvoiceServiceImpl invoiceService;
 
-    //---------------------------------------------CONSTRUCTOR----------------------------------------------------------
+    //-----------------------------------------------------------------------CONSTRUCTOR----------------------------------------------------------------------------------------
+
+    @Autowired
     public ElectricalInvoiceController(InvoiceServiceImpl invoiceService) {
         this.invoiceService = invoiceService;
     }
 
-    //---------------------------------------------BUSINESS LOGIC-------------------------------------------------------
+    //------------------------------------------------------------------------BUSINESS LOGIC-----------------------------------------------------------------------------------
+
     @GetMapping("/addForm/{building}")
     public String createInvoice(Model model, @PathVariable String building){
         return invoiceService.createInvoiceForm(model, building);

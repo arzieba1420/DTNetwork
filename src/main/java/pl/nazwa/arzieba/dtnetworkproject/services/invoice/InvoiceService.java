@@ -4,13 +4,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import pl.nazwa.arzieba.dtnetworkproject.dto.InvoiceDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.BuildingType;
 import pl.nazwa.arzieba.dtnetworkproject.model.ElectricalInvoice;
-
-import javax.validation.Valid;
 import java.util.List;
 
 @Service

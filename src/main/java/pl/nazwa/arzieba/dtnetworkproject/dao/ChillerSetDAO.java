@@ -6,5 +6,4 @@ import pl.nazwa.arzieba.dtnetworkproject.model.ChillerSet;
 
 @Repository
 public interface ChillerSetDAO extends CrudRepository<ChillerSet,Integer> {
-
 }

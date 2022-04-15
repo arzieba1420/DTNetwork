@@ -1,14 +1,12 @@
 package pl.nazwa.arzieba.dtnetworkproject.services.deviceCard;
 
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DeviceCardDTO;
-
-import javax.validation.Valid;
 import java.util.List;
 
+@Service
 public interface DeviceCardService {
 
     List<DeviceCardDTO> findAll();

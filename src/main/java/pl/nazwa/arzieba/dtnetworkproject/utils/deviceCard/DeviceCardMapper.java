@@ -8,9 +8,7 @@ import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 public class DeviceCardMapper {
 
     public static DeviceCard map(DeviceCardDTO dto, DeviceDAO dao){
-
         DeviceCard card = new DeviceCard();
-
         card.setDevice(dao.findByInventNumber(dto.getInventNumber()));
         card.setAddress(dto.getParameters());
         card.setAttachementsIDs(dto.getAttachementsIDs());
@@ -30,14 +28,11 @@ public class DeviceCardMapper {
         card.setProducer(dto.getProducer());
         card.setSignatureNumber(dto.getSignatureNumber());
         card.setStartDate(CalendarUtil.string2cal(dto.getStartDate()));
-
         return card;
     }
 
     public static DeviceCardDTO map(DeviceCard card){
-
         DeviceCardDTO dto = new DeviceCardDTO();
-
         dto.setInventNumber(card.getDevice().getInventNumber());
         dto.setParameters(card.getAddress());
         dto.setAttachementsIDs(card.getAttachementsIDs());
@@ -57,7 +52,6 @@ public class DeviceCardMapper {
         dto.setProducer(card.getProducer());
         dto.setSignatureNumber(card.getSignatureNumber());
         dto.setStartDate(CalendarUtil.cal2string(card.getStartDate()));
-
         return dto;
     }
 }

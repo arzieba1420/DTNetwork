@@ -13,12 +13,10 @@ import java.util.ArrayList;
 public class IssueDocMapper {
 
     public static  IssueDocument map (IssueDocumentDTO documentDTO,DamageDAO damageDAO){
-
         IssueDocument document = new IssueDocument();
 
-        if (documentDTO.getDamageId()==null){
-            document.setDamage(null);
-        } else document.setDamage(damageDAO.findById(documentDTO.getDamageId()).orElse(null));
+        if (documentDTO.getDamageId()==null) document.setDamage(null);
+         else document.setDamage(damageDAO.findById(documentDTO.getDamageId()).orElse(null));
 
         document.setDelivererName(documentDTO.getDelivererName());
         document.setDelivererNIP(documentDTO.getDelivererNIP());
@@ -27,24 +25,20 @@ public class IssueDocMapper {
         document.setIssueSignature(documentDTO.getIssueSignature());
         document.setIssueTittle(documentDTO.getIssueTittle());
 
-        if(documentDTO.getDamageId()==null)
-        document.setInventNumber(documentDTO.getInventNumber());
-        else document.setInventNumber(damageDAO.findById(documentDTO.getDamageId()).orElse(null).getDevice().getInventNumber());        document.setValue(documentDTO.getValue());
+        if(documentDTO.getDamageId()==null) document.setInventNumber(documentDTO.getInventNumber());
+        else document.setInventNumber(damageDAO.findById(documentDTO.getDamageId()).orElse(null).getDevice().getInventNumber());
 
+        document.setValue(documentDTO.getValue());
         document.setFiles(documentDTO.getIssueFiles());
         document.setFilesToRemove(documentDTO.getFilesToRemove());
-
         return document;
     }
 
     public static IssueDocumentDTO map(IssueDocument document){
-
         IssueDocumentDTO documentDTO = new IssueDocumentDTO();
 
-        if(document.getDamage()==null){
-            documentDTO.setDamageId(null);
-        }else
-        documentDTO.setDamageId(document.getDamage().getDamageId());
+        if(document.getDamage()==null) documentDTO.setDamageId(null);
+        else documentDTO.setDamageId(document.getDamage().getDamageId());
 
         documentDTO.setDelivererName(document.getDelivererName());
         documentDTO.setDelivererNIP(document.getDelivererNIP());
@@ -56,7 +50,6 @@ public class IssueDocMapper {
         documentDTO.setValue(document.getValue());
         documentDTO.setIssueFiles(document.getFiles());
         documentDTO.setFilesToRemove(document.getFilesToRemove());
-
         return documentDTO;
     }
 }

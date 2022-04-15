@@ -15,26 +15,25 @@ import pl.nazwa.arzieba.dtnetworkproject.model.ElectricalInvoice;
 import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 import pl.nazwa.arzieba.dtnetworkproject.utils.enums.ListOfEnumValues;
 import pl.nazwa.arzieba.dtnetworkproject.utils.invoices.InvoiceMapper;
-
-import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
 public class InvoiceServiceImpl implements InvoiceService {
 
-    //---------------------------------------------LOCAL VARIABLES------------------------------------------------------
+    //------------------------------------------------------------LOCAL VARIABLES---------------------------------------------------------------------------------------------
 
     private InvoiceDAO invoiceDAO;
     @Value("${my.pagesize}")
     private int pagesize;
 
-    //---------------------------------------------CONSTRUCTOR----------------------------------------------------------
+    //------------------------------------------------------------CONSTRUCTOR-------------------------------------------------------------------------------------------------
+
     public InvoiceServiceImpl(InvoiceDAO invoiceDAO) {
         this.invoiceDAO = invoiceDAO;
     }
 
-    //---------------------------------------------DAO methods----------------------------------------------------------
+    //-------------------------------------------------------------DAO METHODS-----------------------------------------------------------------------------------------------
 
     @Override
     public InvoiceDTO create(InvoiceDTO dto) {
@@ -77,7 +76,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
 
-    //--------------------------------------------HTTP METHODS----------------------------------------------------------
+    //----------------------------------------------------------------CONTROLLER METHODS--------------------------------------------------------------------------------------
 
     @Override
     public String createInvoiceForm(Model model, String building) {
@@ -89,15 +88,16 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public String addInvoice(Model model, InvoiceDTO dto, BindingResult bindingResult) {
+
         if(bindingResult.hasFieldErrors()){
             List<FieldError> allErrors;
             allErrors = bindingResult.getFieldErrors();
-
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors",allErrors);
             model.addAttribute("errorsAmount",allErrors.size());
             return createInvoiceErr(model,dto,dto.getBuilding());
         }
+
         create(dto);
         return "redirect:/dtnetwork";
     }
@@ -132,7 +132,8 @@ public class InvoiceServiceImpl implements InvoiceService {
         return "invoices/allInvoices";
     }
 
-//------------------------------Util methods----------------------------------------------------------------------------
+    //------------------------------Util methods----------------------------------------------------------------------------
+
     public String createInvoiceErr(Model model, InvoiceDTO dto, BuildingType building ){
         model.addAttribute("newInvoice", dto);
         model.addAttribute("building", building);

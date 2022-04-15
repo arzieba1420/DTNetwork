@@ -6,12 +6,9 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
-
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.List;
-
 
 @Entity
 @Table
@@ -21,19 +18,25 @@ import java.util.List;
 @NoArgsConstructor
 public class Damage {
 
+    //-----------------------------------------------------------------------MODEL FIELDS-----------------------------------------------------------------------------------------
+
     //cannot exist without Device
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer damageId;
+
     @ManyToOne
     @JoinColumn(name = "device_inventNumber")
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Device device;
+
     @Lob
     private String description;
+
     @Temporal(TemporalType.DATE)
     private Calendar damageDate;
     private Author author;
+
     @OneToMany(mappedBy = "damage", fetch =FetchType.LAZY, cascade = CascadeType.ALL)
     private List<IssueDocument> issueDocumentList;
 }

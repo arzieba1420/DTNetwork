@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import pl.nazwa.arzieba.dtnetworkproject.dto.InvoiceDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.ElectricalInvoice;
 import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -12,9 +11,7 @@ import java.math.RoundingMode;
 public class InvoiceMapper {
 
     public static InvoiceDTO map(ElectricalInvoice invoice){
-
         InvoiceDTO dto = new InvoiceDTO();
-
         dto.setBuilding(invoice.getBuilding());
         dto.setDate(CalendarUtil.cal2string(invoice.getDate()));
         dto.setInvoiceId(invoice.getInvoiceId());
@@ -23,9 +20,7 @@ public class InvoiceMapper {
     }
 
     public static ElectricalInvoice map(InvoiceDTO dto){
-
         ElectricalInvoice invoice = new ElectricalInvoice();
-
         invoice.setBuilding(dto.getBuilding());
         invoice.setDate(CalendarUtil.string2cal(dto.getDate()));
         invoice.setNetValue(dto.getNetValue());
@@ -40,7 +35,6 @@ public class InvoiceMapper {
 
         BigDecimal bd = new BigDecimal(value);
         bd = bd.setScale(places, RoundingMode.HALF_UP);
-
         return bd.doubleValue();
     }
 }

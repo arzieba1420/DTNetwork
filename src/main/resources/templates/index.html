@@ -61,9 +61,9 @@
                     <td th:if="${generators.values().contains(null)}" ><a href="" th:href="@{'/generators/' + ${generator}+'/1'}" >Brak testu</a></td>
                     <td th:if="!${generators.values().contains(null)}"  th:text="${generators.get(generator).getStatus()}"></td>
                     <td th:if="${generators.values().contains(null)}"  >Nieznany</td>
-                    <td th:if="${!generators.values().contains(null)&&@mainController.betweenDates(generators.get(generator).getDate(),today)<30&&!generators.get(generator).getDevice().getRoom().name().equals('Nieaktywne')}" th:text="${@mainController.betweenDates(generators.get(generator).getDate(),today)}" ></td>
+                    <td th:if="${!generators.values().contains(null)&&@loadServiceImpl.betweenDates(generators.get(generator).getDate(),today)<30&&!generators.get(generator).getDevice().getRoom().name().equals('Nieaktywne')}" th:text="${@loadServiceImpl.betweenDates(generators.get(generator).getDate(),today)}" ></td>
                     <td th:if="${generators.values().contains(null)}" >0</td>
-                    <td style="background-color: rgba(255,0,0,0.65); color: white" th:if="${!generators.values().contains(null)&&@mainController.betweenDates(generators.get(generator).getDate(),today)>=30&&!generators.get(generator).getDevice().getRoom().name().equals('Nieaktywne')}" th:text="${@mainController.betweenDates(generators.get(generator).getDate(),today)}" ></td>
+                    <td style="background-color: rgba(255,0,0,0.65); color: white" th:if="${!generators.values().contains(null)&&@loadServiceImpl.betweenDates(generators.get(generator).getDate(),today)>=30&&!generators.get(generator).getDevice().getRoom().name().equals('Nieaktywne')}" th:text="${@loadServiceImpl.betweenDates(generators.get(generator).getDate(),today)}" ></td>
 <!--                   <td th:if="${generators.get(generator).getDevice().getRoom().name().equals('Nieaktywne')}" >N/D</td>-->
                </tr>
            </table>
@@ -172,12 +172,12 @@
                             <i class="fas fa-gears" style="font-size: 200%;color: #44fe00"></i>
                         </div>
 
-                        <div class="cell remove " th:if="${lastPosts.get(key).getPostLevel().name().equals('GENERAL') and (lastPosts.get(key).getAuthor().name().equals(@mainController.getUser()) or @mainController.getUser().equals('admin')) }">
+                        <div class="cell remove " th:if="${lastPosts.get(key).getPostLevel().name().equals('GENERAL') and (lastPosts.get(key).getAuthor().name().equals(@loadServiceImpl.getUser()) or @loadServiceImpl.getUser().equals('admin')) }">
                             <a href="#" th:href="@{'/posts/delete/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-trash-alt"></i> Usuń post</span></a>
                             <br>
                             <a href="#" th:href="@{'/posts/edit/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-edit"></i> Edytuj post</span></a>
                         </div>
-                        <div class="cell remove " th:if="${lastPosts.get(key).getPostLevel().name().equals('GENERAL')and(!lastPosts.get(key).getAuthor().name().equals(@mainController.getUser()) and !@mainController.getUser().equals('admin')) }">
+                        <div class="cell remove " th:if="${lastPosts.get(key).getPostLevel().name().equals('GENERAL')and(!lastPosts.get(key).getAuthor().name().equals(@loadServiceImpl.getUser()) and !@loadServiceImpl.getUser().equals('admin')) }">
                             <span style="font-size: 1em"><i class="fas fa-lock"></i></span>
 
                         </div>

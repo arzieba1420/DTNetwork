@@ -10,9 +10,7 @@ import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 public class DrycoolerSetMapper {
 
     public  static DrycoolerSet map (DrycoolerSetDTO dto, DeviceDAO dao){
-
         DrycoolerSet drycoolerSet = new DrycoolerSet();
-
         drycoolerSet.setActualSetPoint_AmbL(dto.getActualSetPoint_AmbL());
         drycoolerSet.setActualSetPoint_AmbR(dto.getActualSetPoint_AmbR());
         drycoolerSet.setActualSetPoint_CWL(dto.getActualSetPoint_CWL());
@@ -27,14 +25,11 @@ public class DrycoolerSetMapper {
         drycoolerSet.setDrycoolerSetId(dto.getDrycoolerSetId());
         drycoolerSet.setSetDate(CalendarUtil.string2cal(dto.getSetDate()));
         drycoolerSet.setPreviousSetDate(CalendarUtil.string2cal(dto.getPreviousSetDate()));
-
         return drycoolerSet;
     }
 
     public static DrycoolerSetDTO map (DrycoolerSet drycoolerSet){
-
         DrycoolerSetDTO dto = new DrycoolerSetDTO();
-
         dto.setActualSetPoint_AmbL(drycoolerSet.getActualSetPoint_AmbL());
         dto.setActualSetPoint_AmbR(drycoolerSet.getActualSetPoint_AmbR());
         dto.setActualSetPoint_CWL(drycoolerSet.getActualSetPoint_CWL());
@@ -49,7 +44,6 @@ public class DrycoolerSetMapper {
         dto.setPreviousSetPoint_AmbR(drycoolerSet.getPreviousSetPoint_AmbR());
         dto.setPreviousSetPoint_CWL(drycoolerSet.getPreviousSetPoint_CWL());
         dto.setPreviousSetPoint_CWR(drycoolerSet.getPreviousSetPoint_CWR());
-
         return dto;
     }
 }

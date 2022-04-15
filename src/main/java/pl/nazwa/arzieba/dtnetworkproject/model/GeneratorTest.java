@@ -6,11 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import pl.nazwa.arzieba.dtnetworkproject.utils.enums.ListOfEnumValues;
-
 import javax.persistence.*;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -22,18 +18,24 @@ import java.util.List;
 @NoArgsConstructor
 public class GeneratorTest {
 
+    //-----------------------------------------------------------------------MODEL FIELDS-----------------------------------------------------------------------------------------
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer testId;
+
     @ManyToOne
     @JoinColumn(name ="Device_INVENT")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Device device;
+
     @Temporal(TemporalType.DATE)
     private Calendar date;
+
     @Lob
     private String content;
     private Status status;
+
     @Transient
     private List<Author> authors;
     private String authorsCommaSeparated;

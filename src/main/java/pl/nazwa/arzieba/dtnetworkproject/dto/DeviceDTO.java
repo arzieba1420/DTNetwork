@@ -6,18 +6,16 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 @Component
-
 @Getter
 @Setter
 @ToString
 public class DeviceDTO {
+
+    //-----------------------------------------------------------------------MODEL FIELDS-----------------------------------------------------------------------------------------
 
     @NotBlank(message = "Podaj numer inwentaryzacyjny!"  )
     private String inventNumber;

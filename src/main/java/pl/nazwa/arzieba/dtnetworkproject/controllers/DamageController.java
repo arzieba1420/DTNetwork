@@ -15,17 +15,17 @@ import javax.validation.Valid;
 @Slf4j
 public class DamageController {
 
-    //-------------------------------------LOCAL VARIABLES--------------------------------------------------------------
+    //---------------------------------------------------------------LOCAL VARIABLES--------------------------------------------------------------------------------------------
 
     private DamageService damageService;
 
-    //-------------------------------------CONSTRUCTOR------------------------------------------------------------------
+    //---------------------------------------------------------------CONSTRUCTOR------------------------------------------------------------------------------------------------
     @Autowired
     public DamageController(DamageService damageService) {
         this.damageService = damageService;
     }
 
-    //-------------------------------------BUSINESS LOGIC---------------------------------------------------------------
+    //-------------------------------------------------------------BUSINESS LOGIC---------------------------------------------------------------------------------------------
 
     @PostMapping("/addAsModel")
     public String add(@Valid @ModelAttribute("newDamage") DamageDTO damageDTO, BindingResult bindingResult,Model model){

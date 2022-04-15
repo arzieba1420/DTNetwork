@@ -1,7 +1,6 @@
 package pl.nazwa.arzieba.dtnetworkproject.utils.media;
 
 import org.springframework.http.MediaType;
-
 import javax.servlet.ServletContext;
 
 public  class MediaTypeUtils {

@@ -5,8 +5,6 @@ import com.sun.istack.Nullable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,17 +16,23 @@ import java.util.List;
 @NoArgsConstructor
 public class User {
 
+    //-----------------------------------------------------------------------MODEL FIELDS-----------------------------------------------------------------------------------------
+
     @Id
     @Column(nullable = false)
     private String username;
+
     @Column(nullable = false)
     private String password;
     private boolean active;
     private Author author;
     private String roles;
     private String permissions;
+
     @Nullable
     private String personalDiary;
+
+    //-----------------------------------------------------------------------CONSTRUCTOR-----------------------------------------------------------------------------------------
 
     public User(String username, String password, Author author, String roles, String permissions) {
         this.username = username;

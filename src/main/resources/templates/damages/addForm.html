@@ -56,7 +56,7 @@
                 </div>
                 <div class="col-75">
                     <select class="disabledSelect" id="author" name="Author"  th:field="*{author}">
-                        <option th:hidden="hidden" th:readonly="readonly"  th:value="${@mainController.string2Aut(@mainController.getUser())}" th:text="${@mainController.getUser()}"></option>
+                        <option th:hidden="hidden" th:readonly="readonly"  th:value="${@loadServiceImpl.string2Aut(@loadServiceImpl.getUser())}" th:text="${@loadServiceImpl.getUser()}"></option>
                     </select>
                 </div>
             </div>

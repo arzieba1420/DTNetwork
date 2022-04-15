@@ -29,13 +29,7 @@ public class DtNetworkApplication  {
     public static final Logger LOG = LoggerFactory.getLogger(DtNetworkApplication.class);
 
     public static void main(String[] args) {
-
         SpringApplication.run(DtNetworkApplication.class, args);
-
-    /*    String password = "arzieba_DTNetworkPL";
-        BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-        String encryptedPassword = passwordEncryptor.encryptPassword(password);
-        System.out.println("USERNAME:  "+encryptedPassword);*/
     }
 
 

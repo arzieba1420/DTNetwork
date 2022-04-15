@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import java.util.Calendar;
 
@@ -16,17 +15,22 @@ import java.util.Calendar;
 @ToString
 public class DrycoolerSet {
 
+        //-----------------------------------------------------------------------MODEL FIELDS-----------------------------------------------------------------------------------------
+
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         Integer drycoolerSetId;
+
         @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "Device_INVENT")
         @OnDelete(action = OnDeleteAction.CASCADE)
+
         private Device device;
         private Double actualSetPoint_AmbL; //temp zadana drycoolera zewn
         private Double actualSetPoint_CWL; //temp zadana drycoolera zadana
         private Double actualSetPoint_AmbR; //temp zadana drycoolera zewn
         private Double actualSetPoint_CWR; //temp zadana drycoolera zadana
+
         @Temporal(TemporalType.DATE)
         private Calendar setDate;
         private Author author;
@@ -34,6 +38,7 @@ public class DrycoolerSet {
         private Double previousSetPoint_CWL; //temp zadana drycoolera zadana
         private Double previousSetPoint_AmbR; //temp zadana drycoolera zewn
         private Double previousSetPoint_CWR; //temp zadana drycoolera zadana
+
         @Temporal(TemporalType.DATE)
         private Calendar previousSetDate;
         private Author previousAuthor;

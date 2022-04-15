@@ -6,8 +6,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.nazwa.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import org.springframework.stereotype.Service;
 import pl.nazwa.arzieba.dtnetworkproject.model.IssueFiles;
-
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Set;
@@ -34,6 +32,10 @@ public interface IssueDocService {
     String addFormDevice(String inventNumber, Model model);
     String addFormDamage(Integer damageId, Model model);
     String createDocumentForDamage(IssueDocumentDTO issueDocumentDTO, BindingResult bindingResult, Model model, HttpServletRequest request);
-
     String createDocumentForDevice(IssueDocumentDTO issueDocumentDTO, BindingResult bindingResult, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes);
+    String showDocsForDamage(Integer damageId, Model model);
+    String showDocsForYear(int year, Model model,int page);
+    String showFilesForDoc(Model model,String signature);
+    String createEditForm(Model model,String signature);
+    String editDoc(IssueDocumentDTO documentDTO, BindingResult bindingResult, Model model);
 }

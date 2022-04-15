@@ -4,7 +4,6 @@ package pl.nazwa.arzieba.dtnetworkproject.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -15,6 +14,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class IssueFiles implements Serializable {
 
+    //-----------------------------------------------------------------------MODEL FIELDS-----------------------------------------------------------------------------------------
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long issueFilesId;
@@ -22,6 +23,7 @@ public class IssueFiles implements Serializable {
     private String fileNameNoExt;
     private String modifiedFileName;
     private String fileExtension;
+
     @ManyToOne
     @JoinColumn(name="issue_signature")
     private IssueDocument issueDocument;

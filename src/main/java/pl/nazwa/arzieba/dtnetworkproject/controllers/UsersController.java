@@ -1,113 +1,44 @@
 package pl.nazwa.arzieba.dtnetworkproject.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import pl.nazwa.arzieba.dtnetworkproject.dao.UserDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.NewPassDTO;
-import pl.nazwa.arzieba.dtnetworkproject.model.User;
-
+import pl.nazwa.arzieba.dtnetworkproject.services.users.UserService;
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping("/users")
 public class UsersController {
 
-    private UserDAO userDAO;
-    private NewPassDTO newPassDTO;
-    private PasswordEncoder passwordEncoder;
+    //--------------------------------------------------------------------LOCAL VARIABLES---------------------------------------------------------------------------------------
+
+    private UserService userService;
+
+    //---------------------------------------------------------------------CONSTRUCTOR-----------------------------------------------------------------------------------------
 
     @Autowired
-    public UsersController(UserDAO userDAO, NewPassDTO newPassDTO, PasswordEncoder passwordEncoder) {
-        this.userDAO = userDAO;
-        this.newPassDTO = newPassDTO;
-        this.passwordEncoder = passwordEncoder;
+    public UsersController(UserService userService) {
+        this.userService = userService;
     }
+
+    //--------------------------------------------------------------------BUSINESS LOGIC---------------------------------------------------------------------------------------
 
     @GetMapping("/{username}")
     public String changePasswordForm(Model model, @PathVariable String username ){
-
-        User user =userDAO.findByUsername(username);
-
-        model.addAttribute("user", user);
-        model.addAttribute("newPass", new NewPassDTO());
-
-        return "users/changePasswordForm";
-    }
-
-    public String changePasswordFormErr(Model model,  String username, NewPassDTO newPassDTO ){
-
-        User user =userDAO.findByUsername(username);
-
-        model.addAttribute("user", user);
-        model.addAttribute("newPass", newPassDTO);
-
-        return "users/changePasswordForm";
+        return userService.changePasswordForm(model, username);
     }
 
     @PostMapping("/changePass")
     public String changePass(@Valid @ModelAttribute("newPass") NewPassDTO newPassDTO, BindingResult bindingResult, Model model){
-
-        User user = userDAO.findByUsername(newPassDTO.getLogin());
-
-        if(bindingResult.hasFieldErrors()){
-            List<FieldError> allErrors;
-            allErrors = bindingResult.getFieldErrors();
-
-            model.addAttribute("bindingResult", bindingResult);
-            model.addAttribute("errors",allErrors);
-            model.addAttribute("errorsAmount",allErrors.size());
-
-            return changePasswordFormErr(model,newPassDTO.getLogin(),newPassDTO);
-        }
-
-        if(!passwordEncoder.matches(newPassDTO.getOldPass(),userDAO.findByUsername(newPassDTO.getLogin()).getPassword())){
-            List<FieldError> allErrors;
-            FieldError fieldError = new FieldError("newPass","oldPass",newPassDTO.getOldPass(),
-                    false,null,null,"Niepoprawne aktualne hasło!");
-            bindingResult.addError(fieldError);
-            allErrors = bindingResult.getFieldErrors();
-
-            model.addAttribute("bindingResult", bindingResult);
-            model.addAttribute("errors",allErrors);
-            model.addAttribute("errorsAmount",allErrors.size());
-
-            return changePasswordFormErr(model,newPassDTO.getLogin(),newPassDTO);
-        }
-
-        if (!newPassDTO.getNewPass().equals(newPassDTO.getNewPassConfirmed())){
-            List<FieldError> allErrors;
-            FieldError fieldError = new FieldError("newPass","newPassConfirmed",newPassDTO.getNewPassConfirmed(),
-                    false,null,null,"Hasła niezgodne!");
-            bindingResult.addError(fieldError);
-            allErrors = bindingResult.getFieldErrors();
-
-            model.addAttribute("bindingResult", bindingResult);
-            model.addAttribute("errors",allErrors);
-            model.addAttribute("errorsAmount",allErrors.size());
-
-            return changePasswordFormErr(model,newPassDTO.getLogin(),newPassDTO);
-        }
-
-        user.setPassword(passwordEncoder.encode(newPassDTO.getNewPass()));
-        userDAO.save(user);
-
-        return "redirect:/logout";
+        return userService.changePass(newPassDTO, bindingResult, model);
     }
 
     @PostMapping("/saveDiary/{username}")
     public String saveDiary (Model model, @PathVariable String username, @ModelAttribute("diaryText") String diaryText ){
-
-        User user = userDAO.findByUsername(username);
-
-        user.setPersonalDiary(diaryText);
-        userDAO.save(user);
-
-        return "redirect:/dtnetwork";
+        return userService.saveDiary(model, username, diaryText);
     }
 }

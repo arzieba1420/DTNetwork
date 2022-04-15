@@ -17,17 +17,21 @@ import java.util.stream.Collectors;
 public class DeviceCardServiceImpl implements DeviceCardService {
 
 
-    //----------------------------------------LOCAL VARIABLES-----------------------------------------------------------
+    //------------------------------------------------------------LOCAL VARIABLES---------------------------------------------------------------------------------------------
+
     private DeviceCardDAO dao;
     private DeviceDAO deviceDAO;
 
-    //----------------------------------------CONSTRUCTOR---------------------------------------------------------------
+    //--------------------------------------------------------------CONSTRUCTOR-----------------------------------------------------------------------------------------------
+
     @Autowired
     public DeviceCardServiceImpl(DeviceCardDAO dao, DeviceDAO deviceDAO) {
         this.dao = dao;
         this.deviceDAO = deviceDAO;
     }
-    //----------------------------------------DAO methods---------------------------------------------------------------
+
+    //--------------------------------------------------------------DAO METHODS-----------------------------------------------------------------------------------------------
+
     @Override
     public List<DeviceCardDTO> findAll() {
         return dao.findAll().stream()
@@ -62,7 +66,8 @@ public class DeviceCardServiceImpl implements DeviceCardService {
        DeviceCard saved = dao.save(DeviceCardMapper.map(dto,deviceDAO));
         return saved.getSignatureNumber();
     }
-    //----------------------------------------HTTP methods--------------------------------------------------------------
+    //------------------------------------------------------------------CONTROLLER METHODS---------------------------------------------------------------------------------
+
     @Override
     public String addForm(Model model, String inventNumber) {
         model.addAttribute("newCard", new DeviceCardDTO());
@@ -74,6 +79,7 @@ public class DeviceCardServiceImpl implements DeviceCardService {
 
     @Override
     public String create(Model model, DeviceCardDTO deviceCardDTO, BindingResult bindingResult) {
+
         if(bindingResult.hasFieldErrors()){
             List<FieldError> allErrors;
             allErrors = bindingResult.getFieldErrors();
@@ -82,7 +88,8 @@ public class DeviceCardServiceImpl implements DeviceCardService {
             model.addAttribute("errorsAmount",allErrors.size());
             return addFormErr(model,deviceCardDTO.getInventNumber(),deviceCardDTO);
         }
-            create(deviceCardDTO);
+
+        create(deviceCardDTO);
         return "redirect:/devices/"+deviceCardDTO.getInventNumber();
     }
 
@@ -92,6 +99,5 @@ public class DeviceCardServiceImpl implements DeviceCardService {
         model.addAttribute("room", deviceDAO.findByInventNumber(inventNumber).getRoom());
         model.addAttribute("type", deviceDAO.findByInventNumber(inventNumber).getDeviceType());
         return "devices/addCardForm";
-
     }
 }

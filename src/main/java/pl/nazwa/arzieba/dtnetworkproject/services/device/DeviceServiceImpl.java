@@ -15,6 +15,7 @@ import pl.nazwa.arzieba.dtnetworkproject.dto.*;
 import pl.nazwa.arzieba.dtnetworkproject.model.*;
 import pl.nazwa.arzieba.dtnetworkproject.services.damage.DamageService;
 import pl.nazwa.arzieba.dtnetworkproject.services.generator.GeneratorService;
+import pl.nazwa.arzieba.dtnetworkproject.services.load.LoadServiceImpl;
 import pl.nazwa.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
 import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 import pl.nazwa.arzieba.dtnetworkproject.utils.chillerSet.ChillerSetMapper;
@@ -38,38 +39,39 @@ import java.util.stream.Collectors;
 @Transactional
 public class DeviceServiceImpl implements DeviceService {
 
+    //---------------------------------------------------------------LOCAL VARIABLES---------------------------------------------------------------------------------------------
+
     private DeviceDAO deviceDAO;
     private DamageDAO damageDAO;
     private IssueDocumentDAO issueDocumentDAO;
     private DeviceCardDAO deviceCardDAO;
     private GeneratorTestDAO generatorTestDAO;
     private ShortPostDAO shortPostDAO;
-    private GeneratorService generatorService;
     private ShortPostService postService;
     private ChillerSetDAO chillerSetDAO;
     private DrycoolerSetDAO drycoolerSetDAO;
     @Value("${my.pagesize}")
     private int pagesize;
 
+    //----------------------------------------------------------------CONSTRUCTOR----------------------------------------------------------------------------------------------
+
     @Autowired
-    public DeviceServiceImpl(DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, GeneratorTestDAO generatorTestDAO, ShortPostDAO shortPostDAO, GeneratorService generatorService, ShortPostService postService,  ChillerSetDAO chillerSetDAO, DrycoolerSetDAO drycoolerSetDAO) {
+    public DeviceServiceImpl(DeviceDAO deviceDAO, DamageDAO damageDAO, IssueDocumentDAO issueDocumentDAO, DeviceCardDAO deviceCardDAO, GeneratorTestDAO generatorTestDAO, ShortPostDAO shortPostDAO, ShortPostService postService,  ChillerSetDAO chillerSetDAO, DrycoolerSetDAO drycoolerSetDAO) {
         this.deviceDAO = deviceDAO;
         this.damageDAO = damageDAO;
         this.issueDocumentDAO = issueDocumentDAO;
         this.deviceCardDAO = deviceCardDAO;
         this.generatorTestDAO = generatorTestDAO;
         this.shortPostDAO = shortPostDAO;
-        this.generatorService = generatorService;
         this.postService = postService;
-
-
         this.chillerSetDAO = chillerSetDAO;
         this.drycoolerSetDAO = drycoolerSetDAO;
     }
 
+    //---------------------------------------------------------------DAO METHODS---------------------------------------------------------------------------------------------
+
     @Override
     public List<DeviceDTO> findAll() {
-
        return deviceDAO.findAll()
                .stream()
                .map(DeviceMapper::map)
@@ -83,13 +85,11 @@ public class DeviceServiceImpl implements DeviceService {
                 .map(DeviceDTO::getInventNumber)
                 .collect(Collectors.toList())
                 .contains(inventNumber)) throw new DeviceNotFoundException();
-
         return DeviceMapper.map( deviceDAO.findByInventNumber(inventNumber));
     }
 
     @Override
     public List<DeviceDTO> findByType(String name) {
-
       return deviceDAO.findAll().stream()
               .filter(d->d.getDeviceType()
               .name().equals(name))
@@ -98,6 +98,7 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
+    @Transactional
     public DeviceDTO create(DeviceDTO toAdd) {
         deviceDAO.save( DeviceMapper.map(toAdd));
 
@@ -111,7 +112,6 @@ public class DeviceServiceImpl implements DeviceService {
             generatorTestDTO.setLossPowerFlag(false);
             generatorTestDAO.save(GeneratorTestMapper.map(generatorTestDTO,deviceDAO));
         }
-
         return toAdd;
     }
 
@@ -121,18 +121,13 @@ public class DeviceServiceImpl implements DeviceService {
         if(!this.findAll().stream()
                 .map(DeviceDTO::getInventNumber)
                 .collect(Collectors.toList())
-                .contains(deviceDTO.getInventNumber())){
-
-            return  create(deviceDTO);
-
-        } else{
+                .contains(deviceDTO.getInventNumber())) return  create(deviceDTO);
+        else{
            Device toBeUpdated = deviceDAO.findByInventNumber(deviceDTO.getInventNumber());
-
            toBeUpdated.setDeviceType(deviceDTO.getDeviceType());
            toBeUpdated.setDeviceDescription(deviceDTO.getDeviceDescription());
            toBeUpdated.setRoom(deviceDTO.getRoom());
            deviceDAO.save(toBeUpdated);
-
            return DeviceMapper.map(toBeUpdated);
         }
     }
@@ -146,17 +141,14 @@ public class DeviceServiceImpl implements DeviceService {
                 .contains(inventNumber)) throw new DeviceNotFoundException("Device not found");
         else {
             DeviceDTO removed = generateMainViewForDevice(inventNumber);
-
             deviceDAO.deleteDeviceByInventNumber(inventNumber);
             removed.setDeviceDescription("Removed " + removed.getDeviceDescription());
-
             return removed;
         }
     }
 
     @Override
     public List<DamageDTO> getDamages(String inventNumber) {
-
         return deviceDAO.findByInventNumber(inventNumber)
                 .getDamageList()
                 .stream()
@@ -166,7 +158,6 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public List<IssueDocumentDTO> getIssueDocuments(String inventNumber) {
-
         return issueDocumentDAO.findByInventNumber(inventNumber).stream()
                 .map(IssueDocMapper::map)
                 .collect(Collectors.toList());
@@ -174,13 +165,11 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public DeviceCardDTO getDeviceCard(String inventNumber) {
-
         return DeviceCardMapper.map(deviceCardDAO.findByDevice_InventNumber(inventNumber));
     }
 
     @Override
     public List<DeviceDTO> findByRoom(String room) {
-
         return deviceDAO.findAll().stream().filter(d->d.getRoom().equals(Room.valueOf(room)))
                 .map(DeviceMapper::map)
                 .collect(Collectors.toList());
@@ -188,13 +177,11 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public DeviceDTO changeRoom(String inventNumber) {
-
        Device device = deviceDAO.findByInventNumber(inventNumber);
 
-
        if (!device.getDeviceType().equals(DeviceType.GENERATOR))  device.setDeviceDescription(device.getDeviceDescription()+ " ("+device.getRoom()+")");
-       device.setRoom(Room.Nieaktywne);
 
+        device.setRoom(Room.Nieaktywne);
         ShortPost shortPost = new ShortPost();
         shortPost.setAuthor(Author.DTN);
         shortPost.setDevice(device);
@@ -203,10 +190,11 @@ public class DeviceServiceImpl implements DeviceService {
         shortPost.setPostDate(Calendar.getInstance());
         shortPost.setDate(Calendar.getInstance().getTime());
         shortPostDAO.save(shortPost);
-
        return DeviceMapper.map(deviceDAO.save(device));
     }
-    //----------------------------------------------HTTP methods--------------------------------------------------------
+
+    //-------------------------------------------------------------------CONTROLLER METHODS-----------------------------------------------------------------------------------
+
     @Override
     public String generateMainViewForDevice(String inventNumber, Model model) {
         DeviceDTO deviceDTO = generateMainViewForDevice(inventNumber);
@@ -259,6 +247,7 @@ public class DeviceServiceImpl implements DeviceService {
                         false, null, null, "Urządzenie o tym numerze już istnieje w bazie danych!");
                 bindingResult.addError(fieldError);
             }
+
             allErrors = bindingResult.getFieldErrors();
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors",allErrors);
@@ -268,7 +257,6 @@ public class DeviceServiceImpl implements DeviceService {
 
         if(deviceDAO.existsById(deviceDTO.getInventNumber())){
             FieldError fieldError = new FieldError("newDevice","inventNumber", deviceDTO.getInventNumber(),false,null,null ,"Device with this Invent Number already exist in database!");
-
             bindingResult.addError(fieldError);
             model.addAttribute("bindingResult", bindingResult);
             model.addAttribute("errors",fieldError);
@@ -290,11 +278,9 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public String createActivityForGenerator(Model model, String inventNumber) {
-
         String text = deviceDAO.findByInventNumber(inventNumber).getDeviceDescription()
                 +" "+deviceDAO.findByInventNumber(inventNumber).getRoom();
         GeneratorTestDTO generatorTestDTO = new GeneratorTestDTO();
-
         generatorTestDTO.setDate(CalendarUtil.cal2string(Calendar.getInstance()));
         generatorTestDTO.setContent(
                 "\nUwagi: \n\n\n"+
@@ -322,14 +308,13 @@ public class DeviceServiceImpl implements DeviceService {
         if(binding.hasFieldErrors()){
             List<FieldError> allErrors;
             allErrors = binding.getFieldErrors();
-
             model.addAttribute("bindingResult", binding);
             model.addAttribute("errors",allErrors);
             model.addAttribute("errorsAmount",allErrors.size());
             return findByInventNumberErr(inventNumber,model) ;
         }
 
-        chillerSetDTO.setAuthor(Author.valueOf(MainController.getUser()));
+        chillerSetDTO.setAuthor(Author.valueOf(LoadServiceImpl.getUser()));
         chillerSetDTO.setInventNumber(chiller.getInventNumber());
         chillerSetDTO.setSetDate(CalendarUtil.cal2string(Calendar.getInstance()));
 
@@ -368,7 +353,7 @@ public class DeviceServiceImpl implements DeviceService {
             return findByInventNumberErr(inventNumber,model) ;
         }
 
-        drycoolerSetDTO.setAuthor(Author.valueOf(MainController.getUser()));
+        drycoolerSetDTO.setAuthor(Author.valueOf(LoadServiceImpl.getUser()));
         drycoolerSetDTO.setInventNumber(drycooler.getInventNumber());
         drycoolerSetDTO.setSetDate(CalendarUtil.cal2string(Calendar.getInstance()));
 
@@ -443,6 +428,7 @@ public class DeviceServiceImpl implements DeviceService {
                 activityType="(test)";
             }
         }
+
         model.addAttribute("chillerSetDTO",new ChillerSetDTO());
         model.addAttribute("activityType", activityType);
         model.addAttribute("dto", deviceDTO);
@@ -454,24 +440,17 @@ public class DeviceServiceImpl implements DeviceService {
         return "devices/deviceInfo";
     }
 
-
-
     public String addFormErr(Model model, @PathVariable String room, DeviceDTO deviceDTO){
-
         model.addAttribute("newDevice", deviceDTO);
         model.addAttribute("room", Room.valueOf(room));
-
         return "devices/addDeviceForm";
     }
 
     public List<GeneratorTestDTO> getAllGeneratorTests(int page, int size, String inv) {
-
         Page<GeneratorTest> page1 = generatorTestDAO.findByDevice_InventNumberOrderByDateDesc(inv, PageRequest.of(
                 page, size, Sort.Direction.DESC,"date"));
-
         return page1.stream()
                 .map(GeneratorTestMapper::map)
                 .collect(Collectors.toList());
     }
-
 }

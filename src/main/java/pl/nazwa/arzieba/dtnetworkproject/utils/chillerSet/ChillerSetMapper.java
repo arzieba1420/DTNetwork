@@ -10,9 +10,7 @@ import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 public class ChillerSetMapper {
 
     public static ChillerSet map (ChillerSetDTO dto, DeviceDAO dao){
-
         ChillerSet chillerSet = new ChillerSet();
-
         chillerSet.setAuthor(dto.getAuthor());
         chillerSet.setDevice(dao.findByInventNumber(dto.getInventNumber()));
         chillerSet.setSetDate(CalendarUtil.string2cal(dto.getSetDate()));
@@ -20,14 +18,11 @@ public class ChillerSetMapper {
         chillerSet.setPreviousSetPoint(dto.getPreviousSetPoint());
         chillerSet.setPreviousSetDate(CalendarUtil.string2cal(dto.getPreviousSetDate()));
         chillerSet.setPreviousAuthor(dto.getPreviousAuthor());
-
         return chillerSet;
     }
 
     public static ChillerSetDTO map (ChillerSet chillerSet ){
-
         ChillerSetDTO dto = new ChillerSetDTO();
-
         dto.setAuthor(chillerSet.getAuthor());
         dto.setInventNumber(chillerSet.getDevice().getInventNumber());
         dto.setSetDate(CalendarUtil.cal2string(chillerSet.getSetDate()));
@@ -36,7 +31,6 @@ public class ChillerSetMapper {
         dto.setPreviousAuthor(chillerSet.getPreviousAuthor());
         dto.setPreviousSetDate(CalendarUtil.cal2string(chillerSet.getPreviousSetDate()));
         dto.setPreviousSetPoint(chillerSet.getPreviousSetPoint());
-
         return dto;
     }
 }

@@ -1,18 +1,13 @@
 package pl.nazwa.arzieba.dtnetworkproject.services.damage;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DamageDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.GeneratorTestDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.IssueDocumentDTO;
 import org.springframework.stereotype.Service;
 import pl.nazwa.arzieba.dtnetworkproject.model.Damage;
-
-import javax.validation.Valid;
 import java.util.List;
 
 @Service

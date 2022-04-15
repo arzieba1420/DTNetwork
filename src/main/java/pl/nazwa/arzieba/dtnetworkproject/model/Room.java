@@ -7,7 +7,7 @@ public enum  Room {
 
     G39,//0
     G04,//1
-    UPS_Naw11,//2
+    UPS_Build,//2
     H106,//3
     H104,//4
     H102,//5
