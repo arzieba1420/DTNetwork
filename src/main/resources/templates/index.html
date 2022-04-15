@@ -44,7 +44,7 @@
     <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
 
    <a id="instrukcja" href="" th:href="@{/download1/Instrukcja}" ><button id="instrButton">Pobierz instrukcję</button></a>
-   <a target="_blank" id="grafik" href=""  ><button id="grafikButton">Grafik on-line</button></a>
+   <a target="_blank" id="grafik" href="https://docs.google.com/spreadsheets/d/1yHuWARoslz7rkAE0vnt-7UxMwL0hRL4VEH6S8oGDJEo/edit?usp=sharing"  ><button id="grafikButton">Grafik on-line</button></a>
    <div id="mySidenav" class="sidenav">
        <div class="search" id="tests">
            <table style="background-color: white; border: 1px solid black;color: black; text-align: center">
@@ -64,7 +64,7 @@
                     <td th:if="${!generators.values().contains(null)&&@loadServiceImpl.betweenDates(generators.get(generator).getDate(),today)<30&&!generators.get(generator).getDevice().getRoom().name().equals('Nieaktywne')}" th:text="${@loadServiceImpl.betweenDates(generators.get(generator).getDate(),today)}" ></td>
                     <td th:if="${generators.values().contains(null)}" >0</td>
                     <td style="background-color: rgba(255,0,0,0.65); color: white" th:if="${!generators.values().contains(null)&&@loadServiceImpl.betweenDates(generators.get(generator).getDate(),today)>=30&&!generators.get(generator).getDevice().getRoom().name().equals('Nieaktywne')}" th:text="${@loadServiceImpl.betweenDates(generators.get(generator).getDate(),today)}" ></td>
-<!--                   <td th:if="${generators.get(generator).getDevice().getRoom().name().equals('Nieaktywne')}" >N/D</td>-->
+                   <td th:if="${generators.get(generator).getDevice().getRoom().name().equals('Nieaktywne')}" >N/D</td>
                </tr>
            </table>
            <i style="float:left; font-size: 130%; margin-left: 425px; margin-top: -70px" class="fas fa-angle-right" id="arr2"></i>

@@ -38,7 +38,7 @@
 }
 
 .headerBar #desc{
-    background-image: url("../images/logo_desc3.png");
+    /*background-image: url("../images/logo_desc3.png");*/
     width: 500px;
     height: 60px;
     text-align: center;
@@ -53,8 +53,8 @@
 .headerBar #logo{
 
 
-    background-image: url("../images/logo.png");
-    background-size: contain;
+    background-image: url("../images/pet2.png");
+    background-size: auto;
     background-repeat: no-repeat;
     height: 140px !important;
     width: 260px !important;
