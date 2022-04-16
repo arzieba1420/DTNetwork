@@ -177,8 +177,8 @@
                             <br>
                             <a href="#" th:href="@{'/posts/edit/'+ ${key}}"> <span style="font-size: 1em;cursor:pointer"><i class="far fa-edit"></i> Edytuj post</span></a>
                         </div>
-                        <div class="cell remove " th:if="${lastPosts.get(key).getPostLevel().name().equals('GENERAL')and(!lastPosts.get(key).getAuthor().name().equals(@loadServiceImpl.getUser()) and !@loadServiceImpl.getUser().equals('admin')) }">
-                            <span style="font-size: 1em"><i class="fas fa-lock"></i></span>
+                        <div title="Cannot edit when you are not author of post or admin" class="cell remove " th:if="${lastPosts.get(key).getPostLevel().name().equals('GENERAL')and(!lastPosts.get(key).getAuthor().name().equals(@loadServiceImpl.getUser()) and !@loadServiceImpl.getUser().equals('admin')) }">
+                            <span id="lock" style="font-size: 1em"><i class="fas fa-lock"></i></span>
 
                         </div>
 

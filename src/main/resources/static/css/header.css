@@ -53,8 +53,8 @@
 .headerBar #logo{
 
 
-    background-image: url("../images/pet2.png");
-    background-size: auto;
+    background-image: url("../images/sample_logo.png");
+    background-size: contain;
     background-repeat: no-repeat;
     height: 140px !important;
     width: 260px !important;

@@ -23,6 +23,7 @@ import pl.nazwa.arzieba.dtnetworkproject.dto.NewPassDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.*;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
+import pl.nazwa.arzieba.dtnetworkproject.services.init.InitDataLoader;
 import pl.nazwa.arzieba.dtnetworkproject.services.issueDocument.IssueDocService;
 import pl.nazwa.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
 import pl.nazwa.arzieba.dtnetworkproject.utils.enums.ListOfEnumValues;
@@ -54,11 +55,12 @@ public class LoadServiceImpl implements LoadService {
     private GeneratorTestDAO generatorTestDAO;
     private MyPropertiesConfig propertiesConfig;
     private ApplicationArguments applicationArguments;
+    private InitDataLoader initDataLoader;
 
     //------------------------------------------------------------CONSTRUCTOR---------------------------------------------------------------------------------------------
 
     @Autowired
-    public LoadServiceImpl(ShortPostService postService, DeviceService deviceService, ShortPostDAO shortPostDAO, DeviceDAO deviceDAO, IssueDocService issueDocService, UserDAO userDAO, PasswordEncoder passwordEncoder, GeneratorTestDAO generatorTestDAO, MyPropertiesConfig propertiesConfig, ApplicationArguments applicationArguments) {
+    public LoadServiceImpl(ShortPostService postService, DeviceService deviceService, ShortPostDAO shortPostDAO, DeviceDAO deviceDAO, IssueDocService issueDocService, UserDAO userDAO, PasswordEncoder passwordEncoder, GeneratorTestDAO generatorTestDAO, MyPropertiesConfig propertiesConfig, ApplicationArguments applicationArguments, InitDataLoader initDataLoader) {
         this.postService = postService;
         this.deviceService = deviceService;
         this.shortPostDAO = shortPostDAO;
@@ -69,6 +71,7 @@ public class LoadServiceImpl implements LoadService {
         this.generatorTestDAO = generatorTestDAO;
         this.propertiesConfig = propertiesConfig;
         this.applicationArguments = applicationArguments;
+        this.initDataLoader = initDataLoader;
     }
 
     //------------------------------------------------------------CONTROLLER METHODS---------------------------------------------------------------------------------------------

@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
-import org.springframework.mail.MailSendException;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -42,7 +41,6 @@ public class ShortPostServiceImpl implements ShortPostService {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     private ShortPostDAO postDAO;
     private DeviceDAO deviceDAO;
-    private EmailConfiguration email;
     private ApplicationArguments applicationArguments;
     @Value("${my.pagesize}")
     int pagesize;
@@ -51,10 +49,9 @@ public class ShortPostServiceImpl implements ShortPostService {
     //------------------------------------------------------------CONSTRUCTOR---------------------------------------------------------------------------------------------
 
     @Autowired
-    public ShortPostServiceImpl(ShortPostDAO postDAO, DeviceDAO deviceDAO, EmailConfiguration email, ApplicationArguments applicationArguments, EmailConfiguration emailConfiguration) {
+    public ShortPostServiceImpl(ShortPostDAO postDAO, DeviceDAO deviceDAO, ApplicationArguments applicationArguments, EmailConfiguration emailConfiguration) {
         this.postDAO = postDAO;
         this.deviceDAO = deviceDAO;
-        this.email = email;
         this.applicationArguments = applicationArguments;
         this.emailConfiguration = emailConfiguration;
     }
@@ -171,10 +168,15 @@ public class ShortPostServiceImpl implements ShortPostService {
         postDAO.save(ShortPostMapper.map(dto,deviceDAO));
 
             if (!dto.getPostLevel().equals(PostLevel.INFO)){
-                email.sendMail("Nowy post dla: "+deviceDAO.findByInventNumber(dto.getInventNumber()).getDeviceDescription()+ " w: "+deviceDAO.findByInventNumber(dto.getInventNumber()).getRoom().name(),dto.getContent()
+                emailConfiguration.sendMail("Nowy post dla: "+deviceDAO.findByInventNumber(dto.getInventNumber()).getDeviceDescription()+ " w: "+deviceDAO.findByInventNumber(dto.getInventNumber()).getRoom().name(),dto.getContent()
                          ,dto.getAuthor().name());
             }
         return dto;
+    }
+
+    @Override
+    public void createOnInit(ShortPostDTO shortPostDTO){
+        postDAO.save(ShortPostMapper.map(shortPostDTO,deviceDAO));
     }
 
     @Override

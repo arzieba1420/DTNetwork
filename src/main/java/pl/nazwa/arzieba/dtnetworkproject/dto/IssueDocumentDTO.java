@@ -1,6 +1,7 @@
 package pl.nazwa.arzieba.dtnetworkproject.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,6 +12,7 @@ import java.util.List;
 @Component
 @Getter
 @Setter
+@NoArgsConstructor
 public class IssueDocumentDTO {
 
     //-----------------------------------------------------------------------MODEL FIELDS-----------------------------------------------------------------------------------------
@@ -37,4 +39,18 @@ public class IssueDocumentDTO {
     private double value;
     private List<MultipartFile> issueFiles ;
     private List<String> filesToRemove;
+
+    //-----------------------------------------------------------------------CONSTRUCTOR-----------------------------------------------------------------------------------------
+
+
+    public IssueDocumentDTO(String issueSignature, String delivererName, String delivererNIP, String issueDate, String issueTittle, String issueDetails, String inventNumber, double value) {
+        this.issueSignature = issueSignature;
+        this.delivererName = delivererName;
+        this.delivererNIP = delivererNIP;
+        this.issueDate = issueDate;
+        this.issueTittle = issueTittle;
+        this.issueDetails = issueDetails;
+        this.inventNumber = inventNumber;
+        this.value = value;
+    }
 }

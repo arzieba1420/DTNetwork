@@ -25,6 +25,9 @@ public interface ShortPostService {
     int numberByDevice(String inventNumber);
     Map<Integer,ShortPostDTO> findAll(int year, int page, int size);
     ShortPostDTO create(ShortPostDTO dto);
+
+    void createOnInit(ShortPostDTO shortPostDTO);
+
     ShortPostDTO update(ShortPostDTO dto);
     ShortPostDTO remove(Integer id);
     Map<Integer, ShortPostDTO> searchContent(String phrase);
