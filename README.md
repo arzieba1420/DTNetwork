@@ -27,7 +27,7 @@ On a daily basis it works in closed local network in my company, but I prepaired
 **Used technologies:**
 -----------------------
 * Java 13
-* Spring v.5 and SpringBoot v.2 (Spring Security, Spring Validator, JPA, Hibernate, ...)  
+* Spring v.5 and SpringBoot v.2 (Spring Security, Spring Validator, JPA, Hibernate, Tomcat)  
 * Thymeleaf  
 * Project Lombok
 * JavaMailSender
@@ -40,7 +40,7 @@ On a daily basis it works in closed local network in my company, but I prepaired
 **To run:**
 -------------
 * Java JRE installed
-* Into .zip file
+* .jar and .properties.txt files from ZIP package  
 * Firefox Quantum browser (I work with Firefox Quantum 65.0.2, don't guarantee that all of CSS styles will perform properly with other browsers)  
 * **<u>In Spring Security login form put DTN and DTN1 as login and pass (test account)</u>** 
 
