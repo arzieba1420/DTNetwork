@@ -5,7 +5,7 @@
 ----------
 This is my first fully commercial Spring Boot project!
 
-It is kind of WebApp which will be used as a service to manage technical devices 
+It is kind of WebApp which is used as a service to manage technical (HVACr and AC/DC) devices 
 maintained by me in my current job.  
 On a daily basis it works in closed local network in my company, but I prepaired its demo version. The version uses an embeded simulation of database and includes sample datas, entries etc to demonstrate how it looks in production mode.
 
