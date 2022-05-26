@@ -33,7 +33,7 @@ public class DtNetworkApplication  {
     }
 
 
-   /* @Bean
+    @Bean
     public ServletWebServerFactory servletContainer() {
 
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
@@ -51,9 +51,9 @@ public class DtNetworkApplication  {
         tomcat.addAdditionalTomcatConnectors(httpToHttpsRedirectConnector());
 
         return tomcat;
-    }*/
+    }
 
-    /*private Connector httpToHttpsRedirectConnector() {
+    private Connector httpToHttpsRedirectConnector() {
 
         Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
 
@@ -63,7 +63,7 @@ public class DtNetworkApplication  {
         connector.setRedirectPort(8443);
 
         return connector;
-    }*/
+    }
 }
 
 

@@ -41,8 +41,9 @@ public class DownloadController {
     //Download file from STORAGE DIRECTORY when its name is given in URL
     //Pobieranie pliku karty maszyny dla urządzenia o numerze inwentarzowym jak w URL
     @RequestMapping("/download1/{fileName}")
-    public void downloadCardsAndInstruction(@PathVariable String fileName, HttpServletResponse response) throws IOException {
-        downloadService.downloadCardsAndInstruction(fileName, response);
+    public ResponseEntity <InputStreamResource> downloadCardsAndInstruction(@PathVariable String fileName, HttpServletResponse response) throws IOException {
+
+        return downloadService.downloadFile1(fileName, response);
     }
 
     //Download file from FILE DIRECTORY when its name is given in URL

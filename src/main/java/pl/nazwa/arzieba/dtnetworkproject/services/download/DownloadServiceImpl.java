@@ -3,6 +3,7 @@ package pl.nazwa.arzieba.dtnetworkproject.services.download;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -39,26 +40,19 @@ public class DownloadServiceImpl implements DownloadService {
     //------------------------------------------------------------CONTROLLER METHODS---------------------------------------------------------------------------------------------
 
     @Override
-    public void downloadCardsAndInstruction(String fileName, HttpServletResponse response) throws IOException {
+    public void downloadDefault(String fileName, HttpServletResponse response) throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
 
-        if (fileName.equalsIgnoreCase("Instrukcja")){
-            InputStream inputStream = classLoader.getResourceAsStream("static/files/Instrukcja.pdf");
-            response.setContentType("application/pdf");
-            response.setHeader("Content-Disposition",
-                    String.format("attachment; filename=Instrukcja"));
-            response.setContentLength(inputStream.available());
-            FileCopyUtils.copy(inputStream, response.getOutputStream());}
 
-        if(!fileName.equalsIgnoreCase("Instrukcja")) {
-            InputStream inputStream = classLoader.getResourceAsStream("static/files/EmptyCard.pdf");
+            InputStream inputStream = classLoader.getResourceAsStream("static/files/" + fileName + ".pdf");
             response.setContentType("application/pdf");
             response.setHeader("Content-Disposition",
-                    String.format("attachment; filename=EmptyCard"));
+                    String.format("attachment; filename=" + fileName));
             response.setContentLength(inputStream.available());
             FileCopyUtils.copy(inputStream, response.getOutputStream());
-        }
     }
+
+
 
     @Override
     public ResponseEntity<InputStreamResource> downloadIssueDocFile(Long fileID) throws FileNotFoundException {
@@ -85,6 +79,56 @@ public class DownloadServiceImpl implements DownloadService {
         return ResponseEntity.ok()
                 // Content-Disposition
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + issueFile.getFileName())
+                // Content-Type
+                .contentType(mediaType)
+                // Contet-Length
+                .contentLength(file.length()) //
+                .body(resource);
+    }
+
+    @Override
+    public ResponseEntity<InputStreamResource> downloadDeviceCard(String fileName) throws FileNotFoundException {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<InputStreamResource> downloadFile1(String fileName, HttpServletResponse response) throws IOException {
+
+        if (fileName.equals("Instrukcja")){
+            downloadDefault("Instrukcja", response);
+            return new ResponseEntity<InputStreamResource>(HttpStatus.OK);
+        }
+
+        MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.SERVLET_CONTEXT, fileName);
+        File file;
+        InputStreamResource resource;
+
+        try {
+            file = new File(STORAGE_DIRECTORY + "/" + fileName+".pdf");
+            resource = new InputStreamResource(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            /*file = new File(STORAGE_DIRECTORY + "/" + DEFAULT_FILE_NAME);
+            resource = new InputStreamResource(new FileInputStream(file));*/
+            downloadDefault("EmptyCard", response);
+            return new ResponseEntity<InputStreamResource>(HttpStatus.OK);
+                    // Content-Disposition
+
+        }
+        return ResponseEntity.ok()
+                // Content-Disposition
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+                // Content-Type
+                .contentType(mediaType)
+                // Contet-Length
+                .contentLength(file.length()) //
+                .body(resource);
+    }
+
+    private ResponseEntity<InputStreamResource> getDeviceCard(String fileName, InputStreamResource resource, File file){
+        MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.SERVLET_CONTEXT, fileName);
+        return ResponseEntity.ok()
+                // Content-Disposition
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + fileName)
                 // Content-Type
                 .contentType(mediaType)
                 // Contet-Length

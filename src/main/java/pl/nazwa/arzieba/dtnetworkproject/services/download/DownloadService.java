@@ -9,7 +9,9 @@ import java.io.IOException;
 
 @Service
 public interface DownloadService {
-    void downloadCardsAndInstruction(String fileName, HttpServletResponse response) throws IOException;
+    void downloadDefault(String fileName, HttpServletResponse response) throws IOException;
     ResponseEntity<InputStreamResource> downloadIssueDocFile(Long fileID) throws FileNotFoundException;
+    ResponseEntity<InputStreamResource> downloadDeviceCard (String fileName) throws FileNotFoundException;
 
+    ResponseEntity<InputStreamResource> downloadFile1(String fileName, HttpServletResponse response) throws IOException;
 }
