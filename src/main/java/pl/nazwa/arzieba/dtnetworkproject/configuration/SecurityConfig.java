@@ -36,6 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     Logger logger = LoggerFactory.getLogger(this.getClass());
     private UserPrincipalDetailsService userPrincipalDetailsService;
 
+    public static String username;
+
     //--------------------------------------------------------------------CONSTRUCTOR---------------------------------------------------------------------------------------
 
     @Autowired
@@ -65,6 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login").permitAll()
                 .successHandler((httpServletRequest, httpServletResponse, authentication) -> {
                     logger.info("Zalogowano pomyślnie: "+authentication.getName());
+                    SecurityConfig.username = authentication.getName();
                     httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/dtnetwork");
                     })
                 .and()

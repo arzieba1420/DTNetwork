@@ -11,7 +11,7 @@
     <groupId>com.arzieba</groupId>
     <artifactId>dtnetwork-project</artifactId>
     <packaging>jar</packaging>
-    <version>1.86mail</version>
+    <version>1.87-SNAPSHOT</version>
     <name>DTNetwork</name>
     <description>App used in DTN of Cyfronet AGH</description>
 
@@ -148,6 +148,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
 

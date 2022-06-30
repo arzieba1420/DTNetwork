@@ -1,3 +1,4 @@
+
 window.onload=function () {
 
 
@@ -20,8 +21,20 @@ window.onload=function () {
     var downloadButton = document.getElementById("instrukcja");
     var scheduleButton = document.getElementById("grafik");
     var month = new Date().getMonth();
+    var success = document.getElementById("success")
+    var successText = document.getElementById("successText").textContent;
+    window.setTimeout(closeSuccess,3000)
 
+    if (successText === 'NULL'){
+        success.style.display = "none";
+    }
 
+    console.log(successText);
+
+    function closeSuccess() {
+        success.style.display = "none";
+        successText = 'NULL';
+    }
 
     switch (month) {
         case 0:

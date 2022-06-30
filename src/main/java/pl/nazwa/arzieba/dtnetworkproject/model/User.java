@@ -28,6 +28,10 @@ public class User {
     private Author author;
     private String roles;
     private String permissions;
+    private String mailUsername;
+    private String mailPassword;
+    private String signing;
+    private boolean activeACK;
 
     @Nullable
     private String personalDiary;

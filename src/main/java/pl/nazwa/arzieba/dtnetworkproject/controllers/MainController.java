@@ -11,14 +11,18 @@ import org.springframework.web.bind.annotation.*;
 import pl.nazwa.arzieba.dtnetworkproject.DtNetworkApplication;
 import pl.nazwa.arzieba.dtnetworkproject.dao.ShortPostDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.UserDAO;
+import pl.nazwa.arzieba.dtnetworkproject.dto.LeaveApplyPreparer;
 import pl.nazwa.arzieba.dtnetworkproject.dto.NewPassDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.*;
 import pl.nazwa.arzieba.dtnetworkproject.services.load.LoadService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import pl.nazwa.arzieba.dtnetworkproject.utils.exceptions.DamageNotFoundException;
+import pl.nazwa.arzieba.dtnetworkproject.utils.mail.EmailConfiguration;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.*;
 
 @Controller
@@ -34,26 +38,31 @@ public class MainController implements ErrorController {
     private ShortPostDAO shortPostDAO;
     private UserDAO userDAO;
     private LoadService loadService;
+    private EmailConfiguration emailConfiguration;
+
+
 
     //---------------------------------------------------------------------CONSTRUCTOR---------------------------------------------------------------------------------------
 
     @Autowired
-    public MainController(UserDAO userDAO,  ShortPostDAO shortPostDAO, LoadService loadService) {
+    public MainController(UserDAO userDAO, ShortPostDAO shortPostDAO, LoadService loadService, EmailConfiguration emailConfiguration) {
         this.shortPostDAO = shortPostDAO;
         this.userDAO = userDAO;
         this.loadService = loadService;
+        this.emailConfiguration = emailConfiguration;
+
     }
 
     //--------------------------------------------------------------------BUSINESS LOGIC---------------------------------------------------------------------------------------
 
     @GetMapping
-    public String homeLog(Model model) {
-        return loadHome(model);
+    public String homeLog(Model model, Principal principal) {
+        return loadHome(model, principal);
     }
 
     @GetMapping("/dtnetwork")
-    public String loadHome(Model model)  {
-        return loadService.loadHome(model);
+    public String loadHome(Model model, Principal principal)  {
+        return loadService.loadHome(model, principal);
     }
 
     @GetMapping("/redirect")
@@ -126,16 +135,36 @@ public class MainController implements ErrorController {
         return loadService.changePass(newPassDTO, bindingResult, model);
     }
 
+    @PostMapping("/sendApply")
+    public String sendApply(Model model, Principal principal, @ModelAttribute("applyPreparer")LeaveApplyPreparer applyPreparer){
+        emailConfiguration.sendAckMail(applyPreparer);
+        return loadHome(model,principal);
+    }
 
+    @PostMapping("/sendSingleApply")
+    public String sendSingleApply(Principal principal, @Valid @ModelAttribute("applyPreparer")LeaveApplyPreparer applyPreparer, BindingResult bindingResult,Model model){
 
+       return loadService.sendSingleLeave(principal,applyPreparer,bindingResult,model);
+
+    }
+
+    @GetMapping("/chooseType")
+    public String chooseLeaveType(){
+        return "leaves/choseType";
+    }
+
+    @GetMapping("/prepareSingleApply")
+    public String prepareSingleApply(Model model, Principal principal){
+        return loadService.prepareSingleApplyMail(model,principal);
+    }
     @GetMapping("/changeID")
-    public String changeID(Model model) {
+    public String changeID(Model model, Principal principal) {
         int i =1;
 
         for (ShortPost post:shortPostDAO.findAll()){
             post.setPostId(i);
             i++;
         }
-        return loadHome(model);
+        return loadHome(model, principal);
     }
 }

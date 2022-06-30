@@ -48,4 +48,12 @@ public class CalendarUtil {
 
     public static String[] monthsEng = {"january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"};
     public static String[] monthsPol = {"styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec", "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień"};
+
+    private static String[] monthsPlAdvanced = {"stycznia","lutego","marca","kwietnia","maja","czerwca","lipca","sierpnia","wrzesnia","października","listopada","grudnia"};
+
+    public static String singleLeaveDateFormatter(String date){
+        String inverted = invertDateString(date);
+        String[] dateFactors = inverted.split("-");
+        return dateFactors[0]+" "+monthsPlAdvanced[Integer.parseInt(dateFactors[1])-1]+" "+dateFactors[2]+" r.";
+    }
 }

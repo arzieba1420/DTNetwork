@@ -24,7 +24,7 @@ public class DownloadServiceImpl implements DownloadService {
     private final IssueFilesDAO filesDAO;
     private final ServletContext SERVLET_CONTEXT;
     private static final String STORAGE_PATH = MainController.applicationHome.getDir().getAbsolutePath();
-    public static final String STORAGE_DIRECTORY = STORAGE_PATH + "/storage";
+    public static final String STORAGE_DIRECTORY = STORAGE_PATH + "\\storage";
     private static final String FILE_DIRECTORY = STORAGE_DIRECTORY + "/files";
     //HAS TO BE PROVIDED
     private static final String DEFAULT_FILE_NAME = "static/files/EmptyCard.pdf";
@@ -104,7 +104,7 @@ public class DownloadServiceImpl implements DownloadService {
         InputStreamResource resource;
 
         try {
-            file = new File(STORAGE_DIRECTORY + "/" + fileName+".pdf");
+            file = new File(STORAGE_DIRECTORY + File.separatorChar + fileName+".pdf");
             resource = new InputStreamResource(new FileInputStream(file));
         } catch (FileNotFoundException e) {
             /*file = new File(STORAGE_DIRECTORY + "/" + DEFAULT_FILE_NAME);

@@ -1,0 +1,24 @@
+ .leave-calendar-container{
+    margin-top: 100px;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-evenly;
+     justify-items: center;
+}
+
+ .calendar-leave {
+     scale: 80%;
+     justify-items: center;
+     display: flex;
+     flex-flow: column;
+     align-self: center;
+ }
+
+ .calendar-leave h1 {
+     align-self: center;
+ }
+
+ .calendar-leave img:hover{
+     scale: 110%;
+     cursor: pointer;
+ }

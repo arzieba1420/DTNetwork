@@ -19,19 +19,24 @@ import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.GeneratorTestDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.ShortPostDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.UserDAO;
+import pl.nazwa.arzieba.dtnetworkproject.dto.LeaveApplyPreparer;
 import pl.nazwa.arzieba.dtnetworkproject.dto.NewPassDTO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.ShortPostDTO;
 import pl.nazwa.arzieba.dtnetworkproject.model.*;
 import pl.nazwa.arzieba.dtnetworkproject.services.device.DeviceService;
 import pl.nazwa.arzieba.dtnetworkproject.services.issueDocument.IssueDocService;
 import pl.nazwa.arzieba.dtnetworkproject.services.shortPost.ShortPostService;
+import pl.nazwa.arzieba.dtnetworkproject.utils.calendar.CalendarUtil;
 import pl.nazwa.arzieba.dtnetworkproject.utils.enums.ListOfEnumValues;
+import pl.nazwa.arzieba.dtnetworkproject.utils.mail.EmailConfiguration;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -55,10 +60,12 @@ public class LoadServiceImpl implements LoadService {
     private MyPropertiesConfig propertiesConfig;
     private ApplicationArguments applicationArguments;
 
+    private EmailConfiguration emailConfiguration;
+
     //------------------------------------------------------------CONSTRUCTOR---------------------------------------------------------------------------------------------
 
     @Autowired
-    public LoadServiceImpl(ShortPostService postService, DeviceService deviceService, ShortPostDAO shortPostDAO, DeviceDAO deviceDAO, IssueDocService issueDocService, UserDAO userDAO, PasswordEncoder passwordEncoder, GeneratorTestDAO generatorTestDAO, MyPropertiesConfig propertiesConfig, ApplicationArguments applicationArguments) {
+    public LoadServiceImpl(ShortPostService postService, DeviceService deviceService, ShortPostDAO shortPostDAO, DeviceDAO deviceDAO, IssueDocService issueDocService, UserDAO userDAO, PasswordEncoder passwordEncoder, GeneratorTestDAO generatorTestDAO, MyPropertiesConfig propertiesConfig, ApplicationArguments applicationArguments, EmailConfiguration emailConfiguration) {
         this.postService = postService;
         this.deviceService = deviceService;
         this.shortPostDAO = shortPostDAO;
@@ -69,17 +76,24 @@ public class LoadServiceImpl implements LoadService {
         this.generatorTestDAO = generatorTestDAO;
         this.propertiesConfig = propertiesConfig;
         this.applicationArguments = applicationArguments;
+        this.emailConfiguration = emailConfiguration;
     }
 
     //------------------------------------------------------------CONTROLLER METHODS---------------------------------------------------------------------------------------------
 
     @Override
-    public String loadHome(Model model) {
+    public String loadHome(Model model, Principal principal) {
         List<String> rooms;
         rooms = ListOfEnumValues.rooms;
         List<Device> generators = deviceDAO.findAllByDeviceType(DeviceType.GENERATOR);
         Map<String, GeneratorTest> lastTests = new HashMap<>();
         String diary = userDAO.findByUsername(this.getUser()).getPersonalDiary();
+
+
+        User user = userDAO.findByUsername(principal.getName());
+        boolean credentialsPresent = user.isActiveACK();
+
+
 
         for (Device generator: generators) {
             lastTests.put(generator.getInventNumber(),generatorTestDAO.findTopByDevice_InventNumberAndLossPowerFlagOrderByDateDesc(generator.getInventNumber(),false));
@@ -119,6 +133,7 @@ public class LoadServiceImpl implements LoadService {
         model.addAttribute("rooms", rooms);
         model.addAttribute("generators", lastTests);
         model.addAttribute("today", Calendar.getInstance());
+        model.addAttribute("ackCredentials", credentialsPresent);
         return "index";
     }
 
@@ -191,6 +206,33 @@ public class LoadServiceImpl implements LoadService {
         return "redirect:/logout";
     }
 
+    @Override
+    public String prepareSingleApplyMail(Model model, Principal principal) {
+        LeaveApplyPreparer applyPreparer = new LeaveApplyPreparer();
+        applyPreparer.setSign(userDAO.findByUsername(principal.getName()).getSigning());
+        applyPreparer.setEndDate(CalendarUtil.cal2string(Calendar.getInstance()));
+        model.addAttribute("applyPreparer", applyPreparer);
+        return "leaves/singleApplyForm";
+    }
+
+    @Override
+    public String sendSingleLeave(Principal principal, LeaveApplyPreparer applyPreparer, BindingResult bindingResult,Model model) {
+        if(bindingResult.hasFieldErrors()){
+            List<FieldError> allErrors;
+            allErrors = bindingResult.getFieldErrors();
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("errors",allErrors);
+            model.addAttribute("errorsAmount",allErrors.size());
+            model.addAttribute("applyPreparer",applyPreparer);
+            return sendSingleLeaveErr(model, applyPreparer, principal);
+        }
+        applyPreparer.setLeaveType(LeaveType.WYPOCZYNKOWY);
+        applyPreparer.setUsername(principal.getName());
+        applyPreparer.setText("Dzień dobry,\nzwracam się z prośbą o udzielenie urlopu wypoczynkowego w terminie "+ CalendarUtil.singleLeaveDateFormatter(applyPreparer.getStartDate()) +"\n\nPozdrawiam,");
+        emailConfiguration.sendAckMail(applyPreparer);
+        return "redirect:/dtnetwork";
+    }
+
     public static String getUser(){
         String currentUserName = "Nieznany user";
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -213,5 +255,11 @@ public class LoadServiceImpl implements LoadService {
 
     public Author string2Aut(String name){
         return Author.valueOf(name);
+    }
+
+    private String sendSingleLeaveErr(Model model, LeaveApplyPreparer applyPreparer, Principal principal){
+
+        model.addAttribute("applyPreparer",applyPreparer);
+        return "leaves/singleApplyForm";
     }
 }

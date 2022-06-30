@@ -42,9 +42,14 @@
 
     <div th:replace="~{fragments/header.html::header}"></div>
     <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
+    <div id="success">
+        <span id="successClose" onclick="this.parentElement.style.display='none';">&times;</span>
+        <h2 id="successText">NULL</h2>
+    </div>
 
    <a id="instrukcja" href="" th:href="@{/download1/Instrukcja}" ><button id="instrButton">Pobierz instrukcję</button></a>
    <a target="_blank" id="grafik" href=""  ><button id="grafikButton">Grafik on-line</button></a>
+   <a id="wniosek" href="" th:href="@{/chooseType}"  ><button id="WniosekButton" th:disabled="${ackCredentials==false}" th:style = "${ackCredentials==false?'background-color: grey; cursor:not-allowed':''}">Wniosek o urlop</button></a>
    <div id="mySidenav" class="sidenav">
        <div class="search" id="tests">
            <table style="background-color: white; border: 1px solid black;color: black; text-align: center">

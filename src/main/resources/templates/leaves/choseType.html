@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>DTNetwork</title>
+    <link rel="icon" type="image/ico" href="../static/images/icoTitl.PNG" th:href="@{/images/icoTitl.PNG}" >
+    <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
+    <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
+    <link rel="stylesheet"  th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/header.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/calendar.css}">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/modal.css" th:href="@{/css/modal.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header.html::header}"></div>
+<div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
+<div class="leave-calendar-container">
+    <div class="calendar-leave">
+       <a href=""  th:href="@{/prepareSingleApply}" ><img src="/images/singleday-removebg-preview.png" alt="alternatetext"></a>
+           <h1>Urlop jednodniowy2</h1>
+    </div>
+   <div class="calendar-leave">
+       <img src="/images/multiday-removebg-preview.png" alt="alternatetext">
+       <h1>Urlop od... do...</h1>
+   </div>
+</div>
+</body>
+</html>

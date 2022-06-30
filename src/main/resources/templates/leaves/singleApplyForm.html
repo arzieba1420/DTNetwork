@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>DTNetwork</title>
+    <link rel="icon" type="image/ico" href="../static/images/icoTitl.PNG" th:href="@{/images/icoTitl.PNG}" >
+    <link rel="stylesheet" media="screen" th:href="@{/css/background.css}" href="../../static/css/background.css">
+    <link rel="stylesheet" href="../../static/css/form.css" th:href="@{/css/form.css}">
+    <link rel="stylesheet"  th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/header.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/footer.css}">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/modal.css" th:href="@{/css/modal.css}">
+</head>
+<body>
+<script>
+    window.location.refresh();
+</script>
+<div th:replace="~{fragments/header.html::header}"></div>
+<div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
+
+
+<div th:if="errorsAmount!=0" class="errors">
+    <p th:each="err,iterStat :${errors}" th:text=" ${iterStat.index+1} + '. Error in field: '+
+               ${err.field.toUpperCase()}+'! Bad value: '+${err.rejectedValue}+'. Error message: '+${err.defaultMessage} " ></p>
+</div>
+<div class="container" style="min-height: 100vh">
+
+    <h1 ><span>Dane do wniosku</span></h1>
+    <form  th:action="@{'/sendSingleApply'}" th:object="${applyPreparer}" method="post"
+           modelAttribute="applyPreparer" >
+
+        <div class="row">
+            <div class="col-25">
+                <label for="startDate">Data urlopu</label>
+            </div>
+            <div class="col-75">
+                <input th:errorclass="errorsFields" type="date" id="startDate" name="startDate" placeholder="YYYY-MM-DD" th:field="*{startDate}" >
+            </div>
+        </div>
+        <div class="row" style="display: none">
+            <div class="col-25">
+                <label for="applyEndDate">Data urlopu</label>
+            </div>
+            <div class="col-75">
+                <input type="date" id="applyEndDate" name="applyEndDate" placeholder="YYYY-MM-DD" th:field="*{endDate}" th:errorclass="errorsFields" th:value="${endDate}">
+            </div>
+        </div>
+        <!--Add select!-->
+        <div class="row">
+            <div class="col-25">
+                <label for="sign">Podpis</label>
+            </div>
+            <div class="col-75" >
+                <input  type="text" id="sign" name="sign"  th:field="*{sign}" th:errorclass="errorsFields">
+            </div>
+        </div>
+
+
+        <div class="row submit">
+            <input type="submit" class="cancelbtn" value="Cancel" onclick="window.history.go(-1); return false;">
+            <input type="submit" value="Submit" style="margin-right: 20px">
+        </div>
+    </form>
+</div>
+
+
+<script  th:src="@{/js/mymodal.js}"></script>
+<span></span>
+</body>
+</html>

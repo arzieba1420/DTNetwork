@@ -122,9 +122,14 @@ input[type=submit]:hover {
 
 
 .row:after {
+    margin-bottom: 10px;
     content: "";
     display: table;
     clear: both;
+}
+
+.row submit{
+    margin-top: 10px;
 }
 
 .container h1{
