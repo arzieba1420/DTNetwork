@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum DeviceType {
-
+    //TODO pompa ciepła + obraz
     CRV("/images/crv.png"), //0
     HPM("/images/hpm.png"), //1
     CHILLER("/images/chiller.png"),//2
@@ -17,6 +17,7 @@ public enum DeviceType {
     DRY_COOLER("/images/cooler.png"),//9
     OTHER("/images/cyfronet.png"),//10
     XDH("/images/xdh.png"),//11
+    HEAT_PUMP("/images/mitsubishi.png"),
     PDX("/images/pdx.png");
 
     private final String IMAGE;

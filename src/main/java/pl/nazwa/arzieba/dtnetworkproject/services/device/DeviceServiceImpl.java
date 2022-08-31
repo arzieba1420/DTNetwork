@@ -183,7 +183,7 @@ public class DeviceServiceImpl implements DeviceService {
 
         device.setRoom(Room.Nieaktywne);
         ShortPost shortPost = new ShortPost();
-        shortPost.setAuthor(Author.DTN);
+        shortPost.setAuthor(Author.DTP);
         shortPost.setDevice(device);
         shortPost.setContent("Urządzenie przeniesione do sekcji NIEAKTYWNE [SYSTEM]");
         shortPost.setPostLevel(PostLevel.INFO);
@@ -329,7 +329,7 @@ public class DeviceServiceImpl implements DeviceService {
             chillerSetDTO.setPreviousSetPoint(chillerSetDTO.getActualSetPoint());
         }
 
-        ShortPostDTO shortPostDTO = new ShortPostDTO(Author.DTN,"Zmieniono nastawę chillera! [SYSTEM]",CalendarUtil.cal2string(Calendar.getInstance()),inventNumber,false,PostLevel.INFO);
+        ShortPostDTO shortPostDTO = new ShortPostDTO(Author.DTP,"Zmieniono nastawę chillera! [SYSTEM]",CalendarUtil.cal2string(Calendar.getInstance()),inventNumber,false,PostLevel.INFO);
         postService.create(shortPostDTO);
         chillerSetDAO.save(saved);
         chiller.setChillerSet(saved);
@@ -374,7 +374,7 @@ public class DeviceServiceImpl implements DeviceService {
             drycoolerSetDTO.setPreviousSetPoint_AmbR(drycoolerSetDTO.getActualSetPoint_AmbR());
         }
 
-        ShortPostDTO shortPostDTO = new ShortPostDTO(Author.DTN,"Zmieniono nastawę drycoolera! [SYSTEM]",CalendarUtil.cal2string(Calendar.getInstance()),inventNumber,false,PostLevel.INFO);
+        ShortPostDTO shortPostDTO = new ShortPostDTO(Author.DTP,"Zmieniono nastawę drycoolera! [SYSTEM]",CalendarUtil.cal2string(Calendar.getInstance()),inventNumber,false,PostLevel.INFO);
         postService.create(shortPostDTO);
         drycoolerSetDAO.save(saved);
         drycooler.setDrycoolerSet(saved);

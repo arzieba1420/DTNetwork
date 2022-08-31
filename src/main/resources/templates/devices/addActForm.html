@@ -91,6 +91,9 @@
                     <br>
                     <label style="margin-left: 0px" for="loss" th:text="'Praca podczas zaniku'">Covered</label>
                     <input type="radio" id="loss" name="loss" th:field="*{lossPowerFlag}" th:value="true" th:errorclass="errorsFields" >
+                    <br>
+                    <label style="margin-left: 0px" for="alerted" th:text="'Alredy reported?'">Covered</label>
+                    <input type="checkbox" id="alerted" name="alerted" th:checked="*{alerted}" th:errorclass="errorsFields" >
                 </ul>
             </div>
         </div>

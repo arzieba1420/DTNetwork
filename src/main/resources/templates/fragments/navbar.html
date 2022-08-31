@@ -89,9 +89,9 @@
         </div>
             <div class="cyfroNav">
             <a class="cyfroNav" target="_blank" style="z-index: 1001 ;margin-left: auto; margin-right: 20px; font-size: 1.8em; " href="https://www.cyfronet.krakow.pl/"><i class="fas fa-home"></i></a>
-            <a class="cyfroNav"  target="_blank" style=" z-index: 1001 ;margin-right: 20px; font-size: 1.8em; " href="https://www.cyfronet.krakow.pl/sieci/13167,artykul,poczta_przez_www.html"><i class="fas fa-envelope"></i></a>
+            <a class="cyfroNav"  target="_blank" style=" z-index: 1001 ;margin-right: 20px; font-size: 1.8em; " href="https://poczta.cyfronet.pl/"><i class="fas fa-envelope"></i></a>
             <a class="cyfroNav" id="openNotes"  style=" z-index: 1001 ;margin-right: 20px; font-size: 1.8em; visibility: hidden "><i class="fas fa-user-edit"></i></a>
-            <a class="cyfroNav" id="openCalendar"  style=" z-index: 1001 ; font-size: 1.8em; visibility: hidden "><i class="fas fa-tasks"></i></a>
+            <a th:if="!${@loadServiceImpl.getUser()}=='DTP'" class="cyfroNav" id="openCalendar"  style=" z-index: 1001 ; font-size: 1.8em; visibility: hidden "><i class="fas fa-tasks"></i></a>
             </div>
         </div>
         <div id="modalWindow" class="modal">

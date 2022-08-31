@@ -23,7 +23,7 @@ public class GeneratorTestMapper {
         generatorTest.setAlerted(dto.isAlerted());
 
         if(dto.getAuthors()==null)
-            generatorTest.setAuthors(Arrays.asList(Author.DTN));
+            generatorTest.setAuthors(Arrays.asList(Author.DTP));
         else generatorTest.setAuthors(dto.getAuthors().stream().map(a-> Author.valueOf(a)).collect(Collectors.toList()));
         return generatorTest;
     }

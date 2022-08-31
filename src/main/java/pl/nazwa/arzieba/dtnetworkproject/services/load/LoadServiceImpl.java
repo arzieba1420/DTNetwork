@@ -95,7 +95,7 @@ public class LoadServiceImpl implements LoadService {
                     post.setPostDate(Calendar.getInstance());
                     post.setDate(new Date());
                     post.setContent("Wymagany test generatora! [SYSTEM]");
-                    post.setAuthor(Author.DTN);
+                    post.setAuthor(Author.DTP);
                     post.setPostLevel(PostLevel.INFO);
                     shortPostDAO.save(post);
                     test.setAlerted(true);
@@ -113,7 +113,7 @@ public class LoadServiceImpl implements LoadService {
 
         model.addAttribute("username",this.getUser());
         model.addAttribute("diary", diary);
-        model.addAttribute("calendarEntry", userDAO.findByUsername("DTN").getPersonalDiary() );
+        model.addAttribute("calendarEntry", userDAO.findByUsername("DTP").getPersonalDiary() );
         model.addAttribute("deviceServ", deviceService);
         model.addAttribute("lastPosts", mapa);
         model.addAttribute("rooms", rooms);

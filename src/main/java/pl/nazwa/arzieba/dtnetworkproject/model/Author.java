@@ -2,14 +2,14 @@ package pl.nazwa.arzieba.dtnetworkproject.model;
 
 public enum Author {
 
-    Artur,
-    Arek,
-    Damian,
-    Sebastian,
-    Rafał,
-    Bartek,
-    Grzesiek,
-    Tomek,
+    Mariusz,
+    Wojciech,
+    Wacław,
+    Przemek,
+    Mateusz,
+    KrzysztofS,
+    KrzysztofR,
+    Grzegorz,
     admin,
-    DTN;
+    DTP;
 }

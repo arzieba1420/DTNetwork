@@ -197,7 +197,7 @@ public String addGeneratorActivity(GeneratorTestDTO testDTO, BindingResult bindi
     }
 
     if(testDTO.isLossPowerFlag()==true && testDTO.getStatus()!= Status.DAMAGE){
-        ShortPostDTO postDTO = new ShortPostDTO(Author.DTN,"Generator podał napięcie podczas zaniku! [SYSTEM]",testDTO.getDate(),testDTO.getInventNumber(),false,PostLevel.POWER);
+        ShortPostDTO postDTO = new ShortPostDTO(Author.DTP,"Generator podał napięcie podczas zaniku! [SYSTEM]",testDTO.getDate(),testDTO.getInventNumber(),false,PostLevel.POWER);
         generatorService.create(testDTO);
         postService.create(postDTO);
         return "redirect:/generators/" + testDTO.getInventNumber()+"/1";
@@ -205,7 +205,7 @@ public String addGeneratorActivity(GeneratorTestDTO testDTO, BindingResult bindi
 
     if(testDTO.isLossPowerFlag()==false && testDTO.getStatus()== Status.DAMAGE){
         DamageDTO damageDTO = new DamageDTO(testDTO.getContent(),testDTO.getDate(),Author.valueOf(SecurityContextHolder.getContext().getAuthentication().getName()),testDTO.getInventNumber(),true);
-        ShortPostDTO postDTO = new ShortPostDTO(Author.DTN,"Nowa usterka! Szczegóły po kliknięciu w Urządzenie... [SYSTEM]",damageDTO.getDamageDate(),damageDTO.getDeviceInventNumber(),true,PostLevel.DAMAGE);
+        ShortPostDTO postDTO = new ShortPostDTO(Author.DTP,"Nowa usterka! Szczegóły po kliknięciu w Urządzenie... [SYSTEM]",damageDTO.getDamageDate(),damageDTO.getDeviceInventNumber(),true,PostLevel.DAMAGE);
         generatorService.create(testDTO);
         create(damageDTO);
         postService.create(postDTO);
@@ -213,9 +213,9 @@ public String addGeneratorActivity(GeneratorTestDTO testDTO, BindingResult bindi
     }
 
     if(testDTO.isLossPowerFlag()==true && testDTO.getStatus()== Status.DAMAGE){
-        ShortPostDTO postDTOForPower = new ShortPostDTO(Author.DTN,"Generator podał napięcie podczas zaniku! [SYSTEM]",testDTO.getDate(),testDTO.getInventNumber(),false,PostLevel.POWER);
+        ShortPostDTO postDTOForPower = new ShortPostDTO(Author.DTP,"Generator podał napięcie podczas zaniku! [SYSTEM]",testDTO.getDate(),testDTO.getInventNumber(),false,PostLevel.POWER);
         DamageDTO damageDTO = new DamageDTO(testDTO.getContent(),testDTO.getDate(),Author.valueOf(SecurityContextHolder.getContext().getAuthentication().getName()),testDTO.getInventNumber(),true);
-        ShortPostDTO postDTOForDamage = new ShortPostDTO(Author.DTN,"Nowa usterka! Szczegóły po kliknięciu w Urządzenie... [SYSTEM]",damageDTO.getDamageDate(),damageDTO.getDeviceInventNumber(),true,PostLevel.DAMAGE);
+        ShortPostDTO postDTOForDamage = new ShortPostDTO(Author.DTP,"Nowa usterka! Szczegóły po kliknięciu w Urządzenie... [SYSTEM]",damageDTO.getDamageDate(),damageDTO.getDeviceInventNumber(),true,PostLevel.DAMAGE);
         generatorService.create(testDTO);
         postService.create(postDTOForPower);
         create(damageDTO);
@@ -241,7 +241,7 @@ public String addGeneratorActivity(GeneratorTestDTO testDTO, BindingResult bindi
         if(!damageDTO.isNewPostFlag()) {
             create(damageDTO);
         } else{
-            ShortPostDTO shortPostDTO = new ShortPostDTO(Author.DTN,"Nowa usterka! Szczegóły po kliknięciu w Urządzenie... [SYSTEM]",
+            ShortPostDTO shortPostDTO = new ShortPostDTO(Author.DTP,"Nowa usterka! Szczegóły po kliknięciu w Urządzenie... [SYSTEM]",
                     damageDTO.getDamageDate(),damageDTO.getDeviceInventNumber(),true,PostLevel.DAMAGE);
             create(damageDTO);
             postService.create(shortPostDTO);

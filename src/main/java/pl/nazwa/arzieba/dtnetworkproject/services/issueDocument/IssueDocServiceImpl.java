@@ -330,7 +330,7 @@ public class IssueDocServiceImpl implements IssueDocService {
         }
 
         create(issueDocumentDTO);
-        ShortPostDTO shortPostDTO = new ShortPostDTO(Author.DTN,"Wprowadzono nowe zamówienie dla usterki! [SYSTEM]",CalendarUtil.cal2string(Calendar.getInstance()),
+        ShortPostDTO shortPostDTO = new ShortPostDTO(Author.DTP,"Wprowadzono nowe zamówienie dla usterki! [SYSTEM]",CalendarUtil.cal2string(Calendar.getInstance()),
                 issueDocumentDTO.getInventNumber(),false,PostLevel.INFO );
         postService.create(shortPostDTO);
         return "redirect:/dtnetwork";
@@ -365,7 +365,7 @@ public class IssueDocServiceImpl implements IssueDocService {
             return addFormDeviceErr(issueDocumentDTO.getInventNumber(), model,issueDocumentDTO);
         }
 
-        ShortPostDTO postDTO = new ShortPostDTO(Author.DTN,"Wprowadzono nowe zamówienie dla urządzenia! [SYSTEM]",
+        ShortPostDTO postDTO = new ShortPostDTO(Author.DTP,"Wprowadzono nowe zamówienie dla urządzenia! [SYSTEM]",
                 CalendarUtil.cal2string(Calendar.getInstance()), issueDocumentDTO.getInventNumber(),false,PostLevel.INFO);
         create(issueDocumentDTO);
         postService.create(postDTO);

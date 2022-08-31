@@ -5,25 +5,40 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import pl.nazwa.arzieba.dtnetworkproject.dao.DeviceDAO;
+import pl.nazwa.arzieba.dtnetworkproject.dao.ShortPostDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dao.UserDAO;
 import pl.nazwa.arzieba.dtnetworkproject.dto.NewPassDTO;
+import pl.nazwa.arzieba.dtnetworkproject.model.Author;
+import pl.nazwa.arzieba.dtnetworkproject.model.PostLevel;
+import pl.nazwa.arzieba.dtnetworkproject.model.ShortPost;
 import pl.nazwa.arzieba.dtnetworkproject.model.User;
+
 import javax.transaction.Transactional;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
 
     //------------------------------------------------------------LOCAL VARIABLES---------------------------------------------------------------------------------------------
 
     private UserDAO userDAO;
     private PasswordEncoder passwordEncoder;
 
+    private ShortPostDAO shortPostDAO;
+
+    private DeviceDAO deviceDAO;
+
     //------------------------------------------------------------CONSTRUCTOR---------------------------------------------------------------------------------------------
 
-    public UserServiceImpl(UserDAO userDAO, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserDAO userDAO, PasswordEncoder passwordEncoder, ShortPostDAO shortPostDAO, DeviceDAO deviceDAO) {
         this.userDAO = userDAO;
         this.passwordEncoder = passwordEncoder;
+        this.shortPostDAO = shortPostDAO;
+        this.deviceDAO = deviceDAO;
     }
 
     //------------------------------------------------------------CONTROLLER METHODS---------------------------------------------------------------------------------------------
@@ -84,6 +99,18 @@ public class UserServiceImpl implements UserService {
         User user = userDAO.findByUsername(username);
         user.setPersonalDiary(diaryText);
         userDAO.save(user);
+
+        if(username.equals("DTP")){
+            ShortPost post = new ShortPost();
+            post.setDevice(deviceDAO.findByInventNumber("S-GENERAL"));
+            post.setPostDate(Calendar.getInstance());
+            post.setDate(new Date());
+            post.setContent("Dokonano zmian w sekcji Zaplanowane Zadania! [SYSTEM]");
+            post.setAuthor(Author.DTP);
+            post.setPostLevel(PostLevel.INFO);
+            shortPostDAO.save(post);
+        }
+
         return "redirect:/dtnetwork";
     }
 

@@ -396,7 +396,7 @@ public class ShortPostServiceImpl implements ShortPostService {
             if (post.getPostLevel().equals(PostLevel.GENERAL)) postDAO.delete(post);
         }
 
-        ShortPostDTO shortPostDTO = new ShortPostDTO(Author.DTN,"Usunięto posty systemowe! [SYSTEM]",
+        ShortPostDTO shortPostDTO = new ShortPostDTO(Author.DTP,"Usunięto posty systemowe! [SYSTEM]",
                 CalendarUtil.cal2string(Calendar.getInstance()),"DTN",false,PostLevel.INFO);
         create(shortPostDTO);
         return "redirect:/dtnetwork";
