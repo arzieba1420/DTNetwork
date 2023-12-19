@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.List;
@@ -31,6 +33,7 @@ public class Damage {
     private Device device;
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String description;
 
     @Temporal(TemporalType.DATE)

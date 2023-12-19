@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Entity
+@Table(name = "AppUser")
 @Getter
 @Setter
 @NoArgsConstructor

@@ -3,6 +3,7 @@ package pl.nazwa.arzieba.dtnetworkproject.model;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
 import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,6 +34,7 @@ public class IssueDocument implements Serializable {
     private  String issueTittle;
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String issueDetails;
     private String inventNumber;
     private double value;

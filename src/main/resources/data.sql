@@ -1,4 +1,4 @@
-INSERT  INTO `device` (`invent_number`, `device_description`, `device_type`, `room`) VALUES
+/*INSERT  INTO device (invent_number, device_description, device_type, room) VALUES
                                                                                                ('DTN', 'Ogólne', 10, 12),
                                                                                                ('PPOZ', 'PPOŻ', 10, 12),
                                                                                                ('S-0223', 'K1', 7, 4),
@@ -57,7 +57,7 @@ INSERT  INTO `device` (`invent_number`, `device_description`, `device_type`, `ro
                                                                                                ('U-0226', 'PCW RK', 4, 8),
                                                                                                ('U-0550', 'CH1 (klatki)', 2, 12),
                                                                                                ('W-2848', 'Gen 40kVA', 8, 14);
-INSERT INTO `damage` (`damage_id`, `author`, `damage_date`, `description`, `device_invent_number`) VALUES
+INSERT INTO damage (damage_id, author, damage_date, description, device_invent_number) VALUES
                                                                                                               (1009, 9, '2016-03-12', 'Awaria pompy nr 1(brak przepływu) - kod usterki: 2\r\nUsunięcie awarii: 14.03.2016', 'U-0210(a)'),
                                                                                                               (1013, 9, '2016-03-29', 'Uszkodzenie co najmiej 4 akumulatorów - wyłączenie systemu PPOŻ na hali\r\n-----------------------------------------------\r\n09,04.2016: wymiana 9 akumulatorów', 'U-0013'),
                                                                                                               (1017, 9, '2016-04-11', 'Awaria nr 7 pompy glikolu nr 1 na dachu HM', 'DTN'),
@@ -95,12 +95,12 @@ INSERT INTO `damage` (`damage_id`, `author`, `damage_date`, `description`, `devi
                                                                                                               (26001, 1, '2021-06-11', 'Alarm: Usterka jednego z kondensatorów falownika.\r\n\r\n-------------\r\nAlarm skasowany, UPS działa prawidłowo.\r\n\r\n------------------------------------\r\nZdiagnozowana usterka kondensatorów AC - oczekuje na zamówienie i naprawę\r\n\r\n----------------------------------------\r\n19,07.2021\r\nWymiana kompletu kondensatorów AC', 'U-0216'),
                                                                                                               (28003, 5, '2021-08-02', 'Awaria jednego z APMCDU, Pompy od drycoolera chodzą na sztywno na 3 barach.\r\n-----------\r\n04.08.2021\r\nCDU pracuje ponownie. W razie problemów z wysokim ciśnieniem na pompach związanych z testami/awarią CDU, można w SUCHu zmienić sterowanie na dP zadane pomp, aby pracować na stałych 3 barach.', 'DTN');
 /*!40000 ALTER TABLE `damage` ENABLE KEYS */;
-INSERT INTO `user` (`username`, `active`, `author`, `password`, `permissions`, `personal_diary`, `roles`) VALUES
+INSERT INTO app_user (username, active, author, password, permissions, personal_diary, roles) VALUES
                                                                                                                      ('admin', '1', 1, '$2a$10$smtXq.ugNR/z0p2gTVWDXeGPUMKgM.HhC5zR0L92XqmMgIxIHQq/.', '', NULL, 'USER,ADMIN'),
                                                                                                                      ('USER', '1', 0, '$2a$10$u0RIO.sDbQ5rXRot8qVY1ehdi4n1UehSh2tCjP8JxlmVeSmSdtAuC', '', 'urlopy:\r\n - 30,31 stycznia\r\n', 'USER,ADMIN'),
                                                                                                                      ('DTN', '1', 2, '$2a$10$l68mNuHjtm6o6Iqd/zas3.PoowzIpcB2igKdsVJCO2d9BiX3VvBcC', '', '', 'USER');
 
-INSERT INTO `generator_test` (`test_id`, `alerted`, `content`, `date`, `loss_power_flag`, `status`, `device_invent`, `authors_comma_separated`) VALUES
+INSERT INTO generator_test (test_id, alerted, content, date, loss_power_flag, status, device_invent, authors_comma_separated) VALUES
                                                                                                                                                            (1035, '0', 'Praca 1,5 godziny podczas zaniku napięcia. Powrót napięcia ręcznie, zmiana na automat', '2016-06-07', '1', 0, 'S-0342', NULL),
                                                                                                                                                            (1069, '0', 'Uszkodzenie wężów do chłodziwa', '2017-03-01', '0', 2, 'W-2848', NULL),
                                                                                                                                                            (1098, '0', 'Praca ok 45 min. Parametry po pracy:\r\npaliwo 1350 l\r\nT = 73 st.C\r\naku: 26,5V', '2018-07-20', '1', 0, 'S-0342', NULL),
@@ -135,3 +135,4 @@ INSERT INTO `generator_test` (`test_id`, `alerted`, `content`, `date`, `loss_pow
                                                                                                                                                            (1169, '0', 'licznik: 11h\r\nciśnienie oleju: 5,7bar\r\npaliwo: 794L\r\nnapięcie aku: 27,2V\r\ntemp 61 st.C\r\n\r\nBartek', '2018-05-30', '0', 0, 'U-0219', NULL),
                                                                                                                                                            (1170, '0', 'licznik: 11,1h\r\nciśnienie oleju: 5,8bar\r\npaliwo: 791L\r\nnapięcie aku: 27,1V\r\ntemp 64 st.C\r\n\r\nArek', '2018-07-04', '0', 0, 'S-GEN2', NULL),
                                                                                                                                                            (1171, '0', 'Praca podczas przełączeń na RS i AGH.\r\nCzas pracy ok 2,5 h\r\npaliwo (zbiornik główny) 432L\r\npaliwo(zbiornik rezerwowy) PUSTY!!!\r\ntemp: 91 st.C\r\n\r\nPracowały wszystkie wentylatory chłodnicy\r\nWyłączona pompa dopompowywania paliwa\r\n\r\nTomek, Rafał', '2018-09-28', '1', 1, 'U-0219', NULL);
+*/

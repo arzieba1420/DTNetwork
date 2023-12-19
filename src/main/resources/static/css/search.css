@@ -26,9 +26,7 @@
     float: right;
     margin-top: 0px;
 }
-#instrButton:hover, #grafikButton:hover {
-    background-color: #1e9d0b;
-}
+
 
 #grafik{
     position: absolute;
@@ -46,6 +44,29 @@
     cursor: pointer;
     float: right;
     margin-top: 0px;
+}
+
+#ksbButton{
+    background-color: #4CAF50;
+    color: white;
+    width: 160px;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+    margin-top: 0px;
+}
+
+#ksb{
+    position: absolute;
+    top: 280px;
+    right: 0px;
+    z-index: 2999;
+}
+
+#instrButton:hover, #grafikButton:hover, #ksbButton:hover {
+    background-color: #1e9d0b;
 }
 
 #mySidenav2{

@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,6 +28,7 @@ public class ShortPost {
     private Author author;
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String content;
 
     @Temporal(TemporalType.DATE)

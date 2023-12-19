@@ -5,19 +5,21 @@ import org.springframework.stereotype.Component;
 
 public enum  Room {
 
-    G39,//0
-    G04,//1
-    UPS_Build,//2
-    H106,//3
-    H104,//4
-    H102,//5
-    H124,//6
-    H105,//7
-    HM_Prom,//8
-    HM_Dach,//9
-    HM_Podz,//10
-    Instalacje,//11
-    Inne,//12
-    Generatory,//13
-    Nieaktywne//14
+    HM_Helios, //0
+    G39,//1
+    G04,//2
+    UPS_Build,//3
+    H106,//4
+    H104,//5
+    H102,//6
+    H124,//7
+    H105,//8
+    HM_Prom,//9
+    HM_Dach,//10
+    HM_Podz,//11
+    Instalacje,//12
+    Inne,//13
+    Generatory,//14
+    Nieaktywne//15
+
 }

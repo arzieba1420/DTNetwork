@@ -1,5 +1,4 @@
 
-/*
 package pl.nazwa.arzieba.dtnetworkproject.services.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,4 +71,3 @@ public class UsersInit implements CommandLineRunner {
     }
 }
 
-*/

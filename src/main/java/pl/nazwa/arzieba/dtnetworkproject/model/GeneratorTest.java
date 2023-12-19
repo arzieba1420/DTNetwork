@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.List;
@@ -33,6 +35,7 @@ public class GeneratorTest {
     private Calendar date;
 
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String content;
     private Status status;
 
