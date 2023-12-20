@@ -46,6 +46,12 @@ public class DownloadController {
         return downloadService.downloadFile1(fileName, response);
     }
 
+    @RequestMapping("/downloadCard/{fileName}")
+    public ResponseEntity <InputStreamResource> downloadCards(@PathVariable String fileName, HttpServletResponse response) throws IOException {
+
+        return downloadService.downloadCard(fileName, response);
+    }
+
     //Download file from FILE DIRECTORY when its name is given in URL
     //Pobieranie pliku ZAMÓWIENIA o ID jak w URL
     //Unactive in DEMO Version

@@ -14,4 +14,5 @@ public interface DownloadService {
     ResponseEntity<InputStreamResource> downloadDeviceCard (String fileName) throws FileNotFoundException;
 
     ResponseEntity<InputStreamResource> downloadFile1(String fileName, HttpServletResponse response) throws IOException;
+    ResponseEntity<InputStreamResource> downloadCard(String fileName, HttpServletResponse response) throws IOException;
 }

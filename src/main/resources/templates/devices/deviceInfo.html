@@ -231,7 +231,7 @@
             </div>
             <div class="tooltip"  >
                 <!--<a th:href="@{/cards/addForm/}+${dto.getInventNumber()}"><i class="far fa-id-card" style=" color: #55003b;"></i></a>-->
-                <a th:href="@{/download1/} + ${dto.getInventNumber()} "><i class="fas fa-download" style=" color: #55003b;"></i></a>
+                <a th:href="@{/downloadCard/} + ${dto.getInventNumber()} "><i class="fas fa-download" style=" color: #55003b;"></i></a>
                 <span class="tooltiptext">Pobierz kartę maszyny</span>
             </div>
             <div class="tooltip"  th:if="${dao.getDeviceCard()!= null}" >

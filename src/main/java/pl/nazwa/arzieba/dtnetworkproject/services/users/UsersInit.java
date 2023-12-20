@@ -20,16 +20,19 @@ import java.util.stream.IntStream;
 
 @Service
 public class UsersInit implements CommandLineRunner {
+
+
+
+    private UserDAO userDAO;
+    private PasswordEncoder passwordEncoder;
+    private DeviceDAO deviceDAO;
+    private GeneratorTestDAO generatorTestDAO;
+    private ShortPostDAO shortPostDAO;
+
     @Override
     public void run(String... args) throws Exception {
 
     }
-//
-//    private UserDAO userDAO;
-//    private PasswordEncoder passwordEncoder;
-//    private DeviceDAO deviceDAO;
-//    private GeneratorTestDAO generatorTestDAO;
-//    private ShortPostDAO shortPostDAO;
 //
 //    @Autowired
 //    public UsersInit(UserDAO userDAO, PasswordEncoder passwordEncoder, DeviceDAO deviceDAO, GeneratorTestDAO generatorTestDAO, ShortPostDAO shortPostDAO) {

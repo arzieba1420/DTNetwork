@@ -124,6 +124,33 @@ public class DownloadServiceImpl implements DownloadService {
                 .body(resource);
     }
 
+    public ResponseEntity<InputStreamResource> downloadCard(String fileName, HttpServletResponse response) throws IOException {
+
+        MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.SERVLET_CONTEXT, fileName);
+        File file;
+        InputStreamResource resource;
+
+        try {
+            file = new File(STORAGE_DIRECTORY + "/" + fileName + ".pdf");
+            resource = new InputStreamResource(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            /*file = new File(STORAGE_DIRECTORY + "/" + DEFAULT_FILE_NAME);
+            resource = new InputStreamResource(new FileInputStream(file));*/
+            downloadDefault("EmptyCard", response);
+            return new ResponseEntity<InputStreamResource>(HttpStatus.OK);
+            // Content-Disposition
+
+        }
+        return ResponseEntity.ok()
+                // Content-Disposition
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+                // Content-Type
+                .contentType(mediaType)
+                // Contet-Length
+                .contentLength(file.length()) //
+                .body(resource);
+    }
+
     private ResponseEntity<InputStreamResource> getDeviceCard(String fileName, InputStreamResource resource, File file){
         MediaType mediaType = MediaTypeUtils.getMediaTypeForFileName(this.SERVLET_CONTEXT, fileName);
         return ResponseEntity.ok()
