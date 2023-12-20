@@ -104,7 +104,7 @@ public class DownloadServiceImpl implements DownloadService {
         InputStreamResource resource;
 
         try {
-            file = new File(STORAGE_DIRECTORY + "/" + fileName+".pdf");
+            file = new File(STORAGE_DIRECTORY + "/" + fileName);
             resource = new InputStreamResource(new FileInputStream(file));
         } catch (FileNotFoundException e) {
             /*file = new File(STORAGE_DIRECTORY + "/" + DEFAULT_FILE_NAME);

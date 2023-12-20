@@ -10,4 +10,8 @@ import java.util.List;
 public interface DownloadItemService {
 
     String getAllFiles(Model model);
+
+    String addForm(Model model);
+
+    String save(Model model, DownloadItemDTO itemDTO);
 }

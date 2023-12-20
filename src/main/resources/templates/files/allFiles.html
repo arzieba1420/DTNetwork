@@ -33,19 +33,21 @@
     <div style="display: flex;flex-flow: row;justify-content: center">
         <table style=" width: 50%;  margin: 10px 30px">
             <tr id="topBar">
-                <th >ID</th>
-                <th>Name</th>
+                <th >Name</th>
+                <th>Description</th>
                 <th>Type</th>
                 <th>Actions</th>
             </tr>
 
             <tr th:each="file:${files}">
-                <td style="white-space:pre-wrap;" th:text="${file.getId()}">ID</td>
-                <td th:text="${file.getName()}" ></td>
+                <td style="width: 100px; padding: 10px" >
+                    <a href="#" th:text="${file.getName()} " th:href="@{'/download1/' + ${file.getName()}}"> </a>
+                </td>
+                <td th:text="${file.getDescription()}" ></td>
 
-                <td th:text="${file.getType()}">Invent Number</td>
-                <td >
-                   <a href="#" th:href="@{'/download1/' + ${file.getName()}}"> <span style="font-size: 1em;cursor:pointer"><i class="fa fa-download"></i> Pobierz</span></a>
+                <td th:text="${file.getType()}" style="width: 30px"></td>
+                <td style="width: 30px" >
+                   <a href="#" th:href="@{'/download1/' + ${file.getName()}}"> <span style="font-size: 1em;cursor:pointer" ><i class="fa fa-download"></i> </span></a>
                 </td>
             </tr>
 
@@ -53,14 +55,31 @@
 
     </div>
 
-<!--    <div  style="text-align: center">
-        <div id="btnContainer"  class="pagination">
-            <a  th:href="@{'/invoices/' + ${building} + '/1'}" >&laquo;</a>
-            <a th:href="@{'/issueDocs/' + ${building} + '/1'}"  th:class=" ${currentPage}==1 ?'active' : '' " >1</a>
-            <a th:href="@{'/issueDocs/'+${building}+'/'+${page}}" th:each="page:${pages}" th:text="${page}" th:class="${currentPage}==${page}? 'active' : ''" >2</a>
-            <a th:href="@{'/issueDocs/' + ${building} + '/'+ ${lastPage}}">&raquo;</a>
+    <form
+            id="uploadForm"
+            th:action="@{/files/newFile}"
+            enctype="multipart/form-data">
+        <div class="upload-wrap">
+            <button type="submit" class="upload-button">
+                <i class="fas fa-solid fa-upload"></i>
+                <input type="file" name="file" class="input-file" style=" display: none;">
+            </button>
         </div>
-    </div>-->
+
+    </form>
+
+
+
+
+        <!-- <i class="fa-solid fa-upload">     </i>
+    <div  style="text-align: center">
+            <div id="btnContainer"  class="pagination">
+                <a  th:href="@{'/invoices/' + ${building} + '/1'}" >&laquo;</a>
+                <a th:href="@{'/issueDocs/' + ${building} + '/1'}"  th:class=" ${currentPage}==1 ?'active' : '' " >1</a>
+                <a th:href="@{'/issueDocs/'+${building}+'/'+${page}}" th:each="page:${pages}" th:text="${page}" th:class="${currentPage}==${page}? 'active' : ''" >2</a>
+                <a th:href="@{'/issueDocs/' + ${building} + '/'+ ${lastPage}}">&raquo;</a>
+            </div>
+        </div>-->
 
 </div>
 

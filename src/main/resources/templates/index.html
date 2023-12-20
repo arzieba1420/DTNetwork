@@ -42,10 +42,8 @@
 
     <div th:replace="~{fragments/header.html::header}"></div>
     <div th:replace="~{fragments/navbar.html::navbar(${@listOfEnumValues.rooms})}"></div>
-
-   <a id="instrukcja" href="" th:href="@{/download1/Instrukcja}" ><button id="instrButton">Pobierz instrukcję</button></a>
    <a target="_blank" id="grafik" href=""  ><button id="grafikButton">Grafik on-line</button></a>
-   <a id="ksb" href="" th:href="@{/download1/KSB}" ><button id="ksbButton">Instrukcja KSB</button></a>
+
    <div id="mySidenav" class="sidenav">
        <div class="search" id="tests">
            <table style="background-color: white; border: 1px solid black;color: black; text-align: center">

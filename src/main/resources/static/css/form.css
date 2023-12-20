@@ -204,3 +204,26 @@ input.disabledInput:focus{
 input.disabledInput:hover{
     cursor: not-allowed;
 }
+
+.fa-upload:hover{
+    transform: scale(1.3,1.3);
+    cursor: pointer;
+    color: #0062fe
+
+}
+
+.fa-upload{
+    font-size: 300%;
+    color: #032465;
+}
+ .upload-button{
+     background: none;
+     border: none;
+ }
+
+ .upload-wrap{
+     margin-top: 30px;
+     width: 75%;
+     display: flex;
+     justify-content: end;
+ }
