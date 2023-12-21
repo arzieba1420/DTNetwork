@@ -3,16 +3,17 @@ package pl.nazwa.arzieba.dtnetworkproject.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DownloadItemDTO;
 import pl.nazwa.arzieba.dtnetworkproject.services.download.DownloadService;
 import pl.nazwa.arzieba.dtnetworkproject.services.downloadItem.DownloadItemService;
 
+import javax.validation.Valid;
+
 @Controller
+@RequestMapping("/files")
 public class DownloadItemsController {
 
     private final DownloadItemService downloadItemService;
@@ -22,19 +23,19 @@ public class DownloadItemsController {
         this.downloadItemService = downloadItemService;
     }
 
-    @GetMapping("/files")
+    @GetMapping
     public String getAllFiles(Model model){
         return downloadItemService.getAllFiles(model);
     }
 
-    @GetMapping("/files/newFile")
+    @GetMapping("/newFile")
     public String addForm(Model model) {
         return downloadItemService.addForm(model);
     }
 
-    @PostMapping("/files/upload")
-    public String uploadFile(Model model, @ModelAttribute("fileDTO") DownloadItemDTO fileDTO) {
+    @PostMapping("/upload")
+    public String uploadFile(Model model, @Valid @ModelAttribute("fileDTO")  DownloadItemDTO fileDTO, BindingResult bindingResult) {
 
-       return  downloadItemService.save(model, fileDTO);
+       return  downloadItemService.save(model, fileDTO, bindingResult);
     }
 }

@@ -179,11 +179,11 @@ input[type=submit]:hover {
 }
 
 .errorsFields{
-    border: 2px solid crimson ;
+    border: 2px solid crimson !important ;
 }
 
 input[type=text].errorsFields,input[type=password].errorsFields,input[type=date].errorsFields {
-    border: 2px solid crimson ;
+    border: 2px solid crimson !important; ;
 }
 
 

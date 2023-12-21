@@ -2,6 +2,7 @@ package pl.nazwa.arzieba.dtnetworkproject.services.downloadItem;
 
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import pl.nazwa.arzieba.dtnetworkproject.dto.DownloadItemDTO;
 
 import java.util.List;
@@ -13,5 +14,6 @@ public interface DownloadItemService {
 
     String addForm(Model model);
 
-    String save(Model model, DownloadItemDTO itemDTO);
+
+    String save(Model model, DownloadItemDTO itemDTO, BindingResult bindingResult);
 }

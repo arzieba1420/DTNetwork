@@ -88,7 +88,7 @@
     padding: 15px 10px; /* 15px padding */
      /* Set a specific width */
     text-decoration: none; /* Remove underline */
-    font-size: 20px; /* Increase font size */
+
     color: white; /* White text color */
     border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
 
@@ -158,9 +158,10 @@
     margin-left: -410px;
     width: 450px;
     z-index: 999;
+    font-size: 20px;
 }
 
-#tests:hover{
+#tests:hover, #searchBar:hover {
     background-color: #1e9d0b;
 }
 
@@ -339,5 +340,28 @@ button{
 #arr5{
 
 }
+
+
+table, th, td {
+    cursor: auto;
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 5px;
+}
+
+td{
+    font-size: 0.9em;
+}
+
+tr:hover{
+    background-color: #9c9c9c;
+    cursor: pointer;
+}
+
+#arr2{
+    margin-top: -90px !important;
+}
+
+
 
 

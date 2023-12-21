@@ -55,18 +55,19 @@
 
     </div>
 
-    <form
-            id="uploadForm"
-            th:action="@{/files/newFile}"
-            enctype="multipart/form-data">
-        <div class="upload-wrap">
-            <button type="submit" class="upload-button">
-                <i class="fas fa-solid fa-upload"></i>
-                <input type="file" name="file" class="input-file" style=" display: none;">
-            </button>
-        </div>
+    <a class="upload-wrap" th:href="@{/files/newFile}"><i class="fas fa-solid fa-upload" ></i></a>
+<!--    <form-->
+<!--            id="uploadForm"-->
+<!--            th:action="@{/files/newFile}"-->
+<!--            enctype="multipart/form-data">-->
+<!--        <div class="upload-wrap">-->
+<!--            <button type="submit" class="upload-button">-->
+<!--                <i class="fas fa-solid fa-upload"></i>-->
+<!--                <input type="file" name="file" class="input-file" style=" display: none;">-->
+<!--            </button>-->
+<!--        </div>-->
 
-    </form>
+<!--    </form>-->
 
 
 
