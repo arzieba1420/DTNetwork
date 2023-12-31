@@ -346,7 +346,7 @@ table, th, td {
     cursor: auto;
     border: 1px solid black;
     border-collapse: collapse;
-    padding: 5px;
+    padding: 3px;
 }
 
 td{
